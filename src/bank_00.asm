@@ -214,26 +214,164 @@ zAdvanceFrameDoThings:
     PLB                                                                             ;008203|AB      |      ;
     RTL                                                                             ;008204|6B      |      ;
 
-    db $AD,$1B,$42,$89,$20,$F0,$04,$20,$2B,$82,$60,$AD,$1B,$42,$89,$80              ;008205|        |00421B;
-    db $F0,$0C,$A9,$1E,$48,$22,$B7,$B1,$02,$68,$3A,$D0,$F7,$60,$89,$40              ;008215|        |008223;
-    db $F0,$03,$20,$71,$82,$60,$A9,$00,$20,$40,$82,$A9,$03,$20,$40,$82              ;008225|        |00822A;
-    db $A9,$04,$20,$40,$82,$A9,$1F,$20,$40,$82,$60,$8B,$48,$AB,$A2,$00              ;008235|        |      ;
-    db $80,$BD,$00,$00,$C9,$02,$D0,$1F,$BD,$01,$00,$C9,$01,$D0,$18,$BD              ;008245|        |008204;
-    db $02,$00,$C9,$AA,$D0,$11,$BC,$03,$00,$10,$0C,$DA,$A2,$0A,$04,$8E              ;008255|        |      ;
-    db $F3,$03,$22,$27,$AC,$02,$FA,$E8,$D0,$D7,$AB,$60,$AD,$14,$03,$20              ;008265|        |000003;
-    db $FC,$82,$8D,$06,$1F,$AD,$14,$03,$20,$00,$83,$8D,$07,$1F,$AD,$16              ;008275|        |008D82;
-    db $03,$20,$FC,$82,$8D,$09,$1F,$AD,$16,$03,$20,$00,$83,$8D,$0A,$1F              ;008285|        |000020;
-    db $AD,$6A,$1C,$20,$FC,$82,$8D,$0C,$1F,$AD,$6A,$1C,$20,$00,$83,$8D              ;008295|        |001C6A;
-    db $0D,$1F,$AD,$78,$03,$20,$FC,$82,$8D,$0F,$1F,$AD,$78,$03,$20,$00              ;0082A5|        |00AD1F;
-    db $83,$8D,$10,$1F,$AD,$74,$03,$20,$00,$83,$8D,$12,$1F,$AD,$7A,$03              ;0082B5|        |00008D;
-    db $20,$FC,$82,$8D,$14,$1F,$AD,$7A,$03,$20,$00,$83,$8D,$15,$1F,$AD              ;0082C5|        |0082FC;
-    db $76,$03,$20,$00,$83,$8D,$17,$1F,$AD,$00,$1F,$20,$FC,$82,$8D,$19              ;0082D5|        |000003;
-    db $1F,$AD,$00,$1F,$20,$00,$83,$8D,$1A,$1F,$A0,$02,$1F,$22,$69,$A7              ;0082E5|        |1F00AD;
-    db $02,$A9,$01,$8D,$B8,$03,$60,$4A,$4A,$4A,$4A,$C2,$20,$29,$0F,$00              ;0082F5|        |      ;
-    db $AA,$BF,$0D,$83,$00,$E2,$20,$60,$30,$31,$32,$33,$34,$35,$36,$37              ;008305|        |      ;
-    db $38,$39,$41,$42,$43,$44,$45,$46,$AD,$84,$04,$D0,$01,$60,$29,$F0              ;008315|        |      ;
-    db $4A,$4A,$4A,$4A,$EB,$A9,$0A,$22,$D1,$B1,$02,$48,$AD,$84,$04,$29              ;008325|        |      ;
-    db $0F,$18,$63,$01,$22,$F9,$A0,$02,$68,$9C,$84,$04,$60                          ;008335|        |016318;
+CODE_808205:
+    LDA.W JOY2H
+    BIT.B #$20
+    BEQ .loc_808210
+    JSR.W CODE_00822B
+    RTS
+
+.loc_808210:
+    LDA.W JOY2H
+    BIT.B #$80
+    BEQ .loc_808223
+    LDA.B #$1E
+
+.loc_808219:
+    PHA
+    JSL.L wait_vblank
+    PLA
+    DEC
+    BNE .loc_808219
+    RTS
+
+.loc_808223:
+    BIT.B #$40
+    BEQ .locret_80822A
+    JSR.W CODE_808271
+
+.locret_80822A:
+    RTS
+
+CODE_00822B:
+    LDA.B #$0
+    JSR CODE_808240
+    LDA.B #$3
+    JSR CODE_808240
+    LDA.B #$4
+    JSR CODE_808240
+    LDA.B #$1F
+    JSR CODE_808240
+    RTS
+
+CODE_808240:
+    PHB
+    PHA
+    PLB
+    LDX #$8000
+
+.loop:
+    LDA.W $0000, X
+    CMP.B #$2
+    BNE .loc_80826C
+    LDA $0001, X
+    CMP.B #$1
+    BNE .loc_80826C
+    LDA.W $0002, X
+    CMP.B #$AA
+    BNE .loc_80826C
+    LDY.W $0003, X
+    BPL .loc_80826C
+    PHX
+    LDX.W #$40A
+    STX.W textPointerRestore
+    JSL.L printOsdStringFromBankX
+    PLX
+
+.loc_80826C:
+    INX
+    BNE .loop
+    PLB
+    RTS
+
+CODE_808271:
+    LDA.W mapNumber
+    JSR.W CODE_8082FC
+    STA.W $1F06
+    LDA.W mapNumber
+    JSR.W CODE_808300
+    STA.W $1F07
+    LDA.W mapSubNumber
+    JSR.W CODE_8082FC
+    STA.W $1F09
+    LDA.W mapSubNumber
+    JSR.W CODE_808300
+    STA.W $1F0A
+    LDA.W currentMapNumber
+    JSR.W CODE_8082FC
+    STA.W $1F0C
+    LDA.W currentMapNumber
+    JSR.W CODE_808300
+    STA.W $1F0D
+    LDA.W player_pos_x_int
+    JSR.W CODE_8082FC
+    STA.W $1F0F
+    LDA.W player_pos_x_int
+    JSR.W CODE_808300
+    STA.W $1F10
+    LDA.W player_pos_x_real
+    JSR.W CODE_808300
+    STA.W $1F12
+    LDA.W player_pos_y_int
+    JSR.W CODE_8082FC
+    STA.W $1F14
+    LDA.W player_pos_y_int
+    JSR.W CODE_808300
+    STA.W $1F15
+    LDA.W player_pos_y_real
+    JSR.W CODE_808300
+    STA.W $1F17
+    LDA.W $1F00
+    JSR.W CODE_8082FC
+    STA.W $1F19
+    LDA.W $1F00
+    JSR.W CODE_808300
+    STA.W $1F1A
+    LDY.W #$1F02
+    JSL.L printOsdStringFromBank2
+    LDA.B #1
+    STA.W $03B8
+    RTS
+
+CODE_8082FC:
+    LSR
+    LSR
+    LSR
+    LSR
+;fallthrough
+CODE_808300:
+    REP #$20
+    AND.W #$F
+    TAX
+    LDA.L .upper_hex_chars, X
+    SEP #$20
+    RTS
+
+.upper_hex_chars:
+    db "0123456789ABCDEF"
+
+CODE_80831D:
+    LDA.W $0484
+    BNE .loc_808323
+    RTS
+.loc_808323:
+    AND.B #$F0
+    LSR
+    LSR
+    LSR
+    LSR
+    XBA
+    LDA.B #$0A
+    JSL.L multiply
+    PHA
+    LDA $0484
+    AND #$0F
+    CLC
+    ADC 1, S
+    JSL.L giveItem
+    PLA
+    STZ $0484
+    RTS
 
 Native_mode_NMI:
     PHP                                                                             ;008342|08      |      ;
