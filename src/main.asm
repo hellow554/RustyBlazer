@@ -1,4 +1,8 @@
-lorom
+incsrc "settings.asm"
+
+incsrc "snes_header.asm"
+
+incsrc "labels.asm"
 
 incsrc "bank_00.asm"
 incsrc "bank_01.asm"
@@ -32,4 +36,3 @@ incsrc "bank_1C.asm"
 incsrc "bank_1D.asm"
 incsrc "bank_1E.asm"
 incsrc "bank_1F.asm"
-incsrc "labels.asm"

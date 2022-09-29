@@ -13501,24 +13501,3 @@ aClearTextboxAndReturn:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00              ;00FF92|        |FFFFFF;
     db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00              ;00FFA2|        |      ;
     db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00                      ;00FFB2|        |      ;
-
-snes_header:
-    db "SOULBLAZER - 1 USA   "                                                      ;00FFC0|        |      ;
-    db $20,$02,$0A,$03,$01,$B4,$00                                                  ;00FFD5|        |      ;
-    dw $9FA6,$6059                                                                  ;00FFDC|        |      ;
-    dw $0000                                                                        ;00FFE0|        |000000;
-    dw $0080                                                                        ;00FFE2|        |000080;
-    dw Native_mode_COP                                                              ;00FFE4|        |00D61E;
-    dw Native_mode_BRK                                                              ;00FFE6|        |00D5FC;
-    dw $0000                                                                        ;00FFE8|        |000000;
-    dw Native_mode_NMI                                                              ;00FFEA|        |008342;
-    dw $0000                                                                        ;00FFEC|        |000000;
-    dw Native_mode_IRQ                                                              ;00FFEE|        |0085A5;
-    dw $0000                                                                        ;00FFF0|        |000000;
-    dw $0000                                                                        ;00FFF2|        |000000;
-    dw $0000                                                                        ;00FFF4|        |000000;
-    dw CODE_008900                                                                  ;00FFF6|        |008900;
-    dw $0000                                                                        ;00FFF8|        |000000;
-    dw $0015                                                                        ;00FFFA|        |000015;
-    dw Start                                                                        ;00FFFC|        |008000;
-    dw UNREACH_00D011                                                               ;00FFFE|        |00D011;
