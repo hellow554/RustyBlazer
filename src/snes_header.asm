@@ -12,7 +12,7 @@ db $02 ; Cartridge Type:    ROM, RAM and Battery
 db $0A ; ROM Size:          2^0A = 1024kB
 db $03 ; RAM Size:          2^03 = 8kB
 db $01 ; Destination Code:  USA
-db $B4 ; Fixed value:       according to the wiki, this should be #$33
+db $B4 ; Developer Id:      
 db $00 ; Mask ROM Version:  is zero
 
 dw $AAAA,$5555 ; ROM Verification:  will be override by asar
