@@ -1,6 +1,11 @@
-all: build verify
+randomizer: sb.sfc randomizer.sfc
 
-build: sb.sfc
+randomizer.sfc: $(shell find randomizer -type f) sb.sfc
+	@cp sb.sfc rando.sfc
+	@echo "Compiling randomizer/main.asm"
+	@tools/asar randomizer/main.asm rando.sfc
+
+original: sb.sfc verify
 
 sb.sfc: $(shell find src -type f)
 	@echo "Compiling src/main.asm"
@@ -11,6 +16,9 @@ verify: sb.sfc
 	@echo "Verify succesfull"
 
 clean:
+	@echo "Removing sb.sfc"
 	@$(RM) sb.sfc
+	@echo "Removing rando.sfc"
+	@$(RM) rando.sfc
 
 .PHONY: clean
