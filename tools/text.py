@@ -101,7 +101,7 @@ class SbChar:
             0x14: "",
             0x15: "Y",
             # Health bar
-            0x1B: "\u25fe",
+            0x1B: "\u25A0",
             0x1C: "\u25ae",
             0x1D: "\u25e7",
             0x1E: "\u25eb",
@@ -168,9 +168,9 @@ class SbString:
                     return
                 case 0x01:
                     # set new position on screen
-                    [p1, p2] = take(2)
+                    [pl, ph] = take(2)
                 case 0x02:
-                    # quick print certain textx
+                    # quick print certain text
                     [idx] = take(1)
                     match idx:
                         case 0:
@@ -188,27 +188,51 @@ class SbString:
                 case 0x03:
                     # text color modifier
                     [color] = take(1)
+                case 0x04:
+                    # print health bar
+                    # a is the pointer to the current health
+                    # b is the pointer to the max health
+                    [al, ah, bl, bh] = take(4)
+
+                    pass
                 case 0x05:
                     # do a lookup into a table
-                    [b1, b2, a1, a2] = take(4)
-                    known_luts = {0xD2E6: 0x34, 0xCF74: 0x40}
+                    [bl, bh, a1, a2] = take(4)
+                    # addr and size
+                    known_luts = {
+                        # character names
+                        0xD2E6: 0x34,
+                        # item names
+                        0xCF74: 0x40,
+                        # location names
+                        0xC7C2: 0x80,
+                    }
 
-                    lut_addr = b2 << 8 | b1
+                    lut_addr = bh << 8 | bl
                     if lut_addr not in known_luts:
                         raise Exception(f"Unsupported LUT @ {lut_addr:04X}")
 
-                    assert [0xC8, 0x03] == [a1, a2]
-                    entity_id = random.randint(0, known_luts[lut_addr])
-                    entity_name_ptr = IdaAddr(bank=0x82, offset=lut_addr) + entity_id * 2
-                    addr_value = ROM[entity_name_ptr] | ROM[entity_name_ptr + 1] << 8
-                    entity_name_addr = IdaAddr(
+                    random_id = random.randint(0, known_luts[lut_addr])
+                    name_ptr = IdaAddr(bank=0x82, offset=lut_addr) + random_id * 2
+                    addr_value = ROM[name_ptr] | ROM[name_ptr + 1] << 8
+                    name_addr = IdaAddr(
                         bank=0x82,
                         offset=addr_value,
                     ).addr
 
-                    while ROM[entity_name_addr] != 0:
-                        yield SbChar(ROM[entity_name_addr]).get()
-                        entity_name_addr += 1
+                    while ROM[name_addr] != 0:
+                        val = ROM[name_addr]
+                        if val == 0x14:
+                            name_addr += 1
+                            n = ROM[name_addr]
+                            yield from map(lambda _: " ", range(n))
+                        else:
+                            yield SbChar(ROM[name_addr]).get()
+                        name_addr += 1
+
+                case 0x06:
+                    # display dec value from memory
+                    [width, ptr_lo, ptr_hi] = take(3)
 
                 case 0x07:
                     # TODO draw textbox
@@ -222,6 +246,12 @@ class SbString:
                     pass
                 case 0x0A:
                     pass
+                case 0x0B:
+                    # repeat `a` n times, where n is read from b
+                    [a, bl, bh] = take(3)
+                    assert (0x0D, 0xC7) == (bl, bh)
+                    # 0xC70D is 0x19
+                    yield from map(lambda _: a, range(0x19))
                 case 0x0C:
                     # return and store current text pointer to $03F3
                     return
@@ -230,6 +260,11 @@ class SbString:
                 case 0x0E:
                     [no_frames] = take(1)
                     # wait for `no_frames`
+                case 0x0F:
+                    # something with menu beep?!
+                    pass
+                case 0x10:
+                    pass
                 case 0x11:
                     # wait for keypress to advance and go to next line
                     yield SbChar(0x3D).get()
@@ -239,16 +274,24 @@ class SbString:
                     pass
                 case 0x13:
                     # load new textpointer
-                    [b1, b2] = take(2)
+                    [bl, bh] = take(2)
                     # addr = Addr(start_addr)
-                    addr_value = b2 << 8 | b1
+                    addr_value = bh << 8 | bl
                     yield from SbString._inner(IdaAddr(bank=start_addr.ida_bank, offset=addr_value))
                     return
+                case 0x14:
+                    # write space n times
+                    [n] = take(1)
+                    yield from map(lambda _: " ", range(n))
+                    pass
                 case x:
                     yield SbChar(x).get()
 
     def print(self):
-        print("".join(self.interpretX()))
+        if self._addr.ida_bank == 0x82:
+            print("".join(self.interpret2()))
+        else:
+            print("".join(self.interpretX()))
 
     def interpretX(self) -> Iterator[str]:
         match ROM[self._addr.addr]:
@@ -262,20 +305,12 @@ class SbString:
                 raise Exception(f"Invalid start byte for string: {x:02X}")
         yield from self._inner(self._addr + 1)
 
+    def interpret2(self) -> Iterator[str]:
+        yield from self._inner(self._addr)
+
 
 if __name__ == "__main__":
-    for addr in [
-        ".80:F998",
-        ".83:A913",
-        ".82:e216",
-        ".80:cfb6",
-        ".80:cef8",
-        ".80:d3c6",
-        ".80:d40b",
-        ".80:d43b",
-        ".80:d593",
-        ".83:82e7"
-    ]:
+    print(SbChar(0x1A))
+    for addr in [".84.e48e"]:
         SbString(IdaAddr(addr)).print()
         print()
-
