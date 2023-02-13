@@ -8,4 +8,3 @@
 
 org $00e6FC
     LDA.w #0
- 

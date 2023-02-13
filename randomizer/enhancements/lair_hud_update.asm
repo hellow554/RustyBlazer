@@ -3,7 +3,7 @@
 ; we want to include our lair reveal as well
 
 org $00AFC2
-LDA.w #$1F|$20 
+LDA.w #$1F|$20
 
 org $02999B
 LDA.b #$1F|$20
