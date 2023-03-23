@@ -1,4 +1,7 @@
 incsrc "settings.asm"
+incsrc "macros.asm"
+incsrc "items.asm"
+incsrc "text.asm"
 
 incsrc "snes_header.asm"
 

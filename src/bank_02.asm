@@ -9263,16 +9263,34 @@ OsdSoulNames:
     db $65,$61,$6C,$69,$74,$79,$40,$40,$00
 
 OsdItemMenu:
-    db $01,$88,$00,$07,$06,$0C,$57,$65,$61,$70,$6F,$6E,$01,$98,$00,$07
-    db $06,$0C,$41,$72,$6D,$6F,$72,$01,$A8,$00,$07,$06,$0C,$4D,$61,$67
-    db $69,$63
+    %TextWithBorderAtPosition($88, 0, 6, $c, "Weapon")
+    %TextWithBorderAtPosition($98, 0, 6, $c, "Armor")
+    %TextWithBorderAtPosition($A8, 0, 6, $c, "Magic")
+
 
 WeaponArmorMagicItem:
-    db $01,$08,$04,$07,$16,$08,$01,$8A,$04,$20,$57,$65,$70,$2E,$3A,$20
-    db $05,$74,$CF,$5E,$1B,$0D,$0D,$20,$41,$72,$6D,$2E,$3A,$20,$05,$74
-    db $CF,$60,$1B,$0D,$0D,$20,$4D,$61,$67,$2E,$3A,$20,$05,$74,$CF,$62
-    db $1B,$0D,$0D,$20,$49,$74,$65,$6D,$3A,$20,$05,$74,$CF,$64,$1B,$00
-    db $01,$88,$00,$07,$16,$0C,$49,$74,$65,$6D,$00,$20,$19
+    %TextDrawBorderAtPosition(8, 4, $16, 8)
+
+    %TextAtPosition($8A, 4, " Wep.: ")
+    %TextDoLookup(TextLutItem, playerEquippedSword)
+
+    db $0D,$0D
+    db " Arm.: "
+    %TextDoLookup(TextLutItem, playerEquippedArmor)
+
+    db $0D,$0D
+    db " Mag.: "
+    %TextDoLookup(TextLutItem, playerEquippedMagic)
+
+    db $0D,$0D
+    db " Item: "
+    %TextDoLookup(TextLutItem, playerEquippedItem)
+    db $00
+
+ItemMenu:
+    %TextDrawBorderAtPosition($88, 0, $16, $C)
+    db "Item"
+    db $00, $20, $19
 
 HUDLevExpGem:
     db $09,$03,$24,$01,$00,$07,$0B,$1A,$0C,$C7,$01,$42,$00,$4C,$45,$56
@@ -9320,270 +9338,355 @@ aLmno:
     db $4C,$4D,$4E,$4F,$00
 
 SectionNamesTable:
-    db $C2,$C8,$D9,$C8,$F1,$C8,$08,$C9,$18,$C9,$26,$C9,$3F,$C9,$58,$C9
-    db $69,$C9,$7A,$C9,$8B,$C9,$9A,$C9,$AB,$C9,$BF,$C9,$CC,$C9,$DA,$C9
-    db $DB,$C9,$DC,$C9,$DD,$C9,$DE,$C9,$DF,$C9,$F2,$C9,$05,$CA,$13,$CA
-    db $26,$CA,$3C,$CA,$4F,$CA,$5E,$CA,$6D,$CA,$7C,$CA,$8A,$CA,$98,$CA
-    db $A6,$CA,$B5,$CA,$C4,$CA,$D9,$CA,$E7,$CA,$F6,$CA,$F7,$CA,$F8,$CA
-    db $F9,$CA,$0C,$CB,$20,$CB,$34,$CB,$43,$CB,$52,$CB,$64,$CB,$70,$CB
-    db $86,$CB,$8F,$CB,$99,$CB,$A7,$CB,$B7,$CB,$CB,$CB,$CC,$CB,$CD,$CB
-    db $CE,$CB,$CF,$CB,$D0,$CB,$D1,$CB,$D2,$CB,$E5,$CB,$FC,$CB,$14,$CC
-    db $24,$CC,$38,$CC,$49,$CC,$61,$CC,$74,$CC,$7F,$CC,$93,$CC,$A1,$CC
-    db $B6,$CC,$B7,$CC,$B8,$CC,$B9,$CC,$BA,$CC,$BB,$CC,$BC,$CC,$BD,$CC
-    db $BE,$CC,$D3,$CC,$E5,$CC,$F7,$CC,$02,$CD,$0F,$CD,$1D,$CD,$33,$CD
-    db $49,$CD,$57,$CD,$62,$CD,$6D,$CD,$7C,$CD,$8B,$CD,$8C,$CD,$8D,$CD
-    db $8E,$CD,$8F,$CD,$90,$CD,$91,$CD,$92,$CD,$A3,$CD,$B5,$CD,$C8,$CD
-    db $DB,$CD,$EE,$CD,$F9,$CD,$07,$CE,$15,$CE,$1F,$CE,$2E,$CE,$3D,$CE
-    db $4C,$CE,$5E,$CE,$6F,$CE,$80,$CE,$92,$CE,$93,$CE,$94,$CE,$95,$CE
-    db $96,$CE,$AB,$CE,$B9,$CE,$C7,$CE,$D8,$CE,$EC,$CE,$00,$CF,$01,$CF
+    ; Grass Valley
+    dw aGrassValleyShr, aGrassValleyHig, aChild, aTreasureRoom
+    dw aTheVillageChiefsRoom, aUndergroundCastleWest, aUndergroundCastleEast
+    dw aLeo_4, aLeo_3, aLeo_2, aTulip_0, aLeo_1, aMonster
+    dw aTrialRoom, aLisa_0
+    dw aGvZero, aGvZero+1, aGvZero+2, aGvZero+3, aGvZero+4
 
+    ; Green Wood
+    dw aGreenwoodShrine, aWoods, aMolesHole, aSquirrelsHouse, aSquirrelTheExchanger, aLostside
+    dw aWaterShrine_1, aWaterShrine_0, aWaterShrine
+    dw aFireShrine_1, aFireShrine_0, aFireShrine
+    dw aLightShrine_0, aLightShrine
+    dw aTombStoneStatue, aBird_0, aStump
+    dw aGwZero, aGwZero+1, aGwZero+2
+
+    ; St. Elles
+    dw aStEllesShrine, aSeabedSanctuary, aSeabedOfStElles_0, aSecretCave_0, aSecretCave, asc_82CB52
+    dw aSoutherta, aShoreReef, aDurean, aBlester, aGhostShip
+    dw aServasDream, aSeabedOfStElles
+    dw aSeZero, aSeZero+1, aSeZero+2, aSeZero+3, aSeZero+4, aSeZero+5, aSeZero+6
+
+    ; Mountain of Souls
+    dw aSoulsSanctuary, aSoulOfMountainHouse, aMountainNorthSlope, aAurora
+    dw aAnOldMan_0, aPassageToLune, aUndergroundLake, aMushroomsDream, aPoseidon
+    dw aTopOfSnowMountain, aIceHill, aIceField
+    dw aMsZero, aMsZero+1, aMsZero+2, aMsZero+3, aMsZero+4, aMsZero+5, aMsZero+6, aMsZero+7
+
+    ; Dr. Leo`s Lab
+    dw aLaboratoryShrine, aLeo_0, aLeo, aAnAttic, aMiceNest, aCatsDream
+    dw aBasementOfLaboratory_2, aBasementOfLaboratory_1, aPowerPlant, aTinDoll
+    dw aDream_1, aModelTown_1, aModelTown_0
+    dw aLlZero, aLlZero+1, aLlZero+2, aLlZero+3, aLlZero+4, aLlZero+5, aLlZero+6
+
+    ; Magridd Castle
+    dw aMagriddCastleShrine, aCastleOfKingMagridd, aTortureChamber
+    dw aBasement_0, aBasement, aDream_2, aLeftTower_1, aLeftTower
+    dw aPrison, aRightTower_2, aRightTower_1, aRightTower_0
+    dw aCorridorToTheDock, aDockForAnAirship, aDeckOfAnAirship, aSoldiersDream
+    dw aMcZero, aMcZero+1, aMcZero+2, aMcZero+3
+
+    ; World Of Evil
+    dw aEvilWorldShrine, aWorldOfEvil_1, aWorldOfEvil_0, aDazzlingSpace
+    dw aDeathtollsShrine, aBattleWithDeathtoll
+    dw aWoeZero, aWoeZero+1
+
+; Grass Valley
 aGrassValleyShr:
-    db $20,$20,$47,$72,$61,$73,$73,$20,$56,$61,$6C,$6C,$65,$79,$20,$53
-    db $68,$72,$69,$6E,$65,$20,$00
+    %B2Text("  Grass Valley Shrine ")
 
 aGrassValleyHig:
-    db $20,$47,$72,$61,$73,$73,$20,$56,$61,$6C,$6C,$65,$79,$20,$68,$69
-    db $67,$68,$6C,$61,$6E,$64,$73,$00
+    %B2Text(" Grass Valley highlands")
 
 aChild:
-    db $20,$43,$68,$69,$6C,$64,$60,$D7,$73,$65,$63,$72,$65,$74,$20,$70
-    db $61,$73,$73,$61,$67,$65,$00
+    db " Child`", $D7, "secret passage", $00
 
 aTreasureRoom:
-    db $14,$06,$54,$72,$65,$61,$73,$75,$72,$65,$20,$72,$6F,$6F,$6D,$00
-    db $91,$EF,$43,$68,$69,$65,$66,$60,$D7,$72,$6F,$6F,$6D,$00
+    db $14,$06, "Treasure room", $00
+
+aTheVillageChiefsRoom:
+    db $91, $EF, "Chief`", $D7, "room", $00
 
 aUndergroundCastleWest:
-    db $55,$6E,$64,$65,$72,$67,$72,$6F,$75,$6E,$64,$20,$43,$61,$73,$74
-    db $6C,$65,$2C,$20,$77,$65,$73,$74,$00
+    %B2Text("Underground Castle, west")
 
 aUndergroundCastleEast:
-    db $55,$6E,$64,$65,$72,$67,$72,$6F,$75,$6E,$64,$20,$43,$61,$73,$74
-    db $6C,$65,$2C,$20,$65,$61,$73,$74,$00
+    %B2Text("Underground Castle, east")
 
 aLeo_4:
-    db $14,$05,$4C,$65,$6F,$60,$D7,$50,$61,$69,$6E,$74,$69,$6E,$67,$73
-    db $00
+    db $14,$05, "Leo`", $D7, "Paintings", $00
 
 aLeo_3:
-    db $14,$05,$4C,$65,$6F,$60,$D7,$50,$61,$69,$6E,$74,$69,$6E,$67,$73
-    db $00
+    db $14,$05, "Leo`", $D7, "Paintings", $00
 
 aLeo_2:
-    db $14,$05,$4C,$65,$6F,$60,$D7,$50,$61,$69,$6E,$74,$69,$6E,$67,$73
-    db $00
+    db $14,$05, "Leo`", $D7, "Paintings", $00
 
 aTulip_0:
-    db $14,$06,$54,$75,$6C,$69,$70,$60,$D7,$44,$72,$65,$61,$6D,$00
+    db $14,$06, "Tulip`", $D7, "Dream", $00
 
 aLeo_1:
-    db $14,$05,$4C,$65,$6F,$60,$D7,$50,$61,$69,$6E,$74,$69,$6E,$67,$73
-    db $00
+    db $14,$05, "Leo`", $D7, "Paintings", $00
 
 aMonster:
-    db $4D,$6F,$6E,$73,$74,$65,$72,$20,$BB,$E1,$70,$61,$69,$6E,$74,$69
-    db $6E,$67,$73,$00
+    db "Monster ", $BB, $E1, "paintings", $00
 
 aTrialRoom:
-    db $14,$07,$54,$72,$69,$61,$6C,$20,$72,$6F,$6F,$6D,$00
+    db $14,$07, "Trial room", $00
 
 aLisa_0:
-    db $14,$06,$4C,$69,$73,$61,$60,$D7,$64,$72,$65,$61,$6D,$00,$00,$00
-    db $00,$00,$00
+    db $14,$06, "Lisa`", $D7, "dream", $00
 
-aGreenwoodShrin:
-    db $14,$04,$47,$72,$65,$65,$6E,$57,$6F,$6F,$64,$20,$53,$68,$72,$69
-    db $6E,$65,$00
+aGvZero:
+    db $00,$00,$00,$00,$00
+
+; GreenWood
+aGreenwoodShrine:
+    db $14,$04, "GreenWood Shrine", $00
 
 aWoods:
-    db $14,$03,$57,$6F,$6F,$64,$73,$20,$CB,$47,$72,$65,$65,$6E,$57,$6F
-    db $6F,$64,$00,$14,$06,$81,$6D,$6F,$6C,$65,$60,$D7,$68,$6F,$6C,$65
-    db $00,$14,$03,$81,$73,$71,$75,$69,$72,$72,$65,$6C,$60,$D7,$68,$6F
-    db $75,$73,$65,$00
+    db $14,$03, "Woods ", $CB, "GreenWood", $00
 
-aSquirrel_0:
-    db $20,$53,$71,$75,$69,$72,$72,$65,$6C,$2C,$20,$E1,$45,$78,$63,$68
-    db $61,$6E,$67,$65,$72,$00
+aMolesHole:
+    db $14,$06, $81, "mole`", $D7, "hole", $00
+
+aSquirrelsHouse:
+    db $14,$03, $81, "squirrel`", $D7, "house", $00
+
+aSquirrelTheExchanger:
+    db " Squirrel, ", $E1, "Exchanger", $00
 
 aLostside:
-    db $14,$03,$4C,$6F,$73,$74,$73,$69,$64,$65,$2C,$20,$97,$6D,$61,$72
-    db $73,$68,$00
+    db $14,$03, "Lostside, ", $97, "marsh", $00
 
 aWaterShrine_1:
-    db $14,$06,$57,$61,$74,$65,$72,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$06, "Water Shrine", $00
 
 aWaterShrine_0:
-    db $14,$06,$57,$61,$74,$65,$72,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$06, "Water Shrine", $00
 
 aWaterShrine:
-    db $14,$06,$57,$61,$74,$65,$72,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$06, "Water Shrine", $00
 
 aFireShrine_1:
-    db $14,$07,$46,$69,$72,$65,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$07, "Fire Shrine", $00
 
 aFireShrine_0:
-    db $14,$07,$46,$69,$72,$65,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$07, "Fire Shrine", $00
 
 aFireShrine:
-    db $14,$07,$46,$69,$72,$65,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$07, "Fire Shrine", $00
 
 aLightShrine_0:
-    db $14,$06,$4C,$69,$67,$68,$74,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$06, "Light Shrine", $00
 
 aLightShrine:
-    db $14,$06,$4C,$69,$67,$68,$74,$20,$53,$68,$72,$69,$6E,$65,$00
+    db $14,$06, "Light Shrine", $00
 
-aTombStoneStatu:
-    db $20,$54,$6F,$6D,$62,$20,$CB,$97,$73,$74,$6F,$6E,$65,$20,$73,$74
-    db $61,$74,$75,$65,$00
+aTombStoneStatue:
+    db " Tomb ", $CB, $97, "stone statue", $00
 
 aBird_0:
-    db $14,$06,$42,$69,$72,$64,$60,$D7,$44,$72,$65,$61,$6D,$00
+    db $14,$06, "Bird`", $D7, "Dream", $00
 
 aStump:
-    db $14,$05,$53,$74,$75,$6D,$70,$60,$D7,$44,$72,$65,$61,$6D,$00,$00
-    db $00,$00
+    db $14,$05, "Stump`", $D7, "Dream", $00
 
+aGwZero:
+    db $00, $00, $00
+
+; St. Elles
 aStEllesShrine:
-    db $14,$04,$53,$74,$2E,$20,$45,$6C,$6C,$65,$73,$20,$53,$68,$72,$69
-    db $6E,$65,$00,$20,$20,$91,$53,$65,$61,$62,$65,$64,$20,$53,$61,$6E
-    db $63,$74,$75,$61,$72,$79,$00,$20,$91,$53,$65,$61,$62,$65,$64,$20
-    db $CB,$53,$74,$2E,$20,$45,$6C,$6C,$65,$73,$00,$14,$04,$91,$53,$65
-    db $63,$72,$65,$74,$20,$43,$61,$76,$65,$00,$14,$04,$91,$53,$65,$63
-    db $72,$65,$74,$20,$43,$61,$76,$65,$00,$14,$03,$81,$64,$6F,$6C,$70
-    db $68,$69,$6E,$60,$D7,$64,$72,$65,$61,$6D,$00
+    db $14,$04, "St. Elles Shrine", $00
+
+aSeabedSanctuary:
+    db "  ", $91, "Seabed Sanctuary", $00
+
+aSeabedOfStElles_0:
+    db " ", $91, "Seabed ", $CB, "St. Elles", $00
+
+aSecretCave_0:
+    db $14,$04, $91, "Secret Cave", $00
+
+aSecretCave:
+    db $14,$04, $91, "Secret Cave", $00
+
+asc_82CB52:
+    db $14,$03, $81, "dolphin`", $D7, "dream", $00
 
 aSoutherta:
-    db $14,$08,$53,$6F,$75,$74,$68,$65,$72,$74,$61,$00
+    db $14,$08, "Southerta", $00
 
 aShoreReef:
-    db $20,$53,$68,$6F,$72,$65,$20,$72,$65,$65,$66,$20,$CB,$52,$6F,$63
-    db $6B,$62,$69,$72,$64,$00
+    db " Shore reef ", $CB, "Rockbird", $00
 
 aDurean:
-    db $14,$08,$44,$75,$72,$65,$61,$6E,$00
+    db $14,$08, "Durean", $00
 
 aBlester:
-    db $14,$08,$42,$6C,$65,$73,$74,$65,$72,$00,$14,$06,$81,$67,$68,$6F
-    db $73,$74,$20,$73,$68,$69,$70,$00
+    db $14,$08, "Blester", $00
+
+aGhostShip:
+    db $14,$06, $81, "ghost ship", $00
 
 aServasDream:
-    db $14,$06,$53,$65,$72,$76,$61,$73,$60,$20,$64,$72,$65,$61,$6D,$00
-    db $20,$91,$53,$65,$61,$62,$65,$64,$20,$CB,$53,$74,$2E,$20,$45,$6C
-    db $6C,$65,$73,$00,$00,$00,$00,$00,$00,$00,$00,$20,$20,$91,$53,$6F
-    db $75,$6C,$60,$D7,$53,$61,$6E,$63,$74,$75,$61,$72,$79,$00
+    db $14,$06, "Servas` dream", $00
 
-aSoul:
-    db $20,$20,$53,$6F,$75,$6C,$20,$CB,$4D,$6F,$75,$6E,$74,$61,$69,$6E
-    db $20,$48,$6F,$75,$73,$65,$00
+aSeabedOfStElles:
+    db " ", $91, "Seabed ", $CB, "St. Elles", $00
 
-aMountainNorthS:
-    db $20,$20,$4D,$6F,$75,$6E,$74,$61,$69,$6E,$2C,$20,$4E,$6F,$72,$74
-    db $68,$2D,$73,$6C,$6F,$70,$65,$00
+aSeZero:
+    db $00,$00,$00,$00,$00,$00,$00
+
+; Mountain of Souls
+aSoulsSanctuary:
+    db "  ", $91, "Soul`", $D7, "Sanctuary", $00
+
+aSoulOfMountainHouse:
+    db "  Soul ", $CB, "Mountain House", $00
+
+aMountainNorthSlope:
+    db "  Mountain, North-slope", $00
 
 aAurora:
-    db $14,$05,$41,$75,$72,$6F,$72,$61,$60,$D7,$52,$69,$64,$67,$65,$00
+    db $14,$05, "Aurora`", $D7, "Ridge", $00
 
 aAnOldMan_0:
-    db $14,$03,$41,$6E,$20,$6F,$6C,$64,$20,$6D,$61,$6E,$60,$D7,$64,$72
-    db $65,$61,$6D,$00,$14,$04,$81,$70,$61,$73,$73,$61,$67,$65,$20,$E2
-    db $4C,$75,$6E,$65,$00
+    db $14,$03, "An old man`", $D7, "dream", $00
 
-aUndergroundLak:
-    db $20,$20,$55,$6E,$64,$65,$72,$67,$72,$6F,$75,$6E,$64,$20,$6C,$61
-    db $6B,$65,$2C,$4C,$75,$6E,$65,$00,$14,$03,$81,$6D,$75,$73,$68,$72
-    db $6F,$6F,$6D,$60,$D7,$64,$72,$65,$61,$6D,$00
+aPassageToLune:
+    db $14,$04, $81, "passage ", $E2, "Lune", $00
+
+aUndergroundLake:
+    db "  Underground lake,Lune", $00
+
+aMushroomsDream:
+    db $14,$03, $81, "mushroom`", $D7, "dream", $00
 
 aPoseidon:
-    db $14,$08,$50,$6F,$73,$65,$69,$64,$6F,$6E,$00,$91,$74,$6F,$70,$20
-    db $CB,$53,$6E,$6F,$77,$20,$4D,$6F,$75,$6E,$74,$61,$69,$6E,$00
+    db $14,$08, "Poseidon", $00
 
-aAnIceHill:
-    db $14,$07,$41,$6E,$20,$69,$63,$65,$20,$68,$69,$6C,$6C,$00
+aTopOfSnowMountain:
+    db $91, "top ", $CB, "Snow Mountain", $00
+
+aIceHill:
+    db $14,$07, "An ice hill", $00
 
 aIceField:
-    db $20,$20,$49,$63,$65,$20,$66,$69,$65,$6C,$64,$20,$CB,$4C,$61,$79
-    db $6E,$6F,$6C,$65,$00,$00,$00,$00,$00,$00,$00,$00,$00,$20,$20,$91
-    db $4C,$61,$62,$6F,$72,$61,$74,$6F,$72,$79,$20,$53,$68,$72,$69,$6E
-    db $65,$00
+    db "  Ice field ", $CB, "Laynole", $00
+
+aMsZero:
+    db $00,$00,$00,$00,$00,$00,$00,$00
+
+; Leo`s Lab
+aLaboratoryShrine:
+    db "  ", $91, "Laboratory Shrine", $00
 
 aLeo_0:
-    db $14,$04,$4C,$65,$6F,$60,$D7,$4C,$61,$62,$6F,$72,$61,$74,$6F,$72
-    db $79,$00
+    db $14,$04, "Leo`", $D7, "Laboratory", $00
 
 aLeo:
-    db $14,$04,$4C,$65,$6F,$60,$D7,$4C,$61,$62,$6F,$72,$61,$74,$6F,$72
-    db $79,$00
+    db $14,$04, "Leo`", $D7, "Laboratory", $00
 
 aAnAttic:
-    db $14,$08,$41,$6E,$20,$61,$74,$74,$69,$63,$00,$14,$07,$81,$6D,$69
-    db $63,$65,$20,$6E,$65,$73,$74,$00,$14,$06,$81,$63,$61,$74,$60,$D7
-    db $64,$72,$65,$61,$6D,$00
+    db $14,$08, "An attic", $00
 
-aBasement_2:
-    db $20,$42,$61,$73,$65,$6D,$65,$6E,$74,$20,$CB,$4C,$61,$62,$6F,$72
-    db $61,$74,$6F,$72,$79,$00
+aMiceNest:
+    db $14,$07, $81, "mice nest", $00
 
-aBasement_1:
-    db $20,$42,$61,$73,$65,$6D,$65,$6E,$74,$20,$CB,$4C,$61,$62,$6F,$72
-    db $61,$74,$6F,$72,$79,$00
+aCatsDream:
+    db $14,$06, $81, "cat`", $D7, "dream", $00
+
+aBasementOfLaboratory_2:
+    db " Basement ", $CB, "Laboratory", $00
+
+aBasementOfLaboratory_1:
+    db " Basement ", $CB, "Laboratory", $00
 
 aPowerPlant:
-    db $14,$07,$70,$6F,$77,$65,$72,$20,$70,$6C,$61,$6E,$74,$00
+    db $14,$07, "power plant", $00
 
 aTinDoll:
-    db $14,$08,$54,$69,$6E,$20,$44,$6F,$6C,$6C,$00,$14,$08,$81,$64,$72
-    db $65,$61,$6D,$20,$31,$00
+    db $14,$08, "Tin Doll", $00
+
+aDream_1:
+    db $14,$08, $81, "dream 1", $00
 
 aModelTown_1:
-    db $14,$05,$4D,$6F,$64,$65,$6C,$20,$CB,$97,$74,$6F,$77,$6E,$00
+    db $14,$05, "Model ", $CB, $97, "town",$00
 
 aModelTown_0:
-    db $14,$05,$4D,$6F,$64,$65,$6C,$20,$CB,$97,$74,$6F,$77,$6E,$00,$00
-    db $00,$00,$00,$00,$00,$00,$20,$20,$8D,$43,$61,$73,$74,$6C,$65,$20
-    db $53,$68,$72,$69,$6E,$65,$00
+    db $14,$05, "Model ", $CB, $97, "town",$00
 
-aCastleMagridd:
-    db $20,$43,$61,$73,$74,$6C,$65,$20,$CB,$8A,$4D,$61,$67,$72,$69,$64
-    db $64,$00,$14,$03,$91,$74,$6F,$72,$74,$75,$72,$65,$20,$63,$68,$61
-    db $6D,$62,$65,$72,$00
+aLlZero:
+    db $00, $00, $00, $00, $00, $00, $00
+
+; Magridd Castle
+aMagriddCastleShrine:
+    db "  ", $8D, "Castle Shrine", $00
+
+aCastleOfKingMagridd:
+    db " Castle ", $CB, $8A, "Magridd", $00
+
+aTortureChamber:
+    db $14,$03, $91, "torture chamber", $00
 
 aBasement_0:
-    db $20,$42,$61,$73,$65,$6D,$65,$6E,$74,$20,$CB,$E1,$63,$61,$73,$74
-    db $6C,$65,$00
+    db " Basement ", $CB, $E1, "castle", $00
 
 aBasement:
-    db $20,$42,$61,$73,$65,$6D,$65,$6E,$74,$20,$CB,$E1,$63,$61,$73,$74
-    db $6C,$65,$00,$14,$08,$81,$64,$72,$65,$61,$6D,$20,$31,$00,$14,$05
-    db $91,$6C,$65,$66,$74,$20,$74,$6F,$77,$65,$72,$00,$14,$05,$91,$6C
-    db $65,$66,$74,$20,$74,$6F,$77,$65,$72,$00,$14,$08,$81,$70,$72,$69
-    db $73,$6F,$6E,$00,$14,$05,$91,$72,$69,$67,$68,$74,$20,$74,$6F,$77
-    db $65,$72,$00,$14,$05,$91,$72,$69,$67,$68,$74,$20,$74,$6F,$77,$65
-    db $72,$00,$14,$05,$91,$72,$69,$67,$68,$74,$20,$74,$6F,$77,$65,$72
-    db $00,$20,$81,$63,$6F,$72,$72,$69,$64,$6F,$72,$20,$E2,$E1,$64,$6F
-    db $63,$6B,$00,$20,$91,$64,$6F,$63,$6B,$20,$AE,$9C,$61,$69,$72,$73
-    db $68,$69,$70,$00,$20,$91,$64,$65,$63,$6B,$20,$CB,$9C,$61,$69,$72
-    db $73,$68,$69,$70,$00,$14,$04,$81,$73,$6F,$6C,$64,$69,$65,$72,$60
-    db $D7,$64,$72,$65,$61,$6D,$00,$00,$00,$00,$00,$20,$20,$91,$45,$76
-    db $69,$6C,$20,$57,$6F,$72,$6C,$64,$20,$53,$68,$72,$69,$6E,$65,$00
+    db " Basement ", $CB, $E1, "castle", $00
 
-aWorld_0:
-    db $14,$06,$57,$6F,$72,$6C,$64,$20,$CB,$45,$76,$69,$6C,$00
+aDream_2:
+    db $14,$08, $81, "dream 1", $00
 
-aWorld:
-    db $14,$06,$57,$6F,$72,$6C,$64,$20,$CB,$45,$76,$69,$6C,$00
+aLeftTower_1:
+    db $14,$05, $91, "left tower", $00
+
+aLeftTower:
+    db $14,$05, $91, "left tower", $00
+
+aPrison:
+    db $14,$08, $81, "prison", $00
+
+aRightTower_2:
+    db $14,$05, $91, "right tower", $00
+
+aRightTower_1:
+    db $14,$05, $91, "right tower", $00
+
+aRightTower_0:
+    db $14,$05, $91, "right tower", $00
+
+aCorridorToTheDock:
+    db " ", $81, "corridor ", $E2, $E1, "dock", $00
+
+aDockForAnAirship:
+    db " ", $91, "dock ", $AE, $9C, "airship", $00
+
+aDeckOfAnAirship:
+    db " ", $91, "deck ", $CB, $9C, "airship", $00
+
+aSoldiersDream:
+    db $14,$04, $81, "soldier`", $D7, "dream", $00
+
+aMcZero:
+    db $00,$00,$00,$00
+
+
+; World Of Evil
+aEvilWorldShrine:
+    db "  ", $91, "Evil World Shrine", $00
+
+aWorldOfEvil_1:
+    db $14,$06, "World ", $CB, "Evil", $00
+
+aWorldOfEvil_0:
+    db $14,$06, "World ", $CB, "Evil", $00
 
 aDazzlingSpace:
-    db $14,$05,$44,$61,$7A,$7A,$6C,$69,$6E,$67,$20,$53,$70,$61,$63,$65
-    db $00
+    db $14,$05, "Dazzling Space", $00
 
-aDeathtoll:
-    db $14,$03,$44,$65,$61,$74,$68,$74,$6F,$6C,$6C,$60,$D7,$53,$68,$72
-    db $69,$6E,$65,$00
+aDeathtollsShrine:
+    db $14,$03, "Deathtoll`", $D7, "Shrine", $00
 
-aBattle:
-    db $20,$20,$42,$61,$74,$74,$6C,$65,$20,$F2,$44,$65,$61,$74,$68,$74
-    db $6F,$6C,$6C,$00,$00,$00
+aBattleWithDeathtoll:
+    db "  Battle ", $F2, "Deathtoll", $00
+
+aWoeZero:
+    db $00,$00
 
 choiceYesNo:
     db $01,$88,$02,$07,$04,$04,$20,$59,$65,$73,$0D,$0D,$20,$4E,$6F,$01
