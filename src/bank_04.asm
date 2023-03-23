@@ -738,8 +738,7 @@ CODE_048C65:
     COP #$82
     COP #$91
     RTL
-    COP #$19
-    db $1C,$DA,$8F
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_048FDA)
     COP #$01
     db $E9,$8F
     COP #$3C
@@ -747,7 +746,11 @@ CODE_048C65:
     COP #$10
     db $0B,$06,$01,$00,$02,$F0,$02
     RTL
-    db $02,$01,$DF,$8F,$6B,$10,$5A,$7A,$7A,$7A,$7A,$20,$13,$1E,$A5,$10
+CODE_048FDA:
+    %CopShowText($8FDF)
+    RTL
+
+    db $10,$5A,$7A,$7A,$7A,$7A,$20,$13,$1E,$A5,$10
     db $02,$02,$20,$70,$6C,$61,$63,$65,$64,$20,$0D,$E1,$85,$52,$6F,$64
     db $20,$CD,$E1,$0D,$6D,$75,$73,$68,$72,$6F,$6F,$6D,$2E,$20,$13,$1E
     db $A5
@@ -1216,8 +1219,7 @@ CODE_049723:
     RTL
     COP #$07
     db $07,$87,$F5,$98
-    COP #$19
-    db $1C,$F0,$98
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_0498F0)
     COP #$01
     db $03,$99
     COP #$3C
@@ -1225,6 +1227,8 @@ CODE_049723:
     COP #$10
     db $0B,$03,$01,$A0,$00,$E0,$00
     RTL
+
+CODE_0498F0:
     COP #$01
     db $FA,$98
     RTL
@@ -1619,10 +1623,12 @@ CODE_049FA7:
     COP #$91
     COP #$05
     db $00,$00
-    COP #$19
-    db $22,$1C,$A0
+    %CopCheckIfItemIsEquipped(!itemMushroomShoes, CODE_04A01C)
+
     COP #$27
     db $07,$A0
+
+CODE_04A01C:
     LDY.W $039C
     LDA.W $001E,Y
     AND.W #$003F
@@ -1653,8 +1659,10 @@ CODE_04A072:
     COP #$91
     COP #$07
     db $00,$00,$B4,$A0
-    COP #$19
-    db $22,$9B,$A0,$82,$19,$00
+    %CopCheckIfItemIsEquipped(!itemMushroomShoes, CODE_04A09B)
+    BRL CODE_04A0B4
+
+CODE_04A09B:
     LDA.W $002C,X
     PHX
     LDX.W $039C
@@ -1668,7 +1676,9 @@ CODE_04A072:
 
 CODE_04A0B0:
     BRL CODE_04A152
+CODE_04A0B3:
     PLX
+CODE_04A0B4:
     COP #$27
     db $07,$A0
 
@@ -2033,8 +2043,7 @@ CODE_04A625:
     COP #$0D
     db $00,$0B,$0D,$2F,$A6
     RTL
-    COP #$19
-    db $27,$45,$A6
+    %CopCheckIfItemIsEquipped(!itemDoorKey, CODE_04A645)
     COP #$01
     db $AC,$A6
     COP #$09
@@ -2043,6 +2052,8 @@ CODE_04A625:
     db $00,$00
     COP #$16
     BRL CODE_04A65C
+
+CODE_04A645:
     COP #$01
     db $7D,$A6
     COP #$91
@@ -2135,10 +2146,11 @@ CODE_04A65C:
     COP #$15
 
 CODE_04A7AC:
-    COP #$19
-    db $26,$B7,$A7
+    %CopCheckIfItemIsEquipped(!itemCatLeaves, CODE_04A7B7)
     COP #$0C
     db $00,$02,$BE,$A7
+
+CODE_04A7B7:
     COP #$80
     db $13
     COP #$82
@@ -2208,10 +2220,11 @@ CODE_04A81C:
     db $06,$86,$10,$A9
 
 CODE_04A89C:
-    COP #$19
-    db $26,$A7,$A8
+    %CopCheckIfItemIsEquipped(!itemCatLeaves, CODE_04A8A7)
     COP #$0C
     db $00,$02,$AE,$A8
+
+CODE_04A8A7:
     COP #$80
     db $14
     COP #$82
@@ -2666,8 +2679,7 @@ CODE_04AE37:
     RTL
     COP #$07
     db $02,$88,$EE,$AF
-    COP #$19
-    db $1C,$E9,$AF
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_04AFE9)
     COP #$01
     db $49,$B0
     COP #$3C
@@ -2675,6 +2687,8 @@ CODE_04AE37:
     COP #$10
     db $0D,$05,$01,$C0,$00,$10,$00
     RTL
+
+CODE_04AFE9:
     COP #$01
     db $3F,$B0
     RTL
@@ -3381,8 +3395,10 @@ CODE_04BE22:
     db $0A,$3C
     COP #$83
     db $02,$86,$6B
-    COP #$19
-    db $0A,$1D,$BF,$6B
+    %CopCheckIfItemIsEquipped(!itemIceArmor, CODE_04BF1D)
+    RTL
+
+CODE_04BF1D:
     LDA.W #$00F3
     JSL.L CODE_04F462
     BCS CODE_04BF2F
@@ -3555,8 +3571,7 @@ CODE_04BFCE:
     RTL
     COP #$07
     db $04,$88,$DD,$C2
-    COP #$19
-    db $1C,$D8,$C2
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_04C2D8)
     COP #$01
     db $EB,$C2
     COP #$3C
@@ -3564,10 +3579,15 @@ CODE_04BFCE:
     COP #$10
     db $13,$03,$01,$50,$01,$A0,$01
     RTL
+
+CODE_04C2D8:
     COP #$01
     db $E2,$C2
     RTL
-    db $02,$01,$E7,$C3,$6B,$10,$5A,$7A,$7A,$7A,$20,$13,$DF,$F0,$10,$02
+
+    COP #$01
+    db $E7,$C3
+    db $6B,$10,$5A,$7A,$7A,$7A,$20,$13,$DF,$F0,$10,$02
     db $02,$20,$70,$6C,$61,$63,$65,$64,$20,$E1,$0D,$85,$52,$6F,$64,$20
     db $75,$70,$6F,$6E,$20,$E1,$0D,$73,$6F,$6C,$64,$69,$65,$72,$60,$D7
     db $68,$65,$61,$64,$2E,$20,$13,$DF,$F0,$10,$4F,$6F,$70,$73,$21,$20
@@ -3748,14 +3768,14 @@ CODE_04C5C4:
     BRA CODE_04C5C4
     COP #$07
     db $03,$87,$FF,$C5
-    COP #$19
-    db $1A,$10,$C6
+
+    %CopCheckIfItemIsEquipped(!itemHarpString, CODE_04C610)
     COP #$01
     db $0A,$C8
     COP #$1A
     db $02,$CF,$02,$FA,$C5
     LDA.L $0003D0
-    BNE UNREACH_04C5FA
+    BNE CODE_04C5FA
     COP #$09
     db $03,$87
     COP #$01
@@ -3767,7 +3787,7 @@ CODE_04C5C4:
     COP #$27
     db $B3,$C5
 
-UNREACH_04C5FA:
+CODE_04C5FA:
     db $02,$01,$71,$C8,$6B
     COP #$01
     db $76,$C6
@@ -3775,9 +3795,12 @@ UNREACH_04C5FA:
     db $0B,$C6
     COP #$27
     db $B3,$C5,$02,$01,$9E,$C7,$6B
+
+CODE_04C610:
     COP #$01
     db $DE,$C7
     RTL
+
     COP #$01
     db $1C,$C6
     COP #$86
@@ -3959,13 +3982,14 @@ CODE_04C9C8:
     RTL
     COP #$86
     RTL
-    COP #$19
-    db $28,$3A,$CB
+    %CopCheckIfItemIsEquipped(!itemPlatinumCard, CODE_04CB3A)
     COP #$01
     db $98,$CB
     COP #$09
     db $07,$86
     RTL
+
+CODE_04CB3A:
     COP #$01
     db $44,$CB
     RTL
@@ -4209,17 +4233,23 @@ UNREACH_04CE97:
     RTL
     COP #$86
     RTL
-    COP #$19
-    db $29,$C6,$D0
+    %CopCheckIfItemIsEquipped(!itemVipCard, CODE_04D0C6)
     COP #$01
     db $33,$D1
     COP #$09
     db $00,$87
     RTL
-    db $02,$01,$D0,$D0,$6B
+
+CODE_04D0C6:
+    COP #$01
+    db $D0,$D0
+    RTL
+
+CODE_04D0CB:
     COP #$01
     db $2F,$D1
     RTL
+
     db $10,$92,$74,$6F,$77,$65,$72,$20,$BA,$0D,$63,$6F,$6E,$6E,$65,$63
     db $74,$65,$64,$20,$E2,$E1,$0D,$61,$69,$72,$73,$68,$69,$70,$60,$D7
     db $64,$6F,$63,$6B,$20,$61,$74,$20,$E1,$0D,$74,$6F,$70,$20,$66,$6C
@@ -5491,9 +5521,10 @@ CODE_04EE98:
     COP #$01
     db $B8,$EE
     BRL CODE_04EE79
-    COP #$19
-    db $0F,$36,$EF
+    %CopCheckIfItemIsEquipped(!itemElementalArmor, CODE_04EF36)
     RTL
+
+CODE_04EF36:
     LDA.W #$0088
     JSL.L CODE_04F462
     BCS CODE_04EF40
@@ -5514,10 +5545,11 @@ CODE_04EF40:
     RTL
     COP #$07
     db $00,$89,$69,$EF
-    COP #$19
-    db $23,$69,$EF
+    %CopCheckIfItemIsEquipped(!itemAirshipKey, CODE_04EF69)
     COP #$0D
     db $00,$17,$0F,$6A,$EF
+
+CODE_04EF69:
     RTL
     LDA.W #$2F80
     TSB.W wButtonMask

@@ -17,8 +17,7 @@ CODE_1F8021:
     BRL CODE_1F8021
     COP #$07
     db $04,$87,$4A,$80
-    COP #$19
-    db $1C,$45,$80
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_1F8045)
     COP #$01
     db $59,$80
     COP #$3C
@@ -26,6 +25,8 @@ CODE_1F8021:
     COP #$10
     db $09,$02,$01,$78,$00,$10,$04
     RTL
+
+CODE_1F8045:
     COP #$01
     db $4F,$80
     RTL
@@ -1433,8 +1434,7 @@ CODE_1F9B0F:
     BRL CODE_1F9B0F
     COP #$07
     db $06,$85,$38,$9B
-    COP #$19
-    db $1C,$33,$9B
+    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_1F9B33)
     COP #$01
     db $47,$9B
     COP #$3C
@@ -1442,6 +1442,8 @@ CODE_1F9B0F:
     COP #$10
     db $07,$04,$00,$50,$00,$00,$02
     RTL
+
+CODE_1F9B33:
     COP #$01
     db $3D,$9B
     RTL
@@ -1805,8 +1807,7 @@ CODE_1FA12D:
     COP #$10
     db $07,$03,$02,$40,$00,$80,$00
     RTL
-    COP #$19
-    db $20,$6E,$A1
+    %CopCheckIfItemIsEquipped(!itemBigPearl, CODE_1FA16E)
     COP #$01
     db $E9,$A1
     COP #$0B
@@ -1816,6 +1817,8 @@ CODE_1FA12D:
     COP #$09
     db $06,$85
     RTL
+
+CODE_1FA16E:
     COP #$01
     db $84,$A1
     COP #$3C
@@ -2053,9 +2056,9 @@ CODE_1FA5CF:
     COP #$91
     COP #$0D
     db $00,$1F,$21,$0D,$A6
+CODE_1FA60C:
     RTL
-    COP #$19
-    db $21,$0C,$A6
+    %CopCheckIfItemIsEquipped(!itemMermaidsTears, CODE_1FA60C)
     COP #$09
     db $03,$85
     COP #$0B
@@ -2073,13 +2076,11 @@ CODE_1FA5CF:
     COP #$91
     COP #$07
     db $03,$89,$A6,$A6
-    COP #$19
-    db $0B,$97,$A6
+    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA697)
     COP #$B0
     db $A9,$A6,$1F,$10,$03
     COP #$91
-    COP #$19
-    db $0B,$8A,$A6
+    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA68A)
     LDY.W $003E,X
     LDA.W player_pos_x_real
     STA.W $0000,Y
@@ -2096,11 +2097,15 @@ CODE_1FA682:
     COP #$AF
     db $CB,$A6,$1F,$40,$20
     RTL
+
+CODE_1FA68A:
     LDY.W $003E,X
     LDA.W #$0000
     STA.W $0014,Y
     COP #$27
     db $4B,$A6
+
+CODE_1FA697:
     LDA.W $0312
     AND.W #$003F
     BNE CODE_1FA6A2
@@ -2123,10 +2128,11 @@ CODE_1FA6A2:
     COP #$91
 
 CODE_1FA6BF:
-    COP #$19
-    db $0B,$C8,$A6
+    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA6C8)
     COP #$82
     BRA CODE_1FA6BF
+
+CODE_1FA6C8:
     COP #$86
     RTL
     COP #$A3
@@ -4738,8 +4744,7 @@ CODE_1FBF2D:
     db $25,$BF,$20,$00
 
 CODE_1FBF33:
-    COP #$19
-    db $24,$2D,$BF
+    %CopCheckIfItemIsEquipped(!itemThunderRing, CODE_1FBF2D)
     COP #$0C
     db $00,$02,$40,$BF
     BRA CODE_1FBF2D

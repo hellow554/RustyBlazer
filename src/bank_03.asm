@@ -710,8 +710,7 @@ CODE_038A83:
     RTL
     COP #$07
     db $04,$81,$9D,$8B
-    COP #$19
-    db $1C,$98,$8B
+    %CopCheckIfItemIsEquipped(!itemDreamRod, $8B98)
     COP #$01
     db $02,$8C
     COP #$3C
@@ -1067,8 +1066,7 @@ CODE_039498:
     db $06,$00
     RTL
 
-    COP #$19
-    db $1D,$E1,$94
+    %CopCheckIfItemIsEquipped(!itemLeosBrush, $94E1)
     COP #$01
     db $4B,$95
     COP #$10
@@ -1245,8 +1243,7 @@ aWas:
 CODE_039843:
     COP #$27
     db $F6,$97
-    COP #$19
-    db $1C,$5D,$98
+    %CopCheckIfItemIsEquipped(!itemDreamRod, $985D)
     COP #$01
     db $80,$98
     COP #$3C
@@ -1334,8 +1331,7 @@ CODE_0398F7:
     db $04,$89
     RTL
 
-    COP #$19
-    db $1B,$2B,$99
+    %CopCheckIfItemIsEquipped(!itemAPass, $992B)
     COP #$09
     db $00,$82
     COP #$01
@@ -3820,8 +3816,7 @@ CODE_03C649:
     TRB.W wButtonMask
     COP #$91
     RTL
-    COP #$19
-    db $1C,$59,$CA
+    %CopCheckIfItemIsEquipped(!itemDreamRod, $CA59)
     COP #$01
     db $B9,$CA
     COP #$3C
@@ -4584,8 +4579,7 @@ CODE_03D6F4:
     COP #$16
     COP #$86
     RTL
-    COP #$19
-    db $1F,$1C,$D9
+    %CopCheckIfItemIsEquipped(!itemMolesRibbon, $D91C)
     COP #$01
     db $4B,$D9
     COP #$0B
@@ -4880,8 +4874,7 @@ CODE_03DDDC:
     db $02,$24,$E0,$02,$01,$1B,$E1,$6B
     COP #$18
     db $25,$3B,$E0
-    COP #$19
-    db $25,$40,$E0
+    %CopCheckIfItemIsEquipped(!itemDeliciousSeeds, $E040)
     COP #$01
     db $DD,$E0
     COP #$0B
@@ -5467,8 +5460,10 @@ CODE_03E98D:
     BRA CODE_03E98D
     COP #$03
     db $F0
-    COP #$19
-    db $0A,$B0,$E9,$80,$0C
+    %CopCheckIfItemIsEquipped(!itemIceArmor, CODE_03E9B0)
+    BRA CODE_03E9BC
+
+CODE_03E9B0:
     LDA.W #$0080
     JSL.L CODE_04F462
     BCC CODE_03E9BC
@@ -5819,10 +5814,15 @@ CODE_03EECA:
     db $60
     COP #$07
     db $01,$8A,$EA,$EE
-    COP #$19
-    db $10,$DF,$EE
+    %CopCheckIfItemIsEquipped(!itemSoulArmor, $EEDF)
     BRA CODE_03EEEA
-    db $AD,$12,$03,$29,$07,$00,$D0,$03,$02,$39,$01
+
+CODE_03EEDF:
+    LDA.W $0312
+    AND.W #07
+    BNE CODE_03EEEA
+    COP #$39
+    db $01
 
 CODE_03EEEA:
     COP #$04

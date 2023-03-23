@@ -1,31 +1,8 @@
 
 ORG $008000
 
-
-Start:
-    SEI
-    CLD
-    CLC
-    XCE
-    REP #$30
-    LDA.W #$0000
-    TCD
-    LDA.W #$1FFF
-    TCS
-
-CODE_00800E:
-    SEP #$20
-    LDA.B #$01
-    PHA
-    PLB
-    JSL.L init_system
-    JSL.L init_window_system
-    JSL.L CODE_04F912
-    JSL.L clearL3
-    LDX.W #$000C
-    STX.W zwSceneId
-    JSL.L enable_interrupts
-    JSL.L CODE_04F781
+incsrc "bank00/start.asm"
+incsrc "bank00/main_loop.asm"
 
 main_loop:
     JSL.L wait_vblank
@@ -6172,24 +6149,29 @@ checkPlayerDead:
     LDX.W $039C
     LDA.W $0016,X
     BIT.W #$0400
-    BNE CODE_00B05D
+    BNE .end
     LDA.W playerCurrentHealth
     ORA.W bPlayerHealthRestore
-    BNE CODE_00B05D
-    COP #$19
-    db $38,$2B,$B0
+    BNE .end
+    %CopCheckIfItemIsEquipped(!itemMedicalHerb, .noHerbEquipped)
     LDA.W playerMaxHealth
     STA.W bPlayerHealthRestore
-    COP #$0B
-    db $38
-    BRA CODE_00B05D
+    %CopRemoveItem(!itemMedicalHerb)
+    BRA .end
+.noHerbEquipped:
+    %CopCheckIfItemIsEquipped(!itemStrangeBottle, .noBottleEquipped)
+    %CopRemoveItem(!itemStrangeBottle)
+    BRA .playerDead
 
-    COP #$19
-    db $39,$35,$B0,$02,$0B,$39,$80,$0D
-    COP #$19
-    db $40,$3C,$B0,$80,$06
-    STZ.W playerGold
-    STZ.W $1B68
+.noBottleEquipped:
+
+    %CopCheckIfItemIsEquipped(!itemMagicBell, .removeAllGold)
+    BRA .playerDead
+
+.removeAllGold
+   STZ.W playerGold : STZ.W playerGold+2
+
+.playerDead
     LDA.W $0016,X
     AND.W #$F7FF
     STA.W $0016,X
@@ -6200,7 +6182,7 @@ checkPlayerDead:
     STA.W wButtonMask
     INC.W wPlayerDied
 
-CODE_00B05D:
+.end:
     PLP
     RTL
 
