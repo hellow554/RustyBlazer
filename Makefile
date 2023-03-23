@@ -12,8 +12,9 @@ sb.sfc: $(shell find src -type f)
 	@tools/asar src/main.asm $@
 
 verify: sb.sfc
-	@echo "8438da09de8ce9aded3bb08644543f7b60fb60cffc68ce2d67d6a0643f2ecfc2 sb.sfc" | sha256sum --check --status
-	@echo "Verify succesfull"
+	@echo "8438da09de8ce9aded3bb08644543f7b60fb60cffc68ce2d67d6a0643f2ecfc2 sb.sfc" | sha256sum --check --status \
+		&& echo -e "\e[32mVerify succesfull\e[0m" \
+		|| (echo -e "\e[31mVerify error\e[0m" && exit 1)
 
 clean:
 	@echo "Removing sb.sfc"
