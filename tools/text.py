@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
+import argparse
 import random
-import sys
 from typing import Callable, Iterator, List, Tuple
 
 
@@ -43,16 +43,17 @@ class IdaAddr(Addr):
 
 
 class ROM:
+    ROM_IMAGE_PATH = "/mnt/d/kk/exp/Soul Blazer (USA).sfc"
     content = []
 
     @classmethod
-    def load(cls, file):
-        with open(file, "rb") as f:
+    def load(cls):
+        with open(cls.ROM_IMAGE_PATH, "rb") as f:
             cls.content = f.read()
 
     def __class_getitem__(cls, idx) -> bytes:
         if len(cls.content) == 0:
-            ROM.load(sys.argv[1] if len(sys.argv) >= 2 else "/mnt/d/kk/exp/Soul Blazer (USA).sfc")
+            ROM.load()
 
         if isinstance(idx, Addr):
             idx = idx.addr
@@ -289,9 +290,9 @@ class SbString:
 
     def print(self):
         if self._addr.ida_bank == 0x82:
-            print("".join(self.interpret2()))
+            print("`{}`".format("".join(self.interpret2())))
         else:
-            print("".join(self.interpretX()))
+            print("`{}`".format("".join(self.interpretX())))
 
     def interpretX(self) -> Iterator[str]:
         match ROM[self._addr.addr]:
@@ -310,7 +311,15 @@ class SbString:
 
 
 if __name__ == "__main__":
-    print(SbChar(0x1A))
-    for addr in [".84.e48e"]:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--rom-image", required=False)
+    parser.add_argument("addresses", metavar="A", type=str, nargs="+")
+
+    args = parser.parse_args()
+
+    if args.rom_image is not None:
+        ROM.ROM_IMAGE_PATH = args.rom_image
+
+    for addr in args.addresses:
         SbString(IdaAddr(addr)).print()
         print()
