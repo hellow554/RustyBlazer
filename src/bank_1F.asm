@@ -17,7 +17,7 @@ CODE_1F8021:
     BRL CODE_1F8021
     COP #$07
     db $04,$87,$4A,$80
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_1F8045)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_1F8045)
     COP #$01
     db $59,$80
     COP #$3C
@@ -1434,7 +1434,7 @@ CODE_1F9B0F:
     BRL CODE_1F9B0F
     COP #$07
     db $06,$85,$38,$9B
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_1F9B33)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_1F9B33)
     COP #$01
     db $47,$9B
     COP #$3C
@@ -1807,7 +1807,7 @@ CODE_1FA12D:
     COP #$10
     db $07,$03,$02,$40,$00,$80,$00
     RTL
-    %CopCheckIfItemIsEquipped(!itemBigPearl, CODE_1FA16E)
+    %CopJumpIfItemIsNotEquipped(!itemBigPearl, CODE_1FA16E)
     COP #$01
     db $E9,$A1
     COP #$0B
@@ -2058,7 +2058,7 @@ CODE_1FA5CF:
     db $00,$1F,$21,$0D,$A6
 CODE_1FA60C:
     RTL
-    %CopCheckIfItemIsEquipped(!itemMermaidsTears, CODE_1FA60C)
+    %CopJumpIfItemIsNotEquipped(!itemMermaidsTears, CODE_1FA60C)
     COP #$09
     db $03,$85
     COP #$0B
@@ -2076,11 +2076,11 @@ CODE_1FA60C:
     COP #$91
     COP #$07
     db $03,$89,$A6,$A6
-    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA697)
+    %CopJumpIfItemIsNotEquipped(!itemBubbleArmor, CODE_1FA697)
     COP #$B0
     db $A9,$A6,$1F,$10,$03
     COP #$91
-    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA68A)
+    %CopJumpIfItemIsNotEquipped(!itemBubbleArmor, CODE_1FA68A)
     LDY.W $003E,X
     LDA.W player_pos_x_real
     STA.W $0000,Y
@@ -2128,7 +2128,7 @@ CODE_1FA6A2:
     COP #$91
 
 CODE_1FA6BF:
-    %CopCheckIfItemIsEquipped(!itemBubbleArmor, CODE_1FA6C8)
+    %CopJumpIfItemIsNotEquipped(!itemBubbleArmor, CODE_1FA6C8)
     COP #$82
     BRA CODE_1FA6BF
 
@@ -4744,7 +4744,7 @@ CODE_1FBF2D:
     db $25,$BF,$20,$00
 
 CODE_1FBF33:
-    %CopCheckIfItemIsEquipped(!itemThunderRing, CODE_1FBF2D)
+    %CopJumpIfItemIsNotEquipped(!itemThunderRing, CODE_1FBF2D)
     COP #$0C
     db $00,$02,$40,$BF
     BRA CODE_1FBF2D

@@ -738,7 +738,7 @@ CODE_048C65:
     COP #$82
     COP #$91
     RTL
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_048FDA)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_048FDA)
     COP #$01
     db $E9,$8F
     COP #$3C
@@ -1219,7 +1219,7 @@ CODE_049723:
     RTL
     COP #$07
     db $07,$87,$F5,$98
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_0498F0)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_0498F0)
     COP #$01
     db $03,$99
     COP #$3C
@@ -1623,7 +1623,7 @@ CODE_049FA7:
     COP #$91
     COP #$05
     db $00,$00
-    %CopCheckIfItemIsEquipped(!itemMushroomShoes, CODE_04A01C)
+    %CopJumpIfItemIsNotEquipped(!itemMushroomShoes, CODE_04A01C)
 
     COP #$27
     db $07,$A0
@@ -1659,7 +1659,7 @@ CODE_04A072:
     COP #$91
     COP #$07
     db $00,$00,$B4,$A0
-    %CopCheckIfItemIsEquipped(!itemMushroomShoes, CODE_04A09B)
+    %CopJumpIfItemIsNotEquipped(!itemMushroomShoes, CODE_04A09B)
     BRL CODE_04A0B4
 
 CODE_04A09B:
@@ -2043,7 +2043,7 @@ CODE_04A625:
     COP #$0D
     db $00,$0B,$0D,$2F,$A6
     RTL
-    %CopCheckIfItemIsEquipped(!itemDoorKey, CODE_04A645)
+    %CopJumpIfItemIsNotEquipped(!itemDoorKey, CODE_04A645)
     COP #$01
     db $AC,$A6
     COP #$09
@@ -2146,7 +2146,7 @@ CODE_04A65C:
     COP #$15
 
 CODE_04A7AC:
-    %CopCheckIfItemIsEquipped(!itemCatLeaves, CODE_04A7B7)
+    %CopJumpIfItemIsNotEquipped(!itemCatLeaves, CODE_04A7B7)
     COP #$0C
     db $00,$02,$BE,$A7
 
@@ -2220,7 +2220,7 @@ CODE_04A81C:
     db $06,$86,$10,$A9
 
 CODE_04A89C:
-    %CopCheckIfItemIsEquipped(!itemCatLeaves, CODE_04A8A7)
+    %CopJumpIfItemIsNotEquipped(!itemCatLeaves, CODE_04A8A7)
     COP #$0C
     db $00,$02,$AE,$A8
 
@@ -2679,7 +2679,7 @@ CODE_04AE37:
     RTL
     COP #$07
     db $02,$88,$EE,$AF
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_04AFE9)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_04AFE9)
     COP #$01
     db $49,$B0
     COP #$3C
@@ -3395,7 +3395,7 @@ CODE_04BE22:
     db $0A,$3C
     COP #$83
     db $02,$86,$6B
-    %CopCheckIfItemIsEquipped(!itemIceArmor, CODE_04BF1D)
+    %CopJumpIfItemIsNotEquipped(!itemIceArmor, CODE_04BF1D)
     RTL
 
 CODE_04BF1D:
@@ -3571,7 +3571,7 @@ CODE_04BFCE:
     RTL
     COP #$07
     db $04,$88,$DD,$C2
-    %CopCheckIfItemIsEquipped(!itemDreamRod, CODE_04C2D8)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_04C2D8)
     COP #$01
     db $EB,$C2
     COP #$3C
@@ -3769,7 +3769,7 @@ CODE_04C5C4:
     COP #$07
     db $03,$87,$FF,$C5
 
-    %CopCheckIfItemIsEquipped(!itemHarpString, CODE_04C610)
+    %CopJumpIfItemIsNotEquipped(!itemHarpString, CODE_04C610)
     COP #$01
     db $0A,$C8
     COP #$1A
@@ -3982,7 +3982,7 @@ CODE_04C9C8:
     RTL
     COP #$86
     RTL
-    %CopCheckIfItemIsEquipped(!itemPlatinumCard, CODE_04CB3A)
+    %CopJumpIfItemIsNotEquipped(!itemPlatinumCard, CODE_04CB3A)
     COP #$01
     db $98,$CB
     COP #$09
@@ -4233,7 +4233,7 @@ UNREACH_04CE97:
     RTL
     COP #$86
     RTL
-    %CopCheckIfItemIsEquipped(!itemVipCard, CODE_04D0C6)
+    %CopJumpIfItemIsNotEquipped(!itemVipCard, CODE_04D0C6)
     COP #$01
     db $33,$D1
     COP #$09
@@ -5521,7 +5521,7 @@ CODE_04EE98:
     COP #$01
     db $B8,$EE
     BRL CODE_04EE79
-    %CopCheckIfItemIsEquipped(!itemElementalArmor, CODE_04EF36)
+    %CopJumpIfItemIsNotEquipped(!itemElementalArmor, CODE_04EF36)
     RTL
 
 CODE_04EF36:
@@ -5545,7 +5545,7 @@ CODE_04EF40:
     RTL
     COP #$07
     db $00,$89,$69,$EF
-    %CopCheckIfItemIsEquipped(!itemAirshipKey, CODE_04EF69)
+    %CopJumpIfItemIsNotEquipped(!itemAirshipKey, CODE_04EF69)
     COP #$0D
     db $00,$17,$0F,$6A,$EF
 

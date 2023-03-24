@@ -20,18 +20,18 @@ dw $AAAA,$5555 ; ROM Verification:  will be override by asar
 
 dw $0000 ; unused
 dw $0080
-    dw Native_mode_COP
-    dw Native_mode_BRK
-    dw $0000
-    dw Native_mode_NMI
-    dw $0000
-    dw Native_mode_IRQ
-    dw $0000
-    dw $0000
-    dw $0000
-    dw CODE_008900
-    dw $0000
-    dw $0015
-    dw Start
-    dw $D011
+dw Native_mode_COP
+dw Native_mode_BRK
+dw $0000
+dw Native_mode_NMI
+dw $0000
+dw Native_mode_IRQ
+dw $0000
+dw $0000
+dw $0000
+dw CODE_008900
+dw $0000
+dw $0015
+dw Start
+dw $D011
 

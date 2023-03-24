@@ -5247,6 +5247,7 @@ CODE_00A96A:
     STZ.W $0006,X
     RTL
 
+CODE_00A99D:
     LDA.W $032E
     BEQ CODE_00A9E5
     COP #$A8
@@ -6153,19 +6154,19 @@ checkPlayerDead:
     LDA.W playerCurrentHealth
     ORA.W bPlayerHealthRestore
     BNE .end
-    %CopCheckIfItemIsEquipped(!itemMedicalHerb, .noHerbEquipped)
+    %CopJumpIfItemIsNotEquipped(!itemMedicalHerb, .noHerbEquipped)
     LDA.W playerMaxHealth
     STA.W bPlayerHealthRestore
     %CopRemoveItem(!itemMedicalHerb)
     BRA .end
 .noHerbEquipped:
-    %CopCheckIfItemIsEquipped(!itemStrangeBottle, .noBottleEquipped)
+    %CopJumpIfItemIsNotEquipped(!itemStrangeBottle, .noBottleEquipped)
     %CopRemoveItem(!itemStrangeBottle)
     BRA .playerDead
 
 .noBottleEquipped:
 
-    %CopCheckIfItemIsEquipped(!itemMagicBell, .removeAllGold)
+    %CopJumpIfItemIsNotEquipped(!itemMagicBell, .removeAllGold)
     BRA .playerDead
 
 .removeAllGold

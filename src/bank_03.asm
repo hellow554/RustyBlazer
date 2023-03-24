@@ -710,7 +710,7 @@ CODE_038A83:
     RTL
     COP #$07
     db $04,$81,$9D,$8B
-    %CopCheckIfItemIsEquipped(!itemDreamRod, $8B98)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, $8B98)
     COP #$01
     db $02,$8C
     COP #$3C
@@ -1066,7 +1066,7 @@ CODE_039498:
     db $06,$00
     RTL
 
-    %CopCheckIfItemIsEquipped(!itemLeosBrush, $94E1)
+    %CopJumpIfItemIsNotEquipped(!itemLeosBrush, $94E1)
     COP #$01
     db $4B,$95
     COP #$10
@@ -1243,7 +1243,7 @@ aWas:
 CODE_039843:
     COP #$27
     db $F6,$97
-    %CopCheckIfItemIsEquipped(!itemDreamRod, $985D)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, $985D)
     COP #$01
     db $80,$98
     COP #$3C
@@ -1331,7 +1331,7 @@ CODE_0398F7:
     db $04,$89
     RTL
 
-    %CopCheckIfItemIsEquipped(!itemAPass, $992B)
+    %CopJumpIfItemIsNotEquipped(!itemAPass, $992B)
     COP #$09
     db $00,$82
     COP #$01
@@ -2845,7 +2845,11 @@ CODE_03B967:
     RTL
 
 aClearTextboxAndEnd:
-    db $12,$08,$08,$04,$0C
+    db $12          ; wait for keypress
+    db $08,$08,$04  ; clear default textbox
+    db $0C          ; return and store current text pointer for next talk
+
+CODE_03B98D:
     COP #$14
     db $56,$00,$94,$B9
     RTL
@@ -3816,7 +3820,7 @@ CODE_03C649:
     TRB.W wButtonMask
     COP #$91
     RTL
-    %CopCheckIfItemIsEquipped(!itemDreamRod, $CA59)
+    %CopJumpIfItemIsNotEquipped(!itemDreamRod, $CA59)
     COP #$01
     db $B9,$CA
     COP #$3C
@@ -4579,7 +4583,7 @@ CODE_03D6F4:
     COP #$16
     COP #$86
     RTL
-    %CopCheckIfItemIsEquipped(!itemMolesRibbon, $D91C)
+    %CopJumpIfItemIsNotEquipped(!itemMolesRibbon, $D91C)
     COP #$01
     db $4B,$D9
     COP #$0B
@@ -4874,7 +4878,7 @@ CODE_03DDDC:
     db $02,$24,$E0,$02,$01,$1B,$E1,$6B
     COP #$18
     db $25,$3B,$E0
-    %CopCheckIfItemIsEquipped(!itemDeliciousSeeds, $E040)
+    %CopJumpIfItemIsNotEquipped(!itemDeliciousSeeds, $E040)
     COP #$01
     db $DD,$E0
     COP #$0B
@@ -5460,7 +5464,7 @@ CODE_03E98D:
     BRA CODE_03E98D
     COP #$03
     db $F0
-    %CopCheckIfItemIsEquipped(!itemIceArmor, CODE_03E9B0)
+    %CopJumpIfItemIsNotEquipped(!itemIceArmor, CODE_03E9B0)
     BRA CODE_03E9BC
 
 CODE_03E9B0:
@@ -5814,7 +5818,7 @@ CODE_03EECA:
     db $60
     COP #$07
     db $01,$8A,$EA,$EE
-    %CopCheckIfItemIsEquipped(!itemSoulArmor, $EEDF)
+    %CopJumpIfItemIsNotEquipped(!itemSoulArmor, $EEDF)
     BRA CODE_03EEEA
 
 CODE_03EEDF:
