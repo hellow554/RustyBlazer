@@ -295,16 +295,20 @@ class SbString:
             print("`{}`".format("".join(self.interpretX())))
 
     def interpretX(self) -> Iterator[str]:
+        skip = 0
         match ROM[self._addr.addr]:
+            case 0x01:
+                # continue on old position
+                # TODO use X as textpointer
+                pass
             case 0x10:
                 # TODO draw textbox
                 pass
-            case 0x01:
-                # TODO restore "old" text pointer
+            case _:
+                # TODO restore "old" text pointer, speed, print a newline and go on
                 pass
-            case x:
-                raise Exception(f"Invalid start byte for string: {x:02X}")
-        yield from self._inner(self._addr + 1)
+
+        yield from self._inner(self._addr + skip)
 
     def interpret2(self) -> Iterator[str]:
         yield from self._inner(self._addr)
