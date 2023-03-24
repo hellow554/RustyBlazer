@@ -1,192 +1,13 @@
 
-                       ORG $038000
+ORG $038000
 
-    COP #$14
-    db $29,$00,$07,$80
-    RTL
-
-    COP #$85
-    db $9D,$A9,$00
-    COP #$17
-    db $36,$80
-    COP #$15
-    COP #$05
-    db $00,$00
-    COP #$8F
-    COP #$80
-    db $02
-    COP #$82
-    COP #$91
-    LDA.W wButtonsPressed
-    AND.W #$0030
-    BNE CODE_038028
-    RTL
+incsrc "bank03/crabwalkguy.asm"
+incsrc "bank03/chiefswife.asm"
 
 
-CODE_038028:
-    LDA.W wButtonsPressed
-    AND.W #$0F00
-    BNE CODE_038031
-    RTL
-
-
-CODE_038031:
-    COP #$17
-    db $3F,$80
-    RTL
-
-    COP #$01
-    db $44,$80
-    COP #$09
-    db $00,$80
-    RTL
-
-    COP #$01
-    db $B7,$80
-    RTL
-
-
-aHey_0:
-    db $10, "Hey, ", $FE, "look ", $BE, "you", $0D, "woul"
-    db "d ", $A1, $B2, "at crab-", $0D, "walking."
-    db " ", $0D, "Try it. ", $11, $95, "don`", $E5, $BD, "how"
-    db "? ", $0D, "Just ", $F9, "while ", $0D, "press"
-    db "ing either ", $0D, $E1, "L or R b"
-    db "utton. ", $13, $88, $B9
-
-aSee:
-    db $10, "See, ", $88, "knew ", $FE, "could", $0D, "do"
-    db " it! ", $11, $92, $F1, $B7, $FE, $0D, $F4, $FE, $98, "fightin"
-    db "g ", $0D, "or using magic. ", $13, $88
-    db $B9
-    COP #$14
-    db $02,$00,$FE,$80
-    RTL
-
-    COP #$30
-    db $02,$00,$59,$81,$03
-    COP #$14
-    db $09,$00,$14,$81
-    COP #$17
-    db $2B,$81
-    COP #$15
-    COP #$91
-    RTL
-
-    COP #$07
-    db $02,$9F,$28,$81
-    COP #$17
-    db $60,$81
-    COP #$11
-    db $04,$3B,$1E
-    COP #$15
-    COP #$91
-    RTL
-
-    COP #$86
-    RTL
-    COP #$07
-    db $01,$81,$52,$81
-    COP #$01
-    db $6F,$81
-    COP #$1A
-    db $02,$CF,$02,$4D,$81
-    LDA.L $0003D0
-    BNE CODE_03814D
-    COP #$09
-    db $01,$81
-    COP #$01
-    db $11,$82
-    BRL CODE_038156
-
-
-CODE_03814D:
-    COP #$01
-    db $F8,$81
-    RTL
-
-    COP #$01
-    db $55,$82
-
-CODE_038156:
-    COP #$37
-    RTL
-
-    COP #$01
-    db $2D,$83
-    COP #$86
-    RTL
-
-    COP #$18
-    db $29,$6A,$81
-    COP #$01
-    db $E7,$82
-    RTL
-
-    COP #$01
-    db $AC,$82
-    RTL
-
-
-aMyHusband:
-    db $10, "My husband ", $EC, $E2, $A1, $0D, $E1, $EF, "Chi"
-    db "ef. ", $11, "One day he sudde"
-    db "nly ", $0D, "disappeared alon"
-    db "g with", $0D, $E1, "other village"
-    db "rs. ", $11, $88, "feel so lonely."
-    db "... ", $0D, "How ", $99, "being ", $CC, "of", $0D, $C2
-    db "children? ", $0C
-
-aWellThat:
-    db "Well, ", $0D, "that`"
-    db $D7
-    db "too bad. ", $13, $88
-    db $B9
-
-aReally:
-    db $52,$65,$61
-    db "l"
-    db $6C,$79,$3F,$21
-    db " ", $0D, $88, $F1, "call"
-    db $20,$FE,$0D,$02,$02,$20,$AD
-    db "n"
-    db $6F,$77,$20,$6F
-    db "n."
-    db $20,$11,$55
-    db "se ", $E1, "second floo"
-    db $72,$20,$0D,$61,$73
-    db " "
-    db $FF,$6F,$77,$6E
-    db " r"
-    db $6F,$6F,$6D
-    db ". ", $13, $88, $B9, $10, $02, $02, ", ", $0D, $FE, $98, $BC, "walking"
-    db " ", $0D, $9B, "doing nothing. ", $11, $88, $9D
-    db "beginning "
-    db $E2,$0D,$77
-    db "o"
-    db $72,$72,$79,$20
-    db $99, "you. ", $0D, "Plea"
-    db $73,$65,$2C,$20
-    db "st"
-    db $61,$79,$20
-    db $B9, $96
-    db $0D,$72,$65
-    db "st. ", $13, $88, $B9, $10, $88, "feel bad ", $AE, "Li"
-    db "sa, ", $0D, "having been sepa"
-    db "rated ", $0D, $AD, "her parents. "
-    db $13, $88, $B9
-
-aSoldiers:
-    db $10, $02, $02, "! ", $11, "Soldiers ", $AD, $8D, $0D, $FD, $BC, "h"
-    db "ere! ", $0D, "They kidnapped "
-    db "Lisa! ", $0D, $95, "must rescue h"
-    db "er! ", $13, $88, $B9, $10, $95, "hear ", $97, "sigh c"
-    db "oming", $0D, $AD, "inside ", $E1, "house."
-    db $13, $88, $B9
     COP #$14
     db $06,$00,$5A,$83
     RTL
-
     COP #$17
     db $99,$83
     COP #$91
@@ -2469,6 +2290,8 @@ CODE_03B17C:
     db $6D,$65,$2C,$20,$0D,$73,$6F,$6D,$65,$6F,$6E,$65,$20,$B7,$6D,$65
     db $21,$20,$13,$88,$B9,$10,$53,$6F,$6D,$65,$6F,$6E,$65,$20,$B7,$6D
     db $65,$21,$20,$13,$88,$B9
+
+CODE_03B1F7:
     LDA.W $0000,X
     CLC
     ADC.W #$0001
@@ -2485,6 +2308,7 @@ CODE_03B17C:
     STA.W $0340
     RTL
 
+CODE_03B21A:
     LDA.W $0000,X
     SEC
     SBC.W #$0008
@@ -2501,6 +2325,7 @@ CODE_03B17C:
     STA.W $0340
     RTL
 
+CODE_03B23D:
     PHP
     SEP #$20
     LDA.B #$32
@@ -2514,6 +2339,8 @@ CODE_03B17C:
     db $7F,$E0,$20,$E0,$04,$E1,$04,$E2,$04,$E3,$04,$E4,$04,$E5,$04,$E6
     db $04,$E7,$04,$E8,$04,$E9,$04,$EA,$04,$EB,$04,$EC,$04,$ED,$04,$EE
     db $04,$EF,$04,$F0,$00
+
+CODE_03B273:
     PHP
     SEP #$20
     LDA.B #$32

@@ -16,27 +16,20 @@ PTR16_01800A:
     dw entities_WorldOfEvil
 
 entities_GrassValley:
-    dw $0201
-    db $03
-    dw $0005
-    db $00,$80,$11
-    dl UNREACH_0B8000
-    dl CODE_009A28
-    db $00,$00,$00,$00,$00,$00,$10,$20,$00,$80,$0D,$E8,$A9,$00,$00,$00
-    db $00,$00,$00,$01,$10,$20,$00,$80,$0D,$E8,$A9,$00,$00,$00,$00,$00
-    db $00,$02,$10,$20,$00,$80,$0D,$E8,$A9,$00,$00,$00,$00,$00,$00,$03
-    db $10,$20,$00,$80,$0D,$E8,$A9,$00,$00,$00,$00,$00,$00,$04,$10,$20
-    db $00,$80,$0D,$E8,$A9,$00,$00,$00,$00,$00,$00,$05,$10,$20,$00,$80
-    db $0D,$E8,$A9,$00,$00,$00,$00,$00,$00,$00,$10,$20,$00,$00,$00,$F7
-    db $B1,$03,$00,$00,$00,$00,$00,$00,$10,$20,$00,$00,$00,$1A,$B2,$03
-    db $00,$00,$00,$00,$00,$06,$10,$20,$00,$80,$0D,$E8,$A9,$00,$00,$00
-    db $00,$00,$00,$00,$10,$20,$00,$00,$00,$73,$B2,$03
+    %create_entity(_, $201, 3, 5, 0, $80, $11, UNREACH_0B8000, CODE_009A28)
+    %create_entity(_, 0, 0, 0, 0, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 1, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 2, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 3, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 4, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 5, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 0, $10, $20, 0, CODE_03B1F7)
+    %create_entity(_, 0, 0, 0, 0, $10, $20, 0, CODE_03B21A)
+    %create_entity(_, 0, 0, 0, 6, $10, $20, UNREACH_0D8000, CODE_00A9E8)
+    %create_entity(_, 0, 0, 0, 0, $10, $20, 0, CODE_03B273)
 
-entity_act1_crab_walk_guy:
-    db $00,$00,$00,$00,$00,$02,$48,$30,$00,$38,$7E,$00,$80,$03
-
-entity_act1_chiefs_wife:
-    db $00,$00,$00,$00,$00,$06,$48,$30,$00,$38,$7E,$F7,$80,$03
+    %create_entity(entity_act1_crab_walk_guy, 0, 0, 0, 2, $48, $30, $7E3800, A1_crabwalkguy_script)
+    %create_entity(entity_act1_chiefs_wife,   0, 0, 0, 6, $48, $30, $7E3800, A1_chiefswife_script)
 
 entity_act1_tool_shop_owner:
     db $00,$00,$00,$00,$00,$06,$58,$30,$00,$38,$7E,$53,$83,$03
