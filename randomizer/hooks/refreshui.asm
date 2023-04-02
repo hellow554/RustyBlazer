@@ -22,6 +22,7 @@ RefreshUiHook:
     REP #$20
 
     LDA $037A ; y position
+    INC       ; for whatever reason y position must be increased by one
     LDX.w #Temp1
     SEP #$20
     JSL $02B215
@@ -147,11 +148,12 @@ LairInfo:
 
 XYPos:
     db $09, $03, $24
-    db $01, $18, $00, "X/Y"
+    db $01, $10, $00, "X/Y"
     db $03, $20
+    db $01, $1A, $00
     db $06, $02
     dw Temp0
-    db "/"
+    db " / "
     db $06, $02
     dw Temp1
     db $00
