@@ -3,6 +3,12 @@ macro CopShowText(textPtr)
     dw <textPtr>
 endmacro
 
+macro CopJumpIfEventFlagIsUnset(eventid, addr)
+    COP #$07
+    dw <eventid>
+    dw <addr>
+endmacro
+
 macro CopRemoveItem(itemId)
     COP #$0B
     db <itemId>

@@ -11,9 +11,7 @@ A1_chiefswife_script:
     RTL
 
 .bridgeGuardRevealed:
-    COP #$07
-    db $02,$9F
-    dw .bla
+    %CopJumpIfEventFlagIsUnset($9F02, .bla)
     %CopAssignTalkCallback(.bla2)
     COP #$11
     db $04,$3B,$1E
@@ -26,8 +24,7 @@ A1_chiefswife_script:
     RTL
 
 .defaultTalk:
-    COP #$07
-    db $01,$81,$52,$81
+    %CopJumpIfEventFlagIsUnset($8101, $8152)
     %CopShowText(.aMyHusband)
     %CopShowMenu(choiceYesNo, 2, .sayNo)
     LDA.L choiceNumber&$00FFFF ; not sure what and why they did here

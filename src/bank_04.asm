@@ -333,10 +333,8 @@
     RTL
     COP #$30
     db $03,$01,$7F,$86,$04
-    COP #$07
-    db $02,$9F,$F2,$85
-    COP #$07
-    db $01,$8A,$D2,$85
+    %CopJumpIfEventFlagIsUnset($9F02, $85F2)
+    %CopJumpIfEventFlagIsUnset($8A01, $85D2)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -415,8 +413,7 @@
     TRB.W wButtonMask
     COP #$91
     RTL
-    COP #$07
-    db $05,$07,$76,$86
+    %CopJumpIfEventFlagIsUnset($0705, $8676)
     COP #$18
     db $18,$3D,$86
     COP #$01
@@ -580,8 +577,7 @@ CODE_048C65:
     db $9D,$A9,$00
     COP #$1B
     db $DF,$8C,$02,$00
-    COP #$07
-    db $07,$00,$14,$8D
+    %CopJumpIfEventFlagIsUnset($0007, $8D14)
     LDA.W #$FFFF
     STA.W lairRevealInProgress
     COP #$80
@@ -783,8 +779,7 @@ CODE_048FDA:
     COP #$15
     COP #$91
     RTL
-    COP #$07
-    db $03,$9B,$C7,$90
+    %CopJumpIfEventFlagIsUnset($9B03, $90C7)
     COP #$01
     db $CC,$90
     BRK #$5E
@@ -1217,8 +1212,7 @@ CODE_049723:
     COP #$15
     COP #$91
     RTL
-    COP #$07
-    db $07,$87,$F5,$98
+    %CopJumpIfEventFlagIsUnset($8707, $98F5)
     %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_0498F0)
     COP #$01
     db $03,$99
@@ -1292,8 +1286,7 @@ CODE_0499E0:
     COP #$15
     COP #$91
     RTL
-    COP #$07
-    db $04,$9A,$74,$9A
+    %CopJumpIfEventFlagIsUnset($9A04, $9A74)
     COP #$01
     db $79,$9A
     BRK #$5E
@@ -1476,9 +1469,8 @@ CODE_0499E0:
     db $2E,$20,$13,$1E,$A5,$10,$4D,$61,$6B,$65,$20,$73,$75,$72,$65,$20
     db $FE,$64,$6F,$6E,$60,$E5,$0D,$F9,$9B,$BB,$97,$64,$72,$65,$61,$6D
     db $0D,$6F,$72,$20,$FE,$F1,$B4,$6C,$6F,$73,$74,$2E,$20,$13,$1E,$A5
-    COP #$07
-    db $05,$9A,$AC,$9E
     COP #$91
+    %CopJumpIfEventFlagIsUnset($9A05, $9EAC)
     COP #$0D
     db $00,$20,$2E,$9F,$9E
     RTL
@@ -1506,8 +1498,7 @@ CODE_0499E0:
     LDA.W #$A288
     PHA
     RTL
-    COP #$07
-    db $00,$9E,$FB,$9E
+    %CopJumpIfEventFlagIsUnset($9E00, $9EFB)
     COP #$01
     db $9A,$A4
     COP #$38
@@ -1546,8 +1537,7 @@ CODE_049F1D:
     LDA.W #$A288
     PHA
     RTL
-    COP #$07
-    db $05,$9D,$FB,$9E
+    %CopJumpIfEventFlagIsUnset($9D05, $9EFB)
     COP #$01
     db $9A,$A4
     COP #$38
@@ -1657,8 +1647,7 @@ CODE_04A072:
     LDA.W #$2F80
     TSB.W wButtonMask
     COP #$91
-    COP #$07
-    db $00,$00,$B4,$A0
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfItemIsNotEquipped(!itemMushroomShoes, CODE_04A09B)
     BRL CODE_04A0B4
 
@@ -2030,8 +2019,7 @@ CODE_04A5DE:
     COP #$14
     db $1A,$01,$14,$A6
     RTL
-    COP #$07
-    db $00,$88,$5C,$A6
+    %CopJumpIfEventFlagIsUnset($8800, $A65C)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -2097,10 +2085,8 @@ CODE_04A65C:
     db $9D,$A9,$00
     COP #$17
     db $F7,$A6
-    COP #$07
-    db $05,$06,$DC,$A6
-    COP #$07
-    db $06,$86,$E4,$A6
+    %CopJumpIfEventFlagIsUnset($0605, $A6DC)
+    %CopJumpIfEventFlagIsUnset($8606, $A6E4)
     COP #$15
     COP #$05
     db $02,$00
@@ -2116,10 +2102,10 @@ CODE_04A65C:
     COP #$15
     COP #$91
     RTL
-    COP #$07
-    db $05,$06,$03,$A7
-    COP #$07
-    db $06,$86,$08,$A7,$02,$01,$11,$A7,$6B
+    %CopJumpIfEventFlagIsUnset($0605, $A703)
+    %CopJumpIfEventFlagIsUnset($8606, $A708)
+
+    db $02,$01,$11,$A7,$6B
     COP #$01
     db $50,$A7
     COP #$09
@@ -2141,8 +2127,7 @@ CODE_04A65C:
     db $9D,$A9,$00
     COP #$17
     db $2A,$A8
-    COP #$07
-    db $05,$86,$17,$A8
+    %CopJumpIfEventFlagIsUnset($8605, $A817)
     COP #$15
 
 CODE_04A7AC:
@@ -2216,8 +2201,7 @@ CODE_04A81C:
     db $9D,$A9,$00
     COP #$17
     db $23,$A9
-    COP #$07
-    db $06,$86,$10,$A9
+    %CopJumpIfEventFlagIsUnset($8606, $A910)
 
 CODE_04A89C:
     %CopJumpIfItemIsNotEquipped(!itemCatLeaves, CODE_04A8A7)
@@ -2352,8 +2336,7 @@ CODE_04A9F1:
 CODE_04AA2E:
     COP #$27
     db $F1,$A9
-    COP #$07
-    db $06,$9A,$45,$AA
+    %CopJumpIfEventFlagIsUnset($9A06, $AA45)
     COP #$01
     db $DC,$AA
     BRK #$5E
@@ -2569,8 +2552,7 @@ CODE_04ADE0:
     RTL
     COP #$30
     db $42,$01,$7E,$AE,$04
-    COP #$07
-    db $03,$86,$53,$AE
+    %CopJumpIfEventFlagIsUnset($8603, $AE53)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -2641,14 +2623,12 @@ CODE_04AE37:
     COP #$17
     db $CD,$AF
     COP #$15
-    COP #$07
-    db $02,$88,$C5,$AF
+    %CopJumpIfEventFlagIsUnset($8802, $AFC5)
     COP #$91
     COP #$0D
     db $00,$09,$0A,$91,$AF
     RTL
-    COP #$07
-    db $01,$08,$C2,$AF
+    %CopJumpIfEventFlagIsUnset($0801, $AFC2)
     COP #$17
     db $00,$00
     LDA.W #$2F80
@@ -2677,8 +2657,7 @@ CODE_04AE37:
     db $13
     COP #$82
     RTL
-    COP #$07
-    db $02,$88,$EE,$AF
+    %CopJumpIfEventFlagIsUnset($8802, $AFEE)
     %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_04AFE9)
     COP #$01
     db $49,$B0
@@ -2799,8 +2778,7 @@ CODE_04AFE9:
     db $07
     COP #$82
     RTL
-    COP #$07
-    db $07,$88,$FF,$B2
+    %CopJumpIfEventFlagIsUnset($8807, $B2FF)
     COP #$18
     db $38,$FA,$B2
     COP #$01
@@ -2878,8 +2856,7 @@ UNREACH_04B2F5:
     RTL
     COP #$30
     db $2F,$01,$58,$B5,$04
-    COP #$07
-    db $02,$9F,$13,$B5
+    %CopJumpIfEventFlagIsUnset($9F02, $B513)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -2908,8 +2885,7 @@ UNREACH_04B2F5:
     TRB.W wButtonMask
     COP #$91
     RTL
-    COP #$07
-    db $04,$9B,$53,$B5
+    %CopJumpIfEventFlagIsUnset($9B04, $B553)
     COP #$01
     db $AC,$B5
     BRK #$5E
@@ -3055,10 +3031,9 @@ CODE_04B8B9:
     COP #$0C
     db $00,$04,$C6,$B8
     BRA CODE_04B8B9
-    COP #$07
-    db $05,$06,$DF,$B8
-    COP #$07
-    db $06,$86,$E4,$B8,$02,$01,$F8,$B8,$6B
+    %CopJumpIfEventFlagIsUnset($0605, $B8DF)
+    %CopJumpIfEventFlagIsUnset($8606, $B8E4)
+    db $02,$01,$F8,$B8,$6B
     COP #$18
     db $15,$EE,$B8,$02,$01,$76,$B9,$6B
     COP #$01
@@ -3110,8 +3085,7 @@ CODE_04B8B9:
     db $10,$0F,$02,$02,$20,$BA,$0D,$73,$77,$61,$6C,$6C,$6F,$77,$65,$64
     db $20,$69,$6E,$74,$6F,$20,$E1,$0D,$6D,$6F,$64,$65,$6C,$2E,$20,$13
     db $A3,$BF
-    COP #$07
-    db $00,$86,$4C,$BA
+    %CopJumpIfEventFlagIsUnset($8600, $BA4C)
     COP #$17
     db $68,$BA
     COP #$15
@@ -3288,8 +3262,7 @@ CODE_04BA45:
     LDA.W #$A288
     PHA
     RTL
-    COP #$07
-    db $01,$9D,$00,$BE
+    %CopJumpIfEventFlagIsUnset($9D01, $BE00)
     COP #$01
     db $33,$BF
     COP #$38
@@ -3324,8 +3297,7 @@ CODE_04BE22:
     LDA.W #$A288
     PHA
     RTL
-    COP #$07
-    db $02,$9D,$00,$BE
+    %CopJumpIfEventFlagIsUnset($9D02, $BE00)
     COP #$01
     db $33,$BF
     COP #$38
@@ -3346,8 +3318,7 @@ CODE_04BE22:
     LDA.W #$A288
     PHA
     RTL
-    COP #$07
-    db $03,$9D,$00,$BE
+    %CopJumpIfEventFlagIsUnset($9D03, $BE00)
     COP #$01
     db $33,$BF
     COP #$38
@@ -3358,8 +3329,7 @@ CODE_04BE22:
     COP #$14
     db $43,$01,$8E,$BE
     RTL
-    COP #$07
-    db $07,$9B,$F0,$BE
+    %CopJumpIfEventFlagIsUnset($9B07, $BEF0)
     COP #$09
     db $07,$9B
     COP #$B2
@@ -3452,8 +3422,7 @@ CODE_04BFCE:
     COP #$14
     db $5A,$01,$2E,$C0
     RTL
-    COP #$07
-    db $06,$88,$42,$C0
+    %CopJumpIfEventFlagIsUnset($8806, $C042)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -3529,8 +3498,7 @@ CODE_04BFCE:
     RTL
     COP #$85
     db $9D,$A9,$00
-    COP #$07
-    db $04,$88,$AE,$C2
+    %CopJumpIfEventFlagIsUnset($8804, $C2AE)
     COP #$17
     db $BC,$C2
     COP #$15
@@ -3538,8 +3506,7 @@ CODE_04BFCE:
     COP #$0D
     db $00,$02,$1F,$7B,$C2
     RTL
-    COP #$07
-    db $03,$08,$B9,$C2
+    %CopJumpIfEventFlagIsUnset($0803, $C2B9)
     COP #$17
     db $00,$00
     LDA.W #$2F80
@@ -3569,8 +3536,7 @@ CODE_04BFCE:
     COP #$15
     COP #$91
     RTL
-    COP #$07
-    db $04,$88,$DD,$C2
+    %CopJumpIfEventFlagIsUnset($8804, $C2DD)
     %CopJumpIfItemIsNotEquipped(!itemDreamRod, CODE_04C2D8)
     COP #$01
     db $EB,$C2
@@ -3766,8 +3732,7 @@ CODE_04C5C4:
     db $1D
     COP #$82
     BRA CODE_04C5C4
-    COP #$07
-    db $03,$87,$FF,$C5
+    %CopJumpIfEventFlagIsUnset($8703, $C5FF)
 
     %CopJumpIfItemIsNotEquipped(!itemHarpString, CODE_04C610)
     COP #$01
@@ -3874,15 +3839,13 @@ CODE_04C610:
     RTL
     COP #$30
     db $7F,$01,$D1,$C9,$04
-    COP #$07
-    db $05,$88,$78,$C9
+    %CopJumpIfEventFlagIsUnset($8805, $C978)
     COP #$17
     db $9F,$C9
     COP #$15
 
 CODE_04C964:
-    COP #$07
-    db $00,$80,$71,$C9
+    %CopJumpIfEventFlagIsUnset($8000, $C971)
     COP #$80
     db $0C
     COP #$82
@@ -3957,8 +3920,7 @@ CODE_04C9C8:
     COP #$14
     db $6D,$01,$FB,$CA
     RTL
-    COP #$07
-    db $05,$88,$29,$CB
+    %CopJumpIfEventFlagIsUnset($8805, $CB29)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -4010,8 +3972,7 @@ CODE_04CB3A:
     db $5E,$B0,$48,$6B
     COP #$85
     db $9D,$A9,$00
-    COP #$07
-    db $05,$88,$20,$CC
+    %CopJumpIfEventFlagIsUnset($8805, $CC20)
     COP #$17
     db $23,$CC
     COP #$18
@@ -4208,8 +4169,7 @@ UNREACH_04CE97:
     COP #$14
     db $82,$01,$87,$D0
     RTL
-    COP #$07
-    db $05,$88,$B5,$D0
+    %CopJumpIfEventFlagIsUnset($8805, $D0B5)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -4284,8 +4244,7 @@ CODE_04D0CB:
     db $03,$D2
     COP #$15
     COP #$91
-    COP #$07
-    db $04,$86,$F9,$D1
+    %CopJumpIfEventFlagIsUnset($8604, $D1F9)
     RTL
     COP #$16
     COP #$85
@@ -4348,8 +4307,7 @@ CODE_04D32D:
     COP #$0D
     db $00,$25,$0C,$37,$D3
     RTL
-    COP #$07
-    db $07,$9A,$4A,$D3
+    %CopJumpIfEventFlagIsUnset($9A07, $D34A)
     COP #$01
     db $C3,$D3
     BRK #$5E
@@ -4428,8 +4386,7 @@ CODE_04D32D:
     db $5E,$B0,$48,$6B
     COP #$30
     db $95,$01,$E4,$D5,$04
-    COP #$07
-    db $02,$9F,$9B,$D5
+    %CopJumpIfEventFlagIsUnset($9F02, $D59B)
     COP #$85
     db $9D,$A9,$00
     COP #$17
@@ -4594,8 +4551,7 @@ CODE_04D32D:
     RTL
     COP #$30
     db $6E,$01,$98,$DB,$04
-    COP #$07
-    db $05,$88,$81,$DB
+    %CopJumpIfEventFlagIsUnset($8805, $DB81)
     COP #$85
     db $9D,$A9,$00
     COP #$15
@@ -4671,8 +4627,7 @@ CODE_04D32D:
     COP #$14
     db $81,$01,$AD,$DC
     RTL
-    COP #$07
-    db $05,$88,$40,$DD
+    %CopJumpIfEventFlagIsUnset($8805, $DD40)
     COP #$85
     db $9D,$A9,$00
     COP #$15
@@ -4843,10 +4798,8 @@ CODE_04D32D:
     RTL
     COP #$30
     db $83,$01,$1D,$E0,$04
-    COP #$07
-    db $05,$9F,$DC,$DF
-    COP #$07
-    db $05,$88,$AF,$DF
+    %CopJumpIfEventFlagIsUnset($9F05, $DFDC)
+    %CopJumpIfEventFlagIsUnset($8805, $DFAF)
     COP #$85
     db $9D,$A9,$00
     COP #$15
@@ -4989,9 +4942,9 @@ CODE_04DFA8:
     db $F7,$DF
     COP #$91
     RTL
-    COP #$07
-    db $00,$89,$C2,$DF,$02,$AC,$FC,$E6,$04,$30,$02,$80,$01,$40,$00,$80
-    db $0B
+    %CopJumpIfEventFlagIsUnset($8900, $DFC2)
+
+    db $02,$AC,$FC,$E6,$04,$30,$02,$80,$01,$40,$00,$80,$0B
     COP #$AC
     db $0A,$E7,$04,$20,$02,$90,$01,$40,$00
     COP #$9F
@@ -5012,10 +4965,8 @@ CODE_04DFA8:
     COP #$17
     db $00,$00
     RTL
-    COP #$07
-    db $00,$89,$18,$E0
-    COP #$07
-    db $01,$89,$18,$E0
+    %CopJumpIfEventFlagIsUnset($8900, $E018)
+    %CopJumpIfEventFlagIsUnset($8901, $E018)
     LDA.W #$0004
     STA.W textSpeed
     COP #$01
@@ -5162,8 +5113,7 @@ CODE_04DFA8:
     db $36,$E7
     COP #$91
     RTL
-    COP #$07
-    db $02,$89,$23,$E7
+    %CopJumpIfEventFlagIsUnset($8902, $E723)
     COP #$97
     COP #$80
     db $08
@@ -5309,8 +5259,7 @@ CODE_04E9CF:
     ADC.W $0002,X
     STA.W $0002,X
     RTS
-    COP #$07
-    db $02,$87,$13,$EA
+    %CopJumpIfEventFlagIsUnset($8702, $EA13)
     COP #$91
     COP #$0D
     db $00,$28,$05,$06,$EA
@@ -5543,8 +5492,7 @@ CODE_04EF40:
     RTL
     DEC.W $038C
     RTL
-    COP #$07
-    db $00,$89,$69,$EF
+    %CopJumpIfEventFlagIsUnset($8900, $EF69)
     %CopJumpIfItemIsNotEquipped(!itemAirshipKey, CODE_04EF69)
     COP #$0D
     db $00,$17,$0F,$6A,$EF

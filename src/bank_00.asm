@@ -2,7 +2,6 @@
 ORG $008000
 
 incsrc "bank00/start.asm"
-incsrc "bank00/main_loop.asm"
 
 main_loop:
     JSL.L wait_vblank
@@ -6445,8 +6444,7 @@ CODE_00B47F:
     db $20,$00,$B2,$B5,$67,$B5,$5D,$B5
 
 CODE_00B493:
-    COP #$07
-    db $05,$99,$AC,$B4
+    %CopJumpIfEventFlagIsUnset($9905, $B4AC)
     COP #$23
     db $AC,$B4
     COP #$09
@@ -6998,8 +6996,7 @@ CODE_00C086:
     STA.W $0000,X
     COP #$91
     PHX
-    COP #$07
-    db $00,$80,$C4,$C0
+    %CopJumpIfEventFlagIsUnset($8000, $C0C4)
     LDA.W $0000,X
     LDY.W $0002,X
     TAX
@@ -7589,8 +7586,7 @@ CODE_00C688:
     COP #$9A
     db $28,$00,$98,$C6,$7D,$C7,$A0,$C6,$02,$80,$10,$02,$82,$82,$6B,$01
     db $02,$80,$0D,$02,$82,$82,$9A,$01
-    COP #$07
-    db $01,$80,$79,$C8
+    %CopJumpIfEventFlagIsUnset($8001, $C879)
     COP #$80
     db $10
     COP #$82
@@ -7632,8 +7628,9 @@ CODE_00C70F:
     COP #$0C
     db $00,$02,$2F,$C7,$02,$9B,$28,$00,$1F,$C7,$42,$C8,$27,$C7,$02,$80
     db $0F,$02,$82,$82,$56,$00,$02,$80,$12,$02,$82,$82,$95,$00
-    COP #$07
-    db $01,$80,$3D,$C9,$02,$80,$12,$02,$82,$02,$09,$01,$80,$82,$C0,$02
+    %CopJumpIfEventFlagIsUnset($8001, $C93D)
+
+    db $02,$80,$12,$02,$82,$02,$09,$01,$80,$82,$C0,$02
 
 CODE_00C741:
     LDA.W $0025,X
@@ -7656,8 +7653,7 @@ CODE_00C750:
     db $0E
     COP #$82
     BRL CODE_00C842
-    COP #$07
-    db $01,$80,$9F,$C9
+    %CopJumpIfEventFlagIsUnset($8001, $C99F)
     COP #$09
     db $01,$80
     BRL CODE_00CA01
@@ -7666,8 +7662,7 @@ CODE_00C77D:
     LDA.W $0002,X
     CMP.W #$00A0
     BEQ UNREACH_00C79D
-    COP #$07
-    db $00,$80,$94,$C7
+    %CopJumpIfEventFlagIsUnset($8000, $C794)
     COP #$81
     db $0A,$04
     COP #$83
@@ -7686,8 +7681,7 @@ CODE_00C7C4:
     LDA.W $0002,X
     CMP.W #$01A0
     BEQ UNREACH_00C7E4
-    COP #$07
-    db $00,$80,$DB,$C7
+    %CopJumpIfEventFlagIsUnset($8000, $C7DB)
     COP #$81
     db $08,$04
     COP #$83
@@ -7700,8 +7694,7 @@ UNREACH_00C7E4:
     db $80,$0E,$02,$82,$82,$F5,$FE
 
 CODE_00C80B:
-    COP #$07
-    db $00,$80,$21,$C8
+    %CopJumpIfEventFlagIsUnset($8000, $C821)
     LDA.W $0000,X
     CMP.W #$0070
     BEQ UNREACH_00C830
@@ -7716,8 +7709,7 @@ UNREACH_00C830:
     db $EF,$01
 
 CODE_00C842:
-    COP #$07
-    db $00,$80,$58,$C8
+    %CopJumpIfEventFlagIsUnset($8000, $C858)
     LDA.W $0000,X
     CMP.W #$0160
     BEQ CODE_00C867
@@ -8625,8 +8617,7 @@ CODE_00D26F:
     COP #$81
     db $0C,$02
     COP #$83
-    COP #$07
-    db $06,$19,$99,$D2
+    %CopJumpIfEventFlagIsUnset($1906, $D299)
     COP #$A1
     db $F8,$FF,$08,$00
     COP #$97
@@ -8693,8 +8684,7 @@ CODE_00D301:
     COP #$81
     db $0C,$02
     COP #$83
-    COP #$07
-    db $07,$19,$2B,$D3
+    %CopJumpIfEventFlagIsUnset($1907, $D32B)
     COP #$A1
     db $F8,$FF,$08,$00
     COP #$97
@@ -12320,10 +12310,8 @@ CODE_00EE1D:
 CODE_00EE27:
     RTS
 
-    COP #$07
-    db $05,$9F,$34,$EE
-    COP #$07
-    db $04,$9F,$64,$F2
+    %CopJumpIfEventFlagIsUnset($9F05, $EE34)
+    %CopJumpIfEventFlagIsUnset($9F04, $F264)
     INC.W $0454
     COP #$85
     db $41,$F1,$00
@@ -12681,10 +12669,8 @@ CODE_00F07A:
 
 
 CODE_00F0B3:
-    COP #$07
-    db $05,$9F,$BF,$F0
-    COP #$07
-    db $04,$9F,$C2,$F0
+    %CopJumpIfEventFlagIsUnset($9F05, $F0BF)
+    %CopJumpIfEventFlagIsUnset($9F04, $F0C2)
     COP #$91
     RTL
 
@@ -12763,11 +12749,8 @@ CODE_00F0B3:
     db $33
     COP #$82
     RTL
-    COP #$07
-    db $05,$9F,$33,$F1
-    COP #$07
-    db $04,$9F,$3A,$F1
-
+    %CopJumpIfEventFlagIsUnset($9F05, $F133)
+    %CopJumpIfEventFlagIsUnset($9F04, $F13A)
 CODE_00F133:
     COP #$92
     db $2D
@@ -12780,8 +12763,8 @@ CODE_00F13A:
     db $4B
     COP #$94
     BRA CODE_00F13A
-    COP #$07
-    db $00,$9B,$49,$F1,$80,$26
+    %CopJumpIfEventFlagIsUnset($9B00, $F149)
+    db $80,$26
     COP #$AC
     db $61,$F1,$00,$70,$00,$D0,$00,$40,$00
     COP #$AC
@@ -12797,8 +12780,7 @@ CODE_00F13A:
 
 
 CODE_00F16F:
-    COP #$07
-    db $01,$9B,$77,$F1
+    %CopJumpIfEventFlagIsUnset($9B01, $F177)
     BRA CODE_00F19D
 
     COP #$AC
@@ -12813,8 +12795,7 @@ CODE_00F16F:
     BRL CODE_00F254
 
 CODE_00F19D:
-    COP #$07
-    db $02,$9B,$A5,$F1
+    %CopJumpIfEventFlagIsUnset($9B02, $F1A5)
     BRA CODE_00F1CB
 
     COP #$AC
@@ -12829,8 +12810,7 @@ CODE_00F19D:
     BRL CODE_00F254
 
 CODE_00F1CB:
-    COP #$07
-    db $03,$9B,$D3,$F1
+    %CopJumpIfEventFlagIsUnset($9B03, $F1D3)
     BRA CODE_00F1F7
 
     COP #$AC
@@ -12844,8 +12824,7 @@ CODE_00F1CB:
     BRL CODE_00F254
 
 CODE_00F1F7:
-    COP #$07
-    db $04,$9B,$FF,$F1
+    %CopJumpIfEventFlagIsUnset($9B04, $F1FF)
     BRA CODE_00F225
 
     COP #$AC
@@ -12860,8 +12839,7 @@ CODE_00F1F7:
     BRL CODE_00F254
 
 CODE_00F225:
-    COP #$07
-    db $05,$9B,$2D,$F2
+    %CopJumpIfEventFlagIsUnset($9B05, $F22D)
     BRA CODE_00F243
 
     COP #$AC
@@ -13322,8 +13300,7 @@ CODE_00F66E:
 
     COP #$01
     db $B0,$F7
-    COP #$07
-    db $00,$9B,$9C,$F6
+    %CopJumpIfEventFlagIsUnset($9B00, $F69C)
     COP #$1A
     db $43,$CF,$02,$54,$F7
     LDA.L $0003D0
@@ -13438,10 +13415,8 @@ CODE_00F754:
     db $6E,$F6
 
 CODE_00F77B:
-    COP #$07
-    db $02,$86,$94,$F7
-    COP #$07
-    db $00,$1B,$94,$F7
+    %CopJumpIfEventFlagIsUnset($8602, $F794)
+    %CopJumpIfEventFlagIsUnset($1B00, $F794)
     COP #$03
     db $03
     COP #$04
@@ -13508,8 +13483,7 @@ aDoNotRushBla:
     db $20,$77,$68,$65,$72,$65,$20,$E1,$0D,$6E,$65,$78,$74,$20,$73,$74
     db $6F,$6E,$65,$20,$61,$77,$61,$69,$74,$73,$20,$0D,$79,$6F,$75,$2E
     db $3E,$20,$13,$52,$FA
-    COP #$07
-    db $06,$9F,$95,$F9
+    %CopJumpIfEventFlagIsUnset($9F06, $F995)
     COP #$09
     db $06,$9F
     COP #$1B
