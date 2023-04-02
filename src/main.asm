@@ -4,6 +4,7 @@ incsrc "soundIds.asm"
 incsrc "macros.asm"
 incsrc "items.asm"
 incsrc "text.asm"
+incsrc "eventIds.asm"
 
 incsrc "snes_header.asm"
 

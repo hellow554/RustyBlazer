@@ -3,9 +3,9 @@ macro CopShowText(textPtr)
     dw <textPtr>
 endmacro
 
-macro CopGiveItem(itemId)
-    COP #$0A
-    db <itemId>
+macro CopWaitForEventFlagToBeSet(eventId)
+    COP #$05
+    dw <eventId>
 endmacro
 
 macro CopJumpIfEventFlagIsUnset(eventid, addr)
@@ -14,9 +14,35 @@ macro CopJumpIfEventFlagIsUnset(eventid, addr)
     dw <addr>
 endmacro
 
+macro CopJumpIfEventFlagIsSet(eventid, addr)
+    COP #$08
+    dw <eventid>
+    dw <addr>
+endmacro
+
+macro CopSetEvent(eventId)
+    Cop #$09
+    dw <eventId>|$8000
+endmacro
+
+macro CopClearEvent(eventId)
+    Cop #$09
+    dw <eventId>
+endmacro
+
+macro CopGiveItem(itemId)
+    COP #$0A
+    db <itemId>
+endmacro
+
 macro CopRemoveItem(itemId)
     COP #$0B
     db <itemId>
+endmacro
+
+macro CopTeleportNpcTo(npc_id, x, y)
+    COP #$11
+    db <npc_id>, <x>, <y>
 endmacro
 
 macro CopJumpIfSealed(lairId, target)
@@ -75,6 +101,10 @@ macro CopJumpIfRevealing(lairId, target)
     dl <target>
 endmacro
 
+macro CopRestoreToFullHealth()
+    COP #$37
+endmacro
+
 macro Cop85(addr)
     COP #$85
     dl <addr>
@@ -82,6 +112,16 @@ endmacro
 
 macro CopSetScriptAddrToNextInstruction()
     COP #$91
+endmacro
+
+macro CopJumpDependingOnPlayerX(x_proximity, too_left, inside, too_right)
+    COP #$9A
+    dw <x_proximity>, <too_left>, <inside>, <too_right>
+endmacro
+
+macro CopJumpDependingOnPlayerY(y_proximity, too_top, inside, too_bottom)
+    COP #$9B
+    dw <y_proximity>, <too_top>, <inside>, <too_bottom>
 endmacro
 
 macro CopAdjustNpcXPosition(pos)

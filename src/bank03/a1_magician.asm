@@ -8,8 +8,7 @@ A1_magician_script:
     %CopAssignTalkCallback(.talkCallback)
     %CopMakeNpcUnpassable()
     %CopAddBlockRelativeToNpc(!FullBlockSize*1, $00)
-    COP #$05
-    db $04,$05
+    %CopWaitForEventFlagToBeSet($504)
     ; --- wait until player talked to us ---
     %CopMakeNpcPassable()
     %CopRemoveBlockRelativeToNpc(!FullBlockSize*1, $00)
@@ -28,8 +27,7 @@ A1_magician_script:
         STA.W playerSouls
     REP #$20
 
-    COP #$09
-        dw $8504
+    %CopSetEvent($504)
     BRK #!Sound_SomebodyAppears
     RTL
 

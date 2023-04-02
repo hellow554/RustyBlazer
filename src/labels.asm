@@ -206,6 +206,9 @@ A2A7H = $004379
 NTRL7 = $00437A
 UNUSED7 = $00437B
 MIRR7 = $00437F
+
+; please add new labels below this line, not above
+
 save_entries = $700000
 soundIdAddr = $01003B
 soundIdBank = $01003C
@@ -289,3 +292,5 @@ PTR16_01800D = $01800D
 PTR16_01800B = $01800B
 PTR16_00FFFF = $00FFFF
 LOOSE_OP_008E70 = $008E70
+; COP_TEMP contains the address of the COP arguments stored directly after the `COP xx` opcode
+COP_TEMP = $000038

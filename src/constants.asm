@@ -30,3 +30,5 @@
 !FullBlockSize  = $10
 
 !MN_Misc        = $00
+
+!NPC_ChiefsWife = $04

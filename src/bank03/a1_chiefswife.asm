@@ -4,18 +4,17 @@ A1_chiefswife_script:
 
 +:
     %CopJumpIfRevealing($02, .revealTalk)
-    %CopJumpIfSealed($09, .bridgeGuardRevealed)
+    %CopJumpIfSealed($09, .villageChiefRevealed)
     %CopAssignTalkCallback(.defaultTalk)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
-.bridgeGuardRevealed:
-    %CopJumpIfEventFlagIsUnset($9F02, .bla)
+.villageChiefRevealed:
+    %CopJumpIfEventFlagIsUnset($1F02|$8000, .bla)
     %CopAssignTalkCallback(.bla2)
-    COP #$11
-    db $04,$3B,$1E
-    COP #$15
+    %CopTeleportNpcTo(!NPC_ChiefsWife, 59, 30)
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -24,27 +23,25 @@ A1_chiefswife_script:
     RTL
 
 .defaultTalk:
-    %CopJumpIfEventFlagIsUnset($8101, $8152)
+    %CopJumpIfEventFlagIsUnset(!EV_A1_ChiefsWifeAsk|$8000, .alreadyAsked)
     %CopShowText(.aMyHusband)
     %CopShowMenu(choiceYesNo, 2, .sayNo)
     LDA.L choiceNumber&$00FFFF ; not sure what and why they did here
     BNE .sayNo ; if it is not 0, e.g. 1 -> no
-    COP #$09
-    db $01,$81
+    %CopSetEvent(!EV_A1_ChiefsWifeAsk)
 
     %CopShowText(.aSaidYes)
-    BRL .CODE_038156
-
+    BRL +
 
 .sayNo:
     %CopShowText(.aSaidNo)
     RTL
 
-.CODE_038152:
+.alreadyAsked:
     %CopShowText(.aTextProgression1)
 
-.CODE_038156:
-    COP #$37
++:
+    %CopRestoreToFullHealth()
     RTL
 
 .revealTalk:
@@ -57,7 +54,7 @@ A1_chiefswife_script:
     %CopShowText(.aAfterSoldiersTookLisa)
     RTL
 +:
-    %CopShowText(.aTextProgression2)
+    %CopShowText(.aLisaRevealed)
     RTL
 
 
@@ -86,7 +83,7 @@ A1_chiefswife_script:
     db $13
     dw aClearTextboxAndEnd
 
-.aTextProgression1
+.aTextProgression1:
     db $10, $02, $02, ", ", $0D
     db $FE, $98, $BC, "walking ", $0D
     db $9B, "doing nothing. ", $11
@@ -98,7 +95,7 @@ A1_chiefswife_script:
     db $13
     dw aClearTextboxAndEnd
 
-.aTextProgression2
+.aLisaRevealed:
     db $10, $88, "feel bad ", $AE, "Li"
     db "sa, ", $0D, "having been sepa"
     db "rated ", $0D, $AD, "her parents. "

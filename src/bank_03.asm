@@ -1,11 +1,11 @@
 
 ORG $038000
 
-incsrc "bank03/crabwalkguy.asm"
-incsrc "bank03/chiefswife.asm"
-incsrc "bank03/toolshopowner.asm"
-incsrc "bank03/tulip_chiefhouse.asm"
-incsrc "bank03/bridgeguard.asm"
+incsrc "bank03/a1_crabwalkguy.asm"
+incsrc "bank03/a1_chiefswife.asm"
+incsrc "bank03/a1_toolshopowner.asm"
+incsrc "bank03/a1_tulip_chiefhouse.asm"
+incsrc "bank03/a1_bridgeguard.asm"
 
 CODE_0386A2:
     COP #$14
@@ -1587,7 +1587,7 @@ aWho:
     db $6C,$64,$20,$6E,$65,$76,$65,$72,$20,$65,$6E,$64,$2E,$20,$0E,$78
     db $13,$89,$B9
 
-incsrc "bank03/magician.asm"
+incsrc "bank03/a1_magician.asm"
 
     %CopJumpIfEventFlagIsUnset($8905, $AA33)
     COP #$B0

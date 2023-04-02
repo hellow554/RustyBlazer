@@ -1,5 +1,3 @@
-COP_TEMP = $7E0038 ; COP_TEMP contains the address of the COP arguments stored directly after the `COP xx` opcode
-
 Native_mode_COP:
     SEP #$20
     TXY

@@ -3,14 +3,14 @@ A1_bridgeguard_script:
     RTL
 
 +:
-    %Cop85($00A99D)
+    %Cop85(CODE_00A99D)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($8202, $85D4)
     %CopAssignTalkCallback($8635)
     RTL
 
-    %CopAssignTalkCallback($863E)
+    %CopAssignTalkCallback(CODE_03863E)
     COP #$0C
     db $00,$04,$0F,$86
     %CopJumpIfEventFlagIsUnset($8004, $85FD)
@@ -64,6 +64,7 @@ A1_bridgeguard_script:
     db $02,$82
     RTL
 
+CODE_03863E:
     COP #$01
     db $98,$86
     RTL

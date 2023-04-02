@@ -9,8 +9,7 @@ A1_toolshopowner_script:
     %CopSetScriptAddrToNextInstruction()
     COP #$20
     db $95,$83
-    COP #$9A
-    dw 0, .walkToLeft, .CODE_038395, .walkToRight
+    %CopJumpDependingOnPlayerX(0, .walkToLeft, .CODE_038395, .walkToRight)
 
 .walkToLeft:
     COP #$23
@@ -44,8 +43,6 @@ A1_toolshopowner_script:
 .CODE_038395:
     COP #$27
     dw .loop
-
-
 
 .defaultTalk:
     %CopJumpIfItemNotObtained(!itemMedicalHerb, +)
