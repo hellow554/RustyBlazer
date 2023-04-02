@@ -13,6 +13,25 @@ RefreshUiHook:
     PHX ; just to be sure
 
     REP #$20                ; swap to A16
+; comment this part out
+.printXYPosition:
+    LDA $0378 ; x position
+    LDX.w #Temp0
+    SEP #$20
+    JSL $02B215
+    REP #$20
+
+    LDA $037A ; y position
+    LDX.w #Temp1
+    SEP #$20
+    JSL $02B215
+    REP #$20
+
+    LDY.w #XYPos
+    JSL $02A769
+
+; until here
+
     LDA $0332 ; updateHudBitfield
     BIT.w #$08 ; level bit
     BEQ .printRemainingLairs
@@ -39,18 +58,19 @@ RefreshUiHook:
     JSL $02A769             ; printOsdStringFromBank2
 
 .printNextLevelExp:
-    LDA $1B86 ; current level
-    ASL
-    ASL
-    TAX
-    LDA $1FBB8, X ; the exp table
-    STA Temp2
-    LDA $1FBB8+2, X
-    STA Temp0
-    LDY.w #NextLevelExp
-    JSL $02A769
-
-    LDA $0332 ; updateHudBitfield for the next BIT instruction
+; commented out for x/y
+;    LDA $1B86 ; current level
+;    ASL
+;    ASL
+;    TAX
+;    LDA $1FBB8, X ; the exp table
+;    STA Temp2
+;    LDA $1FBB8+2, X
+;    STA Temp0
+;    LDY.w #NextLevelExp
+;    JSL $02A769
+;
+;    LDA $0332 ; updateHudBitfield for the next BIT instruction
 
 .printRemainingLairs:
     BIT.w #$20
@@ -117,6 +137,17 @@ NextLevelExp:
 LairInfo:
     db $09, $03, $24
     db $01, $2A, $00, "LIR  "
+    db $03, $20
+    db $06, $02
+    dw Temp0
+    db "/"
+    db $06, $02
+    dw Temp1
+    db $00
+
+XYPos:
+    db $09, $03, $24
+    db $01, $18, $00, "X/Y"
     db $03, $20
     db $06, $02
     dw Temp0
