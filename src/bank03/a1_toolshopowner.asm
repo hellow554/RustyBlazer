@@ -9,7 +9,7 @@ A1_toolshopowner_script:
     %CopSetScriptAddrToNextInstruction()
     COP #$20
     db $95,$83
-    %CopJumpDependingOnPlayerX(0, .walkToLeft, .CODE_038395, .walkToRight)
+    %CopJumpDependingOnPlayerXProximity(0, .walkToLeft, .CODE_038395, .walkToRight)
 
 .walkToLeft:
     COP #$23

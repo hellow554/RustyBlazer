@@ -6,19 +6,23 @@ A1_bridgeguard_script:
     %Cop85(CODE_00A99D)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
-    %CopJumpIfEventFlagIsUnset($8202, $85D4)
-    %CopAssignTalkCallback($8635)
+    %CopJumpIfEventFlagIsUnset(!EV_A1_BridgeGuardTalk|$8000, .CODE_0385D4)
+
+    %CopAssignTalkCallback(.firstTalk)
     RTL
 
-    %CopAssignTalkCallback(CODE_03863E)
+.CODE_0385D4:
+    %CopAssignTalkCallback(.passTalk)
     COP #$0C
     db $00,$04,$0F,$86
     %CopJumpIfEventFlagIsUnset($8004, $85FD)
-    COP #$9A
-    db $00,$00,$EE,$85,$0F,$86,$F3,$85
+    %CopJumpDependingOnPlayerXProximity(0, .CODE_0385EE, .CODE_03860F, .CODE_0385F3)
+
+.CODE_0385EE:
     COP #$97
     BRL .CODE_0385F5
 
+.CODE_0385F3:
     COP #$96
 
 .CODE_0385F5:
@@ -31,12 +35,13 @@ A1_bridgeguard_script:
     COP #$9D
     db $04
     COP #$9E
-    db $06,$86
+    dw .CODE_038606
+.CODE_038606:
     COP #$15
-    COP #$09
-    db $04,$00
+    %CopClearEventFlag($04)
     BRL .CODE_038631
 
+.CODE_03860F:
     %CopJumpIfEventFlagIsUnset($8004, $862C)
     COP #$16
     COP #$9D
@@ -58,15 +63,13 @@ A1_bridgeguard_script:
 .CODE_038631:
     COP #$27
     db $D8,$85
-    COP #$01
-    db $43,$86
-    COP #$09
-    db $02,$82
+.firstTalk:
+    %CopShowText(.atxt)
+    %CopSetEventFlag(!EV_A1_BridgeGuardTalk)
     RTL
 
-CODE_03863E:
-    COP #$01
-    db $98,$86
+.passTalk:
+    %CopShowText(.aPass)
     RTL
 
 .atxt:

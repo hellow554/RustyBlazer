@@ -28,7 +28,7 @@ A1_chiefswife_script:
     %CopShowMenu(choiceYesNo, 2, .sayNo)
     LDA.L choiceNumber&$00FFFF ; not sure what and why they did here
     BNE .sayNo ; if it is not 0, e.g. 1 -> no
-    %CopSetEvent(!EV_A1_ChiefsWifeAsk)
+    %CopSetEventFlag(!EV_A1_ChiefsWifeAsk)
 
     %CopShowText(.aSaidYes)
     BRL +

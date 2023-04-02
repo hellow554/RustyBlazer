@@ -1086,7 +1086,7 @@ CODE_1F902C:
     db $90,$93
     COP #$01
     db $9F,$93
-    COP #$37
+    %CopRestoreToFullHealth()
     STZ.W lairRevealInProgress
     COP #$86
     RTL

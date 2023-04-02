@@ -448,7 +448,7 @@
     db $E1,$00,$8D,$86,$02,$14,$E6,$00,$8D,$86,$80,$04
     COP #$01
     db $96,$86
-    COP #$37
+    %CopRestoreToFullHealth()
     COP #$86
     RTL
     db $10,$0E,$1E,$4B,$69,$6E,$67,$2C,$20,$98,$FE,$6F,$6B,$61,$79,$3F
@@ -2104,7 +2104,7 @@ CODE_04A65C:
     RTL
     %CopJumpIfEventFlagIsUnset($0605, $A703)
     %CopJumpIfEventFlagIsUnset($8606, $A708)
-    
+
     db $02,$01,$11,$A7,$6B
     COP #$01
     db $50,$A7
@@ -2500,7 +2500,7 @@ UNREACH_04ABC3:
 CODE_04AD5A:
     COP #$01
     db $98,$AD
-    COP #$37
+    %CopRestoreToFullHealth()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
@@ -2899,7 +2899,7 @@ UNREACH_04B2F5:
     RTL
     COP #$01
     db $61,$B5
-    COP #$37
+    %CopRestoreToFullHealth()
     COP #$86
     RTL
     db $10,$0E,$3C,$88,$9D,$4D,$61,$72,$69,$65,$2C,$20,$E1,$64,$6F,$6C
@@ -4433,7 +4433,7 @@ CODE_04D32D:
     RTL
     COP #$01
     db $ED,$D5
-    COP #$37
+    %CopRestoreToFullHealth()
     COP #$86
     RTL
     db $10,$0E,$3C,$88,$6B,$6E,$65,$77,$20,$F5,$F3,$0D,$68,$61,$70,$70
@@ -4942,7 +4942,7 @@ CODE_04DFA8:
     %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfEventFlagIsUnset($8900, $DFC2)
-    
+
     db $02,$AC,$FC,$E6,$04,$30,$02,$80,$01,$40,$00,$80,$0B
     COP #$AC
     db $0A,$E7,$04,$20,$02,$90,$01,$40,$00

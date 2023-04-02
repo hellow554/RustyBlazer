@@ -6095,7 +6095,7 @@ CODE_00AF91:
 
 CODE_00AFA3:
     STA.W playerCurrentHealth
-    COP #$37
+    %CopRestoreToFullHealth()
     INC.W playerLevel
     SED
     LDA.W playerLevel_ASCII
@@ -7630,7 +7630,7 @@ CODE_00C70F:
     db $00,$02,$2F,$C7,$02,$9B,$28,$00,$1F,$C7,$42,$C8,$27,$C7,$02,$80
     db $0F,$02,$82,$82,$56,$00,$02,$80,$12,$02,$82,$82,$95,$00
     %CopJumpIfEventFlagIsUnset($8001, $C93D)
-    
+
     db $02,$80,$12,$02,$82,$02,$09,$01,$80,$82,$C0,$02
 
 CODE_00C741:
@@ -8725,7 +8725,7 @@ CODE_00D341:
     LDA.W #$2010
     STA.W $0016,X
     INC.W $0466
-    COP #$37
+    %CopRestoreToFullHealth()
     COP #$31
     db $00
     COP #$03
@@ -9184,7 +9184,8 @@ IntroScene:
     STA.W $0014,Y
     RTS
 
-    LDA.W #$3080
+IntrosCene_Script:
+    LDA.W #!Key16_A|!Key16_Start|!Key16_Select
     TSB.W wButtonMask
     STX.W $039C
     PHX
@@ -9205,6 +9206,7 @@ IntroScene:
     %CopSetScriptAddrToNextInstruction()
     RTL
 
+CODE_00E6FC:
     LDA.W #$3000
     TSB.W wButtonMask
     STZ.W wButtonsPressed
@@ -10067,6 +10069,7 @@ CODE_00EE1D:
 CODE_00EE27:
     RTS
 
+CODE_00EE28:
     %CopJumpIfEventFlagIsUnset($9F05, $EE34)
     %CopJumpIfEventFlagIsUnset($9F04, $F264)
     INC.W $0454
@@ -10425,45 +10428,61 @@ CODE_00F07A:
     RTL
 
 
+; some scripts
+
 CODE_00F0B3:
-    %CopJumpIfEventFlagIsUnset($9F05, $F0BF)
-    %CopJumpIfEventFlagIsUnset($9F04, $F0C2)
+    %CopJumpIfEventFlagIsUnset($9F05, CODE_00F0BF)
+    %CopJumpIfEventFlagIsUnset($9F04, CODE_00F0C2)
+
+CODE_00F0BF:
     %CopSetScriptAddrToNextInstruction()
     RTL
 
+CODE_00F0C2:
     COP #$86
     RTL
+
+CODE_00F0C5:
     RTL
 
+CODE_00F0C6:
     COP #$A3
     RTL
 
+CODE_00F0C9:
     BRA CODE_00F0B3
-
+CODE_00F0CB:
     RTL
 
+CODE_00F0CC:
     RTL
 
+CODE_00F0CD:
     BRA CODE_00F0B3
 
+CODE_00F0CF:
     COP #$80
     db $04
     COP #$82
     RTL
 
+CODE_00F0D5:
     COP #$80
     db $05
     COP #$82
     RTL
 
+CODE_00F0DB:
     COP #$80
     db $30
     COP #$82
     RTL
+CODE_00F0E1:
+    RTL
+CODE_00F0E2:
     RTL
 
-    RTL
-
+CODE_00F0E3:
     COP #$14
     db $B6,$00,$EC,$F0
     %CopSetScriptAddrToNextInstruction()
@@ -10474,6 +10493,8 @@ CODE_00F0B3:
     COP #$82
     %CopSetScriptAddrToNextInstruction()
     RTL
+
+CODE_00F0F4:
     COP #$14
     db $09,$00,$FB,$F0,$6B
     COP #$80
@@ -10482,8 +10503,10 @@ CODE_00F0B3:
     %CopSetScriptAddrToNextInstruction()
     RTL
 
+CODE_00F103:
     RTL
 
+CODE_00F104:
     COP #$14
     db $2F,$01,$0D,$F1
     %CopSetScriptAddrToNextInstruction()
@@ -10494,18 +10517,27 @@ CODE_00F0B3:
     COP #$82
     %CopSetScriptAddrToNextInstruction()
     RTL
+
+CODE_00F115:
     COP #$80
     db $31
     COP #$82
     RTL
+
+CODE_00F11B:
     COP #$80
     db $32
     COP #$82
     RTL
+
+CODE_00F121:
     COP #$80
     db $33
     COP #$82
     RTL
+
+
+CODE_00F127:
     %CopJumpIfEventFlagIsUnset($9F05, $F133)
     %CopJumpIfEventFlagIsUnset($9F04, $F13A)
 CODE_00F133:
@@ -10644,6 +10676,8 @@ CODE_00F254:
     COP #$94
     COP #$86
     RTL
+
+CODE_00F29D:
     LDA.W $0016,X
     ORA.W #$2010
     STA.W $0016,X
@@ -11043,10 +11077,12 @@ CODE_00F614:
     LDA.W #$0020
     STA.W $03B4
     INC.W $0454
+
     %CopSetScriptAddrToNextInstruction()
     RTL
-    COP #$37
 
+CODE_00F66C:
+    %CopRestoreToFullHealth()
 CODE_00F66E:
     %CopSetScriptAddrToNextInstruction()
     COP #$0D
@@ -11240,6 +11276,8 @@ aDoNotRushBla:
     db $20,$77,$68,$65,$72,$65,$20,$E1,$0D,$6E,$65,$78,$74,$20,$73,$74
     db $6F,$6E,$65,$20,$61,$77,$61,$69,$74,$73,$20,$0D,$79,$6F,$75,$2E
     db $3E,$20,$13,$52,$FA
+
+CODE_00F97B:
     %CopJumpIfEventFlagIsUnset($9F06, $F995)
     COP #$09
     db $06,$9F

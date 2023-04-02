@@ -4,28 +4,33 @@ macro CopShowText(textPtr)
 endmacro
 
 macro CopWaitForEventFlagToBeSet(eventId)
+    assert <eventId>&$FF<8, "Second byte must be less than 8"
     COP #$05
     dw <eventId>
 endmacro
 
-macro CopJumpIfEventFlagIsUnset(eventid, addr)
+macro CopJumpIfEventFlagIsUnset(eventId, addr)
+    assert <eventId>&$FF<8, "Second byte must be less than 8"
     COP #$07
-    dw <eventid>
+    dw <eventId>
     dw <addr>
 endmacro
 
-macro CopJumpIfEventFlagIsSet(eventid, addr)
+macro CopJumpIfEventFlagIsSet(eventId, addr)
+    assert <eventId>&$FF<8, "Second byte must be less than 8"
     COP #$08
-    dw <eventid>
+    dw <eventId>
     dw <addr>
 endmacro
 
-macro CopSetEvent(eventId)
+macro CopSetEventFlag(eventId)
+    assert <eventId>&$FF<8, "Second byte must be less than 8"
     Cop #$09
     dw <eventId>|$8000
 endmacro
 
-macro CopClearEvent(eventId)
+macro CopClearEventFlag(eventId)
+    assert <eventId>&$FF<8, "Second byte must be less than 8"
     Cop #$09
     dw <eventId>
 endmacro
@@ -114,12 +119,12 @@ macro CopSetScriptAddrToNextInstruction()
     COP #$91
 endmacro
 
-macro CopJumpDependingOnPlayerX(x_proximity, too_left, inside, too_right)
+macro CopJumpDependingOnPlayerXProximity(x_proximity, too_left, inside, too_right)
     COP #$9A
     dw <x_proximity>, <too_left>, <inside>, <too_right>
 endmacro
 
-macro CopJumpDependingOnPlayerY(y_proximity, too_top, inside, too_bottom)
+macro CopJumpDependingOnPlayerYProximity(y_proximity, too_top, inside, too_bottom)
     COP #$9B
     dw <y_proximity>, <too_top>, <inside>, <too_bottom>
 endmacro
