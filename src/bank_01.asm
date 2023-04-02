@@ -16,6 +16,7 @@ PTR16_01800A:
     dw entities_WorldOfEvil
 
 entities_GrassValley:
+    ; unknown
     %create_entity(_, $201, 3, 5, 0, $80, $11, UNREACH_0B8000, CODE_009A28)
     %create_entity(_, 0, 0, 0, 0, $10, $20, UNREACH_0D8000, CODE_00A9E8)
     %create_entity(_, 0, 0, 0, 1, $10, $20, UNREACH_0D8000, CODE_00A9E8)
@@ -28,93 +29,93 @@ entities_GrassValley:
     %create_entity(_, 0, 0, 0, 6, $10, $20, UNREACH_0D8000, CODE_00A9E8)
     %create_entity(_, 0, 0, 0, 0, $10, $20, 0, CODE_03B273)
 
-    %create_entity(entity_act1_crab_walk_guy, 0, 0, 0, 2, $48, $30, $7E3800, A1_crabwalkguy_script)
-    %create_entity(entity_act1_chiefs_wife,   0, 0, 0, 6, $48, $30, $7E3800, A1_chiefswife_script)
+    ; npcs in town
+    %create_entity(entity_act1_crab_walk_guy,
+        0, 0, 0, $02, $48, $30, $7E3800, A1_crabwalkguy_script)
+    %create_entity(entity_act1_chiefs_wife,
+        0, 0, 0, $06, $48, $30, $7E3800, A1_chiefswife_script)
+    %create_entity(entity_act1_toolshop_owner,
+        0, 0, 0, $06, $58, $30, $7E3800, A1_toolshopowner_script)
+    %create_entity(entity_act1_tulip_chief_house,
+        0, 0, 0, $1E, $50, $30, $7E3800, A1_tulip_chiefhouse_script)
+    %create_entity(entity_act1_bridge_guard,
+        0, 0, 0, $02, $48, $30, $7E3800, A1_bridgeguard_script)
+    %create_entity(entity_act1_water_mill_keeper,
+        0, 0, 0, $01, $48, $30, $7E3800, CODE_0386A2)
+    %create_entity(entity_act1_pen_goat_west,
+        0, 0, 0, $18, $40, $30, $7E3800, CODE_03891A)
+    %create_entity(entity_act1_lisa,
+        0, 0, 0, $12, $40, $30, $7E3800, CODE_038A59)
+    %create_entity(entity_act1_tulip_crab_guy,
+        0, 0, 0, $1E, $50, $30, $7E3800, CODE_038FF4)
+    %create_entity(entity_act1_gaudi,
+        0, 0, 0, $02, $48, $30, $7E3800, CODE_03910C)
+    %create_entity(entity_act1_tulip_hilltop,
+        0, 0, 0, $0C, $48, $30, $7E3800, CODE_0391D2)
+    %create_entity(entity_act1_hilltop_guy,
+        0, 0, 0, $1E, $50, $30, $7E3800, CODE_039365)
+    %create_entity(_,
+        0, 0, 0, $00, $48, $20, $7E3800, CODE_039475)
+    %create_entity(_,
+        0, 0, 0, $1C, $50, $30, $7E3800, CODE_039644)
+    %create_entity(_,
+        0, 0, 0, $1D, $50, $30, $7E3800, CODE_039656)
+    %create_entity(entity_act1_secret_hut_boy,
+        0, 0, 0, $0C, $40, $30, $7E3800, CODE_039668)
+    %create_entity(entity_act1_sleeping_tulip,
+        0, 0, 0, $1E, $40, $30, $7E3800, CODE_0397DA)
+    %create_entity(entity_act1_secret_passage_boy,
+        0, 0, 0, $0C, $48, $30, $7E3800, CODE_0398A6)
+    %create_entity(entity_act1_pen_goat_east,
+        0, 0, 0, $18, $40, $30, $7E3800, CODE_039A2C)
+    %create_entity(entity_act1_pen_goat_north,
+        0, 0, 0, $18, $40, $20, $7E3800, CODE_039CDE)
 
-entity_act1_tool_shop_owner:
-    db $00,$00,$00,$00,$00,$06,$58,$30,$00,$38,$7E,$53,$83,$03
+    ; enemies in act1
+    %create_entity(entity_act1_metal_mantis,
+        $206, $32, $50, $00, $00, $10, $7E3800, CODE_00B1AD)
+    %create_entity(entity_act1_cherry_head,
+        $01, $03, $01, $00, $00, $10, $7E3800, CODE_1FAA49)
+    %create_entity(entity_act1_bondguard,
+        $101, $04, $02, $06, $00, $10, $7E3800, CODE_1FAA8F)
+    %create_entity(_,
+        $101, $03, $01, $1B, $00, $00, $7E3800, CODE_1FAB9A)
+    %create_entity(_,
+        $01, $03, $01, $12, $00, $10, $7E3800, CODE_1FAC31)
+    %create_entity(_,
+        $01, $03, $01, $2E, $00, $10, $7E3800, CODE_1FAC7A)
+    %create_entity(entity_act1_gepper,
+        $01, $05, $02, $18, $00, $00, $7E3800, CODE_1FACF2)
+    %create_entity(entity_act1_spear_guy,
+        $03, $09, $05, $12, $00, $10, $7E3800, CODE_1FAD2A)
+    %create_entity(entity_act1_metagrinner,
+        $804, $18, $250, $1E, $00, $00, $7E3800, CODE_1FAEE5)
+    %create_entity(_,
+        $03, $04, $03, $18, $00, $00, $7E3800, CODE_1FAF44)
+    %create_entity(entity_act1_stone_fire_pot,
+        $03, $09, $04, $22, $00, $00, $7E3800, CODE_1FAFAD)
 
-entity_act1_tulip_chief_house:
-    db $00,$00,$00,$00,$00,$1E,$50,$30,$00,$38,$7E,$8A,$84,$03
+    ; dream entities
+    %create_entity(entity_act1_tulips_dream_tulip,
+        $00, $00, $00, $1E, $40, $30, $7E3800, CODE_03A3B0)
+    %create_entity(entity_act1_lisas_dream_lisa,
+        $00, $00, $00, $1F, $40, $30, $7E3800, CODE_03A440)
+    %create_entity(_,
+        $00, $00, $00, $00, $00, $20, $000000, CODE_03AFFD)
+    %create_entity(_,
+        $00, $00, $00, $00, $10, $20, $000000, CODE_03B23D)
 
-entity_act1_bridge_guard:
-    db $00,$00,$00,$00,$00,$02,$48,$30,$00,$38,$7E,$B9,$85,$03
+    %create_entity(_,
+        $203, $04, $03, $00, $00, $00, $7E3800, CODE_1FB04F)
+    %create_entity(_,
+        $03, $01, $00, $22, $02, $00, $7E3800, CODE_1FB0D6)
+    %create_entity(_,
+        $00, $00, $00, $28, $40, $00, $7E3800, CODE_03AE99)
+    %create_entity(_, 
+        $00, $00, $00, $29, $40, $00, $7E3800, CODE_03AF5C)
+    %create_entity(entity_act1_trialroom_magician,
+        $00, $00, $00, $38, $40, $20, $7E3800, A1_magician_script)
 
-entity_act1_water_mill_keeper:
-    db $00,$00,$00,$00,$00,$01,$48,$30,$00,$38,$7E,$A2,$86,$03
-
-entity_act1_pen_goat_west:
-    db $00,$00,$00,$00,$00,$18,$40,$30,$00,$38,$7E,$1A,$89,$03
-
-entity_act1_lisa:
-    db $00,$00,$00,$00,$00,$12,$40,$30,$00,$38,$7E,$59,$8A,$03
-
-entity_act1_tulip_crab_guy:
-    db $00,$00,$00,$00,$00,$1E,$50,$30,$00,$38,$7E,$F4,$8F,$03
-
-entity_act1_gaudi:
-    db $00,$00,$00,$00,$00,$02,$48,$30,$00,$38,$7E,$0C,$91,$03
-
-entity_act1_tulip_hilltop:
-    db $00,$00,$00,$00,$00,$0C,$48,$30,$00,$38,$7E,$D2,$91,$03
-
-entity_act1_hilltop_guy:
-    db $00,$00,$00,$00,$00,$1E,$50,$30,$00,$38,$7E,$65,$93,$03,$00,$00
-    db $00,$00,$00,$00,$48,$20,$00,$38,$7E,$75,$94,$03,$00,$00,$00,$00
-    db $00,$1C,$50,$30,$00,$38,$7E,$44,$96,$03,$00,$00,$00,$00,$00,$1D
-    db $50,$30,$00,$38,$7E,$56,$96,$03
-
-entity_act1_secret_hut_boy:
-    db $00,$00,$00,$00,$00,$0C,$40,$30,$00,$38,$7E,$68,$96,$03
-
-entity_act1_sleeping_tulip:
-    db $00,$00,$00,$00,$00,$1E,$40,$30,$00,$38,$7E,$DA,$97,$03
-
-entity_act1_secret_passage_boy:
-    db $00,$00,$00,$00,$00,$0C,$48,$30,$00,$38,$7E,$A6,$98,$03
-
-entity_act1_pen_goat_east:
-    db $00,$00,$00,$00,$00,$18,$40,$30,$00,$38,$7E,$2C,$9A,$03
-
-entity_act1_pen_goat_north:
-    db $00,$00,$00,$00,$00,$18,$40,$20,$00,$38,$7E,$DE,$9C,$03
-
-entity_act1_metal_mantis:
-    db $06,$02,$32,$50,$00,$00,$00,$10,$00,$38,$7E,$AD,$B1,$00
-
-entity_act1_cherry_head:
-    db $01,$00,$03,$01,$00,$00,$00,$10,$00,$38,$7E,$49,$AA,$1F
-
-entity_act1_bondguard:
-    db $01,$01,$04,$02,$00,$06,$00,$10,$00,$38,$7E,$8F,$AA,$1F,$01,$01
-    db $03,$01,$00,$1B,$00,$00,$00,$38,$7E,$9A,$AB,$1F,$01,$00,$03,$01
-    db $00,$12,$00,$10,$00,$38,$7E,$31,$AC,$1F,$01,$00,$03,$01,$00,$2E
-    db $00,$10,$00,$38,$7E,$7A,$AC,$1F
-
-entity_act1_gepper:
-    db $01,$00,$05,$02,$00,$18,$00,$00,$00,$38,$7E,$F2,$AC,$1F
-
-entity_act1_spear_guy:
-    db $03,$00,$09,$05,$00,$12,$00,$10,$00,$38,$7E,$2A,$AD,$1F
-
-entity_act1_metagrinner:
-    db $04,$08,$18,$50,$02,$1E,$00,$00,$00,$38,$7E,$E5,$AE,$1F,$03,$00
-    db $04,$03,$00,$18,$00,$00,$00,$38,$7E,$44,$AF,$1F
-
-entity_act1_stone_fire_pot:
-    db $03,$00,$09,$04,$00,$22,$00,$00,$00,$38,$7E,$AD,$AF,$1F
-
-entity_act1_tulips_dream_tulip:
-    db $00,$00,$00,$00,$00,$1E,$40,$30,$00,$38,$7E,$B0,$A3,$03
-
-entity_act1_lisas_dream_lisa:
-    db $00,$00,$00,$00,$00,$1F,$40,$30,$00,$38,$7E,$40,$A4,$03,$00,$00
-    db $00,$00,$00,$00,$00,$20,$00,$00,$00,$FD,$AF,$03,$00,$00,$00,$00
-    db $00,$00,$10,$20,$00,$00,$00,$3D,$B2,$03,$03,$02,$04,$03,$00,$00
-    db $00,$00,$00,$38,$7E,$4F,$B0,$1F,$03,$00,$01,$00,$00,$22,$02,$00
-    db $00,$38,$7E,$D6,$B0,$1F,$00,$00,$00,$00,$00,$28,$40,$00,$00,$38
-    db $7E,$99,$AE,$03,$00,$00,$00,$00,$00,$29,$40,$00,$00,$38,$7E,$5C
-    db $AF,$03,$00,$00,$00,$00,$00,$38,$40,$20,$00,$38,$7E,$AC,$A7,$03
     db $00,$00,$00,$00,$00,$00,$48,$30,$00,$38,$7E,$F4,$9E,$03,$00,$00
     db $00,$00,$00,$18,$40,$30,$00,$38,$7E,$7A,$9F,$03,$00,$00,$00,$00
     db $00,$1E,$50,$20,$00,$38,$7E,$04,$A0,$03,$00,$00,$00,$00,$00,$15
@@ -644,17 +645,10 @@ entity_act7_rotating_wall:
     db $EC,$03,$00,$00,$00,$00,$00,$20,$50,$20,$00,$38,$7E,$4D,$CF,$00
     db $00,$00,$00,$00,$00,$00,$40,$20,$00,$38,$7E,$6D,$EE,$03
 
-entities_placement_pointer_:
-    db $00
+entities_placement_pointer:
+    %create_entities_placement(misc_mastershrine_GrassValley, !MN_Misc, 1, epc_grassValley_MastersShrine)
+    %create_entities_placement(misc_mastersShrineGreenWood,   !MN_Misc, 2, epc_greenWood_MastersShrine)
 
-UNREACH_0199B5:
-    db $01
-
-UNREACH_0199B6:
-    db $39,$9B
-
-misc_mastersShrineGreenWood:
-    db $00,$02,$46,$9B
 
 misc_mastersShrineStElles:
     db $00,$03,$4F,$9B
@@ -722,7 +716,10 @@ entities_placement_pointer_end:
     db $FF
 
 epc_grassValley_MastersShrine:
-    db $07,$06,$00,$00,$00,$00,$01,$54,$00,$00,$01,$55,$FF,$07,$06,$00
+    db $07,$06,$00,$00,$00,$00,$01,$54,$00,$00,$01,$55,$FF
+    
+epc_greenWood_MastersShrine:
+    db $07,$06,$00
     db $00,$00,$00,$01,$4C,$FF
 
 UNREACH_019B4F:

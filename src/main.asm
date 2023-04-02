@@ -1,5 +1,6 @@
 incsrc "settings.asm"
 incsrc "constants.asm"
+incsrc "soundIds.asm"
 incsrc "macros.asm"
 incsrc "items.asm"
 incsrc "text.asm"

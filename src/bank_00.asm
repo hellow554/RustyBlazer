@@ -2736,11 +2736,11 @@ loadEntities:
     LDX.W #$0000
 
 CODE_0092F5:
-    LDA.W entities_placement_pointer_,X
+    LDA.W entities_placement_pointer,X
     BMI CODE_009312
     CMP.W mapNumber
     BNE goToNextEntityPlacementPtr
-    LDA.W UNREACH_0199B5,X
+    LDA.W entities_placement_pointer+1,X
     CMP.W mapSubNumber
     BNE goToNextEntityPlacementPtr
     JSR.W CODE_009314
@@ -2764,7 +2764,7 @@ CODE_009314:
     LDA.B #$01
     STA.B $2B
     REP #$20
-    LDA.W UNREACH_0199B6,X
+    LDA.W entities_placement_pointer+2,X
     STA.B $29
     JSL.L loadEntityPtr
     BRA CODE_00933C
@@ -3069,7 +3069,7 @@ CODE_009578:
 CODE_00957F:
     LDA.W #$9A65
     STA.W $0018,Y
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
@@ -3083,7 +3083,7 @@ UNREACH_009588:
     LDA.W $0016,X
     ORA.W #$0010
     STA.W $0016,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     LDX.W $039C
     JSR.W CODE_00969C
@@ -3690,7 +3690,7 @@ CODE_0099A0:
 
 
 CODE_0099A4:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0380
     BEQ CODE_0099AC
     RTL
@@ -3779,7 +3779,7 @@ CODE_009A18:
     STZ.W $0020,X
     JSL.L CODE_0088F3
     STZ.W $0014,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
@@ -3810,7 +3810,7 @@ CODE_009A3D:
     COP #$85
     db $CF,$9F,$00
     STY.W $039E
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
 
 CODE_009A65:
     LDA.W $0016,X
@@ -4248,7 +4248,7 @@ CODE_009ED3:
     LDA.W actId
     INC A
     STA.W zwSceneId
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     BRK #$01
@@ -4367,7 +4367,7 @@ CODE_009FB8:
     AND.W #$CEFF
     STA.W $0016,X
     INC.W $0024,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$82
     RTL
 
@@ -4399,12 +4399,12 @@ CODE_00A00B:
 
 
 CODE_00A013:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
 CODE_00A016:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W playerSouls
     BNE CODE_00A01E
     RTL
@@ -4418,7 +4418,7 @@ CODE_00A01E:
     LDA.W $0016,X
     ORA.W #$0010
     STA.W $0016,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     JSR.W checkWhichMagicToCast
     BCC CODE_00A03A
@@ -4697,7 +4697,7 @@ CODE_00A22A:
     LDA.W #$4000
     TRB.W zwSomethingWithButtons
     STZ.W magicInUse
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$83
     COP #$86
     RTL
@@ -4896,7 +4896,7 @@ CODE_00A6E7:
     JSR.W CODE_00A842
 
 CODE_00A6F6:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0016,X
     BIT.W #$8000
     BEQ CODE_00A701
@@ -4912,7 +4912,7 @@ CODE_00A709:
     BRK #$53
     JSR.W CODE_00A8ED
     JSR.W CODE_00A913
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     JSR.W CODE_00A8C6
     BCC CODE_00A6F6
     JMP.W CODE_00A871
@@ -4923,7 +4923,7 @@ CODE_00A709:
     STA.W $002C,X
 
 CODE_00A727:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0016,X
     BIT.W #$8000
     BEQ CODE_00A732
@@ -4941,7 +4941,7 @@ CODE_00A73A:
     JSR.W CODE_00A913
     DEC.W $002C,X
     BNE CODE_00A727
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     JSR.W CODE_00A8C6
     BCS CODE_00A74F
     RTL
@@ -4980,7 +4980,7 @@ CODE_00A767:
     STA.W $001C,Y
     DEC.B $0C
     BNE CODE_00A767
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     JSR.W CODE_00A8C6
     BCS CODE_00A79D
     RTL
@@ -4999,7 +4999,7 @@ CODE_00A79D:
     STA.W $002C,X
 
 CODE_00A7DE:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0016,X
     BIT.W #$8000
     BEQ CODE_00A7E9
@@ -5020,7 +5020,7 @@ CODE_00A7F1:
     JSR.W CODE_00A913
     DEC.W $002C,X
     BNE CODE_00A7DE
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     JSR.W CODE_00A8C6
     BCS CODE_00A810
     RTL
@@ -5030,7 +5030,7 @@ CODE_00A810:
     JSR.W CODE_00A842
 
 CODE_00A816:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0016,X
     BIT.W #$8000
     BEQ CODE_00A821
@@ -5048,7 +5048,7 @@ CODE_00A830:
     BRK #$53
     JSR.W CODE_00A8ED
     JSR.W CODE_00A913
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     JSR.W CODE_00A8C6
     BCC CODE_00A816
     JMP.W CODE_00A871
@@ -5083,7 +5083,7 @@ CODE_00A870:
 
 
 CODE_00A871:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $1C7B
     BEQ CODE_00A879
     RTL
@@ -5473,7 +5473,7 @@ CODE_00AB47:
     LDA.B $00
     JSR.W CODE_00AB5B
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$82
     COP #$1B
     db $7E,$AB,$10,$00
@@ -5775,7 +5775,7 @@ CODE_00AD64:
     LDA.B #$00
     STA.W $0036,X
     REP #$20
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
 
 CODE_00AD83:
     COP #$82
@@ -5844,7 +5844,7 @@ CODE_00ADE8:
 
 CODE_00ADEA:
     JSR.W CODE_00AE9C
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     DEC.W $0002,X
     DEC.W $0010,X
     BEQ CODE_00ADFA
@@ -5857,7 +5857,7 @@ CODE_00ADFA:
 
 CODE_00ADFF:
     JSR.W CODE_00AEA4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     INC.W $0000,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5867,7 +5867,7 @@ CODE_00ADFF:
 
 CODE_00AE11:
     JSR.W CODE_00AEA4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     INC.W $0000,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5877,7 +5877,7 @@ CODE_00AE11:
 
 CODE_00AE23:
     JSR.W CODE_00AE9C
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     INC.W $0002,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5887,7 +5887,7 @@ CODE_00AE23:
 
 CODE_00AE35:
     JSR.W CODE_00AE9C
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     INC.W $0002,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5897,7 +5897,7 @@ CODE_00AE35:
 
 CODE_00AE47:
     JSR.W CODE_00AEA4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     DEC.W $0000,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5907,7 +5907,7 @@ CODE_00AE47:
 
 CODE_00AE59:
     JSR.W CODE_00AEA4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     DEC.W $0000,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -5917,7 +5917,7 @@ CODE_00AE59:
 
 CODE_00AE6B:
     JSR.W CODE_00AE9C
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     DEC.W $0002,X
     DEC.W $0010,X
     BNE CODE_00AE83
@@ -6066,7 +6066,7 @@ CODE_00AF61:
     STA.W $1B7E
     LDA.W UNREACH_01FBBA,Y
     STA.W ExpNeededForNextLevel
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W playerExp
     SEC
     SBC.W ExpNeededForNextLevel
@@ -6281,6 +6281,7 @@ CODE_00B19A:
     COP #$86
     RTL
 
+CODE_00B1AD:
     STZ.W $03B2
     INC.W $0458
     STX.W $039A
@@ -6395,7 +6396,7 @@ CODE_00B376:
     COP #$80
     db $21
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     TXA
     CLC
     ADC.W #$0080
@@ -6404,7 +6405,7 @@ CODE_00B376:
     RTL
 
 CODE_00B3FC:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039A
     LDA.W $0016,Y
     BIT.W #$0400
@@ -6415,7 +6416,7 @@ CODE_00B40A:
     COP #$1B
     db $10,$B4,$08,$00
     STX.W $039A
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$04,$1C,$B4
     RTL
@@ -6611,7 +6612,7 @@ CODE_00B72B:
     COP #$80
     db $19
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$04,$43,$B7
     RTL
@@ -6696,14 +6697,14 @@ CODE_00BA24:
     STA.W $0016,X
     LDA.W #$0004
     STA.W $002A,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$83
     COP #$86
     RTL
     COP #$80
     db $13
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039A
     LDA.W $0016,Y
     BIT.W #$0400
@@ -6714,7 +6715,7 @@ CODE_00BA50:
     COP #$1B
     db $56,$BA,$08,$00
     STX.W $039A
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$04,$62,$BA
     RTL
@@ -6994,7 +6995,7 @@ CODE_00C086:
     TAY
     LDA.W soundIdBank,Y
     STA.W $0000,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     %CopJumpIfEventFlagIsUnset($8000, $C0C4)
     LDA.W $0000,X
@@ -7198,7 +7199,7 @@ CODE_00C235:
     COP #$15
     COP #$86
     RTL
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$80
     db $1B
@@ -7398,7 +7399,7 @@ CODE_00C4C3:
     COP #$80
     db $1D
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039A
     LDA.W $001E,Y
     CMP.W #$0014
@@ -7421,7 +7422,7 @@ CODE_00C4FC:
     COP #$80
     db $1D
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039A
     LDA.W $001E,Y
     CMP.W #$0014
@@ -7629,7 +7630,7 @@ CODE_00C70F:
     db $00,$02,$2F,$C7,$02,$9B,$28,$00,$1F,$C7,$42,$C8,$27,$C7,$02,$80
     db $0F,$02,$82,$82,$56,$00,$02,$80,$12,$02,$82,$82,$95,$00
     %CopJumpIfEventFlagIsUnset($8001, $C93D)
-
+    
     db $02,$80,$12,$02,$82,$02,$09,$01,$80,$82,$C0,$02
 
 CODE_00C741:
@@ -8101,7 +8102,7 @@ CODE_00CD09:
     LDA.W $0025,Y
     AND.W #$00FF
     STA.W $0030,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039A
     LDA.W $0016,Y
     BIT.W #$0400
@@ -8162,7 +8163,7 @@ CODE_00CD77:
     STA.W $001A,X
     COP #$9F
     db $08,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDY.W $039C
     LDA.W $0002,Y
     CMP.W #$0080
@@ -8339,7 +8340,7 @@ CODE_00CF59:
     COP #$83
     COP #$10
     db $15,$02,$01,$78,$00,$C8,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $B6,$CF
@@ -8387,7 +8388,7 @@ UNREACH_00D011:
     BRA CODE_00D0ED
 
 CODE_00D08A:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W gameState
     AND.W #$00FF
     CMP.W #$0004
@@ -8710,12 +8711,12 @@ CODE_00D341:
     COP #$80
     db $11
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$80
     db $10
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     SEP #$20
     LDA.B #$00
@@ -8768,7 +8769,7 @@ CODE_00D390:
     STA.W $031E
     COP #$10
     db $00,$07,$01,$70,$00,$60,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $10,$46,$69,$6E,$61,$6C,$6C,$79,$2C,$20,$02,$02,$20,$0D,$64,$65
     db $66,$65,$61,$74,$65,$64,$20,$44,$65,$61,$74,$68,$74,$6F,$6C,$6C
@@ -8812,7 +8813,7 @@ CODE_00D390:
     LDA.W $0016,X
     ORA.W #$0010
     STA.W $0016,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     SEP #$20
     LDA.W $0466
     BNE CODE_00D5E6
@@ -8860,2251 +8861,7 @@ CODE_00D61A:
     PLA
     RTI
 
-
-Native_mode_COP:
-    SEP #$20
-    TXY
-    LDA.B $04,S
-    STA.B $3A
-    REP #$20
-    LDA.B $02,S
-    DEC A
-    STA.B $38
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    ASL A
-    TAX
-    JMP.W (cop_jump_table,X)
-
-
-cop_jump_table:
-    dw cop_00
-    dw cop_01
-    dw cop_02
-    dw cop_03
-    dw cop_04
-    dw cop_05
-    dw cop_06
-    dw cop_07
-    dw cop_08
-    dw cop_09
-    dw cop_0A
-    dw cop_0B
-    dw cop_0C
-    dw cop_0D
-    dw $0000
-    dw $0000
-    dw cop_10
-    dw cop_11
-    dw cop_12
-    dw cop_13
-    dw cop_14
-    dw cop_15
-    dw cop_16
-    dw cop_17
-    dw cop_18
-    dw cop_19
-    dw cop_1A
-    dw cop_1B
-    dw cop_1C
-    dw cop_1D
-    dw cop_1E
-    dw cop_1F
-    dw cop_20
-    dw cop_21
-    dw cop_22
-    dw cop_23
-    dw cop_24
-    dw cop_25
-    dw cop_26
-    dw cop_27
-    dw cop_28
-    dw cop_29
-    dw cop_2A
-    dw cop_2B
-    dw $0000
-    dw $0000
-    dw cop_2E
-    dw cop_2F
-    dw cop_30
-    dw cop_31
-    dw cop_32
-    dw cop_33
-    dw cop_34
-    dw cop_35
-    dw cop_36
-    dw cop_37
-    dw cop_38
-    dw cop_39
-    dw cop_3A
-    dw cop_3B
-    dw cop_3C
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0020
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw PTR16_00FFFF
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw cop_80
-    dw cop_81
-    dw cop_82
-    dw cop_83
-    dw cop_84
-    dw cop_85
-    dw cop_86
-    dw cop_87
-    dw cop_88
-    dw cop_89
-    dw cop_8A
-    dw cop_8B
-    dw cop_8C
-    dw cop_8D
-    dw cop_8E
-    dw cop_8F
-    dw cop_90
-    dw cop_91
-    dw cop_92
-    dw cop_93
-    dw cop_94
-    dw cop_95
-    dw cop_96
-    dw cop_97
-    dw cop_98
-    dw cop_99
-    dw cop_9A
-    dw cop_9B
-    dw cop_9C
-    dw cop_9D
-    dw cop_9E
-    dw cop_9F
-    dw cop_A0
-    dw cop_A1
-    dw cop_A2
-    dw cop_A3
-    dw cop_A4
-    dw cop_A5
-    dw cop_A6
-    dw cop_A7
-    dw cop_A8
-    dw cop_A9
-    dw cop_AA
-    dw cop_AB
-    dw cop_AC
-    dw cop_AD
-    dw cop_AE
-    dw cop_AF
-    dw cop_B0
-    dw cop_B1
-    dw cop_B2
-
-cop_00:
-    TYX
-    BRL cop_ret_ret
-
-
-cop_01:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    TAY
-    SEP #$20
-    PHX
-    PHB
-    LDA.B $3A
-    PHA
-    PLB
-    JSL.L printOsdStringFromBankX
-    PLB
-    PLX
-    REP #$20
-    BRL cop_skip0
-
-
-cop_02:
-    TYX
-    PHX
-    LDY.W #$CF02
-    JSL.L printOsdStringFromBank2
-    SEP #$20
-    LDA.B #$00
-    XBA
-    LDA.B #$02
-    JSL.L printAndRunChoiceBox
-    PHP
-    LDX.W textboxTLC
-    JSL.L clearTextbox
-    LDA.B #$01
-    STA.W $03B8
-    PLP
-    REP #$20
-    PLX
-    BCS CODE_00D7EC
-    AND.W #$00FF
-    BNE CODE_00D7EC
-    BRL cop_skip2
-
-
-CODE_00D7EC:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_03:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $002E,X
-    LDA.B $38
-    STA.W $002C,X
-    STA.W $0018,X
-    BRL cop_ret_in_a
-
-
-cop_04:
-    TYX
-    DEC.W $002E,X
-    BNE CODE_00D814
-    BRL cop_skip0
-
-
-CODE_00D814:
-    LDA.W $002C,X
-    STA.W $0018,X
-    BRL cop_ret_ret
-
-
-cop_05:
-    TYX
-    LDA.B [$38]
-    BMI CODE_00D829
-    JSR.W checkGameStateBit
-    BCC CODE_00D82E
-    BRA CODE_00D835
-
-
-CODE_00D829:
-    JSR.W checkGameStateBit
-    BCC CODE_00D835
-
-CODE_00D82E:
-    DEC.B $38
-    DEC.B $38
-    BRL CODE_00E4C4
-
-
-CODE_00D835:
-    BRL cop_skip2
-
-
-cop_06:
-    TYX
-    LDA.B [$38]
-    BRL cop_ret_in_a
-
-
-cop_07:
-    TYX
-    LDA.B [$38]
-    BRA CODE_00D849
-
-
-cop_08:
-    TYX
-    LDA.B [$38]
-    EOR.W #$8000
-
-CODE_00D849:
-    BMI CODE_00D852
-    JSR.W checkGameStateBit
-    BCS CODE_00D857
-    BRA CODE_00D85A
-
-
-CODE_00D852:
-    JSR.W checkGameStateBit
-    BCS CODE_00D85A
-
-CODE_00D857:
-    BRL cop_skip4
-
-
-CODE_00D85A:
-    INC.B $38
-    INC.B $38
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_09:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    JSR.W setResetGameStateBit
-    BRL cop_skip0
-
-
-cop_0A:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W checkIfItemIsEquipped
-    BCC CODE_00D885
-    JSL.L giveItem
-
-CODE_00D885:
-    BRL cop_skip0
-
-
-cop_0B:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W checkIfItemIsEquipped
-    BCS CODE_00D8A6
-    SEP #$20
-    BPL CODE_00D89E
-    AND.B #$7F
-    STZ.W playerEquippedItem
-
-CODE_00D89E:
-    EOR.W inventoryWeapons,Y
-    STA.W inventoryWeapons,Y
-    REP #$20
-
-CODE_00D8A6:
-    BRL cop_skip0
-
-
-cop_0C:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E628
-    STA.B $00
-
-CODE_00D8C0:
-    LDA.W $0000,X
-    SEC
-    SBC.B $00
-    STA.B $16
-    LDA.B $00
-    ASL A
-    CLC
-    ADC.W $0010,X
-    SEC
-    SBC.W #$000F
-    STA.B $18
-    LDA.W $0000,Y
-    SEC
-    SBC.B $16
-    CMP.B $18
-    BCC CODE_00D8E2
-    BRL cop_skip2
-
-
-CODE_00D8E2:
-    LDA.W $0002,X
-    CLC
-    ADC.B $00
-    STA.B $16
-    LDA.B $00
-    ASL A
-    CLC
-    ADC.W $0012,X
-    SEC
-    SBC.W #$000F
-    STA.B $18
-    LDA.B $16
-    SEC
-    SBC.W $0002,Y
-    CMP.B $18
-    BCC CODE_00D904
-    BRL cop_skip2
-
-
-CODE_00D904:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_0D:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E628
-    CMP.W $0000,Y
-    BEQ CODE_00D92A
-    BRL cop_skip3
-
-
-CODE_00D92A:
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    INC A
-    JSR.W CODE_00E628
-    CMP.W $0002,Y
-    BEQ CODE_00D93D
-    BRL cop_skip2
-
-
-CODE_00D93D:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_10:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    XBA
-    STA.W zwSceneId
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $0380
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $037C
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $037E
-    BRL cop_skip0
-
-
-cop_11:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E628
-    STA.W $0000,Y
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E628
-    STA.W $0002,Y
-    PHX
-    TYX
-    JSR.W CODE_00E5A7
-    PLX
-    BRL cop_skip0
-
-
-cop_12:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    BRL cop_skip0
-
-
-cop_13:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0030,Y
-    BRL cop_skip0
-
-
-cop_14:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    JSR.W CODE_00E62D
-    LDY.W #$1ADE
-    JSL.L checkForSealedLair
-    BCC CODE_00D9F1
-    LDA.W $0016,X
-    AND.W #$DFFF
-    STA.W $0016,X
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-CODE_00D9F1:
-    BRL cop_skip2
-
-
-cop_15:
-    TYX
-    JSR.W CODE_00E537
-    BRL cop_skip0
-
-
-cop_16:
-    TYX
-    JSR.W CODE_00E5A7
-    BRL cop_skip0
-
-
-cop_17:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0030,X
-    BRL cop_skip0
-
-
-cop_18:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W checkIfItemIsEquipped
-    BCS CODE_00DA1F
-    BRL cop_skip2
-
-
-CODE_00DA1F:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_19:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W checkIfItemIsEquipped
-    BCS CODE_00DA3A
-    BPL CODE_00DA3A
-    BRL cop_skip2
-
-
-CODE_00DA3A:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_1A:
-    TYX
-    PHX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    TAY
-    JSL.L printOsdStringFromBank2
-    SEP #$20
-    LDA.B #$00
-    XBA
-    LDA.B [$38]
-    INC.B $38
-    BNE CODE_00DA5D
-    INC.B $39
-
-CODE_00DA5D:
-    JSL.L printAndRunChoiceBox
-    PHA
-    PHP
-    LDX.W textboxTLC
-    JSL.L clearTextbox
-    LDA.B #$01
-    STA.W $03B8
-    PLP
-    PLA
-    REP #$20
-    PLX
-    BCS CODE_00DA7F
-    AND.W #$00FF
-    STA.W $03D0
-    BRL cop_skip2
-
-
-CODE_00DA7F:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_1B:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,X
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0014,X
-    BRL cop_ret_ret
-
-
-cop_1C:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    AND.W $0016,X
-    BNE CODE_00DAAD
-    BRL cop_skip2
-
-
-CODE_00DAAD:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_1D:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    ORA.W $0016,X
-    STA.W $0016,X
-    BRL cop_skip0
-
-
-cop_1E:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    AND.W $0016,X
-    STA.W $0016,X
-    BRL cop_skip0
-
-
-cop_1F:
-    PHY
-    SEP #$20
-    LDX.W #$000F
-    LDA.B #$00
-    XBA
-    CLC
-
-CODE_00DAE0:
-    LDA.W $0302,X
-    ADC.W $0301,X
-    STA.W $0301,X
-    DEX
-    BNE CODE_00DAE0
-    LDX.W #$0010
-
-CODE_00DAEF:
-    INC.W $0301,X
-    BNE CODE_00DAF7
-    DEX
-    BNE CODE_00DAEF
-
-CODE_00DAF7:
-    REP #$20
-    PLX
-    BRL cop_skip0
-
-
-cop_20:
-    TYX
-    LDA.W player_pos_x_real
-    ORA.W player_pos_y_real
-    AND.W #$000F
-    BEQ CODE_00DB12
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-CODE_00DB12:
-    BRL cop_skip2
-
-
-cop_21:
-    TYX
-    LDA.W $0000,X
-    STA.B $16
-    LDA.W $0002,X
-    SEC
-    SBC.W #$0010
-    SEC
-    SBC.W $0012,X
-    STA.B $18
-    BRL CODE_00DBD0
-
-
-cop_22:
-    TYX
-    LDA.W $0000,X
-    STA.B $16
-    LDA.W $0002,X
-    STA.B $18
-    BRL CODE_00DBD0
-
-
-cop_23:
-    TYX
-    LDA.W $0000,X
-    SEC
-    SBC.W #$0010
-    STA.B $16
-    LDA.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    BRL CODE_00DBD0
-
-
-cop_24:
-    TYX
-    LDA.W $0000,X
-    CLC
-    ADC.W $0010,X
-    STA.B $16
-    LDA.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    BRL CODE_00DBD0
-
-
-cop_25:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    JSL.L addGold
-    LDA.W #$0010
-    TSB.W updateHudBitfield
-    BRL cop_skip0
-
-
-cop_26:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    LDY.W playerEquippedItem
-    CPY.W #$0040
-    BNE CODE_00DB8D
-    LDA.W #$0000
-    BRA CODE_00DB99
-
-
-CODE_00DB8D:
-    LDY.W playerEquippedArmor
-    CPY.W #$000C
-    BNE CODE_00DB99
-    LSR A
-    BNE CODE_00DB99
-    INC A
-
-CODE_00DB99:
-    JSL.L subtractGold
-    BCS CODE_00DBA8
-    LDA.W #$0010
-    TSB.W updateHudBitfield
-    BRL cop_skip2
-
-
-CODE_00DBA8:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_27:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,X
-    STZ.W $0014,X
-    BRL cop_ret_ret
-
-
-cop_28:
-    TYX
-    LDA.W $0000,X
-    STA.B $16
-    LDA.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-
-CODE_00DBD0:
-    PHX
-    JSL.L zCalculateCurrentPositionAndActIdSomething
-    LDA.L $7F8000,X
-    PLX
-    AND.W #$00FF
-    BNE CODE_00DBE2
-    BRL cop_skip2
-
-
-CODE_00DBE2:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_29:
-    TYX
-    LDA.W $0000,X
-    STA.B $16
-    LDA.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    PHX
-    JSL.L zCalculateCurrentPositionAndActIdSomething
-    SEP #$20
-    LDA.B [$38]
-    INC.B $38
-    BNE CODE_00DC09
-    INC.B $39
-
-CODE_00DC09:
-    CMP.L $7E8000,X
-    REP #$20
-    BNE CODE_00DC15
-    PLX
-    BRL cop_skip2
-
-
-CODE_00DC15:
-    PLX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_2A:
-    TYX
-    PHX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.B $16
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    JSL.L zCalculateCurrentPositionAndActIdSomething
-    LDA.L $7F8000,X
-    ORA.W #$00F0
-    STA.L $7F8000,X
-    PLX
-    BRL cop_skip0
-
-
-cop_2B:
-    TYX
-    PHX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.B $16
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    JSL.L zCalculateCurrentPositionAndActIdSomething
-    LDA.L $7F8000,X
-    AND.W #$FF00
-    STA.L $7F8000,X
-    PLX
-    BRL cop_skip0
-
-
-cop_2E:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    JSR.W CODE_00E617
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.B $00
-    BRL CODE_00D8C0
-
-
-cop_2F:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.B $16
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.B $18
-    LDY.W $039C
-    LDA.W $0000,Y
-    CLC
-    ADC.B $16
-    STA.W $0000,Y
-    LDA.W $0002,Y
-    CLC
-    ADC.B $18
-    STA.W $0002,Y
-    LDA.W $003E,Y
-    TAY
-    LDA.W $0000,Y
-    CLC
-    ADC.B $16
-    STA.W $0000,Y
-    LDA.W $0002,Y
-    CLC
-    ADC.B $18
-    STA.W $0002,Y
-    BRL cop_skip0
-
-
-cop_30:
-    TYX
-    LDA.W lairRevealInProgress
-    BNE CODE_00DCDF
-    BRL cop_skip5
-
-
-CODE_00DCDF:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CMP.W revealingLairId
-    BEQ CODE_00DCED
-    BRL cop_skip3
-
-
-CODE_00DCED:
-    BRL cop_85
-
-
-cop_31:
-    TYX
-    JSR.W CODE_00E662
-    LDA.W #$AC9B
-    STA.W $0018,Y
-    SEP #$20
-    LDA.B #$00
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $0030,Y
-    BRL cop_skip0
-
-
-cop_32:
-    TYX
-    JSR.W CODE_00E662
-    LDA.W #$ACCB
-    STA.W $0018,Y
-    SEP #$20
-    LDA.B #$00
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $0030,Y
-    BRL cop_skip0
-
-
-cop_33:
-    TYX
-    LDY.W $039C
-    JSR.W CODE_00DD49
-    LDY.W $039E
-    JSR.W CODE_00DD49
-    LDY.W $03A0
-    JSR.W CODE_00DD49
-    STZ.W $0464
-    BRL cop_skip0
-
-
-CODE_00DD49:
-    LDA.W $001A,Y
-    AND.W #$FF7F
-    STA.W $001A,Y
-    RTS
-
-
-cop_34:
-    TYX
-    LDY.W $039C
-    JSR.W CODE_00DD6C
-    LDY.W $039E
-    JSR.W CODE_00DD6C
-    LDY.W $03A0
-    JSR.W CODE_00DD6C
-    INC.W $0464
-    BRL cop_skip0
-
-
-CODE_00DD6C:
-    LDA.W $001A,Y
-    ORA.W #$0080
-    STA.W $001A,Y
-    RTS
-
-
-cop_35:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.B $00
-    LDA.W $0302
-    AND.W #$00FF
-
-CODE_00DD86:
-    SEC
-    SBC.B $00
-    BPL CODE_00DD86
-    CLC
-    ADC.B $00
-    STA.W $0437
-    BRL cop_skip0
-
-
-cop_36:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    SED
-    CLC
-    ADC.W playerExp
-    STA.W playerExp
-    LDA.W $1B7A
-    ADC.W #$0000
-    STA.W $1B7A
-    CLD
-    BRL cop_skip0
-
-
-cop_37:
-    TYX
-    LDA.W playerMaxHealth
-    SEC
-    SBC.W playerCurrentHealth
-    STA.W bPlayerHealthRestore
-    BRL cop_skip0
-
-
-cop_38:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $043D
-    BRL cop_skip0
-
-
-cop_39:
-    TYX
-    PHX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    PHA
-    LDA.W playerCurrentHealth
-    SEC
-    SBC.B $01,S
-    BPL CODE_00DDE1
-    LDA.B #$00
-
-CODE_00DDE1:
-    STA.W playerCurrentHealth
-    PLA
-    REP #$20
-    LDA.W #$0004
-    TSB.W updateHudBitfield
-    LDX.W $039C
-    LDA.W #$FFE0
-    STA.W $0026,X
-    BRK #$04
-    LDA.W $0016,X
-    ORA.W #$0800
-    STA.W $0016,X
-    PLX
-    BRL cop_skip0
-
-
-cop_3A:
-    TYX
-    JSL.L enterPlayerNameMenu
-    BRL cop_skip0
-
-
-cop_3B:
-    TYX
-    LDA.B [$38]
-    JSR.W CODE_00E62D
-    ASL A
-    ASL A
-    ASL A
-    ASL A
-    ASL A
-    TAY
-    LDA.W UNREACH_01BA2B,Y
-    BEQ CODE_00DE27
-    LDY.W #$1ADE
-    JSL.L checkForSealedLair
-    BCC CODE_00DE4B
-
-CODE_00DE27:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    LDY.W #$1ADE
-    JSL.L checkForSealedLair
-    BCC CODE_00DE48
-    LDA.W $0016,X
-    AND.W #$DFFF
-    STA.W $0016,X
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-CODE_00DE48:
-    BRL cop_ret_ret
-
-
-CODE_00DE4B:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0034,X
-    PHX
-    TAX
-    LDA.L $7F0203,X
-    PLX
-    BIT.W #$0040
-    BEQ CODE_00DE48
-    LDA.W $0016,X
-    ORA.W #$0010
-    STA.W $0016,X
-    BRL cop_skip2
-
-
-cop_3C:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $03E3
-    BRL cop_skip0
-
-
-cop_80:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $001E,X
-    STZ.W $0020,X
-    LDA.B $38
-    STA.W $0018,X
-    BRL cop_skip0
-
-
-cop_81:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $001E,X
-    STZ.W $0020,X
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $002A,X
-    LDA.B $38
-    STA.W $0018,X
-    BRL cop_skip0
-
-
-cop_82:
-    TYX
-    JSL.L CODE_0088F3
-    BCC CODE_00DEBA
-    BRL cop_skip0
-
-
-CODE_00DEBA:
-    BRL cop_ret_ret
-
-
-cop_83:
-    TYX
-
-CODE_00DEBE:
-    JSL.L CODE_0088F3
-    BCC CODE_00DECC
-    DEC.W $002A,X
-    BNE CODE_00DEBE
-    BRL cop_skip0
-
-
-CODE_00DECC:
-    BRL cop_ret_ret
-
-
-cop_84:
-    TYX
-    JSR.W CODE_00E63A
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    BRL cop_skip0
-
-
-cop_85:
-    TYX
-    JSR.W CODE_00E662
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    BRL cop_skip0
-
-
-cop_86:
-    TYX
-    LDY.W soundIdBank,X
-    BNE CODE_00DF23
-    LDY.W $003E,X
-    STY.W $06A6
-    BEQ CODE_00DF37
-    LDA.W #$0000
-    STA.W soundIdBank,Y
-    BRA CODE_00DF37
-
-
-CODE_00DF23:
-    LDA.W $003E,X
-    STA.W $003E,Y
-    BNE CODE_00DF30
-    STY.W currentEntityPtr
-    BRA CODE_00DF37
-
-
-CODE_00DF30:
-    TAY
-    LDA.W soundIdBank,X
-    STA.W soundIdBank,Y
-
-CODE_00DF37:
-    SEP #$20
-    DEC.B $4A
-    DEC.B $4A
-    REP #$20
-    TXA
-    STA.B ($4A)
-    BRL cop_skip0
-
-
-cop_87:
-    TYX
-    LDA.W $001C,X
-    EOR.W #$4000
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-cop_88:
-    TYX
-    LDA.W $001C,X
-    EOR.W #$8000
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-cop_89:
-    TYX
-    LDA.W player_pos_x_real
-    SEC
-    SBC.W $0000,X
-    BPL CODE_00DF6D
-    EOR.W #$FFFF
-    INC A
-
-CODE_00DF6D:
-    STA.B $00
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CMP.B $00
-    BCS CODE_00DF7C
-    BRL cop_skip2
-
-
-CODE_00DF7C:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8A:
-    TYX
-    LDA.W player_pos_y_real
-    SEC
-    SBC.W $0002,X
-    BPL CODE_00DF93
-    EOR.W #$FFFF
-    INC A
-
-CODE_00DF93:
-    STA.B $00
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CMP.B $00
-    BCS CODE_00DFA2
-    BRL cop_skip2
-
-
-CODE_00DFA2:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8B:
-    TYX
-    LDA.W player_pos_x_real
-    SEC
-    SBC.W $0000,X
-    BPL CODE_00DFB9
-    EOR.W #$FFFF
-    INC A
-
-CODE_00DFB9:
-    STA.B $00
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CMP.B $00
-    BCC CODE_00DFC8
-    BRL cop_skip2
-
-
-CODE_00DFC8:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8C:
-    TYX
-    LDA.W player_pos_y_real
-    SEC
-    SBC.W $0002,X
-    BPL CODE_00DFDF
-    EOR.W #$FFFF
-    INC A
-
-CODE_00DFDF:
-    STA.B $00
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CMP.B $00
-    BCC CODE_00DFEE
-    BRL cop_skip2
-
-
-CODE_00DFEE:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8D:
-    TYX
-    LDA.W $0016,X
-    BIT.W #$8000
-    BEQ CODE_00E003
-    BRL cop_skip0
-
-
-CODE_00E003:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8E:
-    TYX
-    LDA.W $0016,X
-    BIT.W #$8000
-    BNE CODE_00E018
-    BRL cop_skip0
-
-
-CODE_00E018:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_8F:
-    TYX
-    LDA.W player_pos_x_real
-    CMP.W $0000,X
-    BCC CODE_00E036
-    LDA.W $001C,X
-    ORA.W #$4000
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-CODE_00E036:
-    LDA.W $001C,X
-    AND.W #$BFFF
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-cop_90:
-    TYX
-    LDA.W player_pos_y_real
-    CMP.W $0002,X
-    BCC CODE_00E057
-    LDA.W $001C,X
-    ORA.W #$8000
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-CODE_00E057:
-    LDA.W $001C,X
-    AND.W #$7FFF
-    STA.W $001C,X
-    BRL cop_skip0
-
-
-cop_91:
-    TYX
-    SEP #$20
-    LDA.B $3A
-    STA.W $0036,X
-    REP #$20
-    LDA.B $38
-    STA.W $0018,X
-    BRL cop_ret_in_a
-
-
-cop_92:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $001E,X
-    STZ.W $0020,X
-    JSL.L CODE_02865B
-    JSL.L CODE_0286CD
-    BRL CODE_00E4C4
-
-
-cop_93:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $001E,X
-    STZ.W $0020,X
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $002A,X
-    JSL.L CODE_02865B
-    JSL.L CODE_0286CD
-    BRL CODE_00E4C4
-
-
-cop_94:
-    TYX
-    DEC.W $0026,X
-    BPL CODE_00E0C0
-    JSL.L CODE_02865B
-    BCC CODE_00E0C6
-    BRL cop_skip0
-
-
-CODE_00E0C0:
-    LDA.W $000E,X
-    STA.W $0014,X
-
-CODE_00E0C6:
-    JSL.L CODE_0286CD
-    BRL cop_ret_ret
-
-
-cop_95:
-    TYX
-    DEC.W $0026,X
-    BPL CODE_00E0E1
-
-CODE_00E0D3:
-    JSL.L CODE_02865B
-    BCC CODE_00E0E7
-    DEC.W $002A,X
-    BNE CODE_00E0D3
-    BRL cop_skip0
-
-
-CODE_00E0E1:
-    LDA.W $000E,X
-    STA.W $0014,X
-
-CODE_00E0E7:
-    JSL.L CODE_0286CD
-    BRL cop_ret_ret
-
-
-cop_96:
-    TYX
-    LDA.W $001C,X
-    BIT.W #$4000
-    BNE CODE_00E0FD
-    ORA.W #$4000
-    STA.W $001C,X
-
-CODE_00E0FD:
-    BRL cop_skip0
-
-
-cop_97:
-    TYX
-    LDA.W $001C,X
-    BIT.W #$4000
-    BEQ CODE_00E10F
-    AND.W #$BFFF
-    STA.W $001C,X
-
-CODE_00E10F:
-    BRL cop_skip0
-
-
-cop_98:
-    TYX
-    LDA.W $001C,X
-    BIT.W #$8000
-    BNE CODE_00E121
-    ORA.W #$8000
-    STA.W $001C,X
-
-CODE_00E121:
-    BRL cop_skip0
-
-
-cop_99:
-    TYX
-    LDA.W $001C,X
-    BIT.W #$8000
-    BEQ CODE_00E133
-    AND.W #$7FFF
-    STA.W $001C,X
-
-CODE_00E133:
-    BRL cop_skip0
-
-
-cop_9A:
-    TYX
-    LDY.W #$0004
-    LDA.W player_pos_x_real
-    SEC
-    SBC.W $0000,X
-    BEQ CODE_00E158
-    BPL CODE_00E151
-    EOR.W #$FFFF
-    CMP.B [$38]
-    BCC CODE_00E158
-    LDY.W #$0002
-    BRA CODE_00E158
-
-
-CODE_00E151:
-    CMP.B [$38]
-    BCC CODE_00E158
-    LDY.W #$0006
-
-CODE_00E158:
-    LDA.B [$38],Y
-    BRL cop_ret_in_a
-
-
-cop_9B:
-    TYX
-    LDY.W #$0004
-    LDA.W player_pos_y_real
-    SEC
-    SBC.W $0002,X
-    BEQ CODE_00E17F
-    BPL CODE_00E178
-    EOR.W #$FFFF
-    CMP.B [$38]
-    BCC CODE_00E17F
-    LDY.W #$0002
-    BRA CODE_00E17F
-
-
-CODE_00E178:
-    CMP.B [$38]
-    BCC CODE_00E17F
-    LDY.W #$0006
-
-CODE_00E17F:
-    LDA.B [$38],Y
-    BRL cop_ret_in_a
-
-
-cop_9C:
-    TYX
-    LDY.W #$0000
-    LDA.W player_pos_x_real
-    SEC
-    SBC.W $0000,X
-    BPL CODE_00E195
-    EOR.W #$FFFF
-    INC A
-
-CODE_00E195:
-    PHA
-    LDA.W player_pos_y_real
-    SEC
-    SBC.W $0002,X
-    BPL CODE_00E1A3
-    EOR.W #$FFFF
-    INC A
-
-CODE_00E1A3:
-    CMP.B $01,S
-    BCC CODE_00E1AC
-    LDY.W #$0002
-    BRA CODE_00E1AC
-
-
-CODE_00E1AC:
-    PLA
-    LDA.B [$38],Y
-    BRL cop_ret_in_a
-
-
-cop_9D:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $001E,X
-    STZ.W $0020,X
-    LDA.B $38
-    STA.W $0018,X
-    LDA.W $0016,X
-    AND.W #$FFFB
-    STA.W $0016,X
-    BRL cop_skip0
-
-
-cop_9E:
-    TYX
-    LDA.W $0016,X
-    BIT.W #$0004
-    BNE CODE_00E1E6
-    JSL.L CODE_0088F3
-    BCC CODE_00E1E3
-    BRL cop_skip2
-
-
-CODE_00E1E3:
-    BRL cop_ret_ret
-
-
-CODE_00E1E6:
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-cop_9F:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.W $0000,X
-    BRL cop_skip0
-
-
-cop_A0:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    STA.W $0002,X
-    BRL cop_skip0
-
-
-cop_A1:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.W $0000,X
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    STA.W $0002,X
-    BRL cop_skip0
-
-
-cop_A2:
-    TYX
-    LDA.W $001C,X
-    AND.W #$CFFF
-    PHA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    XBA
-    ORA.B $01,S
-    STA.W $001C,X
-    PLA
-    BRL cop_skip0
-
-
-cop_A3:
-    TYX
-    LDA.W $001A,X
-    ORA.W #$4000
-    STA.W $001A,X
-    BRL cop_skip0
-
-
-cop_A4:
-    TYX
-    LDA.W $001A,X
-    ORA.W #$2000
-    STA.W $001A,X
-    BRL cop_skip0
-
-
-cop_A5:
-    TYX
-    LDA.W $001C,X
-    PHA
-    AND.W #$3FFF
-    STA.W $001C,X
-    PLA
-    LDY.W #$0000
-    AND.W #$C000
-    BEQ CODE_00E286
-    INY
-    INY
-    CMP.W #$4000
-    BEQ CODE_00E286
-    INY
-    INY
-    CMP.W #$8000
-    BEQ CODE_00E286
-    INY
-    INY
-
-CODE_00E286:
-    LDA.B [$38],Y
-    BRL cop_ret_in_a
-
-
-cop_A6:
-    TYX
-    LDA.W $001A,X
-    AND.W #$BFFF
-    STA.W $001A,X
-    BRL cop_skip0
-
-
-cop_A7:
-    TYX
-    LDA.W $001A,X
-    AND.W #$DFFF
-    STA.W $001A,X
-    BRL cop_skip0
-
-
-cop_A8:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0022,X
-    SEP #$20
-    LDA.B [$38]
-    INC.B $38
-    BNE CODE_00E2B9
-    INC.B $39
-
-CODE_00E2B9:
-    STA.W $0024,X
-    REP #$20
-    BRL cop_skip0
-
-
-cop_A9:
-    TYX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0034,X
-    SEP #$20
-    LDA.B [$38]
-    INC.B $38
-    BNE CODE_00E2D5
-    INC.B $39
-
-CODE_00E2D5:
-    STA.W $002C,X
-    REP #$20
-    LDA.W $001A,X
-    ORA.W #$8000
-    STA.W $001A,X
-    BRL cop_skip0
-
-
-cop_AA:
-    TYX
-    LDA.W $001C,X
-    AND.W #$F1FF
-    PHA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    XBA
-    ORA.B $01,S
-    STA.W $001C,X
-    PLA
-    BRL cop_skip0
-
-
-cop_AB:
-    TYX
-    JSR.W CODE_00E63A
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0000,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0002,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_AC:
-    TYX
-    JSR.W CODE_00E662
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0000,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0002,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_AD:
-    TYX
-    LDA.W $0016,X
-    BIT.W #$8000
-    BNE CODE_00E37F
-    BRL cop_skip1
-
-
-CODE_00E37F:
-    LDA.W $0000,X
-    CMP.W $0342
-    BCC CODE_00E38A
-    BRL cop_skip1
-
-
-CODE_00E38A:
-    LDA.W $0002,X
-    CMP.W $0344
-    BCC CODE_00E395
-    BRL cop_skip1
-
-
-CODE_00E395:
-    LDA.B $38
-    DEC A
-    DEC A
-    STA.W $0018,X
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    STA.W $0014,X
-    BRL cop_ret_ret
-
-
-cop_AE:
-    TYX
-    PHX
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.B $16
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    SEC
-    SBC.W #$0010
-    STA.B $18
-    JSL.L zCalculateCurrentPositionAndActIdSomething
-    LDA.L $7F8000,X
-    PLX
-    AND.W #$000F
-    BEQ CODE_00E3DE
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    BRL cop_ret_in_a
-
-
-CODE_00E3DE:
-    BRL cop_skip2
-
-
-cop_AF:
-    TYX
-    JSR.W CODE_00E63A
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_B0:
-    TYX
-    JSR.W CODE_00E662
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_B1:
-    TYX
-    JSR.W CODE_00E63A
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.W $0000,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    STA.W $0002,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_B2:
-    TYX
-    JSR.W CODE_00E662
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0018,Y
-    TXA
-    LDA.B [$38]
-    INC.B $38
-    AND.W #$00FF
-    SEP #$20
-    STA.W $0036,Y
-    REP #$20
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0000,X
-    STA.W $0000,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    CLC
-    ADC.W $0002,X
-    STA.W $0002,Y
-    LDA.B [$38]
-    INC.B $38
-    INC.B $38
-    STA.W $0016,Y
-    BRL cop_skip0
-
-
-cop_skip5:
-    INC.B $38
-
-cop_skip4:
-    INC.B $38
-
-cop_skip3:
-    INC.B $38
-
-cop_skip2:
-    INC.B $38
-
-cop_skip1:
-    INC.B $38
-
-cop_skip0:
-    LDA.B $38
-
-cop_ret_in_a:
-    STA.B $02,S
-    RTI
-
-
-CODE_00E4C4:
-    LDA.B $38
-    STA.W $0018,X
-
-cop_ret_ret:
-    PLA
-    PLA
-    RTL
-
+incsrc "bank00/handle_cop.asm"
 
 setResetGameStateBit:
     PHX
@@ -11445,7 +9202,7 @@ IntroScene:
     REP #$20
     COP #$10
     db $00,$0A,$01,$00,$00,$00,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     LDA.W #$3000
@@ -11475,7 +9232,7 @@ CODE_00E710:
     STA.W m7yForNmi
     LDA.W #$0083
     STA.W $0480
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     INC.W m7xForNmi
     LDA.W m7xForNmi
     CMP.W #$013E
@@ -11491,7 +9248,7 @@ CODE_00E74C:
     COP #$04
     LDA.W #$0080
     STA.W m7xForNmi
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0480
     CLC
     ADC.W #$0004
@@ -11889,7 +9646,7 @@ CODE_00EA80:
     INC A
     STA.W $0000,Y
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BNE CODE_00EAC0
     RTL
@@ -11908,7 +9665,7 @@ CODE_00EAC0:
     DEC A
     STA.W $0002,Y
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BEQ CODE_00EAE2
     RTL
@@ -11935,7 +9692,7 @@ CODE_00EAE2:
     COP #$80
     db $00
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BMI CODE_00EB26
     LDA.W $0000,X
@@ -11960,7 +9717,7 @@ CODE_00EB26:
     COP #$80
     db $01
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BMI CODE_00EB4E
     LDA.W $0000,X
@@ -11985,7 +9742,7 @@ CODE_00EB4E:
     COP #$80
     db $02
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BNE CODE_00EB5E
     RTL
@@ -12190,7 +9947,7 @@ CODE_00ED30:
     STA.W $037E
     STZ.W $0445
     INC.W $0454
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
@@ -12671,7 +10428,7 @@ CODE_00F07A:
 CODE_00F0B3:
     %CopJumpIfEventFlagIsUnset($9F05, $F0BF)
     %CopJumpIfEventFlagIsUnset($9F04, $F0C2)
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$86
@@ -12709,33 +10466,33 @@ CODE_00F0B3:
 
     COP #$14
     db $B6,$00,$EC,$F0
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$80
     db $18
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$14
     db $09,$00,$FB,$F0,$6B
     COP #$80
     db $14
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     RTL
 
     COP #$14
     db $2F,$01,$0D,$F1
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$80
     db $12
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$80
     db $31
@@ -12860,7 +10617,7 @@ CODE_00F243:
 CODE_00F254:
     STA.W $001E,X
     STZ.W $0020,X
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$82
     COP #$1B
     db $5E,$F2,$FF,$00
@@ -12978,7 +10735,7 @@ CODE_00F254:
     db $8F,$F4,$00,$90,$01,$80,$00,$50,$00
     COP #$AC
     db $60,$F4,$00,$90,$01,$70,$00,$50,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     BNE CODE_00F3AE
     RTL
@@ -13024,7 +10781,7 @@ CODE_00F3AE:
     COP #$1B
     db $1D,$F4,$78,$00
     INC.W $0482
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0482
     CMP.W #$0004
     BEQ CODE_00F42B
@@ -13050,7 +10807,7 @@ CODE_00F42B:
     COP #$1B
     db $5B,$F4,$10,$00
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 CODE_00F460:
@@ -13076,7 +10833,7 @@ CODE_00F460:
     db $01
     COP #$82
     INC.W $0482
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 CODE_00F48F:
@@ -13096,7 +10853,7 @@ CODE_00F48F:
     db $05
     COP #$82
     INC.W $0482
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $02,$80,$07,$02,$82,$AD,$82,$04,$C9,$04,$00,$D0,$F3,$02,$80,$07
     db $02,$82,$02,$80,$08,$02,$82,$02,$80,$09,$02,$82,$EE,$82,$04,$02
@@ -13110,7 +10867,7 @@ CODE_00F48F:
 
 CODE_00F4E2:
     INC.W $0482
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     LDA.W $0016,X
     ORA.W #$0010
@@ -13136,7 +10893,7 @@ CODE_00F4E2:
     STA.L $7E7815,X
     STA.L $7E7801,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     TXY
     LDX.W #$0000
@@ -13183,7 +10940,7 @@ CODE_00F4E2:
     STA.W $0016,X
 
 CODE_00F595:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0466
     BMI CODE_00F5DE
     BNE CODE_00F5A2
@@ -13202,7 +10959,7 @@ CODE_00F5A2:
     JSR.W CODE_00F5E7
     INC.W $0030,X
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0466
     BEQ CODE_00F5CB
     LDA.W #$00E0
@@ -13220,7 +10977,7 @@ CODE_00F5CB:
     BRA CODE_00F595
 
 CODE_00F5DE:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W #$00E0
     JSR.W CODE_00F5E7
     RTL
@@ -13286,12 +11043,12 @@ CODE_00F614:
     LDA.W #$0020
     STA.W $03B4
     INC.W $0454
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$37
 
 CODE_00F66E:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$07,$04,$7F,$F6
     COP #$0D
@@ -13390,14 +11147,14 @@ CODE_00F6EF:
     COP #$04
     COP #$31
     db $13
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
 CODE_00F754:
     COP #$01
     db $48,$F8
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$07,$04,$64,$F7
     BRL CODE_00F66E

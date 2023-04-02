@@ -3,7 +3,7 @@ A1_crabwalkguy_script:
     RTL
 
 +:
-    %CopSetNewScriptRetAddr(CODE_00A99D)
+    %Cop85(CODE_00A99D)
     %CopAssignTalkCallback(.talk)
 
     COP #$15
@@ -13,7 +13,7 @@ A1_crabwalkguy_script:
     COP #$80
         db $02
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W wButtonsPressed
     AND.W #!Key16_R|!Key16_L
     BNE .CODE_038028

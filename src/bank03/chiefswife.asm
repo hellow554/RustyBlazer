@@ -6,8 +6,8 @@ A1_chiefswife_script:
     %CopJumpIfRevealing($02, .revealTalk)
     %CopJumpIfSealed($09, .bridgeGuardRevealed)
     %CopAssignTalkCallback(.defaultTalk)
-    COP #$15
-    COP #$91
+    %CopMakeNpcUnpassable()
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 .bridgeGuardRevealed:
@@ -16,7 +16,7 @@ A1_chiefswife_script:
     COP #$11
     db $04,$3B,$1E
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 .bla:

@@ -3283,7 +3283,7 @@ CODE_029737:
     db $0F,$B1,$00,$10,$20
 
 CODE_02975D:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     LDY.W $03A0
     LDA.W $0000,Y

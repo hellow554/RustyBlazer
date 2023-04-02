@@ -25,3 +25,8 @@
 !Key8_Select    = $20
 !Key8_Y         = $40
 !Key8_B         = $80
+
+
+!FullBlockSize  = $10
+
+!MN_Misc        = $00

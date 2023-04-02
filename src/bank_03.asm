@@ -3,190 +3,11 @@ ORG $038000
 
 incsrc "bank03/crabwalkguy.asm"
 incsrc "bank03/chiefswife.asm"
+incsrc "bank03/toolshopowner.asm"
+incsrc "bank03/tulip_chiefhouse.asm"
+incsrc "bank03/bridgeguard.asm"
 
-
-    COP #$14
-    db $06,$00,$5A,$83
-    RTL
-    COP #$17
-    db $99,$83
-    COP #$91
-    COP #$20
-    db $95,$83
-    COP #$9A
-    db $00,$00,$6E,$83,$95,$83,$83,$83
-    COP #$23
-    db $7B,$83,$02,$97,$02,$9D,$0B,$02,$9E,$7B,$83
-    COP #$80
-    db $06
-    COP #$82
-    BRL CODE_038395
-
-    COP #$24
-    db $90,$83,$02,$96,$02,$9D,$0B,$02,$9E,$90,$83
-    COP #$80
-    db $06
-    COP #$82
-
-CODE_038395:
-    COP #$27
-    db $5E,$83
-    COP #$18
-    db $38,$A3,$83
-    COP #$01
-    db $28,$84
-    RTL
-
-    db $02,$01,$AD,$83,$00,$5E,$02,$0A,$38,$6B,$10,$48,$65,$6C,$6C,$6F
-    db $2C,$20,$6D,$61,$79,$20,$88,$B7,$79,$6F,$75,$3F,$11,$4F,$68,$2C
-    db $20,$FE,$98,$E1,$CC,$0D,$FB,$D6,$6D,$65,$21,$20,$0D,$54,$61,$6B
-    db $65,$20,$77,$68,$61,$74,$65,$76,$65,$72,$20,$FE,$6E,$65,$65,$64
-    db $0D,$AD,$C2,$73,$74,$6F,$72,$65,$2E,$20,$11,$88,$6F,$6E,$6C,$79
-    db $20,$B5,$4D,$65,$64,$69,$63,$61,$6C,$20,$0D,$48,$65,$72,$62,$73
-    db $20,$74,$68,$6F,$75,$67,$68,$2E,$20,$11,$02,$02,$20,$D4,$0D,$03
-    db $24,$97,$4D,$65,$64,$69,$63,$61,$6C,$20,$48,$65,$72,$62,$2E,$20
-    db $03,$20,$13,$88,$B9,$10,$48,$65,$6C,$6C,$6F,$2C,$20,$6D,$61,$79
-    db $20,$88,$B7,$79,$6F,$75,$3F,$11,$4F,$68,$2C,$20,$FE,$98,$E1,$CC
-    db $0D,$FB,$D6,$6D,$65,$21,$20,$11,$57,$68,$65,$6E,$65,$76,$65,$72
-    db $20,$FE,$ED,$FF,$0D,$4D,$65,$64,$69,$63,$61,$6C,$20,$48,$65,$72
-    db $62,$20,$D2,$0D,$A6,$62,$61,$63,$6B,$2C,$20,$96,$88,$F1,$0D,$B0
-    db $FE,$61,$6E,$6F,$74,$68,$65,$72,$2E,$20,$13,$88,$B9
-
-CODE_038480:
-    COP #$96
-    COP #$80
-    db $08
-    COP #$82
-    BRL CODE_038480
-
-    COP #$14
-    db $07,$00,$91,$84
-    RTL
-
-    COP #$30
-    db $07,$00,$B9,$84,$03
-    COP #$85
-    db $9D,$A9,$00
-    COP #$17
-    db $AA,$84
-    COP #$15
-
-CODE_0384A3:
-    COP #$80
-    db $1E
-    COP #$82
-    BRA CODE_0384A3
-
-    COP #$14
-    db $09,$00,$B5,$84
-    COP #$01
-    db $BE,$84
-    RTL
-
-    db $02,$01,$52,$85
-    COP #$01
-    db $2E,$85
-    RTL
-
-    db $10,$93,$6F,$6E,$63,$65,$20,$F3,$0D,$97,$77,$61,$74,$65,$72,$20
-    db $6D,$69,$6C,$6C,$20,$B9,$0D,$62,$65,$66,$6F,$72,$65,$20,$E1,$EF
-    db $77,$61,$73,$0D,$64,$65,$73,$74,$72,$6F,$79,$65,$64,$2E,$20,$11
-    db $88,$68,$65,$61,$72,$20,$E9,$BA,$97,$6D,$61,$6E,$20,$0D,$BB,$E1
-    db $6D,$69,$6C,$6C,$20,$FB,$72,$75,$6E,$73,$20,$0D,$E1,$65,$6C,$65
-    db $76,$61,$74,$6F,$72,$20,$BB,$E1,$0D,$55,$6E,$64,$65,$72,$67,$72
-    db $6F,$75,$6E,$64,$20,$43,$61,$73,$74,$6C,$65,$2E,$20,$13,$88,$B9
-
-aBegan:
-    db $10,$0E,$3C,$02,$02,$20,$62,$65,$67,$61,$6E,$20,$0D,$E2,$68,$65
-    db $61,$72,$20,$97,$73,$6D,$61,$6C,$6C,$20,$76,$6F,$69,$63,$65,$2E
-    db $11,$13,$BF,$84,$10,$91,$EF,$43,$68,$69,$65,$66,$20,$0D,$73,$70
-    db $65,$61,$6B,$73,$20,$F2,$C3,$65,$76,$65,$72,$79,$20,$0D,$6D,$6F
-    db $72,$6E,$69,$6E,$67,$2E,$20,$11,$45,$76,$65,$6E,$20,$EB,$88,$63
-    db $61,$6E,$6E,$6F,$74,$20,$0D,$73,$70,$65,$61,$6B,$2C,$20,$88,$63
-    db $6F,$6D,$6D,$75,$6E,$69,$63,$61,$74,$65,$20,$0D,$F2,$68,$69,$6D
-    db $20,$74,$68,$72,$6F,$75,$67,$68,$20,$6F,$75,$72,$20,$0D,$74,$68
-    db $6F,$75,$67,$68,$74,$73,$2E,$20,$13,$88,$B9
-    COP #$14
-    db $08,$00,$C0,$85
-    RTL
-
-    COP #$85
-    db $9D,$A9,$00
-    COP #$15
-    COP #$91
-    COP #$07
-    db $02,$82,$D4,$85
-    COP #$17
-    db $35,$86
-    RTL
-
-    COP #$17
-    db $3E,$86
-    COP #$0C
-    db $00,$04,$0F,$86
-    COP #$07
-    db $04,$80,$FD,$85
-    COP #$9A
-    db $00,$00,$EE,$85,$0F,$86,$F3,$85
-    COP #$97
-    BRL CODE_0385F5
-
-    COP #$96
-
-CODE_0385F5:
-    COP #$80
-    db $02
-    COP #$82
-    BRL CODE_038631
-
-    COP #$16
-    COP #$9D
-    db $04
-    COP #$9E
-    db $06,$86
-    COP #$15
-    COP #$09
-    db $04,$00
-    BRL CODE_038631
-
-    COP #$07
-    db $04,$80,$2C,$86
-    COP #$16
-    COP #$9D
-    db $03
-    COP #$9E
-    db $1E,$86
-    COP #$80
-    db $01
-    COP #$82
-    COP #$15
-    COP #$09
-    db $04,$80
-    BRL CODE_038631
-
-    COP #$80
-    db $01
-    COP #$82
-
-CODE_038631:
-    COP #$27
-    db $D8,$85
-    COP #$01
-    db $43,$86
-    COP #$09
-    db $02,$82
-    RTL
-
-    COP #$01
-    db $98,$86
-    RTL
-
-    db $10,$88,$9D,$E1,$67,$75,$61,$72,$64,$20,$CB,$0D,$E1,$62,$72,$69
-    db $64,$67,$65,$2E,$20,$11,$88,$67,$75,$65,$73,$73,$20,$69,$74,$20
-    db $BA,$CA,$0D,$D5,$6E,$65,$63,$65,$73,$73,$61,$72,$79,$20,$E2,$0D
-    db $67,$75,$61,$72,$64,$20,$73,$75,$63,$68,$20,$97,$73,$6D,$61,$6C
-    db $6C,$20,$0D,$62,$72,$69,$64,$67,$65,$2C,$20,$D2,$70,$61,$73,$73
-    db $2E,$20,$13,$88,$B9,$10,$8F,$70,$61,$73,$73,$2E,$13,$88,$B9
+CODE_0386A2:
     COP #$14
     db $0E,$00,$A9,$86
     RTL
@@ -219,7 +40,7 @@ CODE_038631:
     COP #$15
 
 CODE_0386E5:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$26,$17,$EF,$86
     RTL
@@ -249,7 +70,7 @@ CODE_0386E5:
 CODE_038724:
     COP #$17
     db $6F,$87
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$2F,$32,$50,$87
     RTL
@@ -258,7 +79,7 @@ CODE_038724:
 CODE_038732:
     COP #$01
     db $89,$B9
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$26,$17,$41,$87
     BRA CODE_0386E5
@@ -281,7 +102,7 @@ CODE_038732:
     db $2A
     COP #$09
     db $00,$9A
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $7B,$87
@@ -332,6 +153,8 @@ aTurned:
     db $2E,$20,$13,$88,$B9,$10,$92,$BA,$03,$24,$E1,$4D,$61,$73,$74,$65
     db $72,$60,$D7,$0D,$45,$6D,$62,$6C,$65,$6D,$20,$41,$2E,$20,$03,$20
     db $13,$88,$B9
+
+CODE_03891A:
     COP #$14
     db $0F,$00,$21,$89
     RTL
@@ -434,7 +257,7 @@ CODE_038A83:
     db $34,$8C
     COP #$09
     db $05,$81
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$37,$1F,$D8,$8A
     COP #$0D
@@ -481,7 +304,7 @@ CODE_038A83:
     COP #$82
     COP #$17
     db $BE,$8B
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     LDA.W #$BFC0
@@ -503,7 +326,7 @@ CODE_038A83:
     db $02,$03,$01,$08,$01,$48,$03
     LDA.W #$BFC0
     TRB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$34
     COP #$80
@@ -519,7 +342,7 @@ CODE_038A83:
     COP #$04
     COP #$10
     db $00,$0B,$01,$00,$00,$00,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfEventFlagIsUnset($8104, $8B9D)
     %CopJumpIfItemIsNotEquipped(!itemDreamRod, $8B98)
@@ -649,6 +472,8 @@ aLisaAppears:
     db $64,$2E,$20,$0E,$78,$13,$89,$B9,$10,$02,$02,$2C,$20,$0D,$70,$72
     db $6F,$6D,$69,$73,$65,$20,$C3,$FE,$F1,$0D,$72,$65,$74,$75,$72,$6E
     db $20,$73,$6F,$6D,$65,$64,$61,$79,$2E,$20,$0E,$B4,$13,$89,$B9
+
+CODE_038FF4:
     COP #$14
     db $11,$00,$FB,$8F
     RTL
@@ -687,6 +512,8 @@ CODE_039006:
     db $20,$69,$73,$0D,$68,$69,$64,$64,$65,$6E,$20,$BB,$E1,$0D,$55,$6E
     db $64,$65,$72,$67,$72,$6F,$75,$6E,$64,$20,$43,$61,$73,$74,$6C,$65
     db $2E,$20,$13,$88,$B9
+
+CODE_03910C:
     COP #$14
     db $12,$00,$13,$91
     RTL
@@ -696,7 +523,7 @@ CODE_039006:
     COP #$17
     db $21,$91
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     %CopJumpIfEventFlagIsUnset($0107, $912D)
@@ -719,6 +546,8 @@ CODE_039006:
     db $73,$65,$20,$77,$61,$6C,$6C,$73,$3F,$20,$0D,$88,$9D,$6B,$6E,$6F
     db $77,$6E,$20,$E2,$A1,$97,$0D,$66,$61,$73,$74,$20,$62,$75,$69,$6C
     db $64,$65,$72,$21,$20,$13,$88,$B9
+
+CODE_0391D2:
     COP #$3B
     db $16,$00,$E8,$91,$02,$17,$91,$B1,$E2,$20,$A9,$00,$48,$C2,$20,$A9
     db $5E,$B0,$48,$6B
@@ -726,7 +555,7 @@ CODE_039006:
     db $9D,$A9,$00
     COP #$17
     db $2C,$92
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$20
     db $28,$92
     COP #$9A
@@ -795,6 +624,8 @@ CODE_039228:
     db $20,$CB,$67,$6F,$61,$74,$60,$D7,$0D,$66,$6F,$6F,$64,$2C,$20,$11
     db $72,$65,$74,$75,$72,$6E,$20,$B9,$9E,$FE,$0D,$B5,$EC,$E1,$CC,$0D
     db $88,$B5,$67,$69,$76,$65,$6E,$20,$79,$6F,$75,$2E,$20,$13,$88,$B9
+
+CODE_039365:
     COP #$14
     db $18,$00,$6C,$93
     RTL
@@ -812,7 +643,7 @@ CODE_039377:
     BRA CODE_039377
 
     %CopJumpIfEventFlagIsUnset($8104, $9389)
-
+    
     db $02,$01,$8E,$93,$6B
     COP #$01
     db $FB,$93
@@ -833,6 +664,8 @@ CODE_039377:
     db $6D,$61,$79,$20,$A1,$0D,$64,$69,$66,$66,$65,$72,$65,$6E,$74,$20
     db $AD,$F4,$0D,$FE,$73,$61,$77,$20,$68,$65,$72,$20,$62,$65,$66,$6F
     db $72,$65,$2E,$20,$13,$88,$B9
+
+CODE_039475:
     COP #$14
     db $1A,$00,$7C,$94
     RTL
@@ -866,7 +699,7 @@ CODE_039498:
     COP #$17
     db $00,$95
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$20
@@ -916,6 +749,8 @@ CODE_039498:
     db $65,$20,$E1,$0D,$68,$6F,$75,$73,$65,$2E,$20,$11,$41,$48,$48,$48
     db $48,$21,$21,$20,$0D,$81,$47,$48,$4F,$53,$54,$21,$20,$81,$47,$48
     db $4F,$53,$54,$21,$20,$13,$88,$B9
+
+CODE_039644:
     COP #$14
     db $0E,$00,$4B,$96
     RTL
@@ -929,6 +764,7 @@ CODE_03964B:
     COP #$82
     BRA CODE_03964B
 
+CODE_039656:
     COP #$14
     db $0E,$00,$5D,$96
     RTL
@@ -942,6 +778,7 @@ CODE_03965D:
     COP #$82
     BRA CODE_03965D
 
+CODE_039668:
     COP #$14
     db $23,$00,$6F,$96
     RTL
@@ -949,7 +786,7 @@ CODE_03965D:
     COP #$15
     COP #$17
     db $FD,$96
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$38,$3A,$7F,$96
     RTL
@@ -957,7 +794,7 @@ CODE_03965D:
     %CopJumpIfEventFlagIsUnset($8206, $96F6)
     COP #$01
     db $1A,$97
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $22,$00,$92,$96,$6B
     COP #$0D
@@ -1001,6 +838,8 @@ aOhThat:
 aWas:
     db $10,$57,$61,$73,$20,$E1,$70,$61,$73,$73,$20,$68,$65,$6C,$70,$66
     db $75,$6C,$3F,$20,$13,$88,$B9
+
+CODE_0397DA:
     COP #$14
     db $22,$00,$E1,$97
     RTL
@@ -1010,7 +849,7 @@ aWas:
     COP #$17
     db $47,$98
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$2F,$36,$F6,$97
     RTL
@@ -1033,7 +872,7 @@ aWas:
     TRB.W wButtonMask
     COP #$15
     %CopJumpIfEventFlagIsUnset($8206, $9840)
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$2E,$36,$33,$98
     RTL
@@ -1045,7 +884,7 @@ aWas:
     db $1B
     COP #$09
     db $06,$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 
@@ -1074,6 +913,8 @@ aPlaced_0:
     db $10,$02,$02,$20,$70,$6C,$61,$63,$65,$64,$20,$0D,$E1,$85,$52,$6F
     db $64,$20,$CD,$E1,$0D,$74,$75,$6C,$69,$70,$60,$D7,$70,$65,$74,$61
     db $6C,$2E,$20,$13,$88,$B9
+
+CODE_0398A6:
     COP #$14
     db $25,$00,$AD,$98
     RTL
@@ -1082,7 +923,7 @@ aPlaced_0:
     db $9D,$A9,$00
     COP #$17
     db $1A,$99
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($0201, $98C8)
     COP #$11
     db $14,$2C,$13
@@ -1094,7 +935,7 @@ aPlaced_0:
     db $00,$02
     COP #$17
     db $30,$99
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$02,$DD,$98
     BRL CODE_0398DE
@@ -1121,7 +962,7 @@ CODE_0398DE:
 CODE_0398F7:
     COP #$17
     db $35,$99
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$28,$0B,$05,$99
     RTL
@@ -1177,6 +1018,8 @@ aWould:
     db $79,$69,$6E,$67,$20,$0D,$68,$69,$64,$65,$20,$96,$73,$65,$65,$6B
     db $2E,$20,$88,$6D,$75,$73,$74,$20,$0D,$66,$69,$6E,$64,$20,$D8,$65
     db $6C,$73,$65,$20,$74,$6F,$0D,$64,$6F,$2E,$20,$13,$88,$B9
+
+CODE_039A2C:
     COP #$14
     db $1D,$00,$33,$9A
     RTL
@@ -1184,12 +1027,12 @@ aWould:
     COP #$85
     db $9D,$A9,$00
     %CopJumpIfEventFlagIsUnset($0102, $9A46)
-
+    
     db $02,$11,$15,$32,$2A,$82,$90,$00
     COP #$17
     db $E4,$9A
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     db $02,$16,$02,$17,$05,$9B,$02,$81,$1B,$02,$02,$83,$02,$9F,$08,$00
@@ -1233,6 +1076,8 @@ aWould:
     db $6F,$72,$6E,$65,$72,$20,$CB,$E1,$66,$65,$6E,$63,$65,$2E,$20,$13
     db $88,$B9,$10,$92,$BA,$9A,$88,$F1,$0D,$E7,$79,$6F,$75,$2E,$20,$8F
     db $0D,$66,$6F,$6C,$6C,$6F,$77,$20,$6D,$65,$2E,$20,$13,$88,$B9
+
+CODE_039CDE:
     COP #$14
     db $15,$00,$E5,$9C
     RTL
@@ -1278,7 +1123,7 @@ aWould:
     db $6E,$9D
     COP #$09
     db $05,$02
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$18
@@ -1345,7 +1190,7 @@ aHey:
     COP #$17
     db $04,$9F
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$01
@@ -1371,7 +1216,7 @@ aSinceLosing:
     COP #$17
     db $94,$9F
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $24
     COP #$82
@@ -1428,7 +1273,7 @@ aBeSure:
     COP #$17
     db $1F,$A1
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($9B00, $A0C5)
     COP #$18
     db $3A,$C5,$A0
@@ -1466,7 +1311,7 @@ CODE_03A0C6:
     TRB.W wButtonMask
     COP #$17
     db $1F,$A1
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$A8
@@ -1544,7 +1389,7 @@ aSuddenly:
     COP #$15
     COP #$17
     db $62,$A3
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $09,$00,$5F,$A3
     COP #$80
@@ -1564,6 +1409,8 @@ aSuddenly:
     db $6F,$63,$6B,$20,$0D,$B9,$AE,$68,$6F,$75,$72,$73,$2E,$20,$11,$88
     db $77,$6F,$6E,$64,$65,$72,$20,$F4,$68,$65,$20,$BA,$0D,$B1,$E2,$A6
     db $62,$61,$63,$6B,$3F,$20,$13,$88,$B9
+
+CODE_03A3B0:
     COP #$14
     db $22,$00,$B7,$A3,$6B
     COP #$17
@@ -1601,13 +1448,15 @@ aIn:
 aWhyDon:
     db $10,$57,$68,$79,$20,$64,$6F,$6E,$60,$E5,$FE,$74,$72,$79,$20,$96
     db $0D,$EA,$E2,$E1,$6A,$65,$77,$65,$6C,$72,$79,$3F,$20,$13,$88,$B9
+
+CODE_03A440:
     COP #$14
     db $10,$00,$47,$A4,$6B
     %CopJumpIfEventFlagIsUnset($9F02, $A491)
     COP #$17
     db $DF,$A4
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $32,$00,$5C,$A4
     RTL
@@ -1628,7 +1477,7 @@ aWhyDon:
     db $9F,$A5
     COP #$17
     db $E4,$A4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$12,$35,$89,$A4
     RTL
@@ -1636,7 +1485,7 @@ aWhyDon:
     COP #$80
     db $1F
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     LDA.W #$BFC0
@@ -1669,7 +1518,7 @@ aWhyDon:
     db $01,$01,$01,$B0,$03,$D8,$01
     LDA.W #$BFC0
     TRB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $0A,$A5
@@ -1737,87 +1586,10 @@ aWho:
     db $77,$69,$73,$68,$20,$E4,$64,$72,$65,$61,$6D,$20,$0D,$77,$6F,$75
     db $6C,$64,$20,$6E,$65,$76,$65,$72,$20,$65,$6E,$64,$2E,$20,$0E,$78
     db $13,$89,$B9
-    COP #$14
-    db $00,$00,$B3,$A7
-    RTL
 
-    COP #$9F
-    db $08,$00
-    COP #$85
-    db $9D,$A9,$00
-    COP #$17
-    db $DC,$A7
-    COP #$15
-    COP #$2A
-    db $10,$00,$00,$00
-    COP #$05
-    db $04,$05
-    COP #$16
-    COP #$2B
-    db $10,$00,$00,$00
-    COP #$85
-    db $9D,$A9,$00
-    COP #$86
-    RTL
+incsrc "bank03/magician.asm"
 
-    COP #$01
-    db $F9,$A7
-    BRK #$5E
-    COP #$0A
-    db $11
-    COP #$01
-    db $13,$A9
-    SEP #$20
-    LDA.B #$01
-    STA.W playerSouls
-    REP #$20
-    COP #$09
-    db $04,$85
-    BRK #$0E
-    RTL
-
-
-aMagicianText1:
-    db $10,$88,$EC,$E2,$C0,$75,$70,$20,$0D,$BB,$E1,$73,$6B,$79,$20,$BC
-    db $BE,$0D,$79,$6F,$75,$2E,$20,$11,$4E,$6F,$77,$2C,$20,$88,$9D,$6C
-    db $69,$76,$69,$6E,$67,$20,$CD,$0D,$45,$61,$72,$74,$68,$2C,$20,$61
-    db $77,$61,$79,$20,$AD,$E1,$0D,$4D,$61,$73,$74,$65,$72,$2E,$20,$11
-    db $80,$E1,$AA,$74,$68,$61,$74,$0D,$B5,$62,$65,$65,$6E,$20,$63,$61
-    db $70,$74,$75,$72,$65,$64,$20,$62,$79,$20,$0D,$44,$65,$61,$74,$68
-    db $74,$6F,$6C,$6C,$20,$98,$73,$65,$61,$6C,$65,$64,$20,$0D,$61,$77
-    db $61,$79,$20,$BB,$6D,$6F,$6E,$73,$74,$65,$72,$20,$6C,$61,$69,$72
-    db $73,$2E,$11,$4A,$75,$73,$74,$20,$61,$73,$20,$FE,$B5,$73,$65,$74
-    db $20,$0D,$C3,$66,$72,$65,$65,$2C,$20,$FE,$6D,$75,$73,$74,$20,$66
-    db $72,$65,$65,$0D,$65,$76,$65,$72,$79,$6F,$6E,$65,$2E,$20,$11,$45
-    db $76,$65,$6E,$20,$E1,$72,$65,$6C,$65,$61,$73,$65,$20,$CB,$97,$0D
-    db $73,$6D,$61,$6C,$6C,$20,$74,$72,$65,$65,$20,$6F,$72,$20,$0D,$63
-    db $72,$65,$61,$74,$75,$72,$65,$2C,$20,$74,$68,$65,$79,$20,$F1,$0D
-    db $61,$69,$64,$20,$FE,$BB,$FF,$71,$75,$65,$73,$74,$2E,$11,$48,$65
-    db $72,$65,$2C,$20,$E6,$74,$68,$69,$73,$2E,$20,$11,$02,$02,$20,$D4
-    db $0D,$03,$24,$E1,$46,$6C,$61,$6D,$65,$20,$42,$61,$6C,$6C,$20,$4D
-    db $61,$67,$69,$63,$2E,$20,$03,$20,$11,$0C
-
-aMagicianText2:
-    db $10,$4E,$6F,$77,$20,$88,$F1,$6A,$6F,$69,$6E,$20,$79,$6F,$75,$2E
-    db $20,$49,$0D,$9D,$97,$6D,$61,$67,$69,$63,$69,$61,$6E,$20,$73,$6F
-    db $20,$88,$63,$61,$6E,$0D,$ED,$9A,$74,$79,$70,$65,$73,$20,$6D,$61
-    db $67,$69,$63,$2E,$20,$11,$88,$F1,$ED,$C2,$73,$6B,$69,$6C,$6C,$20
-    db $74,$6F,$0D,$B7,$79,$6F,$75,$2E,$20,$11,$52,$65,$6D,$65,$6D,$62
-    db $65,$72,$20,$74,$68,$69,$73,$2C,$20,$88,$6E,$65,$65,$64,$20,$0D
-    db $47,$45,$4D,$73,$20,$BB,$6F,$72,$64,$65,$72,$20,$E2,$ED,$0D,$6D
-    db $61,$67,$69,$63,$2E,$20,$11,$57,$68,$65,$6E,$20,$FE,$73,$65,$74
-    db $20,$C3,$66,$72,$65,$65,$2C,$20,$0D,$E1,$C4,$6C,$65,$66,$74,$20
-    db $73,$6F,$6D,$65,$0D,$73,$6D,$61,$6C,$6C,$20,$73,$70,$68,$65,$72
-    db $65,$73,$20,$CB,$67,$6F,$6C,$64,$2E,$11,$92,$BA,$F5,$97,$47,$45
-    db $4D,$20,$0D,$6C,$6F,$6F,$6B,$73,$20,$6C,$69,$6B,$65,$2E,$20,$41
-    db $6C,$72,$69,$67,$68,$74,$2C,$20,$0D,$6C,$65,$74,$60,$D7,$77,$6F
-    db $72,$6B,$20,$74,$6F,$67,$65,$74,$68,$65,$72,$20,$74,$6F,$0D,$72
-    db $65,$76,$69,$76,$65,$20,$E1,$77,$6F,$72,$6C,$64,$21,$20,$11,$57
-    db $65,$20,$6D,$75,$73,$74,$20,$B3,$E2,$E1,$0D,$47,$72,$61,$73,$73
-    db $20,$56,$61,$6C,$6C,$65,$79,$20,$53,$68,$72,$69,$6E,$65,$2E,$20
-    db $13,$88,$B9
-    COP #$07
-    db $05,$89,$33,$AA
+    %CopJumpIfEventFlagIsUnset($8905, $AA33)
     COP #$B0
     db $4C,$AA,$03,$00,$20
     COP #$15
@@ -1836,7 +1608,7 @@ CODE_03AA45:
     COP #$82
     BRA CODE_03AA45
 
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$02,$55,$AA
     RTL
@@ -2047,9 +1819,11 @@ CODE_03AD3D:
     db $73,$65,$20,$AA,$0D,$6F,$6E,$63,$65,$20,$FE,$72,$65,$74,$75,$72
     db $6E,$20,$F2,$0D,$E1,$63,$6F,$72,$72,$65,$63,$74,$20,$73,$77,$6F
     db $72,$64,$2E,$20,$11,$0C
+
+CODE_03AE99:
     COP #$A0
     db $02,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($8404, $AEAD)
     COP #$0D
     db $00,$47,$38,$FA,$AE
@@ -2059,13 +1833,14 @@ CODE_03AD3D:
     LDA.W $0000,Y
     CMP.W #$04B0
     BCC CODE_03AEC0
+
     COP #$A0
     db $B0,$FF
     COP #$27
     db $DD,$AE
 
 CODE_03AEC0:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$47,$38,$CA,$AE
     RTL
@@ -2081,7 +1856,7 @@ CODE_03AED3:
     COP #$83
     COP #$27
     db $DD,$AE
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$47,$33,$E7,$AE
     RTL
@@ -2103,6 +1878,8 @@ CODE_03AEF0:
     db $65,$20,$75,$6E,$6C,$65,$73,$73,$20,$0D,$E1,$77,$61,$74,$65,$72
     db $20,$6D,$69,$6C,$6C,$20,$BA,$0D,$74,$75,$72,$6E,$69,$6E,$67,$2E
     db $20,$13,$88,$B9
+
+CODE_03AF5C:
     COP #$A4
     COP #$05
     db $04,$04
@@ -2116,7 +1893,7 @@ CODE_03AEF0:
     db $97,$AF
 
 CODE_03AF75:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$47,$38,$7F,$AF
     RTL
@@ -2134,7 +1911,7 @@ CODE_03AF88:
     COP #$83
     COP #$27
     db $97,$AF
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$47,$33,$A1,$AF
     RTL
@@ -2184,6 +1961,7 @@ CODE_03AFF2:
     COP #$86
     RTL
 
+CODE_03AFFD:
     SEP #$20
     LDA.W currentMapNumber
     LDY.W #$B042
@@ -2372,9 +2150,9 @@ CODE_03B273:
     db $04
     COP #$10
     db $00,$0D,$02,$F0,$02,$90,$02
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$34
     LDA.W #$0005
     STA.W textSpeed
@@ -2543,7 +2321,7 @@ CODE_03B442:
     COP #$1B
     db $03,$B5,$02,$00
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     LDA.W #$0002
     TSB.W $03B8
@@ -2560,7 +2338,7 @@ CODE_03B442:
     db $FF
     DEC.W horizontalScroll
     COP #$04
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $10,$4D,$79,$20,$66,$6F,$6C,$6C,$6F,$77,$65,$72,$2C,$20,$0D,$0E
     db $28,$E7,$C3,$F5,$BA,$CD,$0D,$FF,$6D,$69,$6E,$64,$2E,$20,$0D,$0E
@@ -2646,7 +2424,7 @@ CODE_03B967:
     COP #$81
     db $1B,$08
     COP #$83
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
 aClearTextboxAndEnd:
@@ -2788,7 +2566,7 @@ CODE_03BA64:
     COP #$17
     db $1C,$BC
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $5D,$00,$5A,$BB
     RTL
@@ -2885,7 +2663,7 @@ CODE_03BA64:
     COP #$82
     COP #$17
     db $33,$BC
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $47,$BC
@@ -2895,7 +2673,7 @@ CODE_03BA64:
     RTL
     db $02,$01,$9D,$D4,$02,$09,$06,$80,$02,$09,$07,$80,$6B
     %CopJumpIfEventFlagIsUnset($8000, $BC42)
-
+    
     db $02,$01,$BB,$D4,$02,$17,$42,$BC,$6B
     COP #$01
     db $D0,$D4
@@ -3007,7 +2785,7 @@ CODE_03BDFE:
     db $48,$48,$21,$20,$0D,$95,$DF,$6D,$65,$21,$20,$0D,$13,$46,$EC
     COP #$17
     db $F1,$BE
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3035,7 +2813,7 @@ CODE_03BDFE:
     COP #$AC
     db $B0,$C0,$03,$A0,$00,$B0,$00,$50,$00
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
     COP #$81
@@ -3055,7 +2833,7 @@ CODE_03BDFE:
     COP #$15
     COP #$17
     db $09,$C0
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$09
     db $02,$80
@@ -3096,7 +2874,7 @@ CODE_03BDFE:
     db $15,$C0
     COP #$09
     db $06,$83
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$14
     db $6F,$00,$F8,$BF
@@ -3219,7 +2997,7 @@ CODE_03BDFE:
     db $20,$13,$46,$EC
     COP #$17
     db $6D,$C2
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3246,7 +3024,7 @@ CODE_03BDFE:
     db $72,$C3,$03,$70,$00,$D0,$02,$40,$20
     COP #$17
     db $35,$C3
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
 
 CODE_03C316:
     COP #$81
@@ -3270,7 +3048,7 @@ CODE_03C316:
     db $67,$20,$E1,$6E,$6F,$69,$73,$65,$2E,$20,$13,$46,$EC
     COP #$17
     db $7E,$C3
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3332,7 +3110,7 @@ CODE_03C3E5:
     db $20,$13,$46,$EC
     COP #$17
     db $A1,$C4
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3365,7 +3143,7 @@ CODE_03C3E5:
     COP #$17
     db $0A,$C6
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
 
     COP #$16
@@ -3385,7 +3163,7 @@ CODE_03C3E5:
     COP #$17
     db $31,$C6
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
     COP #$17
@@ -3396,7 +3174,7 @@ CODE_03C3E5:
     COP #$17
     db $39,$C6
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
     db $00,$00
@@ -3420,7 +3198,7 @@ CODE_03C3E5:
     TRB.W wButtonMask
     COP #$17
     db $2C,$C6
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $4D,$C6
@@ -3485,7 +3263,7 @@ CODE_03C649:
     db $BD,$0D,$74,$68,$61,$74,$3F,$20,$13,$46,$EC
     COP #$17
     db $32,$C8
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3511,7 +3289,7 @@ CODE_03C649:
     COP #$17
     db $C9,$C8
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $18
     COP #$82
@@ -3524,7 +3302,7 @@ CODE_03C649:
     db $6C,$79,$2E,$20,$13,$46,$EC
     COP #$17
     db $01,$C9
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $23
     COP #$82
@@ -3555,7 +3333,7 @@ CODE_03C649:
     COP #$17
     db $43,$CA
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($0402, $C9BF)
     COP #$17
     db $5E,$CA
@@ -3619,7 +3397,7 @@ CODE_03C649:
     db $01,$01,$03,$B0,$03,$D8,$01
     LDA.W #$BFC0
     TRB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfItemIsNotEquipped(!itemDreamRod, $CA59)
     COP #$01
@@ -3637,13 +3415,13 @@ CODE_03C649:
     RTL
 
 CODE_03CA63:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$12,$2C,$6D,$CA
     RTL
     COP #$01
     db $85,$CA
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$12,$2C,$7D,$CA
     BRL CODE_03CA63
@@ -3692,7 +3470,7 @@ CODE_03CA63:
     db $A1,$CC
     COP #$A4
     %CopJumpIfEventFlagIsUnset($8305, $CC81)
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $21
     COP #$82
@@ -3747,7 +3525,7 @@ UNREACH_03CCC4:
     db $9D,$A9,$00
     COP #$A4
     COP #$16
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $21
     COP #$82
@@ -3760,7 +3538,7 @@ UNREACH_03CCC4:
     db $9D,$A9,$00
     COP #$A4
     COP #$16
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $21
     COP #$82
@@ -3774,7 +3552,7 @@ UNREACH_03CCC4:
     COP #$17
     db $E1,$CD
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
     db $E9,$CD
@@ -3796,7 +3574,7 @@ UNREACH_03CCC4:
     COP #$17
     db $EE,$CD
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
     COP #$17
@@ -3816,7 +3594,7 @@ UNREACH_03CCC4:
     COP #$17
     db $FB,$CD
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$1D,$09,$D6,$CD
     RTL
@@ -3824,7 +3602,7 @@ UNREACH_03CCC4:
     db $D5,$CE
     COP #$09
     db $01,$80
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $0B,$CE
@@ -3877,12 +3655,12 @@ aOh_4:
     COP #$17
     db $B4,$CF
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $56,$00,$5C,$CF,$6B
     COP #$17
     db $A7,$CF
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
     COP #$17
@@ -3936,7 +3714,7 @@ CODE_03CF69:
     COP #$15
     COP #$17
     db $DE,$D0
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $4A,$00,$6F,$D0,$6B
     COP #$14
@@ -3995,7 +3773,7 @@ CODE_03CF69:
     db $07,$00
     COP #$17
     db $0E,$D1
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $34,$D1
@@ -4075,7 +3853,7 @@ aTooBad:
     COP #$17
     db $E5,$D3
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $5D,$00,$1D,$D3,$6B
     COP #$14
@@ -4174,16 +3952,16 @@ aTooBad:
     COP #$82
     COP #$17
     db $FC,$D3
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $02,$01,$10,$D4,$6B
     COP #$01
     db $81,$D4
     RTL
     db $02,$01,$9D,$D4,$02,$09,$06,$80,$02,$09,$07,$80,$6B
-
+    
     %CopJumpIfEventFlagIsUnset($8000, $D40B)
-
+    
     db $02,$01,$BB,$D4,$02,$17,$0B,$D4,$6B
     COP #$01
     db $D0,$D4
@@ -4209,7 +3987,7 @@ aTooBad:
 
     COP #$30
     db $50,$00,$31,$D5,$03
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$17,$0D,$11,$D5
     RTL
@@ -4225,7 +4003,7 @@ aTooBad:
     db $07,$85
     COP #$09
     db $01,$9B
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $CE,$D5
@@ -4268,7 +4046,7 @@ aTooBad:
     COP #$17
     db $D0,$D6
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($8303, $D6C6)
     RTL
     COP #$16
@@ -4315,7 +4093,7 @@ CODE_03D6F4:
     %CopJumpIfEventFlagIsUnset($0304, $D80C)
     COP #$86
     RTL
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$19,$19,$16,$D8
     RTL
@@ -4326,7 +4104,7 @@ CODE_03D6F4:
     db $1E
     COP #$09
     db $04,$83
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $10,$03,$24,$91,$6C,$65,$61,$76,$65,$73,$20,$CB,$0D,$47,$72,$65
     db $65,$6E,$57,$6F,$6F,$64,$20,$03,$20,$98,$AF,$0D,$75,$6E,$64,$65
@@ -4338,7 +4116,7 @@ CODE_03D6F4:
 
     COP #$30
     db $49,$00,$68,$D8,$03
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $6F,$D8
@@ -4357,7 +4135,7 @@ CODE_03D6F4:
     COP #$15
     COP #$17
     db $08,$D9
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
     db $00,$00
@@ -4410,7 +4188,7 @@ CODE_03D6F4:
     %CopJumpIfEventFlagIsUnset($0400, $D9AF)
     COP #$17
     db $D9,$D9
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$18
     db $1F,$BA,$D9
     COP #$09
@@ -4457,7 +4235,7 @@ CODE_03D6F4:
     RTL
     COP #$17
     db $00,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$05,$0B,$69,$DB
     COP #$0D
@@ -4496,7 +4274,7 @@ CODE_03DB92:
     COP #$15
     COP #$17
     db $A8,$DB
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $02,$01,$DB,$DB,$6B,$10,$42,$4F,$4F,$21,$20,$11,$2E,$2E,$2E,$2E
     db $2E,$2E,$2E,$2E,$2E,$2E,$2E,$20,$11,$84,$6F,$6E,$21,$20,$41,$72
@@ -4510,7 +4288,7 @@ CODE_03DB92:
     COP #$15
     COP #$17
     db $FA,$DB
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$14
     db $51,$00,$05,$DC,$02,$01,$41,$DD,$6B
@@ -4561,7 +4339,7 @@ CODE_03DB92:
     COP #$17
     db $60,$DE
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
     db $68,$DE
@@ -4608,7 +4386,7 @@ CODE_03DDDC:
     COP #$80
     db $06
     COP #$82
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
     COP #$09
@@ -4645,7 +4423,7 @@ CODE_03DDDC:
     COP #$17
     db $88,$DF
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $8D,$DF
@@ -4665,7 +4443,7 @@ CODE_03DDDC:
     COP #$17
     db $1A,$E0
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$18
     db $02,$24,$E0,$02,$01,$1B,$E1,$6B
@@ -4705,7 +4483,7 @@ CODE_03DDDC:
 
     COP #$30
     db $43,$00,$45,$E1,$03
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
     db $4C,$E1
@@ -4727,7 +4505,7 @@ CODE_03DDDC:
     COP #$17
     db $D5,$E1
     COP #$15
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfEventFlagIsUnset($9A02, $E1E9)
     COP #$01
@@ -4747,7 +4525,7 @@ CODE_03DDDC:
     COP #$15
     COP #$17
     db $4A,$E2
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfEventFlagIsUnset($8402, $E255)
     COP #$01
@@ -4782,7 +4560,7 @@ CODE_03DDDC:
     COP #$15
     COP #$17
     db $37,$E3
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
     db $00,$00
@@ -4820,13 +4598,13 @@ CODE_03DDDC:
     db $72,$65,$61,$6D,$20,$11,$E3,$88,$9D,$97,$62,$69,$72,$64,$20,$96
     db $0D,$A7,$66,$6C,$79,$20,$77,$68,$65,$72,$65,$76,$65,$72,$20,$88
     db $0D,$77,$69,$73,$68,$2E,$20,$13,$46,$EC
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$0F,$15,$85,$E4
     RTL
 
     %CopJumpIfEventFlagIsUnset($0906, $E48E)
-
+    
     db $02,$86,$6B
     COP #$01
     db $9E,$E4
@@ -4974,8 +4752,8 @@ CODE_03E627:
     COP #$86
     RTL
 
-    COP #$91
     %CopJumpIfEventFlagIsUnset($8401, $E682)
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$01,$39,$E6
     RTL
@@ -5013,7 +4791,7 @@ CODE_03E627:
     db $5C,$E7
     COP #$01
     db $8D,$E6
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $10,$02,$02,$20,$62,$65,$67,$61,$6E,$20,$E2,$0D,$68,$65,$61,$72
     db $20,$97,$73,$6D,$61,$6C,$6C,$20,$76,$6F,$69,$63,$65,$2E,$20,$11
@@ -5037,14 +4815,14 @@ CODE_03E627:
     db $00,$00,$00,$00
     COP #$2B
     db $10,$00,$00,$00
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$7B,$E7
     BRL CODE_03E77C
     db $6B
 
 CODE_03E77C:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$85,$E7
     RTL
@@ -5067,7 +4845,7 @@ CODE_03E77C:
     db $D5,$E7
     LDA.W #$2F80
     TSB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$2F
     db $00,$00,$FE,$FF
     %CopJumpIfEventFlagIsUnset($8000, $E7C2)
@@ -5089,14 +4867,14 @@ CODE_03E77C:
     db $00,$00,$F0,$FF
     COP #$2B
     db $10,$00,$F0,$FF
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$F7,$E7
     BRL CODE_03E7F8
     RTL
 
 CODE_03E7F8:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$01,$E8
     RTL
@@ -5118,14 +4896,14 @@ CODE_03E7F8:
     db $00,$00,$00,$00
     COP #$2B
     db $00,$00,$F0,$FF
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$7F,$E8
     BRL CODE_03E880
     RTL
 
 CODE_03E880:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$89,$E8
     RTL
@@ -5156,7 +4934,7 @@ CODE_03E880:
     db $51,$E8
     LDA.W #$2F80
     TSB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$2F
     db $FE,$FF,$00,$00
     %CopJumpIfEventFlagIsUnset($8000, $E8DA)
@@ -5183,14 +4961,14 @@ CODE_03E880:
     db $10,$00,$00,$00
     COP #$2B
     db $10,$00,$F0,$FF
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$1D,$E9
     BRL CODE_03E91E
     RTL
 
 CODE_03E91E:
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0C
     db $00,$00,$27,$E9
     RTL
@@ -5222,11 +5000,10 @@ CODE_03E91E:
     db $ED,$E8
     LDA.W #$2F80
     TSB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$2F
     db $02,$00,$00,$00
-    COP #$07
-    db $00,$80,$7A,$E9
+    %CopJumpIfEventFlagIsUnset($8000, $E97A)
     RTL
     COP #$2F
     db $02,$00,$00,$00
@@ -5293,7 +5070,7 @@ CODE_03E9D7:
     STA.L $7E7000,X
     STA.L $7E7800,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $0000,X
     INC A
     CLC
@@ -5384,7 +5161,7 @@ CODE_03EAFF:
     STA.L $7E7000,X
     STA.L $7E7800,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     LDA.W $0312
     LSR A
@@ -5445,7 +5222,7 @@ UNREACH_03EB82:
     db $66,$65,$65,$6C,$20,$6C,$69,$6B,$65,$0D,$72,$65,$74,$75,$72,$6E
     db $69,$6E,$67,$20,$E2,$0D,$47,$72,$65,$65,$6E,$57,$6F,$6F,$64,$2E
     db $20,$13,$46,$EC,$12,$08,$08,$04,$0C
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$07,$06,$55,$EC
     RTL
@@ -5532,7 +5309,7 @@ UNREACH_03EB82:
     db $10,$01,$01,$F0,$01,$50,$00
     LDA.W #$BFC0
     TRB.W wButtonMask
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     RTL
     db $10,$91,$36,$20,$73,$74,$6F,$6E,$65,$73,$20,$D9,$0D,$E2,$73,$68
     db $69,$6E,$65,$20,$96,$FD,$0D,$73,$77,$61,$6C,$6C,$6F,$77,$65,$64
@@ -5632,7 +5409,7 @@ CODE_03EEF7:
     LDA.W #$0000
     STA.L $7E7800,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     LDA.W $033A
     LSR A
     STA.B $16
@@ -5711,7 +5488,7 @@ CODE_03F067:
     LDA.W #$0000
     STA.L $7E7800,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     DEC.W $038A
     INC.W $038C
@@ -5791,7 +5568,7 @@ UNREACH_03F0CF:
     LDA.W #$0000
     STA.L $7E7824,X
     PLX
-    COP #$91
+    %CopSetScriptAddrToNextInstruction()
     PHX
     LDA.W $0312
     ASL A
