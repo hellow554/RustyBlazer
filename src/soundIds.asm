@@ -16,4 +16,5 @@
 
 !Sound_OpenChest = $15
 !Sound_DiaglogConfirm = $18
+!Sound_WheelStartSpinning = $4F
 !Sound_ReceiveItem = $5E

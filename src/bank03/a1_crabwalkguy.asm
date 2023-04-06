@@ -6,7 +6,7 @@ A1_crabwalkguy_script:
     %Cop85(CODE_00A99D)
     %CopAssignTalkCallback(.talk)
 
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$05
         db $00,$00
     COP #$8F

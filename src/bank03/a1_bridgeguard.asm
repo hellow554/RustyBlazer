@@ -37,7 +37,7 @@ A1_bridgeguard_script:
     COP #$9E
     dw .CODE_038606
 .CODE_038606:
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopClearEventFlag($04)
     BRL .CODE_038631
 
@@ -51,7 +51,7 @@ A1_bridgeguard_script:
     COP #$80
     db $01
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$09
     db $04,$80
     BRL .CODE_038631

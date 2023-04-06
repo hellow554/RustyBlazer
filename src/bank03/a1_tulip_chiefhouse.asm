@@ -6,7 +6,7 @@ A1_tulip_chiefhouse_script:
     %CopJumpIfRevealing($07, .revealTalk)
     %Cop85($00A99D)
     %CopAssignTalkCallback(.CODE_0384AA)
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 -:
     COP #$80

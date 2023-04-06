@@ -41,7 +41,7 @@ entities_GrassValley:
     %create_entity(entity_act1_bridge_guard,
         0, 0, 0, $02, $48, $30, $7E3800, A1_bridgeguard_script)
     %create_entity(entity_act1_water_mill_keeper,
-        0, 0, 0, $01, $48, $30, $7E3800, CODE_0386A2)
+        0, 0, 0, $01, $48, $30, $7E3800, A1_watermillkeeper_script)
     %create_entity(entity_act1_pen_goat_west,
         0, 0, 0, $18, $40, $30, $7E3800, CODE_03891A)
     %create_entity(entity_act1_lisa,

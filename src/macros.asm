@@ -3,6 +3,15 @@ macro CopShowText(textPtr)
     dw <textPtr>
 endmacro
 
+macro CopLoop(times)
+    COP #$03
+    db <times>
+endmacro
+
+macro CopLoopEnd()
+    COP #$04
+endmacro
+
 macro CopWaitForEventFlagToBeSet(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
     COP #$05
@@ -43,6 +52,12 @@ endmacro
 macro CopRemoveItem(itemId)
     COP #$0B
     db <itemId>
+endmacro
+
+macro CopBranchIfNpcHasReachedXY(npc_id, x, y, target)
+    COP #$0D
+    db <npc_id>, <x>, <y>
+    dw <target>
 endmacro
 
 macro CopTeleportNpcTo(npc_id, x, y)

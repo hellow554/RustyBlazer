@@ -7196,7 +7196,7 @@ CODE_00C235:
     db $89,$C2,$00,$00,$02
     COP #$B0
     db $91,$C2,$00,$00,$02
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$86
     RTL
     %CopSetScriptAddrToNextInstruction()
