@@ -1,4 +1,3 @@
-
 ORG $038000
 
 incsrc "bank03/a1_crabwalkguy.asm"
@@ -24,7 +23,7 @@ CODE_038935:
     COP #$81
     db $1B,$02
     COP #$83
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$81
     db $24,$04
     COP #$83
@@ -336,7 +335,7 @@ CODE_038FF4:
     db $9D,$A9,$00
     COP #$17
     db $0D,$90
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 CODE_039006:
     COP #$80
@@ -376,7 +375,7 @@ CODE_03910C:
     db $9D,$A9,$00
     COP #$17
     db $21,$91
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -488,7 +487,7 @@ CODE_039365:
     db $9D,$A9,$00
     COP #$17
     db $7E,$93
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 CODE_039377:
     COP #$80
@@ -552,7 +551,7 @@ CODE_039498:
 
     COP #$17
     db $00,$95
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -637,7 +636,7 @@ CODE_039668:
     db $23,$00,$6F,$96
     RTL
 
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $FD,$96
     %CopSetScriptAddrToNextInstruction()
@@ -702,7 +701,7 @@ CODE_0397DA:
     db $9D,$A9,$00
     COP #$17
     db $47,$98
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$2F,$36,$F6,$97
@@ -724,7 +723,7 @@ CODE_0397DA:
     COP #$83
     LDA.W #$2F80
     TRB.W wButtonMask
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopJumpIfEventFlagIsUnset($8206, $9840)
     %CopSetScriptAddrToNextInstruction()
     COP #$0D
@@ -781,10 +780,10 @@ CODE_0398A6:
     %CopJumpIfEventFlagIsUnset($0201, $98C8)
     COP #$11
     db $14,$2C,$13
-    COP #$15
+    %CopMakeNpcUnpassable()
     BRL CODE_0398F7
 
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$05
     db $00,$02
     COP #$17
@@ -809,7 +808,7 @@ CODE_0398DE:
     COP #$80
     db $0E
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$09
     db $01,$82
 
@@ -885,7 +884,7 @@ CODE_039A2C:
     db $02,$11,$15,$32,$2A,$82,$90,$00
     COP #$17
     db $E4,$9A
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -940,7 +939,7 @@ CODE_039CDE:
     db $9D,$A9,$00
     COP #$17
     db $3B,$9D
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$05
     db $05,$02
     COP #$17
@@ -1044,7 +1043,7 @@ CODE_039EF4:
 
     COP #$17
     db $04,$9F
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -1072,7 +1071,7 @@ CODE_039F7A:
     db $9D,$A9,$00
     COP #$17
     db $94,$9F
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $24
@@ -1100,7 +1099,7 @@ CODE_03A004:
     db $9D,$A9,$00
     COP #$17
     db $1D,$A0
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 CODE_03A016:
     COP #$80
@@ -1120,136 +1119,10 @@ aBeSure:
     db $63,$68,$69,$6E,$67,$2C,$20,$A2,$88,$0D,$73,$61,$77,$20,$68,$69
     db $6D,$21,$20,$13,$88,$B9
 
-CODE_03A098:
-    COP #$14
-    db $09,$00,$9F,$A0
-    RTL
-
-    COP #$30
-    db $09,$00,$39,$A1,$03
-    COP #$11
-    db $01,$04,$08
-    COP #$85
-    db $9D,$A9,$00
-    COP #$17
-    db $1F,$A1
-    COP #$15
-    %CopSetScriptAddrToNextInstruction()
-    %CopJumpIfEventFlagIsUnset($9B00, $A0C5)
-    COP #$18
-    db $3A,$C5,$A0
-    BRA CODE_03A0C6
-
-    RTL
-
-
-CODE_03A0C6:
-    LDA.W #$2F80
-    TSB.W wButtonMask
-    COP #$17
-    db $00,$00
-    COP #$31
-    db $00
-    COP #$85
-    db $05,$A1,$03
-    COP #$03
-    db $F1
-    COP #$04
-    COP #$01
-    db $C4,$A2
-    COP #$09
-    db $00,$9B
-    LDA.W #$2F80
-    TSB.W wButtonMask
-    COP #$85
-    db $12,$A1,$03
-    COP #$32
-    db $02
-    COP #$03
-    db $3D
-    COP #$04
-    LDA.W #$2F80
-    TRB.W wButtonMask
-    COP #$17
-    db $1F,$A1
-    %CopSetScriptAddrToNextInstruction()
-    RTL
-
-    COP #$A8
-    db $00,$80,$0D
-    COP #$92
-    db $45
-    COP #$94
-    COP #$86
-    RTL
-
-    COP #$A8
-    db $00,$80,$0D
-    COP #$92
-    db $46
-    COP #$94
-    COP #$86
-    RTL
-
-    %CopJumpIfEventFlagIsUnset($9B00, $A12A)
-    COP #$18
-    db $3A,$2F,$A1,$02,$01,$72,$A2,$6B
-    COP #$01
-    db $91,$A1
-    BRK #$5E
-    COP #$0A
-    db $3A
-    RTL
-
-    COP #$01
-    db $42,$A1
-    %CopRestoreToFullHealth()
-    COP #$86
-    RTL
-
-
-aWelcome:
-    db $10,$0E,$3C,$57,$65,$6C,$63,$6F,$6D,$65,$20,$E2,$C2,$72,$6F,$6F
-    db $6D,$2E,$20,$0D,$88,$66,$69,$6E,$61,$6C,$6C,$79,$20,$66,$65,$65
-    db $6C,$20,$BE,$0D,$6D,$79,$73,$65,$6C,$66,$20,$61,$67,$61,$69,$6E
-    db $2E,$20,$11,$88,$B5,$D8,$E2,$0D,$E7,$79,$6F,$75,$2E,$20,$0D,$8F
-    db $A6,$A0,$E2,$0D,$C2,$68,$6F,$75,$73,$65,$2E,$20,$13,$88,$B9,$10
-    db $88,$66,$65,$65,$6C,$20,$61,$73,$20,$EB,$88,$0D,$B5,$62,$65,$65
-    db $6E,$20,$73,$75,$72,$72,$6F,$75,$6E,$64,$65,$64,$20,$0D,$62,$79
-    db $20,$64,$61,$72,$6B,$6E,$65,$73,$73,$2E,$20,$11,$49,$6E,$20,$E3
-    db $64,$61,$72,$6B,$6E,$65,$73,$73,$20,$88,$0D,$68,$65,$61,$72,$64
-    db $20,$C2,$62,$65,$73,$74,$20,$66,$72,$69,$65,$6E,$64,$20,$0D,$4C
-    db $65,$6F,$2E,$20,$11,$48,$65,$20,$74,$6F,$6C,$64,$20,$C3,$E2,$B0
-    db $0D,$E4,$42,$72,$6F,$77,$6E,$20,$90,$E2,$97,$0D,$D1,$6E,$61,$6D
-    db $65,$64,$20,$02,$02,$2E,$11,$88,$64,$6F,$6E,$60,$E5,$BD,$F5,$E1
-    db $0D,$42,$72,$6F,$77,$6E,$20,$90,$6C,$6F,$6F,$6B,$73,$20,$6C,$69
-    db $6B,$65,$0D,$A2,$E4,$BA,$97,$73,$74,$6F,$6E,$65,$20,$11,$E3,$88
-    db $D4,$AD,$0D,$68,$69,$6D,$20,$E1,$64,$61,$79,$20,$62,$65,$66,$6F
-    db $72,$65,$20,$68,$65,$20,$0D,$64,$69,$73,$61,$70,$70,$65,$61,$72
-    db $65,$64,$2E,$20,$11,$02,$02,$2C,$20,$D4,$0D,$03,$24,$E1,$42,$72
-    db $6F,$77,$6E,$20,$53,$74,$6F,$6E,$65,$2E,$20,$03,$20,$13,$88,$B9
-
-aDr:
-    db $10,$44,$72,$2E,$8B,$B6,$6F,$6E,$6C,$79,$20,$97,$0D,$64,$61,$75
-    db $67,$68,$74,$65,$72,$20,$6E,$61,$6D,$65,$64,$20,$4C,$69,$73,$61
-    db $2E,$20,$11,$88,$F1,$61,$73,$6B,$20,$C2,$77,$69,$66,$65,$20,$E2
-    db $0D,$6C,$6F,$6F,$6B,$20,$9E,$68,$65,$72,$20,$75,$6E,$74,$69,$6C
-    db $20,$0D,$44,$72,$2E,$8B,$72,$65,$74,$75,$72,$6E,$73,$2E,$20,$13
-    db $88,$B9
-
-aSuddenly:
-    db $10,$53,$75,$64,$64,$65,$6E,$6C,$79,$20,$E1,$4D,$61,$73,$74,$65
-    db $72,$60,$D7,$0D,$F0,$A9,$74,$68,$75,$6E,$64,$65,$72,$69,$6E,$67
-    db $20,$0D,$64,$6F,$77,$6E,$20,$AD,$E1,$68,$65,$61,$76,$65,$6E,$73
-    db $2E,$11,$3C,$91,$42,$72,$6F,$77,$6E,$20,$90,$FE,$0D,$B5,$BA,$97
-    db $6B,$65,$79,$20,$E2,$6F,$70,$65,$6E,$20,$0D,$E1,$57,$6F,$72,$6C
-    db $64,$20,$CB,$45,$76,$69,$6C,$2E,$20,$11,$92,$BA,$77,$68,$65,$72
-    db $65,$20,$0D,$44,$65,$61,$74,$68,$74,$6F,$6C,$6C,$20,$6C,$69,$76
-    db $65,$73,$21,$20,$11,$84,$A0,$E2,$C3,$F2,$0D,$E1,$73,$74,$6F,$6E
-    db $65,$2E,$3E,$20,$13,$88,$B9
+incsrc "bank03/a1_villagechief.asm"
 
 CODE_03A34B:
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $62,$A3
     %CopSetScriptAddrToNextInstruction()
@@ -1279,7 +1152,7 @@ CODE_03A3B0:
     db $22,$00,$B7,$A3,$6B
     COP #$17
     db $D5,$A3
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 CODE_03A3BD:
     COP #$80
@@ -1319,7 +1192,7 @@ CODE_03A440:
     %CopJumpIfEventFlagIsUnset($9F02, $A491)
     COP #$17
     db $DF,$A4
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $32,$00,$5C,$A4
@@ -1457,7 +1330,7 @@ CODE_03AA26:
     %CopJumpIfEventFlagIsUnset($8905, $AA33)
     COP #$B0
     db $4C,$AA,$03,$00,$20
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$14
     db $09,$00,$41,$AA
     COP #$17
@@ -1895,7 +1768,7 @@ CODE_03B161:
     JSL.L CODE_0088F3
     LDA.W $0372
     STA.W $001C,X
-    COP #$15
+    %CopMakeNpcUnpassable()
     RTL
 
 
@@ -2320,7 +2193,7 @@ CODE_03B99D:
     COP #$80
     db $0E
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$1B
     db $AA,$B9,$78,$00
     COP #$16
@@ -2342,7 +2215,7 @@ CODE_03B99D:
     db $11
     COP #$9E
     db $CF,$B9
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$1B
     db $D7,$B9,$78,$00
     COP #$16
@@ -2356,7 +2229,7 @@ CODE_03B99D:
     COP #$80
     db $0E
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$1B
     db $F4,$B9,$78,$00
     COP #$16
@@ -2439,7 +2312,7 @@ CODE_03BA64:
     db $9D,$A9,$00
     COP #$17
     db $1C,$BC
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $5D,$00,$5A,$BB
@@ -2489,7 +2362,7 @@ CODE_03BA64:
     COP #$80
     db $00
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $21,$BC
     COP #$05
@@ -2524,7 +2397,7 @@ CODE_03BA64:
     COP #$80
     db $00
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $26,$BC
     COP #$05
@@ -2576,7 +2449,7 @@ CODE_03BCFC:
     COP #$81
     db $11,$03
     COP #$83
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$1B
     db $0A,$BD,$28,$00
     COP #$16
@@ -2608,7 +2481,7 @@ CODE_03BCFC:
     db $9D,$A9,$00
     COP #$AC
     db $E5,$BE,$03,$30,$00,$10,$01,$40,$20
-    COP #$15
+    %CopMakeNpcUnpassable()
 
 CODE_03BDFE:
     COP #$0C
@@ -2634,7 +2507,7 @@ CODE_03BDFE:
     COP #$82
     COP #$87
     COP #$A6
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $3B,$BE
     BRL CODE_03BDFE
@@ -2686,7 +2559,7 @@ CODE_03BDFE:
     db $15,$C0
     COP #$AC
     db $B0,$C0,$03,$A0,$00,$B0,$00,$50,$00
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
@@ -2704,7 +2577,7 @@ CODE_03BDFE:
     COP #$80
     db $16
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $09,$C0
     %CopSetScriptAddrToNextInstruction()
@@ -2743,7 +2616,7 @@ CODE_03BDFE:
     COP #$80
     db $15
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $15,$C0
     COP #$09
@@ -3016,7 +2889,7 @@ CODE_03C3E5:
     db $26,$C8,$03,$B0,$02,$00,$02,$40,$20
     COP #$17
     db $0A,$C6
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
 
@@ -3036,7 +2909,7 @@ CODE_03C3E5:
     COP #$82
     COP #$17
     db $31,$C6
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
@@ -3047,7 +2920,7 @@ CODE_03C3E5:
     COP #$83
     COP #$17
     db $39,$C6
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
@@ -3162,7 +3035,7 @@ CODE_03C649:
     db $F5,$C8,$03,$A0,$02,$60,$01,$40,$20
     COP #$17
     db $C9,$C8
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$80
     db $18
@@ -3206,7 +3079,7 @@ CODE_03C649:
     db $63,$CA,$03
     COP #$17
     db $43,$CA
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($0402, $C9BF)
     COP #$17
@@ -3425,7 +3298,7 @@ UNREACH_03CCC4:
     db $9D,$A9,$00
     COP #$17
     db $E1,$CD
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
@@ -3447,7 +3320,7 @@ UNREACH_03CCC4:
     COP #$82
     COP #$17
     db $EE,$CD
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$16
@@ -3467,7 +3340,7 @@ UNREACH_03CCC4:
     COP #$82
     COP #$17
     db $FB,$CD
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$0D
     db $00,$1D,$09,$D6,$CD
@@ -3528,7 +3401,7 @@ aOh_4:
     db $9D,$A9,$00
     COP #$17
     db $B4,$CF
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $56,$00,$5C,$CF,$6B
@@ -3585,7 +3458,7 @@ CODE_03CF69:
     db $5E,$B0,$48,$6B
     COP #$85
     db $9D,$A9,$00
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $DE,$D0
     %CopSetScriptAddrToNextInstruction()
@@ -3609,7 +3482,7 @@ CODE_03CF69:
     COP #$82
     COP #$17
     db $F0,$D0
-    COP #$15
+    %CopMakeNpcUnpassable()
     RTL
     COP #$16
     COP #$17
@@ -3640,7 +3513,7 @@ CODE_03CF69:
     COP #$80
     db $00
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $01,$D1
     COP #$05
@@ -3726,7 +3599,7 @@ aTooBad:
     db $9D,$A9,$00
     COP #$17
     db $E5,$D3
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     COP #$14
     db $5D,$00,$1D,$D3,$6B
@@ -3776,7 +3649,7 @@ aTooBad:
     COP #$80
     db $00
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $EA,$D3
     COP #$05
@@ -3813,7 +3686,7 @@ aTooBad:
     COP #$80
     db $00
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $EF,$D3
     COP #$05
@@ -3919,7 +3792,7 @@ aTooBad:
     db $03,$D8,$03
     COP #$17
     db $D0,$D6
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEventFlagIsUnset($8303, $D6C6)
     RTL
@@ -4006,7 +3879,7 @@ CODE_03D6F4:
     db $51,$00,$CF,$D8
     RTL
     %CopJumpIfEventFlagIsUnset($8403, $D905)
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $08,$D9
     %CopSetScriptAddrToNextInstruction()
@@ -4053,7 +3926,7 @@ CODE_03D6F4:
     COP #$14
     db $62,$00,$95,$D9
     RTL
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $BB,$D9
     %CopJumpIfEventFlagIsUnset($0307, $D9A5)
@@ -4145,7 +4018,7 @@ CODE_03DB92:
     COP #$80
     db $0B
     COP #$82
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $A8,$DB
     %CopSetScriptAddrToNextInstruction()
@@ -4159,7 +4032,7 @@ CODE_03DB92:
     RTL
     COP #$85
     db $9D,$A9,$00
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $FA,$DB
     %CopSetScriptAddrToNextInstruction()
@@ -4212,7 +4085,7 @@ CODE_03DB92:
     db $9D,$A9,$00
     COP #$17
     db $60,$DE
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$17
@@ -4256,7 +4129,7 @@ CODE_03DDDC:
     BRA CODE_03DDDC
     COP #$17
     db $6D,$DE
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$80
     db $06
     COP #$82
@@ -4296,7 +4169,7 @@ CODE_03DDDC:
     db $9D,$A9,$00
     COP #$17
     db $88,$DF
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$01
@@ -4316,7 +4189,7 @@ CODE_03DDDC:
     db $9D,$A9,$00
     COP #$17
     db $1A,$E0
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     COP #$18
@@ -4378,7 +4251,7 @@ CODE_03DDDC:
     db $9D,$A9,$00
     COP #$17
     db $D5,$E1
-    COP #$15
+    %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
     RTL
     %CopJumpIfEventFlagIsUnset($9A02, $E1E9)
@@ -4396,7 +4269,7 @@ CODE_03DDDC:
     db $65,$72,$60,$D7,$45,$6D,$62,$6C,$65,$6D,$20,$43,$2E,$03,$20,$13
     db $46,$EC,$10,$94,$FE,$AE,$0D,$72,$65,$6C,$65,$61,$73,$69,$6E,$67
     db $20,$6D,$65,$2E,$20,$13,$46,$EC
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $4A,$E2
     %CopSetScriptAddrToNextInstruction()
@@ -4431,7 +4304,7 @@ CODE_03DDDC:
     COP #$81
     db $28,$08
     COP #$83
-    COP #$15
+    %CopMakeNpcUnpassable()
     COP #$17
     db $37,$E3
     %CopSetScriptAddrToNextInstruction()

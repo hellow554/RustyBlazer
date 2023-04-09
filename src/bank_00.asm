@@ -1,4 +1,3 @@
-
 ORG $008000
 
 incsrc "bank00/start.asm"
@@ -2725,37 +2724,41 @@ CODE_0092D2:
 loadEntities:
     PHP
     REP #$20
+    ; get the correct offset from the entities_lut
     LDA.W actId
     ASL A
     TAX
     LDA.W entities_lut,X
+
+    ; subtract $8000
     SEC
     SBC.W #$8000
     STA.W entities_lut_base_offset
     SEP #$20
+
     LDX.W #$0000
 
-CODE_0092F5:
+.loop:
     LDA.W entities_placement_pointer,X
-    BMI CODE_009312
+    BMI .end ; $FF signals the end of the LUT
     CMP.W mapNumber
-    BNE goToNextEntityPlacementPtr
+    BNE .goToNextEntity
     LDA.W entities_placement_pointer+1,X
     CMP.W mapSubNumber
-    BNE goToNextEntityPlacementPtr
+    BNE .goToNextEntity
     JSR.W CODE_009314
-    BRA CODE_009312
+    BRA .end
 
 
-goToNextEntityPlacementPtr:
+.goToNextEntity:
     INX
     INX
     INX
     INX
-    BRA CODE_0092F5
+    BRA .loop
 
 
-CODE_009312:
+.end:
     PLP
     RTL
 
@@ -9192,8 +9195,9 @@ IntrosCene_Script:
     LDY.W #$C176
     JSL.L printOsdStringFromBank2
     PLX
-    COP #$1B
-    db $DE,$E6,$01,$00
+    %CopJumpAfterNoFramesPassed($1, +)
+
++:
     SEP #$20
     PHX
     JSL.L CODE_1FEFBC
@@ -10431,14 +10435,14 @@ CODE_00F07A:
 ; some scripts
 
 CODE_00F0B3:
-    %CopJumpIfEventFlagIsUnset($9F05, CODE_00F0BF)
-    %CopJumpIfEventFlagIsUnset($9F04, CODE_00F0C2)
+    %CopJumpIfEventFlagIsUnset($9F05, +)
+    %CopJumpIfEventFlagIsUnset($9F04, ++)
 
-CODE_00F0BF:
++:
     %CopSetScriptAddrToNextInstruction()
     RTL
 
-CODE_00F0C2:
+++:
     COP #$86
     RTL
 
@@ -10451,6 +10455,7 @@ CODE_00F0C6:
 
 CODE_00F0C9:
     BRA CODE_00F0B3
+
 CODE_00F0CB:
     RTL
 
@@ -10477,17 +10482,18 @@ CODE_00F0DB:
     db $30
     COP #$82
     RTL
+
 CODE_00F0E1:
     RTL
 CODE_00F0E2:
     RTL
 
 CODE_00F0E3:
-    COP #$14
-    db $B6,$00,$EC,$F0
+    %CopJumpIfSealed($B6, +)
     %CopSetScriptAddrToNextInstruction()
     RTL
 
++:
     COP #$80
     db $18
     COP #$82
@@ -10495,8 +10501,10 @@ CODE_00F0E3:
     RTL
 
 CODE_00F0F4:
-    COP #$14
-    db $09,$00,$FB,$F0,$6B
+    %CopJumpIfSealed($09, +)
+    RTL
+
++:
     COP #$80
     db $14
     COP #$82
@@ -10507,11 +10515,10 @@ CODE_00F103:
     RTL
 
 CODE_00F104:
-    COP #$14
-    db $2F,$01,$0D,$F1
+    %CopJumpIfSealed($12F, +)
     %CopSetScriptAddrToNextInstruction()
     RTL
-
++:
     COP #$80
     db $12
     COP #$82
@@ -10538,22 +10545,24 @@ CODE_00F121:
 
 
 CODE_00F127:
-    %CopJumpIfEventFlagIsUnset($9F05, $F133)
-    %CopJumpIfEventFlagIsUnset($9F04, $F13A)
-CODE_00F133:
+    %CopJumpIfEventFlagIsUnset($9F05, .loop)
+    %CopJumpIfEventFlagIsUnset($9F04, .secondLoop)
+.loop
     COP #$92
     db $2D
     COP #$94
-    BRA CODE_00F133
+    BRA .loop
 
-
-CODE_00F13A:
+.secondLoop:
     COP #$92
     db $4B
     COP #$94
-    BRA CODE_00F13A
+    BRA .secondLoop
+
+
     %CopJumpIfEventFlagIsUnset($9B00, $F149)
-    db $80,$26
+    BRA CODE_00F16F
+
     COP #$AC
     db $61,$F1,$00,$70,$00,$D0,$00,$40,$00
     COP #$AC
@@ -10577,6 +10586,7 @@ CODE_00F16F:
     COP #$AC
     db $95,$F1,$00,$E0,$00,$60,$01,$40,$00
     BRA CODE_00F19D
+
     LDA.W #$0008
     BRL CODE_00F254
     COP #$96
@@ -11081,45 +11091,36 @@ CODE_00F614:
     %CopSetScriptAddrToNextInstruction()
     RTL
 
-CODE_00F66C:
+Shrine_Script:
     %CopRestoreToFullHealth()
 CODE_00F66E:
     %CopSetScriptAddrToNextInstruction()
-    COP #$0D
-    db $00,$07,$04,$7F,$F6
-    COP #$0D
-    db $00,$07,$06,$65,$F7
+    %CopBranchIfNpcHasReachedXY($00, 7, 4, .touchedNorthPlate)
+    %CopBranchIfNpcHasReachedXY($00, 7, 6, .touchedMidPlate)
     RTL
 
-    COP #$01
-    db $B0,$F7
-    %CopJumpIfEventFlagIsUnset($9B00, $F69C)
-    COP #$1A
-    db $43,$CF,$02,$54,$F7
-    LDA.L $0003D0
-    BNE CODE_00F699
-    BRL CODE_00F6EF
+.touchedNorthPlate:
+    %CopShowText(.aSaveBla)
+    %CopJumpIfEventFlagIsUnset(!EV_A1_TalkedWithVillageChief|$8000, .canMove)
+    %CopShowMenu(choiceRecordQuit, 2, .quitMenu)
+    LDA.L choiceNumber
+    BNE .chooseQuit
+    BRL .chooseSave
 
+.chooseQuit:
+    BRL .quitMenu
 
-CODE_00F699:
-    BRL CODE_00F754
+.canMove:
+    %CopShowMenu(choiceRecordMoveQuit, 3, .quitMenu)
+    LDA.L choiceNumber
+    BNE + : BRL .chooseSave : +
 
-    COP #$1A
-    db $23,$CF,$03,$54,$F7
-    LDA.L $0003D0
-    BNE CODE_00F6AC
-    BRL CODE_00F6EF
-
-
-CODE_00F6AC:
     DEC A
-    BEQ CODE_00F6B2
-    BRL CODE_00F754
+    BEQ .chooseMove
+    BRL .quitMenu
 
-
-CODE_00F6B2:
-    COP #$01
-    db $66,$F8
+.chooseMove:
+    %CopShowText(.clearTxtBox)
     PHX
     LDA.W #$0009
     STA.W zwSceneId
@@ -11127,29 +11128,31 @@ CODE_00F6B2:
     ASL A
     ASL A
     TAX
-    LDA.L UNREACH_00F6D3,X
+    LDA.L .markerPosition,X
     STA.W $037C
-    LDA.L UNREACH_00F6D5,X
+    LDA.L .markerPosition+2,X
     STA.W $037E
     PLX
     RTL
 
+; these are the positions of the marker (diamonds) on the map
+.markerPosition:
+    dw $70, $A0
+    dw $30, $160
+    dw $F0, $160
+    dw $F0, $60
+    dw $1B0, $140
+    dw $170, $60
+    dw $F0, $20
 
-UNREACH_00F6D3:
-    db $70,$00
-
-UNREACH_00F6D5:
-    db $A0,$00,$30,$00,$60,$01,$F0,$00,$60,$01,$F0,$00,$60,$00,$B0,$01
-    db $40,$01,$70,$01,$60,$00,$F0,$00,$20,$00
-
-CODE_00F6EF:
+.chooseSave:
     COP #$01
     db $D4,$F7
     COP #$1A
     db $02,$CF,$02,$54,$F7
     LDA.L $0003D0
     DEC A
-    BEQ CODE_00F754
+    BEQ .quitMenu
     BRK #$66
     PHX
     JSL.L CODE_04F0E4
@@ -11166,7 +11169,7 @@ CODE_00F6EF:
     COP #$1A
     db $02,$CF,$02,$54,$F7
     LDA.L $0003D0
-    BEQ CODE_00F754
+    BEQ .quitMenu
     COP #$01
     db $25,$F8
     LDA.W #$7F80
@@ -11187,7 +11190,7 @@ CODE_00F6EF:
     RTL
 
 
-CODE_00F754:
+.quitMenu:
     COP #$01
     db $48,$F8
     %CopSetScriptAddrToNextInstruction()
@@ -11197,8 +11200,9 @@ CODE_00F754:
 
     RTL
 
+.touchedMidPlate:
     LDA.W wPlayerDied
-    BEQ CODE_00F77B
+    BEQ .CODE_00F77B
     STZ.W wPlayerDied
     COP #$1B
     db $73,$F7,$02,$00
@@ -11207,7 +11211,7 @@ CODE_00F754:
     COP #$27
     db $6E,$F6
 
-CODE_00F77B:
+.CODE_00F77B:
     %CopJumpIfEventFlagIsUnset($8602, $F794)
     %CopJumpIfEventFlagIsUnset($1B00, $F794)
     COP #$03
@@ -11233,32 +11237,35 @@ CODE_00F77B:
     RTL
 
 
-aSaveBla:
+.aSaveBla:
     db $10,$81,$F0,$A9,$AD,$0D,$61,$62,$6F,$76,$65,$2E,$20,$11,$13,$C2
     db $F7,$10,$02,$02,$2C,$20,$0D,$68,$6F,$77,$20,$A7,$88,$B7,$79,$6F
     db $75,$3F,$20,$0C
 
-aAccomplishedBla:
+.aAccomplishedBla:
     db $88,$F1,$72,$65,$63,$6F,$72,$64,$20,$9A,$0D,$FE,$B5,$61,$63,$63
     db $6F,$6D,$70,$6C,$69,$73,$68,$65,$64,$2E,$0D,$49,$73,$20,$E4,$6F
     db $6B,$61,$79,$3F,$20,$0C
 
-aFinishedRecordingBla:
+.aFinishedRecordingBla:
     db $46,$69,$6E,$69,$73,$68,$65,$64,$20,$72,$65,$63,$6F,$72,$64,$69
     db $6E,$67,$2E,$20,$11,$44,$6F,$20,$FE,$77,$69,$73,$68,$20,$E2,$0D
     db $63,$6F,$6E,$74,$69,$6E,$75,$65,$3F,$20,$0C
 
-aRestWellBla:
+.aRestWellBla:
     db $52,$65,$73,$74,$20,$77,$65,$6C,$6C,$2C,$20,$E9,$BA,$0D,$73,$74
     db $69,$6C,$6C,$20,$6D,$75,$63,$68,$20,$E2,$A1,$64,$6F,$6E,$65,$2E
     db $13,$52,$FA
 
-aYouAreDoingWellBla:
+.aYouAreDoingWellBla:
     db $02,$02,$0D,$FE,$98,$64,$6F,$69,$6E,$67,$20,$77,$65,$6C,$6C,$2E
     db $20,$0D,$44,$6F,$20,$CA,$B0,$75,$70,$2E,$20,$13,$52,$FA
 
-aDoNotRushBla:
-    db $08,$48,$04,$0C,$10,$81,$F0,$A9,$AD,$0D,$61,$62,$6F,$76,$65,$2E
+.clearTxtBox:
+    db $08,$48,$04,$0C
+
+.aDoNotRushBla:
+    db $10,$81,$F0,$A9,$AD,$0D,$61,$62,$6F,$76,$65,$2E
     db $20,$11,$3C,$44,$6F,$20,$CA,$72,$75,$73,$68,$2C,$20,$A2,$A1,$0D
     db $70,$61,$74,$69,$65,$6E,$74,$2E,$20,$95,$6D,$75,$73,$74,$20,$0D
     db $63,$6F,$6E,$74,$69,$6E,$75,$65,$20,$6D,$61,$6B,$69,$6E,$67,$20
@@ -11277,20 +11284,19 @@ aDoNotRushBla:
     db $6F,$6E,$65,$20,$61,$77,$61,$69,$74,$73,$20,$0D,$79,$6F,$75,$2E
     db $3E,$20,$13,$52,$FA
 
-CODE_00F97B:
-    %CopJumpIfEventFlagIsUnset($9F06, $F995)
-    COP #$09
-    db $06,$9F
-    COP #$1B
-    db $8B,$F9,$02,$00
-    COP #$01
-    db $98,$F9
-    COP #$3A
-    COP #$01
-    db $06,$FA
+Shrine_ChooseName_Script:
+    %CopJumpIfEventFlagIsUnset(!MC_NameChoosen|$8000, .end)
+    %CopSetEventFlag(!MC_NameChoosen)
+    %CopJumpAfterNoFramesPassed($2, +)
++:
+    %CopShowText(.aChooseName)
+    %CopChooseName()
+    %CopShowText(.bla2)
+.end:
     COP #$86
     RTL
 
+.aChooseName:
     db $10,$81,$F0,$A9,$AD,$0D,$61,$62,$6F,$76,$65,$2E,$20,$11,$3C,$4D
     db $79,$20,$66,$6F,$6C,$6C,$6F,$77,$65,$72,$2C,$20,$73,$69,$6E,$63
     db $65,$20,$0D,$FE,$F1,$A1,$61,$62,$6C,$65,$20,$E2,$0D,$73,$70,$65
@@ -11299,12 +11305,13 @@ CODE_00F97B:
     db $20,$8F,$63,$68,$6F,$6F,$73,$65,$20,$97,$0D,$6E,$61,$6D,$65,$20
     db $AE,$79,$6F,$75,$72,$73,$65,$6C,$66,$2E,$20,$13,$52,$FA
 
-aWhat:
+.bla2:
     db $10,$02,$02,$2C,$2E,$2E,$2E,$2E,$2E,$2E,$2E,$20,$0D,$57,$68,$61
     db $74,$20,$9C,$69,$6E,$74,$65,$72,$65,$73,$74,$69,$6E,$67,$20,$0D
     db $6E,$61,$6D,$65,$2E,$20,$11,$41,$6C,$6C,$72,$69,$67,$68,$74,$2C
     db $20,$B3,$96,$73,$61,$76,$65,$20,$0D,$E1,$F6,$AE,$9A,$0D,$63,$72
     db $65,$61,$74,$75,$72,$65,$73,$2E,$20,$13,$52,$FA
+
 
 aClearTextboxAndReturn:
     db $12,$08,$08,$04,$0C,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$80,$00

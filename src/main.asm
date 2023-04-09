@@ -1,14 +1,7 @@
 incsrc "settings.asm"
-incsrc "constants.asm"
-incsrc "soundIds.asm"
-incsrc "macros.asm"
-incsrc "items.asm"
-incsrc "text.asm"
-incsrc "eventIds.asm"
 
+incsrc "common.asm"
 incsrc "snes_header.asm"
-
-incsrc "labels.asm"
 
 incsrc "bank_00.asm"
 incsrc "bank_01.asm"

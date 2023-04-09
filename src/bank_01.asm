@@ -1,4 +1,3 @@
-
 ORG $018000
 
 
@@ -121,14 +120,15 @@ entities_GrassValley:
         $00, $00, $00, $18, $40, $30, $7E3800, CODE_039F7A)
     %create_entity(_,
         $00, $00, $00, $1E, $50, $20, $7E3800, CODE_03A004)
-    %create_entity(_,
-        $00, $00, $00, $15, $40, $20, $7E3800, CODE_03A098)
+    %create_entity(entity_act1_village_chief,
+        $00, $00, $00, $15, $40, $20, $7E3800, A1_villagechief_script)
     %create_entity(_,
         $00, $00, $00, $07, $50, $20, $7E3800, CODE_03AB4F)
     %create_entity(_,
         $00, $00, $00, $07, $50, $00, $7E3800, CODE_03AC06)
     %create_entity(_,
         $00, $00, $00, $07, $40, $00, $7E3800, CODE_03AC32)
+
     %create_entity(_,
         $00, $00, $00, $2A, $10, $20, $0D8000, CODE_00A9E8)
     %create_entity(_,
@@ -182,9 +182,9 @@ entities_GrassValley:
     %create_entity(_,
         $00, $00, $00, $10, $80, $03, $7E3800, CODE_00EE28)
     %create_entity(_,
-        $00, $00, $00, $00, $40, $20, $7E3800, CODE_00F97B)
+        $00, $00, $00, $00, $40, $20, $7E3800, Shrine_ChooseName_Script)
     %create_entity(_,
-        $00, $00, $00, $00, $40, $20, $7E3800, CODE_00F66C)
+        $00, $00, $00, $00, $40, $20, $7E3800, Shrine_Script)
     %create_entity(intro_moving_sword,
         $00, $00, $00, $00, $80, $03, $7E3800, CODE_00E6FC)
     %create_entity(_,
@@ -764,11 +764,15 @@ entities_placement_pointer_end:
     db $FF
 
 epc_grassValley_MastersShrine:
-    db $07,$06,$00,$00,$00,$00,$01,$54,$00,$00,$01,$55,$FF
+    db $07,$06,$00,$00
+    db $00,$00,$01,$54
+    db $00,$00,$01,$55
+    db $FF
 
 epc_greenWood_MastersShrine:
-    db $07,$06,$00
-    db $00,$00,$00,$01,$4C,$FF
+    db $07,$06,$00,$00
+    db $00,$00,$01,$4C
+    db $FF
 
 UNREACH_019B4F:
     db $07,$06,$00,$00,$00,$00,$01,$51,$FF,$07

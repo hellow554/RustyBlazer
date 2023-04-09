@@ -5,3 +5,5 @@
 !EV_A1_MagicianTalk     = $504
 
 !EV_A1_PickedEmblemAUp  = $1A00
+!EV_A1_TalkedWithVillageChief   = $1B00
+!MC_NameChoosen         = $1F06

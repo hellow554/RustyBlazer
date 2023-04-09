@@ -1,5 +1,4 @@
-
-                       ORG $0D8000
+ORG $0D8000
 
 
 UNREACH_0D8000:

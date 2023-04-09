@@ -103,6 +103,11 @@ macro CopShowMenu(choices_txt_ptr, number_of_choices, abort_ptr)
     dw <abort_ptr>
 endmacro
 
+macro CopJumpAfterNoFramesPassed(noFrames, target)
+    COP #$1B
+    dw <target>, <noFrames>
+endmacro
+
 macro CopAddBlockRelativeToNpc(x, y)
     Cop #$2A
     dw <x>
@@ -123,6 +128,10 @@ endmacro
 
 macro CopRestoreToFullHealth()
     COP #$37
+endmacro
+
+macro CopChooseName()
+    Cop #$3A
 endmacro
 
 macro Cop85(addr)
