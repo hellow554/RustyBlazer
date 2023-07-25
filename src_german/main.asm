@@ -1,0 +1,22 @@
+incsrc "settings.asm"
+
+incsrc "common/common.asm"
+
+incsrc "bank_C0.asm"
+incsrc "bank_C1.asm"
+incsrc "bank_C2.asm"
+incsrc "bank_C3.asm"
+incsrc "bank_C4.asm"
+incsrc "bank_C5.asm"
+incsrc "bank_C6.asm"
+incsrc "bank_C7.asm"
+incsrc "bank_C8.asm"
+incsrc "bank_C9.asm"
+incsrc "bank_CA.asm"
+incsrc "bank_CB.asm"
+incsrc "bank_CC.asm"
+incsrc "bank_CD.asm"
+incsrc "bank_CE.asm"
+incsrc "bank_CF.asm"
+
+incsrc "snes_header.asm"

@@ -1,0 +1,17 @@
+EMULATION_MODE_RESET:
+    SEI
+    CLC
+    XCE
+    JML main
+
+NATIVE_MODE_NMI:
+    JML NMI_Func
+
+NATIVE_MODE_IRQ:
+    JML IRQ_Func
+
+NATIVE_MODE_COP:
+    JML COP_Func
+
+NATIVE_MODE_BRK:
+    JML BRK_Func
