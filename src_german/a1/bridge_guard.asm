@@ -92,5 +92,5 @@ db $13 : dw Default_Text_End
 ; "überqueren." -> Default_Text_End
 db $10
 db $83, $64, $61, $72, $66, $73, $74, $20, $B5, $42, $72, $5B, $63, $6B, $65, $20, $0D
-db $5B, $62, $65, $72, $71, $75, $65, $72, $65, $6E, $2E : db $13 : dw Default_Text_End
+db $5B, $62, $65, $72, $71, $75, $65, $72, $65, $6E, $2E, $13 : dw Default_Text_End
 ; @END@
