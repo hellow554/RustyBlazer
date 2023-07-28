@@ -19,21 +19,23 @@ COP_Func:
     dw .cop_00, .cop_01, .cop_02, .cop_03
     dw .cop_04, .cop_05, .cop_06, .cop_07
     dw .cop_08, .cop_09, .cop_0A, .cop_0B
-    dw .cop_0C, .cop_0D, 0, 0
+    dw .cop_0C, .cop_0D, 0,       0
     dw .cop_10, .cop_11, .cop_12, .cop_13
     dw .cop_14, .cop_15, .cop_16, .cop_17
     dw .cop_18, .cop_19, .cop_1A, .cop_1B
     dw .cop_1C, .cop_1D, .cop_1E, .cop_1F
     dw .cop_20, .cop_21, .cop_22, .cop_23
+    dw .cop_24, .cop_25, .cop_26, .cop_27
+    dw .cop_28, .cop_29, .cop_2A, .cop_2B
+    dw 0,       0,       .cop_2E, .cop_2F
+    dw .cop_30, .cop_31, .cop_32, .cop_33
+    dw .cop_34, .cop_35, .cop_36, .cop_37
+    dw .cop_38, .cop_39, .cop_3A, .cop_3B
 
 
 
-db $C7,$DB,$DD,$DB,$F1,$DB,$29,$DC   ;C0D6F3|        |0000DB;
-db $39,$DC,$63,$DC,$97,$DC,$C8,$DC   ;C0D6FB|        |0063DC;
-db $00,$00,$00,$00,$F9,$DC,$0F,$DD   ;C0D703|        |      ;
-db $4E,$DD,$68,$DD,$88,$DD,$A8,$DD   ;C0D70B|        |0068DD;
-db $CB,$DD,$EE,$DD,$0C,$DE,$28,$DE   ;C0D713|        |      ;
-db $36,$DE,$43,$DE,$7D,$DE,$85,$DE   ;C0D71B|        |0000DE;
+
+
 db $E4,$DE,$FF,$FF,$FF,$FF,$FF,$FF   ;C0D723|        |0000DE;
 db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF   ;C0D72B|        |FFFFFF;
 db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF   ;C0D733|        |FFFFFF;
@@ -982,62 +984,71 @@ TYX
 
 .cop_3A:
     TYX
-    JSL.L CODE_82A4F3
+    JSL.L EnterPlayerName
     BRL .ret_in_tmp
 
 .cop_3B:
+    TYX
+    LDA.B [CopTemp]
+    JSR.W CODE_C0E6A5
+    ASL A
+    ASL A
+    ASL A
+    ASL A
+    ASL A
+    TAY
+    LDA.W LairDataStructure.lair_dependency, Y
+    BEQ ..no_dependency ; branch if it has no dependency, e.g. it's zero
+    LDY.W #lair_sealed_table
+    JSL.L checkIfBitIsSet
+    BCC ..not_sealed ; if the lair is not sealed, jump
+
+..no_dependency:
+    LDA.B [CopTemp]
+    INC.B CopTemp
+    INC.B CopTemp
+    LDY.W #lair_sealed_table
+    JSL.L checkIfBitIsSet
+    BCC ..dont_jump ; if the lair is not sealed, jump
+
+    LDA.W $0016, X ; load entity id
+    AND.W #$DFFF
+    STA.W $0016, X
+    LDA.B [CopTemp]
+    INC.B CopTemp
+    INC.B CopTemp
+    BRL .ret_in_a
+
+..dont_jump:
+    BRL .ret_out_of_script
+
+..not_sealed:
+    LDA.B [CopTemp]
+    INC.B CopTemp
+    INC.B CopTemp
+
+    STA.W $0034, X
+    PHX
+    TAX
+    LDA.L $7F0203,X
+
+    PLX
+    BIT.W #$0040
+    BEQ ..dont_jump
+    LDA.W $16, X
+    ORA.W #$10
+    STA.W $16, X
+    BRL .skip_2_args
+
+.COP_3C
 TYX
 LDA.B [CopTemp]
-JSR.W CODE_C0E6A5
-ASL A
-ASL A
-ASL A
-ASL A
-ASL A
-TAY
-LDA.W UNREACH_81BA2B,Y
-BEQ .CODE_C0DE9F
-LDY.W #$1ADE
-JSL.L checkIfBitIsSet
-BCC .CODE_C0DEC3
+INC.B CopTemp
+AND.W #$00FF
+STA.W $03E5
+BRL .ret_in_tmp
 
-.CODE_C0DE9F:
-LDA.B [CopTemp]
-INC.B CopTemp
-INC.B CopTemp
-LDY.W #$1ADE
-JSL.L checkIfBitIsSet
-BCC .CODE_C0DEC0
-LDA.W $0016,X
-AND.W #$DFFF
-STA.W $0016,X
-LDA.B [CopTemp]
-INC.B CopTemp
-INC.B CopTemp
-BRL .ret_in_a
-
-.CODE_C0DEC0:
-BRL .ret_out_of_script
-
-.CODE_C0DEC3:
-LDA.B [CopTemp]
-INC.B CopTemp
-INC.B CopTemp
-STA.W $0034,X
-PHX
-TAX
-LDA.L $7F0203,X
-PLX
-BIT.W #$0040
-BEQ .CODE_C0DEC0
-db $BD,$16,$00,$09,$10,$00,$9D,$16   ;C0DED8|        |000016;
-db $00,$82,$4F,$06                   ;C0DEE0|        |      ;
-TYX                                  ;C0DEE4|BB      |      ;
-LDA.B [CopTemp]                          ;C0DEE5|A738    |000038;
-INC.B CopTemp                            ;C0DEE7|E638    |000038;
-AND.W #$00FF                         ;C0DEE9|29FF00  |      ;
-STA.W $03E5                          ;C0DEEC|8DE503  |8103E5;
-BRL .ret_in_tmp                      ;C0DEEF|824506  |C0E537;
+.COP_3D:
 TYX                                  ;C0DEF2|BB      |      ;
 LDA.B [CopTemp]                          ;C0DEF3|A738    |000038;
 INC.B CopTemp                            ;C0DEF5|E638    |000038;

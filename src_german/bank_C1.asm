@@ -5971,7 +5971,49 @@ db $34,$67,$01,$1C,$34,$6B,$01,$24   ;C1B9E8|        |000067;
 db $34,$79,$01,$36,$34,$87,$01,$1F   ;C1B9F0|        |000079;
 db $0C,$8C,$01,$10,$0A,$8C,$01,$2F   ;C1B9F8|        |00018C;
 db $0A,$8C,$01,$38,$1E,$7F,$01,$31   ;C1BA00|        |      ;
-db $2C,$87,$01,$FF,$FF,$0D,$00,$00   ;C1BA08|        |000187;
+db $2C,$87,$01,$FF,$FF
+
+
+struct LairDataStructure $C1BA0D
+    .resur_map_num : skip 1
+    .resur_facing : skip 1
+    .resur_pos_x : skip 1
+    .resur_pos_y : skip 1
+    .resur_zone_tlc_x : skip 1
+    .resur_zone_tlc_y : skip 1
+    .resur_zone_width : skip 1
+    .resur_zone_height : skip 1
+
+    .field_08 : skip 1
+    .npc_name : skip 1
+    .act_number : skip 1
+    
+    .lair_location : skip 1
+    .lair_pos_x : skip 1
+    .lair_pos_y : skip 1
+
+    .field_0E : skip 1
+    .field_0F : skip 1
+    .field_10 : skip 1
+    .field_11 : skip 1
+    .field_12 : skip 1
+    .enemies_to_spawn : skip 1
+    .spawn_delay : skip 1
+    .enemy_id : skip 1
+    .facing : skip 1
+    .field_17 : skip 1
+    .field_18 : skip 1
+    .field_19 : skip 1
+    .field_1A : skip 1
+    .field_1B : skip 1
+    .field_1C : skip 1
+    .field_1D : skip 1
+    .lair_dependency : skip 2
+endstruct
+
+LairDataStructure:
+LD_act1_trial_room:
+db $0D,$00,$00   ;C1BA08|        |000187;
 db $00,$01,$01,$01,$01,$00,$00,$00   ;C1BA10|        |      ;
 db $0D,$0B,$0A,$01,$01,$1F,$A7,$80   ;C1BA18|        |000A0B;
 db $04,$00,$20,$00,$00,$00,$00,$00   ;C1BA20|        |000000;

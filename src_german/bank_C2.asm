@@ -7086,7 +7086,7 @@ TRB.W $032A                          ;C29993|1C2A03  |81032A;
 STZ.W $0322                          ;C29996|9C2203  |810322;
 SEP #$20                             ;C29999|E220    |      ;
 BRK #$07                             ;C2999B|0007    |      ;
-JSR.W CODE_C2A355                    ;C2999D|2055A3  |C2A355;
+JSR.W clearOsd                    ;C2999D|2055A3  |C2A355;
 LDA.B #$1F                           ;C299A0|A91F    |      ;
 STA.W display_hud_bitfield                          ;C299A2|8D3203  |810332;
 JSL.L update_hud                    ;C299A5|225EA682|82A65E;
@@ -7459,7 +7459,7 @@ STZ.W $0440                          ;C29C5F|9C4004  |810440;
 
 CODE_C29C62:
 JSL.L CODE_838321                    ;C29C62|22218383|838321;
-JSR.W CODE_C2A355                    ;C29C66|2055A3  |C2A355;
+JSR.W clearOsd                    ;C29C66|2055A3  |C2A355;
 LDA.B #$1F                           ;C29C69|A91F    |      ;
 STA.W display_hud_bitfield                          ;C29C6B|8D3203  |810332;
 JSL.L wait_vblank                    ;C29C6E|22B7B182|82B1B7;
@@ -7470,7 +7470,7 @@ STA.W $2100                          ;C29C7C|8D0021  |812100;
 RTL                                  ;C29C7F|6B      |      ;
 
 CODE_C29C80:
-JSR.W CODE_C2A355                    ;C29C80|2055A3  |C2A355;
+JSR.W clearOsd                    ;C29C80|2055A3  |C2A355;
 LDY.W #$C870                         ;C29C83|A070C8  |      ;
 JSL.L printOsdStringFromBank2                    ;C29C86|2254A782|82A754;
 LDA.B #$01                           ;C29C8A|A901    |      ;
@@ -8442,31 +8442,49 @@ JSR.W CODE_C2A395                    ;C2A350|2095A3  |C2A395;
 PLP                                  ;C2A353|28      |      ;
 RTL                                  ;C2A354|6B      |      ;
 
-CODE_C2A355:
-PHP                                  ;C2A355|08      |      ;
-PHB                                  ;C2A356|8B      |      ;
-SEP #$20                             ;C2A357|E220    |      ;
-LDA.B #$7F                           ;C2A359|A97F    |      ;
-PHA                                  ;C2A35B|48      |      ;
-PLB                                  ;C2A35C|AB      |      ;
-REP #$20                             ;C2A35D|C220    |      ;
-LDA.W #$2000                         ;C2A35F|A90020  |      ;
-LDX.W #$07FE                         ;C2A362|A2FE07  |      ;
+clearOsd:
+    PHP
+    PHB
+    SEP #$20
+    LDA.B #$7F ; load bank $7F
+    PHA
+    PLB
+    REP #$20
+    LDA.W #$2000 ; transparent whitespace
+    LDX.W #$07FE ; total screen length
 
-CODE_C2A365:
-STA.W $7000,X                        ;C2A365|9D0070  |7F7000;
-DEX                                  ;C2A368|CA      |      ;
-DEX                                  ;C2A369|CA      |      ;
-BPL CODE_C2A365                      ;C2A36A|10F9    |C2A365;
-LDA.W #$0001                         ;C2A36C|A90100  |      ;
-TSB.W $03BA                          ;C2A36F|0CBA03  |7F03BA;
-PLB                                  ;C2A372|AB      |      ;
-PLP                                  ;C2A373|28      |      ;
-RTS                                  ;C2A374|60      |      ;
-db $08,$8B,$E2,$20,$A9,$7F,$48,$AB   ;C2A375|        |      ;
-db $C2,$20,$A9,$00,$20,$A2,$FE,$03   ;C2A37D|        |      ;
-db $9D,$00,$70,$CA,$CA,$10,$F9,$A9   ;C2A385|        |007000;
-db $01,$00,$0C,$BA,$03,$AB,$28,$60   ;C2A38D|        |000000;
+-:
+    STA.W L3_Text, X
+    DEX
+    DEX
+    BPL -
+    LDA.W #1
+    TSB.W $03BA
+    PLB
+    PLP
+    RTS
+
+CODE_C2A375:
+    PHP
+    PHB
+    SEP #$20
+    LDA.B #$7F ; load bank $7F
+    PHA
+    PLB
+    REP #$20
+    LDA.W #$2000 ; transparent whitespace
+    LDX.W #$3FE ; upper half of the screen
+
+-:
+    STA.W L3_Text, X
+    DEX
+    DEX
+    BPL -
+    LDA.W #1
+    TSB.W $03BA
+    PLB
+    PLP
+    RTS
 
 CODE_C2A395:
 PHP                                  ;C2A395|08      |      ;

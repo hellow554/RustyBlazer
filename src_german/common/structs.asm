@@ -50,8 +50,7 @@ struct LiveEntities $7E0800
     ._30 : skip 2                       ; 30
     ._32 : skip 1                       ; 32
     ._33 : skip 1                       ; 33
-    ._34 : skip 1                       ; 34
-    ._35 : skip 1                       ; 35
+    ._34 : skip 2                       ; 34
     .script_ret_addr_bank : skip 1      ; 36
     ._37 : skip 1                       ; 37
     .entities_table_entry_offset : skip 2 ; 38

@@ -4198,9 +4198,9 @@ RTL                                  ;C0822B|6B      |      ;
 incsrc "bankC0/debug_code.asm"
 
 CODE_C08344:
-    LDA.W $0490                          ;C08344|AD9004  |810490;
-    BNE +                   ;C08347|D001    |C0834A;
-    RTS                                  ;C08349|60      |      ;
+    LDA.W $0490
+    BNE +
+    RTS
 
 +
     AND.B #$F0
@@ -10875,19 +10875,19 @@ make_npc_unpassable:
     STA.B $0E                            ;C0E5FE|850E    |00000E;
 
 .inner_loop:
-    LDA.L passable_map,X                
-    ORA.W #$00F0                        
-    STA.L passable_map,X                
-    JSL.L CODE_838242                   
-    DEC.B $0E                           
-    BNE .inner_loop                     
-    LDA.B $18                           
-    CLC                                 
-    ADC.W #$0010                        
-    DEC.B $0C                           
-    BNE .outer_loop                     
-    TYX                                 
-    RTS                                 
+    LDA.L passable_map,X
+    ORA.W #$00F0
+    STA.L passable_map,X
+    JSL.L CODE_838242
+    DEC.B $0E
+    BNE .inner_loop
+    LDA.B $18
+    CLC
+    ADC.W #$0010
+    DEC.B $0C
+    BNE .outer_loop
+    TYX
+    RTS
 
 make_npc_passable:
 LDA.W $0010,X                        ;C0E61F|BD1000  |810010;
@@ -10956,7 +10956,7 @@ LDA.B #objectsize(LiveEntities)                           ;C0E692|A940    |     
 JSL.L multiply                    ;C0E694|22D1B182|82B1D1;
 REP #$20                             ;C0E698|C220    |      ;
 CLC                                  ;C0E69A|18      |      ;
-ADC.W #entities_table  
+ADC.W #entities_table
 TAY                                  ;C0E69E|A8      |      ;
 RTS                                  ;C0E69F|60      |      ;
 
