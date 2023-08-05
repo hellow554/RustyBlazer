@@ -266,16 +266,18 @@ class Translator:
         self._cur_line = None
         self._byte_list = None
         self._inc_paths = []
-        self._transpiled = ""
+        self._transpiled = []
         self._bold = False
 
     def transpile(self) -> str:
-        text = self._path.read_text()
-        for line_num, line in enumerate(text.splitlines()):
-            self._cur_line = (line_num, line)
-            self._process_line()
+        if len(self._transpiled) == 0:
+            text = self._path.read_text()
+            for line_num, line in enumerate(text.splitlines()):
+                self._cur_line = (line_num, line)
+                self._process_line()
 
-        return self._transpiled
+            self._transpiled.append("")  # append one empty line, so we have a newline in the end
+        return "\n".join(self._transpiled)
 
     def inc_paths(self) -> list[Path]:
         return self._inc_paths
@@ -317,7 +319,7 @@ class Translator:
                 self._parse_comment(rest)
             else:
                 self._raise(UnsupportedContent, line)
-        self._transpiled += line + "\n"
+        self._transpiled.append(line)
 
     def _iter_args(self, text: str) -> Iterator[str]:
         while len(text) > 0:
@@ -411,16 +413,16 @@ class Translator:
 
         self._byte_list.append(to_append)
 
+    @profile
     def _end_line(self):
         if self._byte_list is None:
             self._raise(ParseException, "@END@ without begin")
 
         for byte in self._byte_list:
             if isinstance(byte, tuple):
-                self._transpiled += self._line_to_str(byte)
+                self._transpiled.append(self._line_to_str(byte))
             else:
-                self._transpiled += " : ".join(x for x in map(self._line_to_str, byte) if x is not None)
-            self._transpiled += "\n"
+                self._transpiled.append(" : ".join(x for x in map(self._line_to_str, byte) if x is not None))
 
         self._byte_list = None
 
@@ -439,13 +441,15 @@ class Translator:
             assert False, f"Unsupported thing {sig}"
 
 
+@profile
 def crawl(path: Path):
     todo = [path]
     while len(todo) > 0:
         path = todo.pop()
         translator = Translator(path)
         # print(translator.transpile())
-        path.write_text(translator.transpile())
+        transpiled = translator.transpile()
+        path.write_text(transpiled)
         todo.extend(path.parent / inc for inc in reversed(translator.inc_paths()))
 
 
