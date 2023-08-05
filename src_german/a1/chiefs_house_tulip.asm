@@ -1,11 +1,7 @@
-
-A1_script_chiefs_house_tulip: 
-    %CopJumpIfSealed(!Lair_A1_Chiefs_House_Tulip, +)
-    RTL
-
-+
+A1_script_chiefs_house_tulip:
+    %CopJumpIfSealed(!Lair_A1_Chiefs_House_Tulip, +) : RTL : +
     %CopJumpIfRevealing(!Lair_A1_Chiefs_House_Tulip, .revealing)
-    %Cop85(CODE_C0A9C9)
+    %CopSetScriptAddr(CODE_C0A9C9)
     %CopAssignTalkCallback(.talk)
     %CopMakeNpcUnpassable()
 

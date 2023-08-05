@@ -1,8 +1,5 @@
 A1_script_mill_keeper:
-    %CopJumpIfSealed(!Lair_A1_Mill_Keeper, +)
-    RTL
-
-+
+    %CopJumpIfSealed(!Lair_A1_Mill_Keeper, +) : RTL : +
     %CopJumpIfRevealing(!Lair_A1_Mill_Keeper, .revealing)
     %CopJumpIfEventFlagIsSet(!EV_A1_WatermillwheelRotated, .already_turned)
     %CopMakeNpcUnpassable()

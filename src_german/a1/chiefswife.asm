@@ -1,7 +1,5 @@
 A1_script_chiefs_wife:
-    %CopJumpIfSealed(!Lair_A1_Chiefs_Wife, +)
-    RTL
-+
+    %CopJumpIfSealed(!Lair_A1_Chiefs_Wife, +) : RTL : +
     %CopJumpIfRevealing(!Lair_A1_Chiefs_Wife, .revealing)
     %CopJumpIfSealed(!Lair_A1_Lisa, .lisaRevealed)
     %CopAssignTalkCallback(.default_talk)

@@ -1,9 +1,6 @@
 A1_script_bridge_guard:
-    %CopJumpIfSealed(!Lair_A1_Bridge_Guard, +)
-    RTL
-
-+:
-    %Cop85(CODE_C0A9C9)
+    %CopJumpIfSealed(!Lair_A1_Bridge_Guard, +) : RTL : +
+    %CopSetScriptAddr(CODE_C0A9C9)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
 ;---

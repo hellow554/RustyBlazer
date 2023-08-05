@@ -324,7 +324,7 @@ macro Cop83()
     COP #$83
 endmacro
 
-macro Cop85(addr_24)
+macro CopSetScriptAddr(addr_24)
     COP #$85
     dl <addr_24>
 endmacro

@@ -1,9 +1,6 @@
-
 A1_script_crabwalkguy:
-    %CopJumpIfSealed(!Lair_A1_Crabwalk_Guy, +)
-    RTL
-+
-    %Cop85(CODE_C0A9C9)
+    %CopJumpIfSealed(!Lair_A1_Crabwalk_Guy, +) : RTL : +
+    %CopSetScriptAddr(CODE_C0A9C9)
     %CopAssignTalkCallback(.default_talk)
     %CopMakeNpcUnpassable()
     %CopWaitForEventFlagToBeSet(!EV_A1_CrabwalkGuyNoticedUs)

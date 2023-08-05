@@ -6,4 +6,5 @@
 !Lair_A1_Mill_Keeper        = $0E
 !Lair_A1_xxx                = $0F
 !Lair_A1_Lisa2              = $10
+!Lair_A1_xxx2               = $11
 !Lair_A1_Crabwalk_Guy       = $29

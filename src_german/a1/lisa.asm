@@ -1,7 +1,5 @@
-A1_script_lisa:
-    %CopJumpIfSealed(!Lair_A1_Lisa2, +)
-    RTL
-+
+A1_script_Lisa:
+    %CopJumpIfSealed(!Lair_A1_Lisa2, +) : RTL : +
     %CopJumpIfRevealing(!Lair_A1_Lisa2, .revealing)
     %CopJumpIfEventFlagIsSet(!EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE, .todo)
     %CopJumpIfItemNotObtained(!VipCard, .lisa_still_here)

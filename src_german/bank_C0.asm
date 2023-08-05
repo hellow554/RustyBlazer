@@ -6351,7 +6351,7 @@ STA.B $2B                            ;C09342|852B    |00002B;
 REP #$20                             ;C09344|C220    |      ;
 LDA.W UNREACH_8199B6,X               ;C09346|BDB699  |8199B6;
 STA.B $29                            ;C09349|8529    |000029;
-JSL.L CODE_80E702                    ;C0934B|2202E780|80E702;
+JSL.L TakeEntityPtr                    ;C0934B|2202E780|80E702;
 BRA CODE_C09368                      ;C0934F|8017    |C09368;
 
 CODE_C09351:
@@ -6362,7 +6362,7 @@ BNE CODE_C0935C                      ;C09359|D001    |C0935C;
 RTS                                  ;C0935B|60      |      ;
 
 CODE_C0935C:
-JSL.L CODE_80E702                    ;C0935C|2202E780|80E702;
+JSL.L TakeEntityPtr                    ;C0935C|2202E780|80E702;
 TYA                                  ;C09360|98      |      ;
 STA.W $003E,X                        ;C09361|9D3E00  |81003E;
 TXA                                  ;C09364|8A      |      ;
@@ -10979,7 +10979,7 @@ PLA                                  ;C0E6B0|68      |      ;
 RTS                                  ;C0E6B1|60      |      ;
 
 CODE_C0E6B2:
-JSL.L CODE_80E702                    ;C0E6B2|2202E780|80E702;
+JSL.L TakeEntityPtr                    ;C0E6B2|2202E780|80E702;
 BCS CODE_C0E6D9                      ;C0E6B6|B021    |C0E6D9;
 TXA                                  ;C0E6B8|8A      |      ;
 STA.W $003E,Y                        ;C0E6B9|993E00  |81003E;
@@ -11005,7 +11005,7 @@ CODE_C0E6D9:
 RTS                                  ;C0E6D9|60      |      ;
 
 CODE_C0E6DA:
-JSL.L CODE_80E702                    ;C0E6DA|2202E780|80E702;
+JSL.L TakeEntityPtr                    ;C0E6DA|2202E780|80E702;
 BCS CODE_C0E701                      ;C0E6DE|B021    |C0E701;
 TXA                                  ;C0E6E0|8A      |      ;
 STA.W $003C,Y                        ;C0E6E1|993C00  |81003C;
@@ -11029,20 +11029,30 @@ JSR.W CODE_C0E71B                    ;C0E6FE|201BE7  |C0E71B;
 
 CODE_C0E701:
 RTS                                  ;C0E701|60      |      ;
-LDA.B ($4A)                          ;C0E702|B24A    |00004A;
-BEQ UNREACH_C0E716                   ;C0E704|F010    |C0E716;
-TAY                                  ;C0E706|A8      |      ;
-LDA.W #$0000                         ;C0E707|A90000  |      ;
-STA.B ($4A)                          ;C0E70A|924A    |00004A;
-SEP #$20                             ;C0E70C|E220    |      ;
-INC.B $4A                            ;C0E70E|E64A    |00004A;
-INC.B $4A                            ;C0E710|E64A    |00004A;
-REP #$20                             ;C0E712|C220    |      ;
-CLC                                  ;C0E714|18      |      ;
-RTL                                  ;C0E715|6B      |      ;
 
-UNREACH_C0E716:
-db $38,$A0,$B6,$06,$6B               ;C0E716|        |      ;
+
+;;; Loads an entity pointer from $4A and zeros it afterwards
+;;;
+;;; If an entity pointer could be loaded, the carry bit is cleared
+;;; else the default entity pointer $6B6 will be loaded and the carry bit is set
+TakeEntityPtr:
+    LDA.B ($4A)
+    BEQ .load_default
+
+    TAY ; transfer pointer to Y and place zero into that point
+    LDA.W #$0000
+    STA.B ($4A)
+    SEP #$20
+    INC.B $4A
+    INC.B $4A
+    REP #$20
+    CLC
+    RTL
+
+.load_default:
+    SEC
+    LDY.W #$6B6
+    RTL
 
 CODE_C0E71B:
 PHX                                  ;C0E71B|DA      |      ;

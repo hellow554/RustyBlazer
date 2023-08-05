@@ -1,7 +1,5 @@
 A1_script_shopowner:
-    %CopJumpIfSealed(!Lair_A1_Shop_Owner, +)
-    RTL
-+:
+    %CopJumpIfSealed(!Lair_A1_Shop_Owner, +) : RTL : +
     %CopAssignTalkCallback(.talk)
 
 .move_loop

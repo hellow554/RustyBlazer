@@ -1,8 +1,6 @@
 A1_script_GoatWithFence:
-    %CopJumpIfSealed(!Lair_A1_xxx, +)
-    RTL
-+
-    %Cop85(CODE_C0A9C9)
+    %CopJumpIfSealed(!Lair_A1_xxx, +) : RTL : +
+    %CopSetScriptAddr(CODE_C0A9C9)
     %CopAC(.herbs_on_the_ground, 0, $10, $2000)
     %CopAssignTalkCallback(.talk)
 
