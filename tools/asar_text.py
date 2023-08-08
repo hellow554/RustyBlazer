@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 
+from contextlib import contextmanager
 from enum import Enum, auto
+from functools import partial
 from pathlib import Path
 import re
+from re import Match
 import sys
 from typing import Never, Iterator
 
-START_BLOCK = re.compile(r"^;\s*@TEXTBOX@\s*$")
-CONTINUE_BLOCK = re.compile(r"^;\s*@TEXTCONT@\s*$")
-ENDBLOCK = re.compile(r"^;\s*@END@\s*$")
+DEFAULT_START_BLOCK = re.compile(r"^\s*;\s*@DEFAULT_TEXTBOX@\s*$")
+NEW_BLOCK = re.compile(r"^\s*;\s*@NEW_TEXTBOX@\s*$")
+ENDBLOCK = re.compile(r"^\s*;\s*@END@\s*$")
+ENDSTRING = re.compile(r"^\s*;\s*@ENDSTRING@\s*$")
+SINGLE_STRING = re.compile(r";\s*@STRING@ ")
 INCSTMT = re.compile(r"^\s*incsrc\s*\"([^\"]+)\"\s*$")
+
+SIMPLE_STRING = re.compile(r";\s*@STRING@ ")
 
 LUT = [
     "Aber",
@@ -173,6 +180,11 @@ class UnclosedQuote(ParseException):
         super().__init__(file, line, "this quote is not properly closed")
 
 
+class InvalidWidth(ParseException):
+    def __init__(self, file: str, line: int, value: int, max_value: int):
+        super().__init__(file, line, f"value {value:#x} exceeds maximum value of {max_value:#x}")
+
+
 class DataWidth(Enum):
     BYTE = auto()
     WORD = auto()
@@ -205,17 +217,25 @@ class DataWidth(Enum):
 
 
 class TextMapper:
+    _regex = re.compile("( )")
     @staticmethod
     def map(txt: str) -> list[int]:
         res = []
-        skip_space = False
-        for word in re.split("( )", txt):
-            if skip_space and word == " ":
-                continue
-            skip_space = False
+        needs_space = False
+        for word in TextMapper._regex.split(txt):
+            if needs_space:
+                needs_space = False
+                if word == " ":
+                    continue
+                else:
+                    # we needed a space but we got none
+                    lut_idx = res.pop() - 0x80
+                    for c in LUT[lut_idx]:
+                        res.append(TextMapper._map_char(c))
+
             if word in LUT:
                 res.append(LUT.index(word) + 0x80)
-                skip_space = True
+                needs_space = True
             else:
                 escape_start = False
                 it = iter(word)
@@ -228,6 +248,8 @@ class TextMapper:
                             res.append((hi << 4) | lo)
                         elif c == "n":
                             res.append(0x0D)
+                        elif c == "0":
+                            res.append(0x00)
                         else:
                             raise UnknownEscapeSequence(c)
                         escape_start = False
@@ -235,6 +257,12 @@ class TextMapper:
                         escape_start = True
                     else:
                         res.append(TextMapper._map_char(c))
+
+        if needs_space:
+            # we needed a space but we got none
+            lut_idx = res.pop() - 0x80
+            for c in LUT[lut_idx]:
+                res.append(TextMapper._map_char(c))
 
         return res
 
@@ -244,11 +272,16 @@ class TextMapper:
             return ord(c)
 
         r = {
-            "ä": 0x7B,
+            "ß": 0x25,
+            "Ü": 0x28,
             "ö": 0x2A,
             "ü": 0x5B,
-            "Ü": 0x28,
-            "ß": 0x25,
+            "↑": 0x5C,
+            "↗": 0x5D,
+            "→": 0x5E,
+            "↘": 0x5F,
+            "ä": 0x7B,
+            "↓": 0x7C,
         }.get(c)
 
         if r is None:
@@ -263,10 +296,12 @@ Tup = tuple[DataWidth, list[Target]]
 class Translator:
     def __init__(self, path: Path):
         self._path = path
-        self._cur_line = None
-        self._byte_list = None
-        self._inc_paths = []
-        self._transpiled = []
+        self._cur_line: tuple[int, str] | None = None
+        self._byte_list: list[list[Tup]] | None = None
+        self._inc_paths: list[Path] = []
+        self._transpiled: list[str] = []
+        self._to_append: list[Tup] | None = None
+        self._line_comment: str | None = None
         self._bold = False
 
     def transpile(self) -> str:
@@ -282,6 +317,26 @@ class Translator:
     def inc_paths(self) -> list[Path]:
         return self._inc_paths
 
+    def parse_int(self, txt: str, width: DataWidth | None = None) -> int | None:
+        try:
+            if (m := txt.removeprefix("$")) != txt:
+                val = int(m, 16)
+            elif (m := txt.removeprefix("%")) != txt:
+                val = int(m, 2)
+            else:
+                val = int(m, 10)
+        except ValueError:
+            return None
+
+        if width is not None:
+            max_val = 1 << (8 * width.width())
+            if val < max_val:
+                return val
+            else:
+                self._raise(InvalidWidth, val, max_val)
+        else:
+            return val
+
     def _line_to_str(self, line) -> str | None:
         def target_to_str(target: tuple[DataWidth, Target]) -> str:
             dw, t = target
@@ -293,7 +348,7 @@ class Translator:
         _, x = line
         if len(x) > 0:
             dw, bytes = line
-            return f"{dw} " + ", ".join(target_to_str((dw, x)) for x in bytes)
+            return f"{dw} " + ",".join(target_to_str((dw, x)) for x in bytes)
         else:
             return None
 
@@ -301,13 +356,18 @@ class Translator:
         assert self._cur_line is not None
         (_, line) = self._cur_line
         if (m := INCSTMT.match(line)) is not None:
-            self._inc_paths.append(m.group(1))
-        elif START_BLOCK.match(line):
+            self._inc_paths.append(Path(m.group(1)))
+        elif DEFAULT_START_BLOCK.match(line):
             self._byte_list = [(DataWidth.BYTE, [0x10])]
-        elif CONTINUE_BLOCK.match(line):
+        elif NEW_BLOCK.match(line):
             self._byte_list = []
         elif ENDBLOCK.match(line):
             self._end_line()
+        elif ENDSTRING.match(line):
+            self._end_line(append_null=True)
+        elif (m := SINGLE_STRING.search(line)) is not None:
+            self._single_string(m, line)
+            return  # we do a return here, because this is a single line comment
         elif self._byte_list is not None:
             if line.startswith(("db", "dw", "dl", "dd")):
                 # we ignore these ones and replace them later with our code
@@ -320,6 +380,21 @@ class Translator:
             else:
                 self._raise(UnsupportedContent, line)
         self._transpiled.append(line)
+
+    def _single_string(self, match: Match[str], string: str):
+        self._byte_list = []
+        self._parse_comment(string[match.end() :], auto_newline=False)
+
+        assert len(self._byte_list) > 0
+        assert self._to_append is None
+
+        self._to_append = self._byte_list[-1]
+        self._append(0)
+        self._byte_list[-1] = self._to_append
+        self._to_append = None
+
+        self._line_comment = string[match.start() :]
+        self._end_line()
 
     def _iter_args(self, text: str) -> Iterator[str]:
         while len(text) > 0:
@@ -349,19 +424,17 @@ class Translator:
                 yield text
                 text = ""
 
-    def _parse_comment(self, comment: str):
-        to_append = []
+    def _append(self, data: list[Target] | Target, size: DataWidth = DataWidth.BYTE):
+        if self._to_append is None:
+            self._to_append = []
+        if not isinstance(data, list):
+            data = [data]
+        if len(self._to_append) > 0 and self._to_append[-1][0] == size:
+            self._to_append[-1][1].extend(data)
+        else:
+            self._to_append.append((size, data))
 
-        def _append(data: list[Target] | Target, size: DataWidth = DataWidth.BYTE):
-            nonlocal to_append
-
-            if not isinstance(data, list):
-                data = [data]
-            if len(to_append) > 0 and to_append[-1][0] == size:
-                to_append[-1][1].extend(data)
-            else:
-                to_append.append((size, data))
-
+    def _parse_comment(self, comment: str, auto_newline: bool = True):
         assert self._byte_list is not None
 
         iterator = self._iter_args(comment)
@@ -371,50 +444,115 @@ class Translator:
             new_line = False
             if arg.startswith('"'):
                 assert arg[-1] == '"'
-                _append(TextMapper.map(arg[1:-1]))
+                self._append(TextMapper.map(arg[1:-1]))
                 new_line = True
             elif arg == "*":
                 if self._bold:
-                    _append([0x03, 0x20])
+                    self._append([0x03, 0x20])
                 else:
-                    _append([0x03, 0x24])
+                    self._append([0x03, 0x24])
                 self._bold = not self._bold
             elif arg == "WFE":
-                _append(0x11)
+                self._append(0x11)
+            elif arg == "WFAK":
+                self._append(0x12)
+            elif arg == "SETPOS":
+                pos_x = next(iterator)
+                pos_y = next(iterator)
+
+                if (m := self.parse_int(pos_x, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse position x `{pos_x}`")
+                else:
+                    pos_x = m
+                if (m := self.parse_int(pos_y, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse position y `{pos_y}`")
+                else:
+                    pos_y = m
+
+                self._append([0x01, pos_x, pos_y])
+            elif arg == "DRAWBOX":
+                width = next(iterator)
+                height = next(iterator)
+
+                if (m := self.parse_int(width, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse drawbox width `{width}`")
+                else:
+                    width = m
+                if (m := self.parse_int(height, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse drawbox height `{height}`")
+                else:
+                    height = m
+
+                self._append([0x07, width, height])
             elif arg == "CONT":
-                _append(0x0C)
+                self._append(0x0C)
             elif arg == "PLAYER_NAME":
-                _append([2, 2])
+                self._append([2, 2])
+            elif arg == "NEWLINE":
+                self._append(0x0D)
             elif arg == "NO_NEWLINE":
                 pass
             elif arg == "->":
                 target = next(iterator)
-                try:
-                    int(target, 16)
-                    target = "$target"
-                except ValueError:
-                    pass
+                if (m := self.parse_int(target, DataWidth.WORD)) is not None:
+                    target = m
 
-                _append(0x13)
-                _append(target, DataWidth.WORD)
+                self._append(0x13)
+                self._append(target, DataWidth.WORD)
             elif arg == "WAIT":
                 amount = next(iterator)
-                try:
-                    num = int(amount, 0)
-                    # TODO assert value is small enough
-                    _append([0x0E, num])
-                except ValueError:
-                    self._raise(ParseException, "Cannot parse numer to wait `{amount}`")
+                if self.parse_int(amount, DataWidth.BYTE) is None:
+                    self._raise(ParseException, f"Cannot parse number to wait `{amount}`")
+
+                self._append([0x0E, amount])
+            elif arg == "LOOKUP":
+                table = next(iterator)
+                offset = next(iterator)
+
+                if (m := self.parse_int(table, DataWidth.WORD)) is not None:
+                    table = m
+                if (m := self.parse_int(offset, DataWidth.WORD)) is not None:
+                    offset = m
+
+                self._append(0x05)
+                self._append([table, offset], DataWidth.WORD)
+            elif arg == "DECVAL":
+                width = next(iterator)
+                addr = next(iterator)
+
+                if (m := self.parse_int(width, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse width `{width}`")
+                else:
+                    width = m
+                if (m := self.parse_int(addr, DataWidth.WORD)) is not None:
+                    addr = m
+
+                self._append([0x06, width])
+                self._append(addr, DataWidth.WORD)
+            elif arg == "REPEAT":
+                amount = next(iterator)
+                addr = next(iterator)
+
+                if (m := self.parse_int(amount, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse amount `{amount}`")
+                else:
+                    width = m
+                if (m := self.parse_int(addr, DataWidth.WORD)) is not None:
+                    addr = m
+
+                self._append([0x0B, amount])
+                self._append(addr, DataWidth.WORD)
             else:
                 self._raise(UnknownKeyword, arg)
 
-        if new_line:
-            _append(0x0D)
+        if new_line and auto_newline:
+            self._append(0x0D)
 
-        self._byte_list.append(to_append)
+        append = self._to_append
+        self._to_append = None
+        self._byte_list.append(append)
 
-    @profile
-    def _end_line(self):
+    def _end_line(self, append_null=False):
         if self._byte_list is None:
             self._raise(ParseException, "@END@ without begin")
 
@@ -424,24 +562,32 @@ class Translator:
             else:
                 self._transpiled.append(" : ".join(x for x in map(self._line_to_str, byte) if x is not None))
 
+        if append_null:
+            self._transpiled.append("db $00")
+        if self._line_comment is not None:
+            self._transpiled[-1] += " " + self._line_comment
+            self._line_comment = None
+
         self._byte_list = None
 
-    def _raise(self, type: type, what: str | None = None) -> Never:
+    def _raise(self, type: type, *args) -> Never:
         assert self._cur_line is not None
         from inspect import signature
 
-        sig = signature(type)
-        param_len = len(sig.parameters)
-        if param_len == 2:
-            assert what is None
-            raise type(self._path, self._cur_line[0])
-        elif param_len == 3:
-            raise type(self._path, self._cur_line[0], what)
-        else:
-            assert False, f"Unsupported thing {sig}"
+        curried = partial(type, self._path, self._cur_line[0])
+        raise curried(*args)
+
+        # sig = signature(type)
+        # param_len = len(sig.parameters)
+        # if param_len == 2:
+        #     assert what is None
+        #     raise type(self._path, self._cur_line[0])
+        # elif param_len == 3:
+        #     raise type(self._path, self._cur_line[0], what)
+        # else:
+        #     assert False, f"Unsupported thing {sig}"
 
 
-@profile
 def crawl(path: Path):
     todo = [path]
     while len(todo) > 0:

@@ -20,12 +20,12 @@ entities_GrassValley:
     %create_entity(_, 0,    0, 0, 0, $10, $20, 0,              CODE_C3C15A)
 
     ; npcs in town
-    %create_entity(entity_act1_crab_walk_guy,
+    %create_entity(entity_act1_crabwalk_guy,
         0, 0, 0, $02, $48, $30, $7E3800, A1_script_crabwalkguy)
     %create_entity(entity_act1_chiefs_wife,
         0, 0, 0, $06, $48, $30, $7E3800, A1_script_chiefs_wife)
     %create_entity(entity_act1_shop_owner,
-        0, 0, 0, $06, $58, $30, $7E3800, A1_script_shopowner)
+        0, 0, 0, $06, $58, $30, $7E3800, A1_script_ShopOwner)
     %create_entity(entity_act1_chiefs_house_tulip,
         0, 0, 0, $1E, $50, $30, $7E3800, A1_script_chiefs_house_tulip)
     %create_entity(entity_act1_bridge_guard,
@@ -36,17 +36,18 @@ entities_GrassValley:
         0, 0, 0, $18, $40, $30, $7E3800, A1_script_GoatWithFence)
     %create_entity(entity_act1_lisa,
         0, 0, 0, $12, $40, $30, $7E3800, A1_script_Lisa)
+    %create_entity(entity_act1_tulip_above_entrace,
+        0, 0, 0, $1E, $50, $30, $7E3800, A1_script_Tulip_Above_Entrance)
+    %create_entity(entity_act1_architect,
+        0, 0, 0, $02, $48, $30, $7E3800, A1_script_Architect)
+    %create_entity(entity_act1_son_shop_owner,
+        0, 0, 0, $0C, $48, $30, $7E3800, A1_script_son_shop_owner)
+    %create_entity(entity_act1_tulip_before_painter_house,
+        0, 0, 0, $1E, $50, $30, $7E3800, A1_script_Tulip_Before_Painter_House)
+    %create_entity(entity_act1_painter,
+        0, 0, 0, $00, $48, $20, $7E3800, A1_script_painter)
 
-
-db $00,$00,$00,$00,$00,$1E,$50,$30   ;C18118|        |      ;
-db $00,$38,$7E,$C2,$9B,$83,$00,$00   ;C18120|        |      ;
-db $00,$00,$00,$02,$48,$30,$00,$38   ;C18128|        |      ;
-db $7E,$1D,$9D,$83,$00,$00,$00,$00   ;C18130|        |009D1D;
-db $00,$0C,$48,$30,$00,$38,$7E,$F4   ;C18138|        |      ;
-db $9D,$83,$00,$00,$00,$00,$00,$1E   ;C18140|        |000083;
-db $50,$30,$00,$38,$7E,$A7,$9F,$83   ;C18148|        |C1817A;
-db $00,$00,$00,$00,$00,$00,$48,$20   ;C18150|        |      ;
-db $00,$38,$7E,$D4,$A0,$83,$00,$00   ;C18158|        |      ;
+db $00,$00   ;C18158|        |      ;
 db $00,$00,$00,$1C,$50,$30,$00,$38   ;C18160|        |      ;
 db $7E,$BA,$A2,$83,$00,$00,$00,$00   ;C18168|        |00A2BA;
 db $00,$1D,$50,$30,$00,$38,$7E,$CC   ;C18170|        |      ;
@@ -102,9 +103,12 @@ db $00,$1E,$50,$20,$00,$38,$7E,$EB   ;C182F8|        |      ;
 db $AC,$83,$00,$00,$00,$00,$00,$15   ;C18300|        |000083;
 db $40,$20,$00,$38,$7E,$B3,$AD,$83   ;C18308|        |      ;
 db $00,$00,$00,$00,$00,$07,$50,$20   ;C18310|        |      ;
-db $00,$38,$7E,$B4,$B9,$83,$00,$00   ;C18318|        |      ;
-db $00,$00,$00,$07,$50,$00,$00,$38   ;C18320|        |      ;
-db $7E,$71,$BA,$83,$00,$00,$00,$00   ;C18328|        |00BA71;
+db $00,$38,$7E,$B4,$B9,$83
+
+    %create_entity(entity_act1_highground_jewel,
+        0, 0, 0, $07, $50, $00, $7E3800, A1_script_highground_jewel)
+
+db $00,$00,$00,$00   ;C18328|        |00BA71;
 db $00,$07,$40,$00,$00,$38,$7E,$9D   ;C18330|        |      ;
 db $BA,$83,$00,$00,$00,$00,$00,$2A   ;C18338|        |      ;
 db $10,$20,$00,$80,$8D,$14,$AA,$80   ;C18340|        |C18362;

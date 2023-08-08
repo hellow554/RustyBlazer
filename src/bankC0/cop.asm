@@ -19,7 +19,7 @@ COP_Func:
     dw .cop_00, .cop_01, .cop_02, .cop_03
     dw .cop_04, .cop_05, .cop_06, .cop_07
     dw .cop_08, .cop_09, .cop_0A, .cop_0B
-    dw .cop_0C, .cop_0D, 0,       0
+    dw .cop_0C, .cop_0D, $000000, $000000
     dw .cop_10, .cop_11, .cop_12, .cop_13
     dw .cop_14, .cop_15, .cop_16, .cop_17
     dw .cop_18, .cop_19, .cop_1A, .cop_1B
@@ -27,44 +27,40 @@ COP_Func:
     dw .cop_20, .cop_21, .cop_22, .cop_23
     dw .cop_24, .cop_25, .cop_26, .cop_27
     dw .cop_28, .cop_29, .cop_2A, .cop_2B
-    dw 0,       0,       .cop_2E, .cop_2F
+    dw $000000, $000000, .cop_2E, .cop_2F
     dw .cop_30, .cop_31, .cop_32, .cop_33
     dw .cop_34, .cop_35, .cop_36, .cop_37
     dw .cop_38, .cop_39, .cop_3A, .cop_3B
-    dw .cop_3C, $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
-    dw $FFFF,   $FFFF,   $FFFF,   $FFFF
+    dw .cop_3C, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
+    dw $00FFFF, $00FFFF, $00FFFF, $00FFFF
     dw .cop_80, .cop_81, .cop_82, .cop_83
     dw .cop_84, .cop_85, .cop_86, .cop_87
     dw .cop_88, .cop_89, .cop_8A, .cop_8B
     dw .cop_8C, .cop_8D, .cop_8E, .cop_8F
-
-
-
-db $BA,$E0,$DB,$E0,$ED,$E0,$06,$E1   ;C0D7CB|        |      ;
-db $29,$E1,$45,$E1,$66,$E1,$78,$E1   ;C0D7D3|        |      ;
-db $8A,$E1,$9C,$E1,$AE,$E1,$D5,$E1   ;C0D7DB|        |      ;
-db $FC,$E1,$2A,$E2,$49,$E2,$67,$E2   ;C0D7E3|        |C02AE1;
-db $78,$E2,$89,$E2,$A7,$E2,$C0,$E2   ;C0D7EB|        |      ;
-db $CD,$E2,$DA,$E2,$03,$E3,$10,$E3   ;C0D7F3|        |00DAE2;
-db $1D,$E3,$39,$E3,$5E,$E3,$77,$E3   ;C0D7FB|        |0039E3;
-db $B1,$E3,$EB,$E3,$21,$E4,$59,$E4   ;C0D803|        |0000E3;
-db $81,$E4,$A9,$E4,$EB,$E4
-
+    dw .cop_90, .cop_91, .cop_92, .cop_93
+    dw .cop_94, .cop_95, .cop_96, .cop_97
+    dw .cop_98, .cop_99, .cop_9A, .cop_9B
+    dw .cop_9C, .cop_9D, .cop_9E, .cop_9F
+    dw .cop_A0, .cop_A1, .cop_A2, .cop_A3
+    dw .cop_A4, .cop_A5, .cop_A6, .cop_A7
+    dw .cop_A8, .cop_A9, .cop_AA, .cop_AB
+    dw .cop_AC, .cop_AD, .cop_AE, .cop_AF
+    dw .cop_B0, .cop_B1, .cop_B2
 
 .cop_00:
     TYX
@@ -333,11 +329,11 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDA.B [CopTemp] ; load X
     INC.B CopTemp
     INC.B CopTemp
-    STA.W teleport_x
+    STA.W TeleportPos.x
     LDA.B [CopTemp] ; load Y
     INC.B CopTemp
     INC.B CopTemp
-    STA.W teleport_y
+    STA.W TeleportPos.y
     BRL .ret_in_tmp
 
 .cop_11:

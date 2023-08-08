@@ -23,6 +23,7 @@ endmacro
 
 macro CopWaitForEventFlagToBeSet(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
+    assert <eventId><$8000, "EventId must be less than $8000"
     COP #$05
     dw <eventId>
 endmacro
@@ -35,6 +36,7 @@ endmacro
 
 macro CopJumpIfEventFlagIsUnset(eventId, addr)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
+    assert <eventId><$8000, "EventId must be less than $8000"
     COP #$07
     dw <eventId>
     dw <addr>
@@ -42,6 +44,7 @@ endmacro
 
 macro CopJumpIfEventFlagIsSet(eventId, addr)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
+    assert <eventId><$8000, "EventId must be less than $8000"
     COP #$07
     dw <eventId>|$8000
     dw <addr>
@@ -57,12 +60,14 @@ endmacro
 
 macro CopSetEventFlag(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
+    assert <eventId><$8000, "EventId must be less than $8000"
     Cop #$09
     dw <eventId>|$8000
 endmacro
 
 macro CopClearEventFlag(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
+    assert <eventId><$8000, "EventId must be less than $8000"
     Cop #$09
     dw <eventId>
 endmacro
@@ -302,6 +307,11 @@ endmacro
 
 macro CopChooseName()
     Cop #$3A
+endmacro
+
+macro Cop3B(lair_id, target)
+    COP #$3B
+    dw <lair_id>, <target>
 endmacro
 
 ; COPs 3D to 7F are not implemented

@@ -1,6 +1,6 @@
 A1_script_Lisa:
-    %CopJumpIfSealed(!Lair_A1_Lisa2, +) : RTL : +
-    %CopJumpIfRevealing(!Lair_A1_Lisa2, .revealing)
+    %CopJumpIfSealed(!Lair_A1_Lisa, +) : RTL : +
+    %CopJumpIfRevealing(!Lair_A1_Lisa, .revealing)
     %CopJumpIfEventFlagIsSet(!EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE, .todo)
     %CopJumpIfItemNotObtained(!VipCard, .lisa_still_here)
     ; lisa was kidnapped
@@ -9,7 +9,7 @@ A1_script_Lisa:
 
 .lisa_still_here:
     %CopAdjustNpcYPosition(-8)
-    %CopJumpIfSealed(!Lair_A1_Lisa, .xxx_sealed)
+    %CopJumpIfSealed(!Lair_A1_Chief, .xxx_sealed)
     %CopAssignTalkCallback(.talk_first)
 
 .CODE_C3956F:

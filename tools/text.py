@@ -31,9 +31,16 @@ class Addr:
 class IdaAddr(Addr):
     def __init__(self, *args, **kwargs):
         if len(args) == 1:
-            bank = int(args[0][1:3], 16) - 0x80
-            offset = int(args[0][4:], 16) - 0x8000
-            super().__init__(bank * 0x8000 + offset)
+            bank = args[0][1:3]
+            if (_ := bank.removeprefix("C")) != bank:
+                bank = int(bank, 16) - 0xC0
+                offset = int(args[0][4:], 16)
+                super().__init__(bank * 0x10000 + offset)
+            else:
+                bank = int(bank, 16) - 0x80
+                offset = int(args[0][4:], 16) - 0x8000
+                super().__init__(bank * 0x8000 + offset)
+
         else:
             assert len(args) == 0, "Either provide one argument or `bank` and `offset`"
 
@@ -43,7 +50,7 @@ class IdaAddr(Addr):
 
 
 class ROM:
-    ROM_IMAGE_PATH = "/mnt/d/kk/exp/Soul Blazer (USA).sfc"
+    ROM_IMAGE_PATH = "/home/marcel/projects/RustyBlazer/german.sfc"
     content = []
 
     @classmethod
@@ -78,7 +85,7 @@ class SbChar:
         return self.special() or chr(self.ch)
 
     def special(self) -> str | None:
-        specials = {
+        return {
             # Box drawing
             0x01: "\u250f",  # top left corner
             0x02: "\u2513",  # top right corner
@@ -123,16 +130,16 @@ class SbChar:
             0x5D: "\U0001f855",
             0x5E: "\U0001f852",
             0x5F: "\U0001F856",
+            0x7B: "ä",
             0x7C: "\U0001f853",
             0x7D: "\U0001f857",
             0x7E: "\U0001f850",
             0x7F: "\U0001f854"
             # TODO: enix logo
-        }
-        return specials.get(self.ch)
+        }.get(self.ch)
 
     def lut(self) -> str:
-        base_addr = IdaAddr(".90:8000").addr
+        base_addr = IdaAddr(".C6:C000").addr
         idx = self.ch & 0x7F
         idx *= 12
         return ROM[base_addr + idx : base_addr + idx + 12].decode("ASCII").rstrip("\x00") + " "
@@ -317,12 +324,14 @@ class SbString:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--rom-image", required=False)
-    parser.add_argument("addresses", metavar="A", type=str, nargs="+")
+    parser.add_argument("addresses", metavar="A", type=str, nargs="*")
 
     args = parser.parse_args()
 
     if args.rom_image is not None:
         ROM.ROM_IMAGE_PATH = args.rom_image
+    if len(args.addresses) == 0:
+        args.addresses = [".C3:9fd0"]
 
     for addr in args.addresses:
         SbString(IdaAddr(addr)).print()

@@ -27,11 +27,11 @@
 !Key8_Y         = $40
 !Key8_B         = $80
 
-!UpdateHud_Text = $01
-!UpdateHud_Exp = $02
-!UpdateHud_Health = $04
-!UpdateHud_Level = $08
-!UpdateHud_Gold = $10
+!UpdateHud_Text     = %1
+!UpdateHud_Exp      = %10
+!UpdateHud_Health   = %100
+!UpdateHud_Level    = %1000
+!UpdateHud_Gold     = %10000
 
 !FullBlockSize  = $10
 
@@ -39,6 +39,7 @@
 
 !Entity_Player     = $00
 !Entity_ChiefsWife = $04
+!Entity_ShopOwner  = $05
 !Entity_MillKeeper = $08
 
 !Row_Width = $40

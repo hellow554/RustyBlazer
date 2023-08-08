@@ -217,11 +217,19 @@ save_entries = $700000
 DMA_channel_enable_bits = $42
 map_number = $314
 map_sub_number = $316
+sceneId = $318
 buttons_pressed = $322
 button_mask = $326
+; this is set to $80 if you want to display the enemy health, it's getting
+; decremented until it's 0 and the code will make it disappear again
+displayEnemeyHealthCounter = $330
 display_hud_bitfield = $332
 %Position(PlayerPosReal, $374)
 %Position(PlayerPosInt, $378)
+; the X, Y and facing after the next teleportation event
+%Position(TeleportPos, $37C)
+; the facing direction after the teleport has happened
+teleport_facing = $380
 entities_lut_base_offset = $3B0
 number_of_choies = $3C6 ; number of choices for the choice box menu
 cursor_counter = $3C8 ; the counter used for the blinking cursor animation
@@ -236,6 +244,8 @@ player_health_restore = $447
 exp_to_give = $449
 player_name8 = $453
 inhibit_buttons_readout = $474
+
+entities_table = $800
 
 Inventory = $1B1E
 struct Inventory Inventory
@@ -263,6 +273,10 @@ player_defense_from_level = $1B76
 %BigDecimal(PlayerExp, $1B78)
 %BigDecimal(ExpNeededForNextLevel, $1B7C)
 
+
+game_state = $1A5E
+lair_sealed_table = $1ADE
+
 player_souls = $1B82
 text_speed = $1B84
 player_level = $1B86
@@ -273,23 +287,10 @@ player_total_defense = $1B8E
 player_name = $1B92
 current_map_number = $1C6A
 
-entities_table = $800
+
 
 L3_Text = $7F7000
 
-sceneId = $318
-; this is set to $80 if you want to display the enemy health, it's getting
-; decremented until it's 0 and the code will make it disappear again
-displayEnemeyHealthCounter = $330
-
-; the X, Y and facing after the next teleportation event
-teleport_x      = $37C
-teleport_y      = $37E
-; the facing direction after the teleport has happened
-teleport_facing = $380
-
-game_state = $1A5E
-lair_sealed_table = $1ADE
 
 ; for each tile on the map, this is where the
 ; information stored whether it's passable or not
