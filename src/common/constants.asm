@@ -48,3 +48,11 @@
 !Facing_Up      = $01
 !Facing_Left    = $02
 !Facing_Right   = $03
+
+!WORDLUT_ENTRY_SIZE = 12
+
+!BGM_BG1 = %1
+!BGM_BG2 = %10
+!BGM_BG3 = %100
+!BGM_BG4 = %1000
+!BGM_Obj = %10000

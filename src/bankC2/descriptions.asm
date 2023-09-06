@@ -47,7 +47,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+0
 ; SETPOS $8A 5
-; "Ein Schwert vom" NEWLINE NEWLINE
+; "Ein Schwert vom\n\n" NO_NEWLINE
 ; "Meister." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+0
@@ -70,7 +70,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+1
 ; SETPOS $8A 5
-; "Lähmung für" NEWLINE NEWLINE
+; "Lähmung für\n\n" NO_NEWLINE
 ; "starke Monster." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+2
@@ -93,7 +93,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+2
 ; SETPOS $8A 5
-; "Besiegt die Monster" NEWLINE NEWLINE
+; "Besiegt die Monster\n\n" NO_NEWLINE
 ; "mit einem Schlag." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+4
@@ -117,7 +117,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+3
 ; SETPOS $8A 5
-; "Größere Chancen" NEWLINE NEWLINE
+; "Größere Chancen\n\n" NO_NEWLINE
 ; "JWL zu finden" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+6
@@ -140,7 +140,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+4
 ; SETPOS $8A 5
-; "Schlägt die Monster " NEWLINE NEWLINE
+; "Schlägt die Monster \n\n" NO_NEWLINE
 ; "mit spezieller Rüstung" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+8
@@ -163,7 +163,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+5
 ; SETPOS $8A 5
-; "Schlägt die <Geister>" NEWLINE NEWLINE
+; "Schlägt die <Geister>\n\n" NO_NEWLINE
 ; "Monster." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+10
@@ -186,7 +186,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+6
 ; SETPOS $8A 5
-; "Die HP werden nach dem" NEWLINE NEWLINE
+; "Die HP werden nach dem\n\n" NO_NEWLINE
 ; "Sieg wieder aufgefüllt" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+12
@@ -209,7 +209,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $26 ItemStrenghTable+7
 ; SETPOS $8A 5
-; "Das stärkste Schwert," NEWLINE NEWLINE
+; "Das stärkste Schwert,\n\n" NO_NEWLINE
 ; "das Du benutzen kannst" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+14
@@ -230,7 +230,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+0
 ; SETPOS $8A 5
-; "Deine Abwehrkräfte" NEWLINE NEWLINE
+; "Deine Abwehrkräfte\n\n" NO_NEWLINE
 ; "werden stärker." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+16
@@ -249,7 +249,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+1
 ; SETPOS $8A 5
-; "Du kannst ohne Gefahr" NEWLINE NEWLINE
+; "Du kannst ohne Gefahr\n\n" NO_NEWLINE
 ; "Feuer überqueren." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+18
@@ -268,7 +268,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+2
 ; SETPOS $8A 5
-; "Ermöglicht es Dir," NEWLINE NEWLINE
+; "Ermöglicht es Dir,\n\n" NO_NEWLINE
 ; "unter Wasser zu laufen" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+20
@@ -287,7 +287,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+3
 ; SETPOS $8A 5
-; "Verringert die notwen-" NEWLINE NEWLINE
+; "Verringert die notwen-\n\n" NO_NEWLINE
 ; "digen Juwelen um 1/2." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+22
@@ -306,7 +306,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+4
 ; SETPOS $8A 5
-; "Unbesiegbar für einen" NEWLINE NEWLINE
+; "Unbesiegbar für einen\n\n" NO_NEWLINE
 ; "längeren Zeitabstand." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+24
@@ -325,7 +325,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+5
 ; SETPOS $8A 5
-; "Schwache Monster sind" NEWLINE NEWLINE
+; "Schwache Monster sind\n\n" NO_NEWLINE
 ; "keine Gefahr mehr." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+26
@@ -344,7 +344,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+6
 ; SETPOS $8A 5
-; "Beschützt Dich vor den" NEWLINE NEWLINE
+; "Beschützt Dich vor den\n\n" NO_NEWLINE
 ; "Gefahren zonen" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+28
@@ -363,7 +363,7 @@ db $00
 ; SETPOS $1E 5
 ; REPEAT $27 ItemDefenseTable+7
 ; SETPOS $8A 5
-; "Ermöglicht es Dir,Dich" NEWLINE NEWLINE
+; "Ermöglicht es Dir,Dich\n\n" NO_NEWLINE
 ; "im Weltall zu bewegen." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+30
@@ -380,8 +380,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+32
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 4" NEWLINE NEWLINE
-; "Schießt einen Feuer-" NEWLINE NEWLINE
+; "Notwendige JUWELEN : 4\n\n" NO_NEWLINE
+; "Schießt einen Feuer-\n\n" NO_NEWLINE
 ; "ball in eine Richtung." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+32
@@ -397,8 +397,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+34
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 8" NEWLINE NEWLINE
-; "Schießt einen Licht " NEWLINE NEWLINE
+; "Notwendige JUWELEN : 8\n\n" NO_NEWLINE
+; "Schießt einen Licht \n\n" NO_NEWLINE
 ; "Pfeil in eine Richtung" NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+34
@@ -414,8 +414,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+36
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 8" NEWLINE NEWLINE
-; "Die Kraft wird durch " NEWLINE NEWLINE
+; "Notwendige JUWELEN : 8\n\n" NO_NEWLINE
+; "Die Kraft wird durch \n\n" NO_NEWLINE
 ; "Knopfdruck gesammelt." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+36
@@ -431,8 +431,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+38
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 1" NEWLINE NEWLINE
-; "Ein Ring aus Licht " NEWLINE NEWLINE
+; "Notwendige JUWELEN : 1\n\n" NO_NEWLINE
+; "Ein Ring aus Licht \n\n" NO_NEWLINE
 ; "wird Dich umkreisen." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+38
@@ -448,8 +448,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+40
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 8" NEWLINE NEWLINE
-; "Abgelegte Minen werden" NEWLINE NEWLINE
+; "Notwendige JUWELEN : 8\n\n" NO_NEWLINE
+; "Abgelegte Minen werden\n\n" NO_NEWLINE
 ; "explodieren." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+40
@@ -465,8 +465,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+42
 ; SETPOS $A 5
-; "Notwendige JUWELEN :20" NEWLINE NEWLINE
-; "Säulen aus Feuer" NEWLINE NEWLINE
+; "Notwendige JUWELEN :20\n\n" NO_NEWLINE
+; "Säulen aus Feuer\n\n" NO_NEWLINE
 ; "erheben sich um Dich." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+42
@@ -482,8 +482,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+44
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 8" NEWLINE NEWLINE
-; "Ein magischer Tornado " NEWLINE NEWLINE
+; "Notwendige JUWELEN : 8\n\n" NO_NEWLINE
+; "Ein magischer Tornado \n\n" NO_NEWLINE
 ; "wird erscheinen." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+44
@@ -499,8 +499,8 @@ db $00
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+46
 ; SETPOS $A 5
-; "Notwendige JUWELEN : 2" NEWLINE NEWLINE
-; "Der Phönix wird Dich " NEWLINE NEWLINE
+; "Notwendige JUWELEN : 2\n\n" NO_NEWLINE
+; "Der Phönix wird Dich \n\n" NO_NEWLINE
 ; "begleiten." NO_NEWLINE
 db $01,$8A,$04
 db $05 : dw AllItemsTable,SequenceTable+46

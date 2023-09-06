@@ -6153,23 +6153,23 @@ macro CreateLut(...)
 
     while !idx < sizeof(...)
         db "<...[!idx]>"
-        pad $C6C000+(!idx+1)*12
+        pad $C6C000+(!idx+1)*!WORDLUT_ENTRY_SIZE
         !idx #= !idx+1
     endwhile
 endmacro
 
 Words_LUT:
     %CreateLut( \
-        "Aber", "Bitte", "B*sen", "Du", "Dir", "Dich", "Deathtoll", "Die", \
-        "Der", "Dies", "Das", "Enblem", "Es", "GreenWood", "Heilkr{uter", \
-        "Ich", "Juwelen", "K*nig", "K*nigin", "Leo", "Lisa", "Monster", \
-        "M*chtest", "Menschen", "Mein", "Magridd", "Magie", "Notwendige", \
-        "Phoenix", "R[stung", "Schlo%", "Sie", "Stimme", "Schl[ssel", \
+        "Aber", "Bitte", "Bösen", "Du", "Dir", "Dich", "Deathtoll", "Die", \
+        "Der", "Dies", "Das", "Enblem", "Es", "GreenWood", "Heilkräuter", \
+        "Ich", "Juwelen", "König", "Königin", "Leo", "Lisa", "Monster", \
+        "Möchtest", "Menschen", "Mein", "Magridd", "Magie", "Notwendige", \
+        "Phoenix", "Rüstung", "Schloß", "Sie", "Stimme", "Schlüssel", \
         "Stein", "Schwert", "Traumstab", "Traum", "Tages", "Vielleicht", \
         "Wenn", "Welt", "Wir", "aber", "auf", "aus", "alle", "als", "auch", \
         "bin", "bitte", "bewache", "bist", "die", "der", "den", "des", "das", \
-        "da%", "dem", "diese", "dieser", "ein", "eine", "einen", "erhielt", \
-        "etwas", "es", "einmal", "eines", "einer", "einem", "er", "f[r", \
+        "daß", "dem", "diese", "dieser", "ein", "eine", "einen", "erhielt", \
+        "etwas", "es", "einmal", "eines", "einer", "einem", "er", "für", \
         "freigelassen", "gibt", "habe", "hast", "hier", "hat", "haben", \
         "ich", "ist", "in", "immer", "im", "jetzt", "kann", "keine", \
         "mich", "mit", "mir", "meine", "meinem", "meiner", "nicht", \
@@ -6178,6 +6178,7 @@ Words_LUT:
         "vielleicht", "vom", "werde", "wenn", "wieder", "werden", "wie", \
         "wird", "wurde", "was", "wirst", "welche", "war", "zu", "zum", \
         "zusammen")
+Words_LUT_END:
 
 db $00,$00,$00,$00,$00,$00,$00,$00   ;C6C600|        |      ;
 db $00,$00,$00,$00,$00,$00,$00,$00   ;C6C608|        |      ;

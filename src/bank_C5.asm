@@ -7139,7 +7139,7 @@ JSR.W CODE_C5C6A0                    ;C5C57C|20A0C6  |C5C6A0;
 JSL.L wait_vblank                    ;C5C57F|22B7B182|82B1B7;
 JSL.L wait_vblank                    ;C5C583|22B7B182|82B1B7;
 LDA.B #$FF                           ;C5C587|A9FF    |      ;
-STA.W $2140                          ;C5C589|8D4021  |812140;
+STA.W APUI00                          ;C5C589|8D4021  |812140;
 LDX.W #$0000                         ;C5C58C|A20000  |      ;
 STX.B $29                            ;C5C58F|8629    |000029;
 LDA.B #$C1                           ;C5C591|A9C1    |      ;
@@ -7163,14 +7163,14 @@ SEP #$20                             ;C5C5B3|E220    |      ;
 JSL.L wait_vblank                    ;C5C5B5|22B7B182|82B1B7;
 JSL.L wait_vblank                    ;C5C5B9|22B7B182|82B1B7;
 LDA.B #$FF                           ;C5C5BD|A9FF    |      ;
-STA.W $2140                          ;C5C5BF|8D4021  |812140;
+STA.W APUI00                          ;C5C5BF|8D4021  |812140;
 LDA.B #$CC                           ;C5C5C2|A9CC    |      ;
 STA.B $04                            ;C5C5C4|8504    |000004;
 REP #$20                             ;C5C5C6|C220    |      ;
 LDA.W #$BBAA                         ;C5C5C8|A9AABB  |      ;
 
 CODE_C5C5CB:
-CMP.W $2140                          ;C5C5CB|CD4021  |812140;
+CMP.W APUI00                          ;C5C5CB|CD4021  |812140;
 BNE CODE_C5C5CB                      ;C5C5CE|D0FB    |C5C5CB;
 LDA.B [$29],Y                        ;C5C5D0|B729    |000029;
 INY                                  ;C5C5D2|C8      |      ;
@@ -7248,19 +7248,19 @@ CODE_C5C649:
 XBA                                  ;C5C649|EB      |      ;
 
 CODE_C5C64A:
-CMP.W $2140                          ;C5C64A|CD4021  |812140;
+CMP.W APUI00                          ;C5C64A|CD4021  |812140;
 BNE CODE_C5C64A                      ;C5C64D|D0FB    |C5C64A;
 INC A                                ;C5C64F|1A      |      ;
 
 CODE_C5C650:
 REP #$20                             ;C5C650|C220    |      ;
-STA.W $2140                          ;C5C652|8D4021  |812140;
+STA.W APUI00                          ;C5C652|8D4021  |812140;
 SEP #$20                             ;C5C655|E220    |      ;
 DEX                                  ;C5C657|CA      |      ;
 BNE CODE_C5C63E                      ;C5C658|D0E4    |C5C63E;
 
 CODE_C5C65A:
-CMP.W $2140                          ;C5C65A|CD4021  |812140;
+CMP.W APUI00                          ;C5C65A|CD4021  |812140;
 BNE CODE_C5C65A                      ;C5C65D|D0FB    |C5C65A;
 
 CODE_C5C65F:
@@ -7281,24 +7281,24 @@ REP #$20                             ;C5C671|C220    |      ;
 LDA.B $00                            ;C5C673|A500    |000000;
 TAX                                  ;C5C675|AA      |      ;
 LDA.B $02                            ;C5C676|A502    |000002;
-STA.W $2142                          ;C5C678|8D4221  |812142;
+STA.W APUI02                          ;C5C678|8D4221  |812142;
 SEP #$20                             ;C5C67B|E220    |      ;
 CPX.W #$0001                         ;C5C67D|E00100  |      ;
 LDA.B #$00                           ;C5C680|A900    |      ;
 ROL A                                ;C5C682|2A      |      ;
-STA.W $2141                          ;C5C683|8D4121  |812141;
+STA.W APUI01                          ;C5C683|8D4121  |812141;
 ADC.B #$7F                           ;C5C686|697F    |      ;
 PLA                                  ;C5C688|68      |      ;
-STA.W $2140                          ;C5C689|8D4021  |812140;
+STA.W APUI00                          ;C5C689|8D4021  |812140;
 
 CODE_C5C68C:
-CMP.W $2140                          ;C5C68C|CD4021  |812140;
+CMP.W APUI00                          ;C5C68C|CD4021  |812140;
 BNE CODE_C5C68C                      ;C5C68F|D0FB    |C5C68C;
 BVS CODE_C5C62F                      ;C5C691|709C    |C5C62F;
 LDA.B #$7E                           ;C5C693|A97E    |      ;
 STA.B $2E                            ;C5C695|852E    |00002E;
-STZ.W $2142                          ;C5C697|9C4221  |812142;
-STZ.W $2143                          ;C5C69A|9C4321  |812143;
+STZ.W APUI02                          ;C5C697|9C4221  |812142;
+STZ.W APUI03                          ;C5C69A|9C4321  |812143;
 PLY                                  ;C5C69D|7A      |      ;
 PLP                                  ;C5C69E|28      |      ;
 RTL                                  ;C5C69F|6B      |      ;
@@ -7311,7 +7311,7 @@ LDY.W #$0000                         ;C5C6A4|A00000  |      ;
 LDA.W #$BBAA                         ;C5C6A7|A9AABB  |      ;
 
 CODE_C5C6AA:
-CMP.W $2140                          ;C5C6AA|CD4021  |812140;
+CMP.W APUI00                          ;C5C6AA|CD4021  |812140;
 BNE CODE_C5C6AA                      ;C5C6AD|D0FB    |C5C6AA;
 SEP #$20                             ;C5C6AF|E220    |      ;
 LDA.B #$CC                           ;C5C6B1|A9CC    |      ;
@@ -7331,19 +7331,19 @@ INY                                  ;C5C6C0|C8      |      ;
 XBA                                  ;C5C6C1|EB      |      ;
 
 CODE_C5C6C2:
-CMP.W $2140                          ;C5C6C2|CD4021  |812140;
+CMP.W APUI00                          ;C5C6C2|CD4021  |812140;
 BNE CODE_C5C6C2                      ;C5C6C5|D0FB    |C5C6C2;
 INC A                                ;C5C6C7|1A      |      ;
 
 CODE_C5C6C8:
 REP #$20                             ;C5C6C8|C220    |      ;
-STA.W $2140                          ;C5C6CA|8D4021  |812140;
+STA.W APUI00                          ;C5C6CA|8D4021  |812140;
 SEP #$20                             ;C5C6CD|E220    |      ;
 DEX                                  ;C5C6CF|CA      |      ;
 BNE CODE_C5C6BD                      ;C5C6D0|D0EB    |C5C6BD;
 
 CODE_C5C6D2:
-CMP.W $2140                          ;C5C6D2|CD4021  |812140;
+CMP.W APUI00                          ;C5C6D2|CD4021  |812140;
 BNE CODE_C5C6D2                      ;C5C6D5|D0FB    |C5C6D2;
 
 CODE_C5C6D7:
@@ -7360,22 +7360,22 @@ TAX                                  ;C5C6E2|AA      |      ;
 LDA.B [$29],Y                        ;C5C6E3|B729    |000029;
 INY                                  ;C5C6E5|C8      |      ;
 INY                                  ;C5C6E6|C8      |      ;
-STA.W $2142                          ;C5C6E7|8D4221  |812142;
+STA.W APUI02                          ;C5C6E7|8D4221  |812142;
 SEP #$20                             ;C5C6EA|E220    |      ;
 CPX.W #$0001                         ;C5C6EC|E00100  |      ;
 LDA.B #$00                           ;C5C6EF|A900    |      ;
 ROL A                                ;C5C6F1|2A      |      ;
-STA.W $2141                          ;C5C6F2|8D4121  |812141;
+STA.W APUI01                          ;C5C6F2|8D4121  |812141;
 ADC.B #$7F                           ;C5C6F5|697F    |      ;
 PLA                                  ;C5C6F7|68      |      ;
-STA.W $2140                          ;C5C6F8|8D4021  |812140;
+STA.W APUI00                          ;C5C6F8|8D4021  |812140;
 
 CODE_C5C6FB:
-CMP.W $2140                          ;C5C6FB|CD4021  |812140;
+CMP.W APUI00                          ;C5C6FB|CD4021  |812140;
 BNE CODE_C5C6FB                      ;C5C6FE|D0FB    |C5C6FB;
 BVS CODE_C5C6B5                      ;C5C700|70B3    |C5C6B5;
-STZ.W $2142                          ;C5C702|9C4221  |812142;
-STZ.W $2143                          ;C5C705|9C4321  |812143;
+STZ.W APUI02                          ;C5C702|9C4221  |812142;
+STZ.W APUI03                          ;C5C705|9C4321  |812143;
 PLX                                  ;C5C708|FA      |      ;
 PLP                                  ;C5C709|28      |      ;
 RTS                                  ;C5C70A|60      |      ;

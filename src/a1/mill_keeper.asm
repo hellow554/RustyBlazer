@@ -10,7 +10,7 @@ A1_script_mill_keeper:
 ; -- this is the walking sequence --
     %CopMakeNpcPassable()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
-    TSB button_mask
+    TSB.W button_mask
     %Cop96()
     %Cop9D($05)
     %Cop9E(+)
@@ -22,7 +22,7 @@ A1_script_mill_keeper:
     %Cop80($0)
     %Cop82()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
-    TRB button_mask
+    TRB.W button_mask
     %CopMakeNpcUnpassable()
 
 .wait_for_player_to_stand_in_front_of_wheel:
@@ -32,14 +32,14 @@ A1_script_mill_keeper:
 
 .player_in_front_of_wheel:
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
-    TSB button_mask
+    TSB.W button_mask
     LDY $039E
     LDA.W #$1
     STA.W $1E, Y
     %CopLoop(3)
     %CopLoopEnd()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
-    TRB button_mask
+    TRB.W button_mask
     %CopShowText(.text_ask_to_turn)
     %CopShowMenu(choice_yes_no, 2, .said_no)
     LDA.L choice_idx

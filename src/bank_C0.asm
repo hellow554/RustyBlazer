@@ -4225,149 +4225,37 @@ incsrc "bankC0/nmi_func.asm"
 
 
 
-CODE_C083F1:
-LDX.W #$0000                         ;C083F1|A20000  |      ;
-STX.W $2102                          ;C083F4|8E0221  |812102;
-STZ.W $4300                          ;C083F7|9C0043  |814300;
-LDA.B #$04                           ;C083FA|A904    |      ;
-STA.W $4301                          ;C083FC|8D0143  |814301;
-LDX.W #$0492                         ;C083FF|A29204  |      ;
-STX.W $4302                          ;C08402|8E0243  |814302;
-LDA.B #$00                           ;C08405|A900    |      ;
-STA.W $4304                          ;C08407|8D0443  |814304;
-LDX.W #$0220                         ;C0840A|A22002  |      ;
-STX.W $4305                          ;C0840D|8E0543  |814305;
-LDA.B #$01                           ;C08410|A901    |      ;
-STA.W $420B                          ;C08412|8D0B42  |81420B;
-RTS                                  ;C08415|60      |      ;
 
-CODE_C08416:
-STZ.W $2121                          ;C08416|9C2121  |812121;
-STZ.W $4310                          ;C08419|9C1043  |814310;
-LDA.B #$22                           ;C0841C|A922    |      ;
-STA.W $4311                          ;C0841E|8D1143  |814311;
-LDX.W #$0000                         ;C08421|A20000  |      ;
-STX.W $4312                          ;C08424|8E1243  |814312;
-LDA.B #$7F                           ;C08427|A97F    |      ;
-STA.W $4314                          ;C08429|8D1443  |814314;
-LDX.W #$0200                         ;C0842C|A20002  |      ;
-STX.W $4315                          ;C0842F|8E1543  |814315;
-LDA.B #$02                           ;C08432|A902    |      ;
-STA.W $420B                          ;C08434|8D0B42  |81420B;
-LDA.L $7F0200                        ;C08437|AF00027F|7F0200;
-STA.W $2132                          ;C0843B|8D3221  |812132;
-LDA.L $7F0201                        ;C0843E|AF01027F|7F0201;
-STA.W $2132                          ;C08442|8D3221  |812132;
-LDA.L $7F0202                        ;C08445|AF02027F|7F0202;
-STA.W $2132                          ;C08449|8D3221  |812132;
-RTS                                  ;C0844C|60      |      ;
 
-CODE_C0844D:
-LDA.W $1C7C                          ;C0844D|AD7C1C  |811C7C;
-BEQ CODE_C08453                      ;C08450|F001    |C08453;
-RTS                                  ;C08452|60      |      ;
 
-CODE_C08453:
-LDA.W $03BA                          ;C08453|ADBA03  |8103BA;
-BNE CODE_C08459                      ;C08456|D001    |C08459;
-RTS                                  ;C08458|60      |      ;
 
-CODE_C08459:
-BIT.B #$02                           ;C08459|8902    |      ;
-BNE CODE_C0846E                      ;C0845B|D011    |C0846E;
-LDX.W #$5800                         ;C0845D|A20058  |      ;
-STX.W $2116                          ;C08460|8E1621  |812116;
-LDX.W #$7000                         ;C08463|A20070  |      ;
-STX.W $4322                          ;C08466|8E2243  |814322;
-STZ.W $03BA                          ;C08469|9CBA03  |8103BA;
-BRA CODE_C0847F                      ;C0846C|8011    |C0847F;
-
-CODE_C0846E:
-LDX.W #$5C00                         ;C0846E|A2005C  |      ;
-STX.W $2116                          ;C08471|8E1621  |812116;
-LDX.W #$7800                         ;C08474|A20078  |      ;
-STX.W $4322                          ;C08477|8E2243  |814322;
-LDA.B #$02                           ;C0847A|A902    |      ;
-TRB.W $03BA                          ;C0847C|1CBA03  |8103BA;
-
-CODE_C0847F:
-LDA.B #$01                           ;C0847F|A901    |      ;
-STA.W $4320                          ;C08481|8D2043  |814320;
-LDA.B #$18                           ;C08484|A918    |      ;
-STA.W $4321                          ;C08486|8D2143  |814321;
-LDA.B #$7F                           ;C08489|A97F    |      ;
-STA.W $4324                          ;C0848B|8D2443  |814324;
-LDX.W #$0800                         ;C0848E|A20008  |      ;
-STX.W $4325                          ;C08491|8E2543  |814325;
-LDA.B #$04                           ;C08494|A904    |      ;
-STA.W $420B                          ;C08496|8D0B42  |81420B;
-RTS                                  ;C08499|60      |      ;
-
-CODE_C0849A:
-LDA.W $0386                          ;C0849A|AD8603  |810386;
-STA.W $2111                          ;C0849D|8D1121  |812111;
-STZ.W $2111                          ;C084A0|9C1121  |812111;
-LDA.W $0388                          ;C084A3|AD8803  |810388;
-STA.W $2112                          ;C084A6|8D1221  |812112;
-STZ.W $2112                          ;C084A9|9C1221  |812112;
-LDA.W $03DD                          ;C084AC|ADDD03  |8103DD;
-BNE CODE_C084C4                      ;C084AF|D013    |C084C4;
-LDX.W #$0000                         ;C084B1|A20000  |      ;
-LDY.W #$0000                         ;C084B4|A00000  |      ;
-JSR.W CODE_C084D7                    ;C084B7|20D784  |C084D7;
-LDX.W #$0004                         ;C084BA|A20400  |      ;
-LDY.W #$0002                         ;C084BD|A00200  |      ;
-JSR.W CODE_C084D7                    ;C084C0|20D784  |C084D7;
-RTS                                  ;C084C3|60      |      ;
-
-CODE_C084C4:
-LDX.W #$0004                         ;C084C4|A20400  |      ;
-LDY.W #$0000                         ;C084C7|A00000  |      ;
-JSR.W CODE_C084D7                    ;C084CA|20D784  |C084D7;
-LDX.W #$0000                         ;C084CD|A20000  |      ;
-LDY.W #$0002                         ;C084D0|A00200  |      ;
-JSR.W CODE_C084D7                    ;C084D3|20D784  |C084D7;
-RTS                                  ;C084D6|60      |      ;
-
-CODE_C084D7:
-LDA.W $033A,X                        ;C084D7|BD3A03  |81033A;
-STA.W $210D,Y                        ;C084DA|990D21  |81210D;
-LDA.W $033B,X                        ;C084DD|BD3B03  |81033B;
-AND.B #$03                           ;C084E0|2903    |      ;
-STA.W $210D,Y                        ;C084E2|990D21  |81210D;
-LDA.W $033C,X                        ;C084E5|BD3C03  |81033C;
-STA.W $210E,Y                        ;C084E8|990E21  |81210E;
-LDA.W $033D,X                        ;C084EB|BD3D03  |81033D;
-AND.B #$03                           ;C084EE|2903    |      ;
-STA.W $210E,Y                        ;C084F0|990E21  |81210E;
-RTS                                  ;C084F3|60      |      ;
 
 CODE_C084F4:
-LDX.W #$3000                         ;C084F4|A20030  |      ;
-STX.B $32                            ;C084F7|8632    |000032;
-LDX.W #$3102                         ;C084F9|A20231  |      ;
-STX.B $35                            ;C084FC|8635    |000035;
-JSL.L CODE_82857D                    ;C084FE|227D8582|82857D;
-LDX.W #$3204                         ;C08502|A20432  |      ;
-STX.B $32                            ;C08505|8632    |000032;
-LDX.W #$3306                         ;C08507|A20633  |      ;
-STX.B $35                            ;C0850A|8635    |000035;
-JSL.L CODE_82857D                    ;C0850C|227D8582|82857D;
-RTS                                  ;C08510|60      |      ;
+    LDX.W #$3000
+    STX.B $32
+    LDX.W #$3102
+    STX.B $35
+    JSL.L CODE_82857D
+    LDX.W #$3204
+    STX.B $32
+    LDX.W #$3306
+    STX.B $35
+    JSL.L CODE_82857D
+    RTS
 
 CODE_C08511:
-LDA.W $03B8                          ;C08511|ADB803  |8103B8;
-BNE CODE_C08517                      ;C08514|D001    |C08517;
-RTS                                  ;C08516|60      |      ;
+    LDA.W $03B8
+    BNE CODE_C08517
+    RTS
 
 CODE_C08517:
-LDA.B #$18                           ;C08517|A918    |      ;
-STA.W $4321                          ;C08519|8D2143  |814321;
+LDA.B #VMDATAL                           ;C08517|A918    |      ;
+STA.W BBAD2                          ;C08519|8D2143  |814321;
 LDA.B #$01                           ;C0851C|A901    |      ;
-STA.W $4320                          ;C0851E|8D2043  |814320;
+STA.W DMAP2                          ;C0851E|8D2043  |814320;
 LDY.W #$0000                         ;C08521|A00000  |      ;
 LDX.W #$2000                         ;C08524|A20020  |      ;
-STX.W $2116                          ;C08527|8E1621  |812116;
+STX.W VMADDL                          ;C08527|8E1621  |812116;
 JSR.W CODE_C08550                    ;C0852A|205085  |C08550;
 LDX.W #$0000                         ;C0852D|A20000  |      ;
 
@@ -4384,7 +4272,7 @@ BRA CODE_C08530                      ;C0853E|80F0    |C08530;
 CODE_C08540:
 LDY.W #$0000                         ;C08540|A00000  |      ;
 LDX.W #$2100                         ;C08543|A20021  |      ;
-STX.W $2116                          ;C08546|8E1621  |812116;
+STX.W VMADDL                          ;C08546|8E1621  |812116;
 JSR.W CODE_C08550                    ;C08549|205085  |C08550;
 STZ.W $03B8                          ;C0854C|9CB803  |8103B8;
 RTS                                  ;C0854F|60      |      ;
@@ -4392,13 +4280,13 @@ RTS                                  ;C0854F|60      |      ;
 CODE_C08550:
 LDX.W $1A06,Y                        ;C08550|BE061A  |811A06;
 BEQ CODE_C0856E                      ;C08553|F019    |C0856E;
-STX.W $4322                          ;C08555|8E2243  |814322;
+STX.W A1T2L                          ;C08555|8E2243  |814322;
 LDA.W $1A08,Y                        ;C08558|B9081A  |811A08;
-STA.W $4324                          ;C0855B|8D2443  |814324;
+STA.W A1B2                          ;C0855B|8D2443  |814324;
 LDX.W #$0040                         ;C0855E|A24000  |      ;
-STX.W $4325                          ;C08561|8E2543  |814325;
+STX.W DAS2L                          ;C08561|8E2543  |814325;
 LDA.B #$04                           ;C08564|A904    |      ;
-STA.W $420B                          ;C08566|8D0B42  |81420B;
+STA.W MDMAEN                          ;C08566|8D0B42  |81420B;
 INY                                  ;C08569|C8      |      ;
 INY                                  ;C0856A|C8      |      ;
 INY                                  ;C0856B|C8      |      ;
@@ -4414,28 +4302,28 @@ RTS                                  ;C08574|60      |      ;
 
 CODE_C08575:
 LDA.B #$01                           ;C08575|A901    |      ;
-STA.W $4320                          ;C08577|8D2043  |814320;
+STA.W DMAP2                          ;C08577|8D2043  |814320;
 LDA.B #$18                           ;C0857A|A918    |      ;
-STA.W $4321                          ;C0857C|8D2143  |814321;
+STA.W BBAD2                          ;C0857C|8D2143  |814321;
 LDX.W $03DF                          ;C0857F|AEDF03  |8103DF;
-STX.W $4322                          ;C08582|8E2243  |814322;
+STX.W A1T2L                          ;C08582|8E2243  |814322;
 LDA.B #$7F                           ;C08585|A97F    |      ;
-STA.W $4324                          ;C08587|8D2443  |814324;
+STA.W A1B2                          ;C08587|8D2443  |814324;
 LDX.W #$0040                         ;C0858A|A24000  |      ;
-STX.W $4325                          ;C0858D|8E2543  |814325;
+STX.W DAS2L                          ;C0858D|8E2543  |814325;
 LDX.W $03E1                          ;C08590|AEE103  |8103E1;
-STX.W $2116                          ;C08593|8E1621  |812116;
+STX.W VMADDL                          ;C08593|8E1621  |812116;
 LDA.B #$04                           ;C08596|A904    |      ;
-STA.W $420B                          ;C08598|8D0B42  |81420B;
+STA.W MDMAEN                          ;C08598|8D0B42  |81420B;
 LDX.W #$0040                         ;C0859B|A24000  |      ;
-STX.W $4325                          ;C0859E|8E2543  |814325;
+STX.W DAS2L                          ;C0859E|8E2543  |814325;
 LDA.W $03E1                          ;C085A1|ADE103  |8103E1;
-STA.W $2116                          ;C085A4|8D1621  |812116;
+STA.W VMADDL                          ;C085A4|8D1621  |812116;
 LDA.W $03E2                          ;C085A7|ADE203  |8103E2;
 INC A                                ;C085AA|1A      |      ;
 STA.W $2117                          ;C085AB|8D1721  |812117;
 LDA.B #$04                           ;C085AE|A904    |      ;
-STA.W $420B                          ;C085B0|8D0B42  |81420B;
+STA.W MDMAEN                          ;C085B0|8D0B42  |81420B;
 STZ.W $03E3                          ;C085B3|9CE303  |8103E3;
 RTS                                  ;C085B6|60      |      ;
 
@@ -4448,7 +4336,7 @@ TCS                                  ;C085BD|1B      |      ;
 CODE_C085BE:
 PLA                                  ;C085BE|68      |      ;
 BEQ CODE_C085CA                      ;C085BF|F009    |C085CA;
-STA.W $2116                          ;C085C1|8D1621  |812116;
+STA.W VMADDL                          ;C085C1|8D1621  |812116;
 PLA                                  ;C085C4|68      |      ;
 STA.W $2118                          ;C085C5|8D1821  |812118;
 BRA CODE_C085BE                      ;C085C8|80F4    |C085BE;
@@ -4493,7 +4381,7 @@ LDA.W $0000,X                        ;C085FF|BD0000  |810000;
 SEC                                  ;C08602|38      |      ;
 SBC.W $0008,X                        ;C08603|FD0800  |810008;
 SEC                                  ;C08606|38      |      ;
-SBC.W $033A                          ;C08607|ED3A03  |81033A;
+SBC.W bg1_hofs                          ;C08607|ED3A03  |81033A;
 CMP.W #$0100                         ;C0860A|C90001  |      ;
 BCC CODE_C08624                      ;C0860D|9015    |C08624;
 BMI CODE_C08614                      ;C0860F|3003    |C08614;
@@ -4504,7 +4392,7 @@ LDA.W $0000,X                        ;C08614|BD0000  |810000;
 CLC                                  ;C08617|18      |      ;
 ADC.W $000C,X                        ;C08618|7D0C00  |81000C;
 SEC                                  ;C0861B|38      |      ;
-SBC.W $033A                          ;C0861C|ED3A03  |81033A;
+SBC.W bg1_hofs                          ;C0861C|ED3A03  |81033A;
 CMP.W #$0100                         ;C0861F|C90001  |      ;
 BCS CODE_C08697                      ;C08622|B073    |C08697;
 
@@ -4513,7 +4401,7 @@ LDA.W $0002,X                        ;C08624|BD0200  |810002;
 SEC                                  ;C08627|38      |      ;
 SBC.W $000A,X                        ;C08628|FD0A00  |81000A;
 SEC                                  ;C0862B|38      |      ;
-SBC.W $033C                          ;C0862C|ED3C03  |81033C;
+SBC.W bg1_vofs                          ;C0862C|ED3C03  |81033C;
 CMP.W #$00E0                         ;C0862F|C9E000  |      ;
 BCC CODE_C08646                      ;C08632|9012    |C08646;
 BPL CODE_C08697                      ;C08634|1061    |C08697;
@@ -4521,7 +4409,7 @@ LDA.W $0002,X                        ;C08636|BD0200  |810002;
 CLC                                  ;C08639|18      |      ;
 ADC.W $000E,X                        ;C0863A|7D0E00  |81000E;
 SEC                                  ;C0863D|38      |      ;
-SBC.W $033C                          ;C0863E|ED3C03  |81033C;
+SBC.W bg1_vofs                          ;C0863E|ED3C03  |81033C;
 CMP.W #$00E0                         ;C08641|C9E000  |      ;
 BCS CODE_C08697                      ;C08644|B051    |C08697;
 
@@ -4542,7 +4430,7 @@ BRA CODE_C08678                      ;C08663|8013    |C08678;
 CODE_C08665:
 LDA.W $0002,X                        ;C08665|BD0200  |810002;
 SEC                                  ;C08668|38      |      ;
-SBC.W $033C                          ;C08669|ED3C03  |81033C;
+SBC.W bg1_vofs                          ;C08669|ED3C03  |81033C;
 CMP.W #$0100                         ;C0866C|C90001  |      ;
 BCC CODE_C08674                      ;C0866F|9003    |C08674;
 
@@ -4581,7 +4469,7 @@ BRL CODE_C085F9                      ;C086A3|8253FF  |C085F9;
 CODE_C086A6:
 LDA.W #$FFFF                         ;C086A6|A9FFFF  |      ;
 STA.W $1900,Y                        ;C086A9|990019  |811900;
-LDA.W #$0492                         ;C086AC|A99204  |      ;
+LDA.W #oam_data                         ;C086AC|A99204  |      ;
 STA.B $02                            ;C086AF|8502    |000002;
 TSC                                  ;C086B1|3B      |      ;
 STA.B $00                            ;C086B2|8500    |000000;
@@ -4659,11 +4547,11 @@ LDA.W #$1A06                         ;C08720|A9061A  |      ;
 STA.B $04                            ;C08723|8504    |000004;
 STZ.W $1A06                          ;C08725|9C061A  |811A06;
 STZ.B $02                            ;C08728|6402    |000002;
-LDA.W $033A                          ;C0872A|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C0872A|AD3A03  |81033A;
 SEC                                  ;C0872D|38      |      ;
 SBC.W #$0010                         ;C0872E|E91000  |      ;
 STA.B $52                            ;C08731|8552    |000052;
-LDA.W $033C                          ;C08733|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C08733|AD3C03  |81033C;
 SEC                                  ;C08736|38      |      ;
 SBC.W #$0010                         ;C08737|E91000  |      ;
 STA.B $54                            ;C0873A|8554    |000054;
@@ -4815,7 +4703,7 @@ CMP.W #$0110                         ;C08819|C91001  |      ;
 BCS CODE_C08856                      ;C0881C|B038    |C08856;
 SBC.W #$000F                         ;C0881E|E90F00  |      ;
 SEP #$20                             ;C08821|E220    |      ;
-STA.W $0492,Y                        ;C08823|999204  |8E0492;
+STA.W oam_data,Y                        ;C08823|999204  |8E0492;
 XBA                                  ;C08826|EB      |      ;
 LSR A                                ;C08827|4A      |      ;
 ROR.B $00                            ;C08828|6600    |000000;
@@ -4854,7 +4742,7 @@ RTS                                  ;C08855|60      |      ;
 
 CODE_C08856:
 LDA.W #$E080                         ;C08856|A980E0  |      ;
-STA.W $0492,Y                        ;C08859|999204  |7E0492;
+STA.W oam_data,Y                        ;C08859|999204  |7E0492;
 BRA CODE_C08849                      ;C0885C|80EB    |C08849;
 
 CODE_C0885E:
@@ -4926,7 +4814,7 @@ CMP.W #$0110                         ;C088D2|C91001  |      ;
 BCS UNREACH_C08917                   ;C088D5|B040    |C08917;
 SBC.W #$000F                         ;C088D7|E90F00  |      ;
 SEP #$20                             ;C088DA|E220    |      ;
-STA.W $0492,Y                        ;C088DC|999204  |8A0492;
+STA.W oam_data,Y                        ;C088DC|999204  |8A0492;
 XBA                                  ;C088DF|EB      |      ;
 LSR A                                ;C088E0|4A      |      ;
 ROR.B $00                            ;C088E1|6600    |000000;
@@ -6380,40 +6268,40 @@ JSL.L CODE_8093D7                    ;C09377|22D79380|8093D7;
 LDA.W $0016,X                        ;C0937B|BD1600  |810016;
 BIT.W #$0080                         ;C0937E|898000  |      ;
 BEQ CODE_C09351                      ;C09381|F0CE    |C09351;
-LDA.W $037C                          ;C09383|AD7C03  |81037C;
-ORA.W $037E                          ;C09386|0D7E03  |81037E;
+LDA.W TeleportPos.x                          ;C09383|AD7C03  |81037C;
+ORA.W TeleportPos.y                          ;C09386|0D7E03  |81037E;
 BEQ CODE_C093C5                      ;C09389|F03A    |C093C5;
-LDA.W $037C                          ;C0938B|AD7C03  |81037C;
+LDA.W TeleportPos.x                          ;C0938B|AD7C03  |81037C;
 STA.W $0000,X                        ;C0938E|9D0000  |810000;
-LDA.W $037E                          ;C09391|AD7E03  |81037E;
+LDA.W TeleportPos.y                          ;C09391|AD7E03  |81037E;
 CLC                                  ;C09394|18      |      ;
 ADC.W #$0010                         ;C09395|691000  |      ;
 STA.W $0002,X                        ;C09398|9D0200  |810002;
-LDA.W $0380                          ;C0939B|AD8003  |810380;
+LDA.W TeleportPos.facing                          ;C0939B|AD8003  |810380;
 STA.W $001E,X                        ;C0939E|9D1E00  |81001E;
 STZ.W $0020,X                        ;C093A1|9E2000  |810020;
 JSL.L CODE_80891F                    ;C093A4|221F8980|80891F;
 STZ.W $0014,X                        ;C093A8|9E1400  |810014;
-LDA.W $037C                          ;C093AB|AD7C03  |81037C;
-STZ.W $037C                          ;C093AE|9C7C03  |81037C;
+LDA.W TeleportPos.x                          ;C093AB|AD7C03  |81037C;
+STZ.W TeleportPos.x                          ;C093AE|9C7C03  |81037C;
 LSR A                                ;C093B1|4A      |      ;
 LSR A                                ;C093B2|4A      |      ;
 LSR A                                ;C093B3|4A      |      ;
 LSR A                                ;C093B4|4A      |      ;
-STA.W $0378                          ;C093B5|8D7803  |810378;
-LDA.W $037E                          ;C093B8|AD7E03  |81037E;
-STZ.W $037E                          ;C093BB|9C7E03  |81037E;
+STA.W PlayerPosInt.x                          ;C093B5|8D7803  |810378;
+LDA.W TeleportPos.y                          ;C093B8|AD7E03  |81037E;
+STZ.W TeleportPos.y                          ;C093BB|9C7E03  |81037E;
 LSR A                                ;C093BE|4A      |      ;
 LSR A                                ;C093BF|4A      |      ;
 LSR A                                ;C093C0|4A      |      ;
 LSR A                                ;C093C1|4A      |      ;
-STA.W $037A                          ;C093C2|8D7A03  |81037A;
+STA.W PlayerPosInt.y                          ;C093C2|8D7A03  |81037A;
 
 CODE_C093C5:
 LDA.W $0000,X                        ;C093C5|BD0000  |810000;
-STA.W $0374                          ;C093C8|8D7403  |810374;
+STA.W PlayerPosReal.x                          ;C093C8|8D7403  |810374;
 LDA.W $0002,X                        ;C093CB|BD0200  |810002;
-STA.W $0376                          ;C093CE|8D7603  |810376;
+STA.W PlayerPosReal.y                          ;C093CE|8D7603  |810376;
 STX.W $039E                          ;C093D1|8E9E03  |81039E;
 BRL CODE_C09351                      ;C093D4|827AFF  |C09351;
 TXY                                  ;C093D7|9B      |      ;
@@ -6585,7 +6473,7 @@ BNE CODE_C0955B                      ;C0954E|D00B    |C0955B;
 CODE_C09550:
 LDY.W $039E                          ;C09550|AC9E03  |81039E;
 LDA.W #$C000                         ;C09553|A900C0  |      ;
-TRB.W $0322                          ;C09556|1C2203  |810322;
+TRB.W buttons_pressed                          ;C09556|1C2203  |810322;
 BRA CODE_C0958B                      ;C09559|8030    |C0958B;
 
 CODE_C0955B:
@@ -6608,7 +6496,7 @@ SEC                                  ;C0957A|38      |      ;
 SBC.W #$0014                         ;C0957B|E91400  |      ;
 CMP.W #$0010                         ;C0957E|C91000  |      ;
 BCC CODE_C095A3                      ;C09581|9020    |C095A3;
-LDA.W $0322                          ;C09583|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09583|AD2203  |810322;
 AND.W #$8000                         ;C09586|290080  |      ;
 BNE CODE_C095A4                      ;C09589|D019    |C095A4;
 
@@ -6622,7 +6510,7 @@ ASL A                                ;C09597|0A      |      ;
 TAX                                  ;C09598|AA      |      ;
 LDA.L UNREACH_8095B4,X               ;C09599|BFB49580|8095B4;
 PLX                                  ;C0959D|FA      |      ;
-AND.W $0322                          ;C0959E|2D2203  |810322;
+AND.W buttons_pressed                          ;C0959E|2D2203  |810322;
 BEQ CODE_C095A4                      ;C095A1|F001    |C095A4;
 
 CODE_C095A3:
@@ -6706,20 +6594,20 @@ CODE_C09683:
 STZ.W $03D6                          ;C09683|9CD603  |8103D6;
 STZ.W $03D8                          ;C09686|9CD803  |8103D8;
 LDA.W $0000,X                        ;C09689|BD0000  |810000;
-STA.W $0374                          ;C0968C|8D7403  |810374;
+STA.W PlayerPosReal.x                          ;C0968C|8D7403  |810374;
 LSR A                                ;C0968F|4A      |      ;
 LSR A                                ;C09690|4A      |      ;
 LSR A                                ;C09691|4A      |      ;
 LSR A                                ;C09692|4A      |      ;
-STA.W $0378                          ;C09693|8D7803  |810378;
+STA.W PlayerPosInt.x                          ;C09693|8D7803  |810378;
 LDA.W $0002,X                        ;C09696|BD0200  |810002;
-STA.W $0376                          ;C09699|8D7603  |810376;
+STA.W PlayerPosReal.y                          ;C09699|8D7603  |810376;
 LSR A                                ;C0969C|4A      |      ;
 LSR A                                ;C0969D|4A      |      ;
 LSR A                                ;C0969E|4A      |      ;
 LSR A                                ;C0969F|4A      |      ;
 DEC A                                ;C096A0|3A      |      ;
-STA.W $037A                          ;C096A1|8D7A03  |81037A;
+STA.W PlayerPosInt.y                          ;C096A1|8D7A03  |81037A;
 LDY.W $03A0                          ;C096A4|ACA003  |8103A0;
 LDA.W $0000,X                        ;C096A7|BD0000  |810000;
 STA.W $0000,Y                        ;C096AA|990000  |810000;
@@ -6738,20 +6626,20 @@ RTL                                  ;C096C7|6B      |      ;
 
 CODE_C096C8:
 LDA.W $0000,X                        ;C096C8|BD0000  |810000;
-STA.W $0374                          ;C096CB|8D7403  |810374;
+STA.W PlayerPosReal.x                          ;C096CB|8D7403  |810374;
 LSR A                                ;C096CE|4A      |      ;
 LSR A                                ;C096CF|4A      |      ;
 LSR A                                ;C096D0|4A      |      ;
 LSR A                                ;C096D1|4A      |      ;
-STA.W $0378                          ;C096D2|8D7803  |810378;
+STA.W PlayerPosInt.x                          ;C096D2|8D7803  |810378;
 LDA.W $0002,X                        ;C096D5|BD0200  |810002;
-STA.W $0376                          ;C096D8|8D7603  |810376;
+STA.W PlayerPosReal.y                          ;C096D8|8D7603  |810376;
 LSR A                                ;C096DB|4A      |      ;
 LSR A                                ;C096DC|4A      |      ;
 LSR A                                ;C096DD|4A      |      ;
 LSR A                                ;C096DE|4A      |      ;
 DEC A                                ;C096DF|3A      |      ;
-STA.W $037A                          ;C096E0|8D7A03  |81037A;
+STA.W PlayerPosInt.y                          ;C096E0|8D7A03  |81037A;
 CLC                                  ;C096E3|18      |      ;
 LDY.W $03DA                          ;C096E4|ACDA03  |8103DA;
 BNE CODE_C096EA                      ;C096E7|D001    |C096EA;
@@ -6791,13 +6679,13 @@ BEQ CODE_C09751                      ;C09713|F03C    |C09751;
 LDA.B $16                            ;C09715|A516    |000016;
 CMP.W $0000,Y                        ;C09717|D90000  |830000;
 BCC CODE_C09745                      ;C0971A|9029    |C09745;
-LDA.W $0378                          ;C0971C|AD7803  |830378;
+LDA.W PlayerPosInt.x                          ;C0971C|AD7803  |830378;
 CMP.W $0001,Y                        ;C0971F|D90100  |830001;
 BCS CODE_C09745                      ;C09722|B021    |C09745;
 LDA.B $18                            ;C09724|A518    |000018;
 CMP.W $0002,Y                        ;C09726|D90200  |830002;
 BCC CODE_C09745                      ;C09729|901A    |C09745;
-LDA.W $037A                          ;C0972B|AD7A03  |83037A;
+LDA.W PlayerPosInt.y                          ;C0972B|AD7A03  |83037A;
 CMP.W $0003,Y                        ;C0972E|D90300  |830003;
 BCS CODE_C09745                      ;C09731|B012    |C09745;
 REP #$20                             ;C09733|C220    |      ;
@@ -6856,7 +6744,7 @@ BRL CODE_C0986A                      ;C0977C|82EB00  |C0986A;
 db $60                               ;C0977F|        |      ;
 
 CODE_C09780:
-LDA.W $0322                          ;C09780|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09780|AD2203  |810322;
 BIT.W #$0800                         ;C09783|890008  |      ;
 BNE CODE_C09789                      ;C09786|D001    |C09789;
 RTS                                  ;C09788|60      |      ;
@@ -6900,7 +6788,7 @@ STA.W $0000,X                        ;C097C9|9D0000  |810000;
 RTS                                  ;C097CC|60      |      ;
 
 CODE_C097CD:
-LDA.W $0322                          ;C097CD|AD2203  |810322;
+LDA.W buttons_pressed                          ;C097CD|AD2203  |810322;
 BIT.W #$0400                         ;C097D0|890004  |      ;
 BNE CODE_C097D6                      ;C097D3|D001    |C097D6;
 RTS                                  ;C097D5|60      |      ;
@@ -6942,7 +6830,7 @@ STA.W $0000,X                        ;C09812|9D0000  |810000;
 RTS                                  ;C09815|60      |      ;
 
 CODE_C09816:
-LDA.W $0322                          ;C09816|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09816|AD2203  |810322;
 BIT.W #$0100                         ;C09819|890001  |      ;
 BNE CODE_C0981F                      ;C0981C|D001    |C0981F;
 RTS                                  ;C0981E|60      |      ;
@@ -6989,7 +6877,7 @@ STA.W $0002,X                        ;C09866|9D0200  |810002;
 RTS                                  ;C09869|60      |      ;
 
 CODE_C0986A:
-LDA.W $0322                          ;C0986A|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0986A|AD2203  |810322;
 BIT.W #$0200                         ;C0986D|890002  |      ;
 BNE CODE_C09873                      ;C09870|D001    |C09873;
 RTS                                  ;C09872|60      |      ;
@@ -7215,7 +7103,7 @@ RTS                                  ;C099CF|60      |      ;
 
 CODE_C099D0:
 COP #$91                             ;C099D0|0291    |      ;
-LDA.W $0380                          ;C099D2|AD8003  |810380;
+LDA.W TeleportPos.facing                          ;C099D2|AD8003  |810380;
 BEQ CODE_C099D8                      ;C099D5|F001    |C099D8;
 RTL                                  ;C099D7|6B      |      ;
 
@@ -7326,7 +7214,7 @@ LDA.W Equipment.sword                          ;C09AA1|AD5E1B  |811B5E;
 BNE CODE_C09AF9                      ;C09AA4|D053    |C09AF9;
 
 CODE_C09AA6:
-LDA.W $0322                          ;C09AA6|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09AA6|AD2203  |810322;
 BIT.W #$0030                         ;C09AA9|893000  |      ;
 BNE CODE_C09ACA                      ;C09AAC|D01C    |C09ACA;
 EOR.W #$FFFF                         ;C09AAE|49FFFF  |      ;
@@ -7359,7 +7247,7 @@ ADC.W $001E,X                        ;C09AD0|7D1E00  |81001E;
 ASL A                                ;C09AD3|0A      |      ;
 ASL A                                ;C09AD4|0A      |      ;
 TAX                                  ;C09AD5|AA      |      ;
-LDA.W $0322                          ;C09AD6|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09AD6|AD2203  |810322;
 INX                                  ;C09AD9|E8      |      ;
 INX                                  ;C09ADA|E8      |      ;
 XBA                                  ;C09ADB|EB      |      ;
@@ -7389,7 +7277,7 @@ CLC                                  ;C09AF7|18      |      ;
 RTS                                  ;C09AF8|60      |      ;
 
 CODE_C09AF9:
-LDA.W $0322                          ;C09AF9|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09AF9|AD2203  |810322;
 BIT.W #$8030                         ;C09AFC|893080  |      ;
 BNE CODE_C09B1A                      ;C09AFF|D019    |C09B1A;
 XBA                                  ;C09B01|EB      |      ;
@@ -7421,7 +7309,7 @@ ADC.W $001E,X                        ;C09B20|7D1E00  |81001E;
 ASL A                                ;C09B23|0A      |      ;
 ASL A                                ;C09B24|0A      |      ;
 TAX                                  ;C09B25|AA      |      ;
-LDA.W $0322                          ;C09B26|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09B26|AD2203  |810322;
 BIT.W #$8000                         ;C09B29|890080  |      ;
 BNE CODE_C09B45                      ;C09B2C|D017    |C09B45;
 INX                                  ;C09B2E|E8      |      ;
@@ -7446,7 +7334,7 @@ INX                                  ;C09B44|E8      |      ;
 
 CODE_C09B45:
 CLC                                  ;C09B45|18      |      ;
-LDA.W $0322                          ;C09B46|AD2203  |810322;
+LDA.W buttons_pressed                          ;C09B46|AD2203  |810322;
 BIT.W #$0030                         ;C09B49|893000  |      ;
 BNE CODE_C09B4F                      ;C09B4C|D001    |C09B4F;
 SEC                                  ;C09B4E|38      |      ;
@@ -7893,7 +7781,7 @@ BCC CODE_C0A066                      ;C0A061|9003    |C0A066;
 BRL CODE_C0A134                      ;C0A063|82CE00  |C0A134;
 
 CODE_C0A066:
-LDA.W $0322                          ;C0A066|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0A066|AD2203  |810322;
 LDY.W #$0002                         ;C0A069|A00200  |      ;
 BIT.W #$0100                         ;C0A06C|890001  |      ;
 BNE CODE_C0A07C                      ;C0A06F|D00B    |C0A07C;
@@ -7914,7 +7802,7 @@ LDY.W #$0000                         ;C0A08E|A00000  |      ;
 
 CODE_C0A091:
 STY.B $18                            ;C0A091|8418    |000018;
-LDA.W $0374                          ;C0A093|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C0A093|AD7403  |810374;
 SEC                                  ;C0A096|38      |      ;
 SBC.W $0000,X                        ;C0A097|FD0000  |810000;
 BEQ CODE_C0A0B6                      ;C0A09A|F01A    |C0A0B6;
@@ -7939,7 +7827,7 @@ CLC                                  ;C0A0B9|18      |      ;
 ADC.B $16                            ;C0A0BA|6516    |000016;
 STA.W $0000,X                        ;C0A0BC|9D0000  |810000;
 STA.B $16                            ;C0A0BF|8516    |000016;
-LDA.W $0376                          ;C0A0C1|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C0A0C1|AD7603  |810376;
 SEC                                  ;C0A0C4|38      |      ;
 SBC.W $0002,X                        ;C0A0C5|FD0200  |810002;
 BEQ CODE_C0A0E4                      ;C0A0C8|F01A    |C0A0E4;
@@ -8040,7 +7928,7 @@ db $6C,$3A,$F0,$2C,$3A,$F0,$29,$3A   ;C0A15F|        |00F03A;
 db $F0,$26,$82,$23,$00               ;C0A167|        |C0A18F;
 
 CODE_C0A16C:
-LDA.W $0322                          ;C0A16C|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0A16C|AD2203  |810322;
 BIT.W #$4000                         ;C0A16F|890040  |      ;
 BEQ CODE_C0A18F                      ;C0A172|F01B    |C0A18F;
 LDA.W Equipment.magic                          ;C0A174|AD621B  |811B62;
@@ -8956,11 +8844,11 @@ CODE_C0ACC7:
 INC.W $039A                          ;C0ACC7|EE9A03  |81039A;
 SEP #$20                             ;C0ACCA|E220    |      ;
 LDA.B #$F1                           ;C0ACCC|A9F1    |      ;
-STA.W $2140                          ;C0ACCE|8D4021  |812140;
+STA.W APUI00                          ;C0ACCE|8D4021  |812140;
 REP #$20                             ;C0ACD1|C220    |      ;
 COP #$27                             ;C0ACD3|0227    |      ;
 db $D7,$AC                           ;C0ACD5|        |0000AC;
-LDA.W $2140                          ;C0ACD7|AD4021  |812140;
+LDA.W APUI00                          ;C0ACD7|AD4021  |812140;
 AND.W #$00FF                         ;C0ACDA|29FF00  |      ;
 CMP.W #$00F1                         ;C0ACDD|C9F100  |      ;
 BEQ CODE_C0ACE3                      ;C0ACE0|F001    |C0ACE3;
@@ -8969,12 +8857,12 @@ RTL                                  ;C0ACE2|6B      |      ;
 CODE_C0ACE3:
 SEP #$20                             ;C0ACE3|E220    |      ;
 LDA.B #$01                           ;C0ACE5|A901    |      ;
-STA.W $2140                          ;C0ACE7|8D4021  |812140;
+STA.W APUI00                          ;C0ACE7|8D4021  |812140;
 REP #$20                             ;C0ACEA|C220    |      ;
 COP #$27                             ;C0ACEC|0227    |      ;
 db $F0,$AC                           ;C0ACEE|        |C0AC9C;
 SEP #$20                             ;C0ACF0|E220    |      ;
-LDA.W $2140                          ;C0ACF2|AD4021  |812140;
+LDA.W APUI00                          ;C0ACF2|AD4021  |812140;
 REP #$20                             ;C0ACF5|C220    |      ;
 BEQ CODE_C0ACFA                      ;C0ACF7|F001    |C0ACFA;
 RTL                                  ;C0ACF9|6B      |      ;
@@ -8983,12 +8871,12 @@ CODE_C0ACFA:
 INC.W $039A                          ;C0ACFA|EE9A03  |81039A;
 SEP #$20                             ;C0ACFD|E220    |      ;
 LDA.B #$F0                           ;C0ACFF|A9F0    |      ;
-STA.W $2140                          ;C0AD01|8D4021  |812140;
+STA.W APUI00                          ;C0AD01|8D4021  |812140;
 REP #$20                             ;C0AD04|C220    |      ;
 COP #$27                             ;C0AD06|0227    |      ;
 db $0A,$AD                           ;C0AD08|        |      ;
 SEP #$20                             ;C0AD0A|E220    |      ;
-LDA.W $2140                          ;C0AD0C|AD4021  |812140;
+LDA.W APUI00                          ;C0AD0C|AD4021  |812140;
 REP #$20                             ;C0AD0F|C220    |      ;
 BEQ CODE_C0AD14                      ;C0AD11|F001    |C0AD14;
 RTL                                  ;C0AD13|6B      |      ;
@@ -8998,7 +8886,7 @@ COP #$1B                             ;C0AD14|021B    |      ;
 db $1A,$AD,$02,$00                   ;C0AD16|        |      ;
 SEP #$20                             ;C0AD1A|E220    |      ;
 LDA.B #$FF                           ;C0AD1C|A9FF    |      ;
-STA.W $2140                          ;C0AD1E|8D4021  |812140;
+STA.W APUI00                          ;C0AD1E|8D4021  |812140;
 REP #$20                             ;C0AD21|C220    |      ;
 LDA.W $0030,X                        ;C0AD23|BD3000  |810030;
 ASL A                                ;C0AD26|0A      |      ;
@@ -9027,7 +8915,7 @@ COP #$1B                             ;C0AD5D|021B    |      ;
 db $63,$AD,$02,$00                   ;C0AD5F|        |0000AD;
 SEP #$20                             ;C0AD63|E220    |      ;
 LDA.B #$01                           ;C0AD65|A901    |      ;
-STA.W $2140                          ;C0AD67|8D4021  |812140;
+STA.W APUI00                          ;C0AD67|8D4021  |812140;
 REP #$20                             ;C0AD6A|C220    |      ;
 STZ.W $039A                          ;C0AD6C|9C9A03  |81039A;
 STZ.W $0398                          ;C0AD6F|9C9803  |810398;
@@ -9073,12 +8961,12 @@ COP #$86                             ;C0ADCB|0286    |      ;
 RTL                                  ;C0ADCD|6B      |      ;
 LDA.W $003C,X                        ;C0ADCE|BD3C00  |81003C;
 STA.W $0030,X                        ;C0ADD1|9D3000  |810030;
-LDA.W $0374                          ;C0ADD4|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C0ADD4|AD7403  |810374;
 SEC                                  ;C0ADD7|38      |      ;
 SBC.W $0000,X                        ;C0ADD8|FD0000  |810000;
 BMI CODE_C0ADFC                      ;C0ADDB|301F    |C0ADFC;
 STA.B $16                            ;C0ADDD|8516    |000016;
-LDA.W $0376                          ;C0ADDF|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C0ADDF|AD7603  |810376;
 SEC                                  ;C0ADE2|38      |      ;
 SBC.W $0002,X                        ;C0ADE3|FD0200  |810002;
 BMI CODE_C0ADF0                      ;C0ADE6|3008    |C0ADF0;
@@ -9099,7 +8987,7 @@ CODE_C0ADFC:
 EOR.W #$FFFF                         ;C0ADFC|49FFFF  |      ;
 INC A                                ;C0ADFF|1A      |      ;
 STA.B $16                            ;C0AE00|8516    |000016;
-LDA.W $0376                          ;C0AE02|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C0AE02|AD7603  |810376;
 SEC                                  ;C0AE05|38      |      ;
 SBC.W $0002,X                        ;C0AE06|FD0200  |810002;
 BMI CODE_C0AE13                      ;C0AE09|3008    |C0AE13;
@@ -9496,7 +9384,7 @@ db $00                               ;C0B1FB|        |      ;
 COP #$82                             ;C0B1FC|0282    |      ;
 
 CODE_C0B1FE:
-LDA.W $0376                          ;C0B1FE|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C0B1FE|AD7603  |810376;
 CMP.W #$0070                         ;C0B201|C97000  |      ;
 BCS CODE_C0B209                      ;C0B204|B003    |C0B209;
 BRL CODE_C0B2EA                      ;C0B206|82E100  |C0B2EA;
@@ -11075,7 +10963,7 @@ LDA.W #$3080                         ;C0E73E|A98030  |      ;
 TSB.W $0326                          ;C0E741|0C2603  |810326;
 STX.W $039E                          ;C0E744|8E9E03  |81039E;
 SEP #$20                             ;C0E747|E220    |      ;
-LDA.W $213F                          ;C0E749|AD3F21  |81213F;
+LDA.W STAT78                          ;C0E749|AD3F21  |81213F;
 BIT.B #$10                           ;C0E74C|8910    |      ;
 REP #$20                             ;C0E74E|C220    |      ;
 BEQ UNREACH_C0E761                   ;C0E750|F00F    |C0E761;
@@ -11102,7 +10990,7 @@ COP #$91                             ;C0E78B|0291    |      ;
 RTL                                  ;C0E78D|6B      |      ;
 LDA.W #$3000                         ;C0E78E|A90030  |      ;
 TSB.W $0326                          ;C0E791|0C2603  |810326;
-STZ.W $0322                          ;C0E794|9C2203  |810322;
+STZ.W buttons_pressed                          ;C0E794|9C2203  |810322;
 STX.W $039E                          ;C0E797|8E9E03  |81039E;
 LDA.W $0451                          ;C0E79A|AD5104  |810451;
 BEQ CODE_C0E7A2                      ;C0E79D|F003    |C0E7A2;
@@ -11409,7 +11297,7 @@ RTL                                  ;C0EBEF|6B      |      ;
 CODE_C0EBF0:
 COP #$86                             ;C0EBF0|0286    |      ;
 RTL                                  ;C0EBF2|6B      |      ;
-LDA.W $0322                          ;C0EBF3|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0EBF3|AD2203  |810322;
 BIT.W #$1000                         ;C0EBF6|890010  |      ;
 BNE CODE_C0EBFC                      ;C0EBF9|D001    |C0EBFC;
 RTL                                  ;C0EBFB|6B      |      ;
@@ -11477,7 +11365,7 @@ XBA                                  ;C0EC8F|EB      |      ;
 LDA.L UNREACH_81FCC4,X               ;C0EC90|BFC4FC81|81FCC4;
 STA.B $02                            ;C0EC94|8502    |000002;
 JSR.W CODE_C0ED32                    ;C0EC96|2032ED  |C0ED32;
-LDY.W $2135                          ;C0EC99|AC3521  |812135;
+LDY.W MPYM                          ;C0EC99|AC3521  |812135;
 STY.W $0482                          ;C0EC9C|8C8204  |810482;
 LDY.W $048C                          ;C0EC9F|AC8C04  |81048C;
 STY.B $00                            ;C0ECA2|8400    |000000;
@@ -11485,7 +11373,7 @@ XBA                                  ;C0ECA4|EB      |      ;
 LDA.L UNREACH_81FC84,X               ;C0ECA5|BF84FC81|81FC84;
 STA.B $02                            ;C0ECA9|8502    |000002;
 JSR.W CODE_C0ED32                    ;C0ECAB|2032ED  |C0ED32;
-LDY.W $2135                          ;C0ECAE|AC3521  |812135;
+LDY.W MPYM                          ;C0ECAE|AC3521  |812135;
 STY.W $0484                          ;C0ECB1|8C8404  |810484;
 LDY.W $048C                          ;C0ECB4|AC8C04  |81048C;
 STY.B $00                            ;C0ECB7|8400    |000000;
@@ -11495,7 +11383,7 @@ EOR.B #$FF                           ;C0ECBE|49FF    |      ;
 INC A                                ;C0ECC0|1A      |      ;
 STA.B $02                            ;C0ECC1|8502    |000002;
 JSR.W CODE_C0ED32                    ;C0ECC3|2032ED  |C0ED32;
-LDY.W $2135                          ;C0ECC6|AC3521  |812135;
+LDY.W MPYM                          ;C0ECC6|AC3521  |812135;
 STY.W $0486                          ;C0ECC9|8C8604  |810486;
 LDY.W $048C                          ;C0ECCC|AC8C04  |81048C;
 STY.B $00                            ;C0ECCF|8400    |000000;
@@ -11503,7 +11391,7 @@ XBA                                  ;C0ECD1|EB      |      ;
 LDA.L UNREACH_81FCC4,X               ;C0ECD2|BFC4FC81|81FCC4;
 STA.B $02                            ;C0ECD6|8502    |000002;
 JSR.W CODE_C0ED32                    ;C0ECD8|2032ED  |C0ED32;
-LDY.W $2135                          ;C0ECDB|AC3521  |812135;
+LDY.W MPYM                          ;C0ECDB|AC3521  |812135;
 STY.W $0488                          ;C0ECDE|8C8804  |810488;
 RTS                                  ;C0ECE1|60      |      ;
 db $C2,$20,$8A,$EB,$4A,$4A,$18,$69   ;C0ECE2|        |      ;
@@ -11527,9 +11415,9 @@ STA.W $211B                          ;C0ED3C|8D1B21  |81211B;
 LDA.B $02                            ;C0ED3F|A502    |000002;
 STA.W $211C                          ;C0ED41|8D1C21  |81211C;
 STA.W $211C                          ;C0ED44|8D1C21  |81211C;
-LDA.W $2134                          ;C0ED47|AD3421  |812134;
+LDA.W MPYL                          ;C0ED47|AD3421  |812134;
 STA.B $00                            ;C0ED4A|8500    |000000;
-LDA.W $2135                          ;C0ED4C|AD3521  |812135;
+LDA.W MPYM                          ;C0ED4C|AD3521  |812135;
 STA.B $01                            ;C0ED4F|8501    |000001;
 PLP                                  ;C0ED51|28      |      ;
 RTS                                  ;C0ED52|60      |      ;
@@ -11592,24 +11480,24 @@ LDA.W $1B90                          ;C0EDBF|AD901B  |811B90;
 CODE_C0EDC2:
 STA.W $0318                          ;C0EDC2|8D1803  |810318;
 LDA.W #$0001                         ;C0EDC5|A90100  |      ;
-STA.W $0380                          ;C0EDC8|8D8003  |810380;
+STA.W TeleportPos.facing                          ;C0EDC8|8D8003  |810380;
 LDA.W #$0070                         ;C0EDCB|A97000  |      ;
-STA.W $037C                          ;C0EDCE|8D7C03  |81037C;
+STA.W TeleportPos.x                          ;C0EDCE|8D7C03  |81037C;
 LDA.W #$0060                         ;C0EDD1|A96000  |      ;
-STA.W $037E                          ;C0EDD4|8D7E03  |81037E;
+STA.W TeleportPos.y                          ;C0EDD4|8D7E03  |81037E;
 STZ.W $0451                          ;C0EDD7|9C5104  |810451;
 INC.W $0460                          ;C0EDDA|EE6004  |810460;
 COP #$91                             ;C0EDDD|0291    |      ;
 RTL                                  ;C0EDDF|6B      |      ;
 
 CODE_C0EDE0:
-LDY.W #$C556                         ;C0EDE0|A056C5  |      ;
-JSL.L printOsdStringFromBank2                    ;C0EDE3|2254A782|82A754;
-STZ.W $03A6                          ;C0EDE7|9CA603  |8103A6;
-LDX.W #$6000                         ;C0EDEA|A20060  |      ;
-LDY.W #$C5BE                         ;C0EDED|A0BEC5  |      ;
-LDA.W #$0000                         ;C0EDF0|A90000  |      ;
-PHA                                  ;C0EDF3|48      |      ;
+    LDY.W #txt_main_menu
+    JSL.L printOsdStringFromBank2
+    STZ.W $03A6
+    LDX.W #$6000
+    LDY.W #$C5BE
+    LDA.W #0 ; set default position
+    PHA
 
 CODE_C0EDF4:
 JSL.L CODE_838092                    ;C0EDF4|22928083|838092;
@@ -11741,7 +11629,7 @@ db $82,$B3,$00,$C9,$70,$00,$D0,$03   ;C0EF0C|        |C0EFC2;
 db $82,$FD,$00,$82,$EB,$01           ;C0EF14|        |C0F014;
 
 CODE_C0EF1A:
-LDA.W $0322                          ;C0EF1A|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0EF1A|AD2203  |810322;
 BIT.W #$0400                         ;C0EF1D|890004  |      ;
 BNE CODE_C0EF39                      ;C0EF20|D017    |C0EF39;
 BIT.W #$8000                         ;C0EF22|890080  |      ;
@@ -11771,7 +11659,7 @@ COP #$82                             ;C0EF4E|0282    |      ;
 BRL CODE_C0EF70                      ;C0EF50|821D00  |C0EF70;
 
 CODE_C0EF53:
-LDA.W $0322                          ;C0EF53|AD2203  |810322;
+LDA.W buttons_pressed                          ;C0EF53|AD2203  |810322;
 BIT.W #$0800                         ;C0EF56|890008  |      ;
 BNE UNREACH_C0EF77                   ;C0EF59|D01C    |C0EF77;
 BIT.W #$0100                         ;C0EF5B|890001  |      ;
@@ -11847,20 +11735,20 @@ db $02,$80,$1E,$02,$82,$02,$80,$2E   ;C0F113|        |      ;
 db $02,$82,$82,$7B,$FF               ;C0F11B|        |      ;
 LDY.W $039E                          ;C0F120|AC9E03  |81039E;
 LDA.W $0000,Y                        ;C0F123|B90000  |810000;
-STA.W $0374                          ;C0F126|8D7403  |810374;
+STA.W PlayerPosReal.x                          ;C0F126|8D7403  |810374;
 LSR A                                ;C0F129|4A      |      ;
 LSR A                                ;C0F12A|4A      |      ;
 LSR A                                ;C0F12B|4A      |      ;
 LSR A                                ;C0F12C|4A      |      ;
-STA.W $0378                          ;C0F12D|8D7803  |810378;
+STA.W PlayerPosInt.x                          ;C0F12D|8D7803  |810378;
 LDA.W $0002,Y                        ;C0F130|B90200  |810002;
-STA.W $0376                          ;C0F133|8D7603  |810376;
+STA.W PlayerPosReal.y                          ;C0F133|8D7603  |810376;
 LSR A                                ;C0F136|4A      |      ;
 LSR A                                ;C0F137|4A      |      ;
 LSR A                                ;C0F138|4A      |      ;
 LSR A                                ;C0F139|4A      |      ;
 DEC A                                ;C0F13A|3A      |      ;
-STA.W $037A                          ;C0F13B|8D7A03  |81037A;
+STA.W PlayerPosInt.y                          ;C0F13B|8D7A03  |81037A;
 PHX                                  ;C0F13E|DA      |      ;
 JSL.L CODE_828000                    ;C0F13F|22008082|828000;
 PLX                                  ;C0F143|FA      |      ;
@@ -12176,9 +12064,9 @@ ASL A                                ;C0F752|0A      |      ;
 ASL A                                ;C0F753|0A      |      ;
 TAX                                  ;C0F754|AA      |      ;
 LDA.L UNREACH_80F765,X               ;C0F755|BF65F780|80F765;
-STA.W $037C                          ;C0F759|8D7C03  |81037C;
+STA.W TeleportPos.x                          ;C0F759|8D7C03  |81037C;
 LDA.L UNREACH_80F767,X               ;C0F75C|BF67F780|80F767;
-STA.W $037E                          ;C0F760|8D7E03  |81037E;
+STA.W TeleportPos.y                          ;C0F760|8D7E03  |81037E;
 PLX                                  ;C0F763|FA      |      ;
 RTL                                  ;C0F764|6B      |      ;
 db $70,$00,$A0,$00,$30,$00,$60,$01   ;C0F765|        |C0F767;

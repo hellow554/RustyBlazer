@@ -211,43 +211,58 @@ MIRR7 = $00437F
 
 save_entries = $700000
 ; CopTemp contains the address of the COP arguments stored directly after the `COP xx` opcode
-%LongPtr(CopTemp, $38)
-%LongPtr(SoundId, $3B)
+%LongPtr(CopTemp, $7E0038)
+%LongPtr(SoundId, $7E003B)
 
-DMA_channel_enable_bits = $42
-map_number = $314
-map_sub_number = $316
-sceneId = $318
-buttons_pressed = $322
-button_mask = $326
+HDMA_channel_enable_bits = $7E0042
+map_number = $7E0314
+map_sub_number = $7E0316
+sceneId = $7E0318
+buttons_pressed = $7E0322
+button_mask = $7E0326
 ; this is set to $80 if you want to display the enemy health, it's getting
 ; decremented until it's 0 and the code will make it disappear again
-displayEnemeyHealthCounter = $330
-display_hud_bitfield = $332
-%Position(PlayerPosReal, $374)
-%Position(PlayerPosInt, $378)
-; the X, Y and facing after the next teleportation event
-%Position(TeleportPos, $37C)
-; the facing direction after the teleport has happened
-teleport_facing = $380
-entities_lut_base_offset = $3B0
-number_of_choies = $3C6 ; number of choices for the choice box menu
-cursor_counter = $3C8 ; the counter used for the blinking cursor animation
-text_lut_id = $3CA
+displayEnemeyHealthCounter = $7E0330
+display_hud_bitfield = $7E0332
+enemy_current_health = $7E0336
+enemy_max_health = $7E0338
+bg1_hofs = $7E033A
+bg1_vofs = $7E033C
+bg2_hofs = $7E033E
+bg2_vofs = $7E0340
+%Position(PlayerPosReal, $7E0374)
+%Position(PlayerPosInt, $7E0378)
+%PositionFacing(TeleportPos, $7E037C) ; the X, Y and facing after the next teleportation event
+entities_lut_base_offset = $7E03B0
+bg3_horizontal_scroll = $7E0386
+bg3_vertical_scroll = $7E0388
+TmTemp = $7E03C2 ; the current TM register value
+CGadSubTemp = $7E03C3 ; the current CGadSub register value
+Bg2ScTemp = $7E03C4 ; the current BG2Sc register value
+W12SelTemp = $7E03C5 ; the current W12Sel register value
+number_of_choies = $7E03C6 ; number of choices for the choice box menu
+cursor_counter = $7E03C8 ; the counter used for the blinking cursor animation
+text_lut_id = $7E03CA
 choice_idx = $3D2 ; the choice in a choicebox that has been selected
-vblank_interrupt_enabled = $3D4 ; if 0 the nmi interrupt is disabled, if 1 not
-text_modifier = $3EB
-textbox_tlc = $3F9 ; top left corner of a default textbox
-lair_reveal_in_progress = $3FD ; 0 if no revealing is in progress, elsewise != 0 (mostly 1)
-revealing_lair_id = $407 ; this is the lair id that is currently revealed
-player_health_restore = $447
-exp_to_give = $449
-player_name8 = $453
-inhibit_buttons_readout = $474
+vblank_interrupt_enabled = $7E03D4 ; if 0 the nmi interrupt is disabled, if 1 not
+text_modifier = $7E03EB
+textbox_tlc = $7E03F9 ; top left corner of a default textbox
+lair_reveal_in_progress = $7E03FD ; 0 if no revealing is in progress, elsewise != 0 (mostly 1)
+revealing_lair_id = $7E0407 ; this is the lair id that is currently revealed
+player_health_restore = $7E0447
+exp_to_give = $7E0449
+player_name8 = $7E0453
+inhibit_buttons_readout = $7E0474
+
+oam_data = $7E0492 ; 544 bytes in size including $6B1
+unk_7E06B2 = $7E06B2
+
 
 entities_table = $800
 
-Inventory = $1B1E
+game_state = $7E1A5E
+lair_sealed_table = $7E1ADE ; 64 bytes * 8 bits = 512 possible lairs
+Inventory = $7E1B1E
 struct Inventory Inventory
     .swords: skip 8
     .armor: skip 8
@@ -255,38 +270,40 @@ struct Inventory Inventory
     .items: skip 40
 endstruct
 
-Equipment = $1B5E
+Equipment = $7E1B5E
 struct Equipment Equipment
     .sword: skip 2
     .armor: skip 2
     .magic: skip 2
     .item: skip 2
 endstruct
-%BigDecimal(PlayerGold, $1B66)
-player_level_ascii = $1B6A
-player_current_health_ascii = $1B6C
-player_max_health_ascii = $1B6E
-player_strength_from_item = $1B70
-player_strength_from_level = $1B72
-player_defense_from_item = $1B74
-player_defense_from_level = $1B76
-%BigDecimal(PlayerExp, $1B78)
-%BigDecimal(ExpNeededForNextLevel, $1B7C)
+%BigDecimal(PlayerGold, $7E1B66)
+player_level_ascii = $7E1B6A
+player_current_health_ascii = $7E1B6C
+player_max_health_ascii = $7E1B6E
+player_strength_from_item = $7E1B70
+player_strength_from_level = $7E1B72
+player_defense_from_item = $7E1B74
+player_defense_from_level = $7E1B76
+%BigDecimal(PlayerExp, $7E1B78)
+%BigDecimal(ExpNeededForNextLevel, $7E1B7C)
+lair_remaining_ascii = $7E1B80
+player_souls = $7E1B82
+text_speed = $7E1B84
+player_level = $7E1B86
+player_current_health = $7E1B88
+player_max_health = $7E1B8A
+player_total_strength = $7E1B8C
+player_total_defense = $7E1B8E
+player_name = $7E1B92
 
 
-game_state = $1A5E
-lair_sealed_table = $1ADE
+current_map_number = $7E1C6A
 
-player_souls = $1B82
-text_speed = $1B84
-player_level = $1B86
-player_current_health = $1B88
-player_max_health = $1B8A
-player_total_strength = $1B8C
-player_total_defense = $1B8E
-player_name = $1B92
-current_map_number = $1C6A
-
+coldata_1 = $7F0200
+coldata_2 = $7F0201
+coldata_3 = $7F0202
+cg_data = $7F0200
 
 
 L3_Text = $7F7000
@@ -301,16 +318,6 @@ L3_Text = $7F7000
 ; Not sure if other values are possible
 passable_map = $7F8000
 
-init_system = $82B9D1
-init_window_system = $82BB01
-init_game_variables = $838846
-clearL3 = $838622
-enable_interrupts = $82B1A2
-check_map_change = $8386B5
-wait_vblank = $82B1B7
-CODE_83849A = $83849A
-disable_vblank_interrupt = $82B1AE
-CODE_8289D6 = $8289D6
 prepare_dma_bank0 = $829863
 CODE_8085D2 = $8085D2
 CODE_8085F0 = $8085F0
@@ -493,7 +500,6 @@ UNREACH_81FBA0 = $81FBA0
 CODE_838521 = $838521
 CODE_838548 = $838548
 UNREACH_82C95B = $82C95B
-UNREACH_86C000 = $86C000
 UNREACH_81FB2F = $81FB2F
 UNREACH_81FB30 = $81FB30
 CODE_82B272 = $82B272

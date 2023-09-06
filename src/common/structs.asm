@@ -20,6 +20,14 @@ macro Position(name, ptr)
     endstruct
 endmacro
 
+macro PositionFacing(name, ptr)
+    struct <name> <ptr>
+        .x: skip 2
+        .y: skip 2
+        .facing: skip 1
+    endstruct
+endmacro
+
 struct LiveEntities $7E0800
     .pos_x: skip 2                      ; 00
     .pos_y: skip 2                      ; 02

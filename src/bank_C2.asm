@@ -4104,9 +4104,9 @@ PHP                                  ;C28000|08      |      ;
 REP #$30                             ;C28001|C230    |      ;
 LDX.W #$0000                         ;C28003|A20000  |      ;
 TXY                                  ;C28006|9B      |      ;
-LDA.W $033A                          ;C28007|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C28007|AD3A03  |81033A;
 PHA                                  ;C2800A|48      |      ;
-LDA.W $0374                          ;C2800B|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C2800B|AD7403  |810374;
 SEC                                  ;C2800E|38      |      ;
 SBC.W #$0070                         ;C2800F|E97000  |      ;
 BPL CODE_C28019                      ;C28012|1005    |C28019;
@@ -4132,9 +4132,9 @@ SEC                                  ;C2802F|38      |      ;
 SBC.B $01,S                          ;C28030|E301    |000001;
 TAX                                  ;C28032|AA      |      ;
 PLA                                  ;C28033|68      |      ;
-LDA.W $033C                          ;C28034|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C28034|AD3C03  |81033C;
 PHA                                  ;C28037|48      |      ;
-LDA.W $0376                          ;C28038|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C28038|AD7603  |810376;
 SEC                                  ;C2803B|38      |      ;
 SBC.W #$0080                         ;C2803C|E98000  |      ;
 BPL CODE_C28046                      ;C2803F|1005    |C28046;
@@ -4169,7 +4169,7 @@ REP #$20                             ;C2806A|C220    |      ;
 LDA.W $0382                          ;C2806C|AD8203  |810382;
 BEQ CODE_C280AE                      ;C2806F|F03D    |C280AE;
 BPL CODE_C28084                      ;C28071|1011    |C28084;
-LDA.W $033A                          ;C28073|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C28073|AD3A03  |81033A;
 BEQ CODE_C280AE                      ;C28076|F036    |C280AE;
 PHA                                  ;C28078|48      |      ;
 CLC                                  ;C28079|18      |      ;
@@ -4178,7 +4178,7 @@ BPL CODE_C2809C                      ;C2807D|101D    |C2809C;
 db $A9,$00,$00,$80,$18               ;C2807F|        |      ;
 
 CODE_C28084:
-LDA.W $033A                          ;C28084|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C28084|AD3A03  |81033A;
 PHA                                  ;C28087|48      |      ;
 CLC                                  ;C28088|18      |      ;
 ADC.W $0382                          ;C28089|6D8203  |810382;
@@ -4193,9 +4193,9 @@ SEC                                  ;C28098|38      |      ;
 SBC.W #$0100                         ;C28099|E90001  |      ;
 
 CODE_C2809C:
-STA.W $033A                          ;C2809C|8D3A03  |81033A;
+STA.W bg1_hofs                          ;C2809C|8D3A03  |81033A;
 PLA                                  ;C2809F|68      |      ;
-EOR.W $033A                          ;C280A0|4D3A03  |81033A;
+EOR.W bg1_hofs                          ;C280A0|4D3A03  |81033A;
 AND.W #$0010                         ;C280A3|291000  |      ;
 BEQ CODE_C280AE                      ;C280A6|F006    |C280AE;
 LDA.W #$0080                         ;C280A8|A98000  |      ;
@@ -4205,7 +4205,7 @@ CODE_C280AE:
 LDA.W $0384                          ;C280AE|AD8403  |810384;
 BEQ CODE_C280F0                      ;C280B1|F03D    |C280F0;
 BPL CODE_C280C6                      ;C280B3|1011    |C280C6;
-LDA.W $033C                          ;C280B5|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C280B5|AD3C03  |81033C;
 BEQ CODE_C280F0                      ;C280B8|F036    |C280F0;
 PHA                                  ;C280BA|48      |      ;
 CLC                                  ;C280BB|18      |      ;
@@ -4214,7 +4214,7 @@ BPL CODE_C280DE                      ;C280BF|101D    |C280DE;
 db $A9,$00,$00,$80,$18               ;C280C1|        |      ;
 
 CODE_C280C6:
-LDA.W $033C                          ;C280C6|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C280C6|AD3C03  |81033C;
 PHA                                  ;C280C9|48      |      ;
 CLC                                  ;C280CA|18      |      ;
 ADC.W $0384                          ;C280CB|6D8403  |810384;
@@ -4229,9 +4229,9 @@ SEC                                  ;C280DA|38      |      ;
 SBC.W $03CC                          ;C280DB|EDCC03  |8103CC;
 
 CODE_C280DE:
-STA.W $033C                          ;C280DE|8D3C03  |81033C;
+STA.W bg1_vofs                          ;C280DE|8D3C03  |81033C;
 PLA                                  ;C280E1|68      |      ;
-EOR.W $033C                          ;C280E2|4D3C03  |81033C;
+EOR.W bg1_vofs                          ;C280E2|4D3C03  |81033C;
 AND.W #$0010                         ;C280E5|291000  |      ;
 BEQ CODE_C280F0                      ;C280E8|F006    |C280F0;
 LDA.W #$0040                         ;C280EA|A94000  |      ;
@@ -4306,10 +4306,10 @@ LDA.W #$0100                         ;C2816F|A90001  |      ;
 
 CODE_C28172:
 CLC                                  ;C28172|18      |      ;
-ADC.W $033A,X                        ;C28173|7D3A03  |81033A;
+ADC.W bg1_hofs,X                        ;C28173|7D3A03  |81033A;
 AND.W #$0FF0                         ;C28176|29F00F  |      ;
 STA.B $16                            ;C28179|8516    |000016;
-LDA.W $033C,X                        ;C2817B|BD3C03  |81033C;
+LDA.W bg1_vofs,X                        ;C2817B|BD3C03  |81033C;
 AND.W #$0F00                         ;C2817E|29000F  |      ;
 STA.B $18                            ;C28181|8518    |000018;
 SEP #$20                             ;C28183|E220    |      ;
@@ -4344,7 +4344,7 @@ RTS                                  ;C281C1|60      |      ;
 
 CODE_C281C2:
 REP #$20                             ;C281C2|C220    |      ;
-LDA.W $033A,X                        ;C281C4|BD3A03  |81033A;
+LDA.W bg1_hofs,X                        ;C281C4|BD3A03  |81033A;
 AND.W #$0F00                         ;C281C7|29000F  |      ;
 STA.B $16                            ;C281CA|8516    |000016;
 LDA.W #$0000                         ;C281CC|A90000  |      ;
@@ -4355,7 +4355,7 @@ LDA.W #$0100                         ;C281D6|A90001  |      ;
 
 CODE_C281D9:
 CLC                                  ;C281D9|18      |      ;
-ADC.W $033C,X                        ;C281DA|7D3C03  |81033C;
+ADC.W bg1_vofs,X                        ;C281DA|7D3C03  |81033C;
 AND.W #$0FF0                         ;C281DD|29F00F  |      ;
 STA.B $18                            ;C281E0|8518    |000018;
 SEP #$20                             ;C281E2|E220    |      ;
@@ -4380,7 +4380,7 @@ CODE_C2820B:
 SEP #$20                             ;C2820B|E220    |      ;
 RTS                                  ;C2820D|60      |      ;
 REP #$20                             ;C2820E|C220    |      ;
-LDA.W $0374                          ;C28210|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C28210|AD7403  |810374;
 SEC                                  ;C28213|38      |      ;
 SBC.W #$0070                         ;C28214|E97000  |      ;
 BPL CODE_C2821E                      ;C28217|1005    |C2821E;
@@ -4402,8 +4402,8 @@ SEC                                  ;C28230|38      |      ;
 SBC.W #$0100                         ;C28231|E90001  |      ;
 
 CODE_C28234:
-STA.W $033A                          ;C28234|8D3A03  |81033A;
-LDA.W $0376                          ;C28237|AD7603  |810376;
+STA.W bg1_hofs                          ;C28234|8D3A03  |81033A;
+LDA.W PlayerPosReal.y                          ;C28237|AD7603  |810376;
 SEC                                  ;C2823A|38      |      ;
 SBC.W #$0090                         ;C2823B|E99000  |      ;
 BPL CODE_C28245                      ;C2823E|1005    |C28245;
@@ -4425,7 +4425,7 @@ SEC                                  ;C28257|38      |      ;
 SBC.W $03CC                          ;C28258|EDCC03  |8103CC;
 
 CODE_C2825B:
-STA.W $033C                          ;C2825B|8D3C03  |81033C;
+STA.W bg1_vofs                          ;C2825B|8D3C03  |81033C;
 LDA.W $0342                          ;C2825E|AD4203  |810342;
 LSR A                                ;C28261|4A      |      ;
 LSR A                                ;C28262|4A      |      ;
@@ -4446,13 +4446,13 @@ LDA.W #$0000                         ;C28277|A90000  |      ;
 JSR.W CODE_C284E1                    ;C2827A|20E184  |C284E1;
 LDA.W $0342,X                        ;C2827D|BD4203  |810342;
 BEQ CODE_C28290                      ;C28280|F00E    |C28290;
-LDA.W $033A,X                        ;C28282|BD3A03  |81033A;
+LDA.W bg1_hofs,X                        ;C28282|BD3A03  |81033A;
 
 CODE_C28285:
 SEC                                  ;C28285|38      |      ;
 SBC.W $0342,X                        ;C28286|FD4203  |810342;
 BCC CODE_C28290                      ;C28289|9005    |C28290;
-STA.W $033A,X                        ;C2828B|9D3A03  |81033A;
+STA.W bg1_hofs,X                        ;C2828B|9D3A03  |81033A;
 BRA CODE_C28285                      ;C2828E|80F5    |C28285;
 
 CODE_C28290:
@@ -4460,22 +4460,22 @@ LDA.W #$0000                         ;C28290|A90000  |      ;
 JSR.W CODE_C2852F                    ;C28293|202F85  |C2852F;
 LDA.W $0344,X                        ;C28296|BD4403  |810344;
 BEQ CODE_C282A9                      ;C28299|F00E    |C282A9;
-LDA.W $033C,X                        ;C2829B|BD3C03  |81033C;
+LDA.W bg1_vofs,X                        ;C2829B|BD3C03  |81033C;
 
 CODE_C2829E:
 SEC                                  ;C2829E|38      |      ;
 SBC.W $0344,X                        ;C2829F|FD4403  |810344;
 BCC CODE_C282A9                      ;C282A2|9005    |C282A9;
-STA.W $033C,X                        ;C282A4|9D3C03  |81033C;
+STA.W bg1_vofs,X                        ;C282A4|9D3C03  |81033C;
 BRA CODE_C2829E                      ;C282A7|80F5    |C2829E;
 
 CODE_C282A9:
 SEP #$20                             ;C282A9|E220    |      ;
 REP #$20                             ;C282AB|C220    |      ;
-LDA.W $033A,X                        ;C282AD|BD3A03  |81033A;
+LDA.W bg1_hofs,X                        ;C282AD|BD3A03  |81033A;
 AND.W #$FF00                         ;C282B0|2900FF  |      ;
 STA.B $16                            ;C282B3|8516    |000016;
-LDA.W $033C,X                        ;C282B5|BD3C03  |81033C;
+LDA.W bg1_vofs,X                        ;C282B5|BD3C03  |81033C;
 AND.W #$FF00                         ;C282B8|2900FF  |      ;
 STA.B $18                            ;C282BB|8518    |000018;
 SEP #$20                             ;C282BD|E220    |      ;
@@ -4808,7 +4808,7 @@ TYA                                  ;C284BC|98      |      ;
 SEP #$20                             ;C284BD|E220    |      ;
 STA.W $211C                          ;C284BF|8D1C21  |81211C;
 STA.W $211C                          ;C284C2|8D1C21  |81211C;
-LDY.W $2134                          ;C284C5|AC3421  |812134;
+LDY.W MPYL                          ;C284C5|AC3421  |812134;
 STY.W $4204                          ;C284C8|8C0442  |814204;
 XBA                                  ;C284CB|EB      |      ;
 STA.W $4206                          ;C284CC|8D0642  |814206;
@@ -4832,10 +4832,10 @@ PHP                                  ;C284E1|08      |      ;
 PHY                                  ;C284E2|5A      |      ;
 REP #$20                             ;C284E3|C220    |      ;
 PHA                                  ;C284E5|48      |      ;
-LDA.W $033A,X                        ;C284E6|BD3A03  |81033A;
+LDA.W bg1_hofs,X                        ;C284E6|BD3A03  |81033A;
 PHA                                  ;C284E9|48      |      ;
 LDY.W $034A,X                        ;C284EA|BC4A03  |81034A;
-LDA.W $033A                          ;C284ED|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C284ED|AD3A03  |81033A;
 JSR.W CODE_C284AF                    ;C284F0|20AF84  |C284AF;
 TAY                                  ;C284F3|A8      |      ;
 CLC                                  ;C284F4|18      |      ;
@@ -4853,16 +4853,16 @@ CODE_C2850A:
 TYA                                  ;C2850A|98      |      ;
 CLC                                  ;C2850B|18      |      ;
 ADC.W $038A                          ;C2850C|6D8A03  |81038A;
-STA.W $033A,X                        ;C2850F|9D3A03  |81033A;
+STA.W bg1_hofs,X                        ;C2850F|9D3A03  |81033A;
 LDA.B $01,S                          ;C28512|A301    |000001;
-EOR.W $033A,X                        ;C28514|5D3A03  |81033A;
+EOR.W bg1_hofs,X                        ;C28514|5D3A03  |81033A;
 AND.W #$0010                         ;C28517|291000  |      ;
 BEQ CODE_C28521                      ;C2851A|F005    |C28521;
 LDA.B $03,S                          ;C2851C|A303    |000003;
 TSB.W $0396                          ;C2851E|0C9603  |810396;
 
 CODE_C28521:
-LDA.W $033A,X                        ;C28521|BD3A03  |81033A;
+LDA.W bg1_hofs,X                        ;C28521|BD3A03  |81033A;
 SEC                                  ;C28524|38      |      ;
 SBC.B $01,S                          ;C28525|E301    |000001;
 STA.W $038E                          ;C28527|8D8E03  |81038E;
@@ -4877,10 +4877,10 @@ PHP                                  ;C2852F|08      |      ;
 PHY                                  ;C28530|5A      |      ;
 REP #$20                             ;C28531|C220    |      ;
 PHA                                  ;C28533|48      |      ;
-LDA.W $033C,X                        ;C28534|BD3C03  |81033C;
+LDA.W bg1_vofs,X                        ;C28534|BD3C03  |81033C;
 PHA                                  ;C28537|48      |      ;
 LDY.W $034C,X                        ;C28538|BC4C03  |81034C;
-LDA.W $033C                          ;C2853B|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C2853B|AD3C03  |81033C;
 JSR.W CODE_C284AF                    ;C2853E|20AF84  |C284AF;
 TAY                                  ;C28541|A8      |      ;
 CLC                                  ;C28542|18      |      ;
@@ -4898,16 +4898,16 @@ CODE_C28558:
 TYA                                  ;C28558|98      |      ;
 CLC                                  ;C28559|18      |      ;
 ADC.W $038C                          ;C2855A|6D8C03  |81038C;
-STA.W $033C,X                        ;C2855D|9D3C03  |81033C;
+STA.W bg1_vofs,X                        ;C2855D|9D3C03  |81033C;
 LDA.B $01,S                          ;C28560|A301    |000001;
-EOR.W $033C,X                        ;C28562|5D3C03  |81033C;
+EOR.W bg1_vofs,X                        ;C28562|5D3C03  |81033C;
 AND.W #$0010                         ;C28565|291000  |      ;
 BEQ CODE_C2856F                      ;C28568|F005    |C2856F;
 LDA.B $03,S                          ;C2856A|A303    |000003;
 TSB.W $0396                          ;C2856C|0C9603  |810396;
 
 CODE_C2856F:
-LDA.W $033C,X                        ;C2856F|BD3C03  |81033C;
+LDA.W bg1_vofs,X                        ;C2856F|BD3C03  |81033C;
 SEC                                  ;C28572|38      |      ;
 SBC.B $01,S                          ;C28573|E301    |000001;
 STA.W $0390                          ;C28575|8D9003  |810390;
@@ -4924,38 +4924,38 @@ STX.W $2115                          ;C28584|8E1521  |812115;
 LDA.B [$32]                          ;C28587|A732    |000032;
 BEQ CODE_C285E0                      ;C28589|F055    |C285E0;
 LDA.B [$32]                          ;C2858B|A732    |000032;
-STA.W $2116                          ;C2858D|8D1621  |812116;
+STA.W VMADDL                          ;C2858D|8D1621  |812116;
 LDA.B $32                            ;C28590|A532    |000032;
 CLC                                  ;C28592|18      |      ;
 ADC.W #$0002                         ;C28593|690200  |      ;
-STA.W $4322                          ;C28596|8D2243  |814322;
+STA.W A1T2L                          ;C28596|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28599|204086  |C28640;
 LDA.B [$32]                          ;C2859C|A732    |000032;
 CLC                                  ;C2859E|18      |      ;
 ADC.W #$0001                         ;C2859F|690100  |      ;
-STA.W $2116                          ;C285A2|8D1621  |812116;
+STA.W VMADDL                          ;C285A2|8D1621  |812116;
 LDA.B $32                            ;C285A5|A532    |000032;
 CLC                                  ;C285A7|18      |      ;
 ADC.W #$0042                         ;C285A8|694200  |      ;
-STA.W $4322                          ;C285AB|8D2243  |814322;
+STA.W A1T2L                          ;C285AB|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285AE|204086  |C28640;
 LDA.B [$32]                          ;C285B1|A732    |000032;
 CLC                                  ;C285B3|18      |      ;
 ADC.W #$0800                         ;C285B4|690008  |      ;
-STA.W $2116                          ;C285B7|8D1621  |812116;
+STA.W VMADDL                          ;C285B7|8D1621  |812116;
 LDA.B $32                            ;C285BA|A532    |000032;
 CLC                                  ;C285BC|18      |      ;
 ADC.W #$0082                         ;C285BD|698200  |      ;
-STA.W $4322                          ;C285C0|8D2243  |814322;
+STA.W A1T2L                          ;C285C0|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285C3|204086  |C28640;
 LDA.B [$32]                          ;C285C6|A732    |000032;
 CLC                                  ;C285C8|18      |      ;
 ADC.W #$0801                         ;C285C9|690108  |      ;
-STA.W $2116                          ;C285CC|8D1621  |812116;
+STA.W VMADDL                          ;C285CC|8D1621  |812116;
 LDA.B $32                            ;C285CF|A532    |000032;
 CLC                                  ;C285D1|18      |      ;
 ADC.W #$00C2                         ;C285D2|69C200  |      ;
-STA.W $4322                          ;C285D5|8D2243  |814322;
+STA.W A1T2L                          ;C285D5|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285D8|204086  |C28640;
 LDA.W #$0000                         ;C285DB|A90000  |      ;
 STA.B [$32]                          ;C285DE|8732    |000032;
@@ -4966,38 +4966,38 @@ STX.W $2115                          ;C285E2|8E1521  |812115;
 LDA.B [$35]                          ;C285E5|A735    |000035;
 BEQ CODE_C2863E                      ;C285E7|F055    |C2863E;
 LDA.B [$35]                          ;C285E9|A735    |000035;
-STA.W $2116                          ;C285EB|8D1621  |812116;
+STA.W VMADDL                          ;C285EB|8D1621  |812116;
 LDA.B $35                            ;C285EE|A535    |000035;
 CLC                                  ;C285F0|18      |      ;
 ADC.W #$0002                         ;C285F1|690200  |      ;
-STA.W $4322                          ;C285F4|8D2243  |814322;
+STA.W A1T2L                          ;C285F4|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285F7|204086  |C28640;
 LDA.B [$35]                          ;C285FA|A735    |000035;
 CLC                                  ;C285FC|18      |      ;
 ADC.W #$0020                         ;C285FD|692000  |      ;
-STA.W $2116                          ;C28600|8D1621  |812116;
+STA.W VMADDL                          ;C28600|8D1621  |812116;
 LDA.B $35                            ;C28603|A535    |000035;
 CLC                                  ;C28605|18      |      ;
 ADC.W #$0042                         ;C28606|694200  |      ;
-STA.W $4322                          ;C28609|8D2243  |814322;
+STA.W A1T2L                          ;C28609|8D2243  |814322;
 JSR.W CODE_C28640                    ;C2860C|204086  |C28640;
 LDA.B [$35]                          ;C2860F|A735    |000035;
 CLC                                  ;C28611|18      |      ;
 ADC.W #$0400                         ;C28612|690004  |      ;
-STA.W $2116                          ;C28615|8D1621  |812116;
+STA.W VMADDL                          ;C28615|8D1621  |812116;
 LDA.B $35                            ;C28618|A535    |000035;
 CLC                                  ;C2861A|18      |      ;
 ADC.W #$0082                         ;C2861B|698200  |      ;
-STA.W $4322                          ;C2861E|8D2243  |814322;
+STA.W A1T2L                          ;C2861E|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28621|204086  |C28640;
 LDA.B [$35]                          ;C28624|A735    |000035;
 CLC                                  ;C28626|18      |      ;
 ADC.W #$0420                         ;C28627|692004  |      ;
-STA.W $2116                          ;C2862A|8D1621  |812116;
+STA.W VMADDL                          ;C2862A|8D1621  |812116;
 LDA.B $35                            ;C2862D|A535    |000035;
 CLC                                  ;C2862F|18      |      ;
 ADC.W #$00C2                         ;C28630|69C200  |      ;
-STA.W $4322                          ;C28633|8D2243  |814322;
+STA.W A1T2L                          ;C28633|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28636|204086  |C28640;
 LDA.W #$0000                         ;C28639|A90000  |      ;
 STA.B [$35]                          ;C2863C|8735    |000035;
@@ -5008,15 +5008,15 @@ RTL                                  ;C2863F|6B      |      ;
 
 CODE_C28640:
 LDX.B #$01                           ;C28640|A201    |      ;
-STX.W $4320                          ;C28642|8E2043  |814320;
+STX.W DMAP2                          ;C28642|8E2043  |814320;
 LDX.B #$18                           ;C28645|A218    |      ;
-STX.W $4321                          ;C28647|8E2143  |814321;
+STX.W BBAD2                          ;C28647|8E2143  |814321;
 LDX.B #$7E                           ;C2864A|A27E    |      ;
-STX.W $4324                          ;C2864C|8E2443  |814324;
+STX.W A1B2                          ;C2864C|8E2443  |814324;
 LDA.W #$0040                         ;C2864F|A94000  |      ;
-STA.W $4325                          ;C28652|8D2543  |814325;
+STA.W DAS2L                          ;C28652|8D2543  |814325;
 LDX.B #$04                           ;C28655|A204    |      ;
-STX.W $420B                          ;C28657|8E0B42  |81420B;
+STX.W MDMAEN                          ;C28657|8E0B42  |81420B;
 RTS                                  ;C2865A|60      |      ;
 PHP                                  ;C2865B|08      |      ;
 PHB                                  ;C2865C|8B      |      ;
@@ -5159,14 +5159,14 @@ LDA.B $16                            ;C28772|A516    |000016;
 CLC                                  ;C28774|18      |      ;
 ADC.W #$0010                         ;C28775|691000  |      ;
 SEC                                  ;C28778|38      |      ;
-SBC.W $033A                          ;C28779|ED3A03  |81033A;
+SBC.W bg1_hofs                          ;C28779|ED3A03  |81033A;
 CMP.W #$0111                         ;C2877C|C91101  |      ;
 BCS CODE_C287A9                      ;C2877F|B028    |C287A9;
 LDA.B $18                            ;C28781|A518    |000018;
 CLC                                  ;C28783|18      |      ;
 ADC.W #$0010                         ;C28784|691000  |      ;
 SEC                                  ;C28787|38      |      ;
-SBC.W $033C                          ;C28788|ED3C03  |81033C;
+SBC.W bg1_vofs                          ;C28788|ED3C03  |81033C;
 CMP.W #$0111                         ;C2878B|C91101  |      ;
 BCS CODE_C287A9                      ;C2878E|B019    |C287A9;
 JSL.L CODE_83820E                    ;C28790|220E8283|83820E;
@@ -5280,14 +5280,14 @@ LDA.B $16                            ;C2892D|A516    |000016;
 CLC                                  ;C2892F|18      |      ;
 ADC.W #$0010                         ;C28930|691000  |      ;
 SEC                                  ;C28933|38      |      ;
-SBC.W $033A                          ;C28934|ED3A03  |81033A;
+SBC.W bg1_hofs                          ;C28934|ED3A03  |81033A;
 CMP.W #$0111                         ;C28937|C91101  |      ;
 BCS CODE_C289A6                      ;C2893A|B06A    |C289A6;
 LDA.B $18                            ;C2893C|A518    |000018;
 CLC                                  ;C2893E|18      |      ;
 ADC.W #$0010                         ;C2893F|691000  |      ;
 SEC                                  ;C28942|38      |      ;
-SBC.W $033C                          ;C28943|ED3C03  |81033C;
+SBC.W bg1_vofs                          ;C28943|ED3C03  |81033C;
 CMP.W #$0111                         ;C28946|C91101  |      ;
 BCS CODE_C289A6                      ;C28949|B05B    |C289A6;
 LDA.L $7E8000,X                      ;C2894B|BF00807E|7E8000;
@@ -5353,14 +5353,16 @@ LDA.W #$0000                         ;C289CE|A90000  |      ;
 STA.W $1C7B,Y                        ;C289D1|997B1C  |811C7B;
 PLX                                  ;C289D4|FA      |      ;
 RTL                                  ;C289D5|6B      |      ;
-LDA.W $0374                          ;C289D6|AD7403  |810374;
-ORA.W $0376                          ;C289D9|0D7603  |810376;
+
+CODE_8289D6:
+LDA.W PlayerPosReal.x                          ;C289D6|AD7403  |810374;
+ORA.W PlayerPosReal.y                          ;C289D9|0D7603  |810376;
 AND.B #$0F                           ;C289DC|290F    |      ;
 BNE CODE_C28A15                      ;C289DE|D035    |C28A15;
 REP #$20                             ;C289E0|C220    |      ;
-LDA.W $0374                          ;C289E2|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C289E2|AD7403  |810374;
 STA.B $16                            ;C289E5|8516    |000016;
-LDA.W $0376                          ;C289E7|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C289E7|AD7603  |810376;
 SEC                                  ;C289EA|38      |      ;
 SBC.W #$0010                         ;C289EB|E91000  |      ;
 STA.B $18                            ;C289EE|8518    |000018;
@@ -5403,10 +5405,10 @@ CODE_C28A36:
 LDA.W UNREACH_81A9DE,X               ;C28A36|BDDEA9  |81A9DE;
 CMP.B #$FF                           ;C28A39|C9FF    |      ;
 BEQ CODE_C28A5A                      ;C28A3B|F01D    |C28A5A;
-LDA.W $0378                          ;C28A3D|AD7803  |810378;
+LDA.W PlayerPosInt.x                          ;C28A3D|AD7803  |810378;
 CMP.W UNREACH_81A9DE,X               ;C28A40|DDDEA9  |81A9DE;
 BNE CODE_C28A4D                      ;C28A43|D008    |C28A4D;
-LDA.W $037A                          ;C28A45|AD7A03  |81037A;
+LDA.W PlayerPosInt.y                          ;C28A45|AD7A03  |81037A;
 CMP.W UNREACH_81A9DF,X               ;C28A48|DDDFA9  |81A9DF;
 BEQ CODE_C28A5C                      ;C28A4B|F00F    |C28A5C;
 
@@ -5426,9 +5428,9 @@ RTL                                  ;C28A5B|6B      |      ;
 CODE_C28A5C:
 TXY                                  ;C28A5C|9B      |      ;
 REP #$20                             ;C28A5D|C220    |      ;
-LDA.W $0374                          ;C28A5F|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C28A5F|AD7403  |810374;
 STA.B $16                            ;C28A62|8516    |000016;
-LDA.W $0376                          ;C28A64|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C28A64|AD7603  |810376;
 SEC                                  ;C28A67|38      |      ;
 SBC.W #$0020                         ;C28A68|E92000  |      ;
 STA.B $18                            ;C28A6B|8518    |000018;
@@ -5497,12 +5499,12 @@ CODE_C28AF8:
 LDA.W UNREACH_81AC96,X               ;C28AF8|BD96AC  |81AC96;
 CMP.B #$FF                           ;C28AFB|C9FF    |      ;
 BEQ CODE_C28B23                      ;C28AFD|F024    |C28B23;
-LDA.W $0378                          ;C28AFF|AD7803  |810378;
+LDA.W PlayerPosInt.x                          ;C28AFF|AD7803  |810378;
 SEC                                  ;C28B02|38      |      ;
 SBC.W UNREACH_81AC96,X               ;C28B03|FD96AC  |81AC96;
 CMP.W UNREACH_81AC98,X               ;C28B06|DD98AC  |81AC98;
 BCS CODE_C28B17                      ;C28B09|B00C    |C28B17;
-LDA.W $037A                          ;C28B0B|AD7A03  |81037A;
+LDA.W PlayerPosInt.y                          ;C28B0B|AD7A03  |81037A;
 SEC                                  ;C28B0E|38      |      ;
 SBC.W UNREACH_81AC97,X               ;C28B0F|FD97AC  |81AC97;
 CMP.W UNREACH_81AC99,X               ;C28B12|DD99AC  |81AC99;
@@ -5558,12 +5560,12 @@ ASL A                                ;C28B5D|0A      |      ;
 SEC                                  ;C28B5E|38      |      ;
 SBC.W #$000F                         ;C28B5F|E90F00  |      ;
 STA.B $06                            ;C28B62|8506    |000006;
-LDA.W $0374                          ;C28B64|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C28B64|AD7403  |810374;
 SEC                                  ;C28B67|38      |      ;
 SBC.B $00                            ;C28B68|E500    |000000;
 CMP.B $04                            ;C28B6A|C504    |000004;
 BCS CODE_C28B23                      ;C28B6C|B0B5    |C28B23;
-LDA.W $0376                          ;C28B6E|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C28B6E|AD7603  |810376;
 SEC                                  ;C28B71|38      |      ;
 SBC.B $02                            ;C28B72|E502    |000002;
 CMP.B $06                            ;C28B74|C506    |000006;
@@ -5574,11 +5576,11 @@ STA.W $0319                          ;C28B7D|8D1903  |810319;
 LDA.W UNREACH_81AC9B,X               ;C28B80|BD9BAC  |81AC9B;
 STA.W $0318                          ;C28B83|8D1803  |810318;
 LDA.W UNREACH_81AC9C,X               ;C28B86|BD9CAC  |81AC9C;
-STA.W $0380                          ;C28B89|8D8003  |810380;
+STA.W TeleportPos.facing                          ;C28B89|8D8003  |810380;
 LDY.W UNREACH_81AC9D,X               ;C28B8C|BC9DAC  |81AC9D;
-STY.W $037C                          ;C28B8F|8C7C03  |81037C;
+STY.W TeleportPos.x                          ;C28B8F|8C7C03  |81037C;
 LDY.W UNREACH_81AC9F,X               ;C28B92|BC9FAC  |81AC9F;
-STY.W $037E                          ;C28B95|8C7E03  |81037E;
+STY.W TeleportPos.y                          ;C28B95|8C7E03  |81037E;
 PLP                                  ;C28B98|28      |      ;
 SEC                                  ;C28B99|38      |      ;
 RTL                                  ;C28B9A|6B      |      ;
@@ -5588,10 +5590,10 @@ CODE_C28B9E:
 LDA.W UNREACH_81B69A,X               ;C28B9E|BD9AB6  |81B69A;
 CMP.B #$FF                           ;C28BA1|C9FF    |      ;
 BEQ CODE_C28C23                      ;C28BA3|F07E    |C28C23;
-CMP.W $0378                          ;C28BA5|CD7803  |810378;
+CMP.W PlayerPosInt.x                          ;C28BA5|CD7803  |810378;
 BNE CODE_C28C1C                      ;C28BA8|D072    |C28C1C;
 LDA.W UNREACH_81B69B,X               ;C28BAA|BD9BB6  |81B69B;
-CMP.W $037A                          ;C28BAD|CD7A03  |81037A;
+CMP.W PlayerPosInt.y                          ;C28BAD|CD7A03  |81037A;
 BNE CODE_C28C1C                      ;C28BB0|D06A    |C28C1C;
 LDA.W UNREACH_81B69D,X               ;C28BB2|BD9DB6  |81B69D;
 XBA                                  ;C28BB5|EB      |      ;
@@ -5668,10 +5670,10 @@ LDA.W UNREACH_81BA18,X               ;C28C32|BD18BA  |81BA18;
 CMP.W current_map_number                          ;C28C35|CD6A1C  |811C6A;
 BNE CODE_C28C4A                      ;C28C38|D010    |C28C4A;
 LDA.W UNREACH_81BA19,X               ;C28C3A|BD19BA  |81BA19;
-CMP.W $0378                          ;C28C3D|CD7803  |810378;
+CMP.W PlayerPosInt.x                          ;C28C3D|CD7803  |810378;
 BNE CODE_C28C4A                      ;C28C40|D008    |C28C4A;
 LDA.W UNREACH_81BA1A,X               ;C28C42|BD1ABA  |81BA1A;
-CMP.W $037A                          ;C28C45|CD7A03  |81037A;
+CMP.W PlayerPosInt.y                          ;C28C45|CD7A03  |81037A;
 BEQ CODE_C28C58                      ;C28C48|F00E    |C28C58;
 
 CODE_C28C4A:
@@ -5801,11 +5803,11 @@ STA.W $03FF                          ;C28D59|8DFF03  |8103FF;
 LDA.W $0316                          ;C28D5C|AD1603  |810316;
 STA.W $0401                          ;C28D5F|8D0104  |810401;
 LDA.W UNREACH_81BA2A,X               ;C28D62|BD2ABA  |81BA2A;
-STA.W $0380                          ;C28D65|8D8003  |810380;
+STA.W TeleportPos.facing                          ;C28D65|8D8003  |810380;
 REP #$20                             ;C28D68|C220    |      ;
-LDA.W $0374                          ;C28D6A|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C28D6A|AD7403  |810374;
 STA.W $0403                          ;C28D6D|8D0304  |810403;
-LDA.W $0376                          ;C28D70|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C28D70|AD7603  |810376;
 SEC                                  ;C28D73|38      |      ;
 SBC.W #$0010                         ;C28D74|E91000  |      ;
 STA.W $0405                          ;C28D77|8D0504  |810405;
@@ -5815,14 +5817,14 @@ ASL A                                ;C28D80|0A      |      ;
 ASL A                                ;C28D81|0A      |      ;
 ASL A                                ;C28D82|0A      |      ;
 ASL A                                ;C28D83|0A      |      ;
-STA.W $037C                          ;C28D84|8D7C03  |81037C;
+STA.W TeleportPos.x                          ;C28D84|8D7C03  |81037C;
 LDA.W UNREACH_81BA10,X               ;C28D87|BD10BA  |81BA10;
 AND.W #$00FF                         ;C28D8A|29FF00  |      ;
 ASL A                                ;C28D8D|0A      |      ;
 ASL A                                ;C28D8E|0A      |      ;
 ASL A                                ;C28D8F|0A      |      ;
 ASL A                                ;C28D90|0A      |      ;
-STA.W $037E                          ;C28D91|8D7E03  |81037E;
+STA.W TeleportPos.y                          ;C28D91|8D7E03  |81037E;
 LDA.W UNREACH_81BA0D,X               ;C28D94|BD0DBA  |81BA0D;
 AND.W #$00FF                         ;C28D97|29FF00  |      ;
 ASL A                                ;C28D9A|0A      |      ;
@@ -5848,10 +5850,10 @@ BMI UNREACH_C28DE8                   ;C28DC4|3022    |C28DE8;
 CMP.W current_map_number                          ;C28DC6|CD6A1C  |811C6A;
 BNE CODE_C28DDB                      ;C28DC9|D010    |C28DDB;
 LDA.W UNREACH_81BA0F,X               ;C28DCB|BD0FBA  |81BA0F;
-CMP.W $0378                          ;C28DCE|CD7803  |810378;
+CMP.W PlayerPosInt.x                          ;C28DCE|CD7803  |810378;
 BNE CODE_C28DDB                      ;C28DD1|D008    |C28DDB;
 LDA.W UNREACH_81BA10,X               ;C28DD3|BD10BA  |81BA10;
-CMP.W $037A                          ;C28DD6|CD7A03  |81037A;
+CMP.W PlayerPosInt.y                          ;C28DD6|CD7A03  |81037A;
 BEQ CODE_C28DE9                      ;C28DD9|F00E    |C28DE9;
 
 CODE_C28DDB:
@@ -5967,9 +5969,9 @@ JSL.L CODE_838270                    ;C28EA2|22708283|838270;
 SEP #$20                             ;C28EA6|E220    |      ;
 RTL                                  ;C28EA8|6B      |      ;
 REP #$20                             ;C28EA9|C220    |      ;
-LDA.W $0374                          ;C28EAB|AD7403  |810374;
+LDA.W PlayerPosReal.x                          ;C28EAB|AD7403  |810374;
 STA.B $16                            ;C28EAE|8516    |000016;
-LDA.W $0376                          ;C28EB0|AD7603  |810376;
+LDA.W PlayerPosReal.y                          ;C28EB0|AD7603  |810376;
 SEC                                  ;C28EB3|38      |      ;
 SBC.W #$0010                         ;C28EB4|E91000  |      ;
 STA.B $18                            ;C28EB7|8518    |000018;
@@ -5999,10 +6001,10 @@ CODE_C28EF8:
 PHP                                  ;C28EF8|08      |      ;
 REP #$20                             ;C28EF9|C220    |      ;
 LDY.W #$0000                         ;C28EFB|A00000  |      ;
-LDA.W $033A                          ;C28EFE|AD3A03  |81033A;
+LDA.W bg1_hofs                          ;C28EFE|AD3A03  |81033A;
 AND.W #$FFF0                         ;C28F01|29F0FF  |      ;
 STA.W $1C77                          ;C28F04|8D771C  |811C77;
-LDA.W $033C                          ;C28F07|AD3C03  |81033C;
+LDA.W bg1_vofs                          ;C28F07|AD3C03  |81033C;
 AND.W #$FFF0                         ;C28F0A|29F0FF  |      ;
 STA.W $1C79                          ;C28F0D|8D791C  |811C79;
 LDA.W $1C75                          ;C28F10|AD751C  |811C75;
@@ -6566,10 +6568,10 @@ CODE_C29463:
 LDA.W UNREACH_81B69A,X               ;C29463|BD9AB6  |81B69A;
 CMP.B #$FF                           ;C29466|C9FF    |      ;
 BEQ CODE_C2948E                      ;C29468|F024    |C2948E;
-CMP.W $0378                          ;C2946A|CD7803  |810378;
+CMP.W PlayerPosInt.x                          ;C2946A|CD7803  |810378;
 BNE CODE_C29487                      ;C2946D|D018    |C29487;
 LDA.W UNREACH_81B69B,X               ;C2946F|BD9BB6  |81B69B;
-CMP.W $037A                          ;C29472|CD7A03  |81037A;
+CMP.W PlayerPosInt.y                          ;C29472|CD7A03  |81037A;
 BNE CODE_C29487                      ;C29475|D010    |C29487;
 LDA.W UNREACH_81B69D,X               ;C29477|BD9DB6  |81B69D;
 XBA                                  ;C2947A|EB      |      ;
@@ -6962,7 +6964,7 @@ TAX                                  ;C2987C|AA      |      ;
 LDA.L UNREACH_8298C1,X               ;C2987D|BFC19882|8298C1;
 LDX.B $46                            ;C29881|A646    |000046;
 ORA.B #$40                           ;C29883|0940    |      ;
-STA.W $4300,X                        ;C29885|9D0043  |814300;
+STA.W DMAP0,X                        ;C29885|9D0043  |814300;
 LDA.B $02,S                          ;C29888|A302    |000002;
 STA.W $4307,X                        ;C2988A|9D0743  |814307;
 BRA CODE_C298A2                      ;C2988D|8013    |C298A2;
@@ -6976,17 +6978,17 @@ PHA                                  ;C29897|48      |      ;
 TAX                                  ;C29898|AA      |      ;
 LDA.L UNREACH_8298C1,X               ;C29899|BFC19882|8298C1;
 LDX.B $46                            ;C2989D|A646    |000046;
-STA.W $4300,X                        ;C2989F|9D0043  |814300;
+STA.W DMAP0,X                        ;C2989F|9D0043  |814300;
 
 CODE_C298A2:
 PLA                                  ;C298A2|68      |      ;
-STA.W $4301,X                        ;C298A3|9D0143  |814301;
+STA.W BBAD0,X                        ;C298A3|9D0143  |814301;
 REP #$20                             ;C298A6|C220    |      ;
 TYA                                  ;C298A8|98      |      ;
-STA.W $4302,X                        ;C298A9|9D0243  |814302;
+STA.W A1T0L,X                        ;C298A9|9D0243  |814302;
 SEP #$20                             ;C298AC|E220    |      ;
 PLA                                  ;C298AE|68      |      ;
-STA.W $4304,X                        ;C298AF|9D0443  |814304;
+STA.W A1B0,X                        ;C298AF|9D0443  |814304;
 LDA.B $44                            ;C298B2|A544    |000044;
 TSB.B $42                            ;C298B4|0442    |000042;
 ASL.B $44                            ;C298B6|0644    |000044;
@@ -7019,7 +7021,7 @@ BRL CODE_C299DD                      ;C2990F|82CB00  |C299DD;
 CODE_C29912:
 BIT.B #$0F                           ;C29912|890F    |      ;
 BNE CODE_C2991D                      ;C29914|D007    |C2991D;
-LDA.W $0322                          ;C29916|AD2203  |810322;
+LDA.W buttons_pressed                          ;C29916|AD2203  |810322;
 BIT.B #$80                           ;C29919|8980    |      ;
 BNE CODE_C2991E                      ;C2991B|D001    |C2991E;
 
@@ -7083,7 +7085,7 @@ BIT.W #$CF80                         ;C2998B|8980CF  |      ;
 BEQ CODE_C29988                      ;C2998E|F0F8    |C29988;
 LDA.W #$C0C0                         ;C29990|A9C0C0  |      ;
 TRB.W $032A                          ;C29993|1C2A03  |81032A;
-STZ.W $0322                          ;C29996|9C2203  |810322;
+STZ.W buttons_pressed                          ;C29996|9C2203  |810322;
 SEP #$20                             ;C29999|E220    |      ;
 BRK #$07                             ;C2999B|0007    |      ;
 JSR.W clearOsd                    ;C2999D|2055A3  |C2A355;
@@ -7098,7 +7100,7 @@ JSL.L wait_vblank                    ;C299AD|22B7B182|82B1B7;
 LDX.W $0312                          ;C299B1|AE1203  |810312;
 DEX                                  ;C299B4|CA      |      ;
 STX.W $0312                          ;C299B5|8E1203  |810312;
-LDA.W $0322                          ;C299B8|AD2203  |810322;
+LDA.W buttons_pressed                          ;C299B8|AD2203  |810322;
 RTS                                  ;C299BB|60      |      ;
 
 print_soul_names:
@@ -7401,17 +7403,17 @@ LDA.B #$06                           ;C29BB1|A906    |      ;
 STA.W $212C                          ;C29BB3|8D2C21  |81212C;
 STZ.W $2131                          ;C29BB6|9C3121  |812131;
 STZ.W $2123                          ;C29BB9|9C2321  |812123;
-LDX.W $033A                          ;C29BBC|AE3A03  |81033A;
+LDX.W bg1_hofs                          ;C29BBC|AE3A03  |81033A;
 STX.W $0466                          ;C29BBF|8E6604  |810466;
-LDX.W $033C                          ;C29BC2|AE3C03  |81033C;
+LDX.W bg1_vofs                          ;C29BC2|AE3C03  |81033C;
 STX.W $0468                          ;C29BC5|8E6804  |810468;
 LDX.W $033E                          ;C29BC8|AE3E03  |81033E;
 STX.W $046A                          ;C29BCB|8E6A04  |81046A;
 LDX.W $0340                          ;C29BCE|AE4003  |810340;
 STX.W $046C                          ;C29BD1|8E6C04  |81046C;
 LDX.W #$0000                         ;C29BD4|A20000  |      ;
-STX.W $033A                          ;C29BD7|8E3A03  |81033A;
-STX.W $033C                          ;C29BDA|8E3C03  |81033C;
+STX.W bg1_hofs                          ;C29BD7|8E3A03  |81033A;
+STX.W bg1_vofs                          ;C29BDA|8E3C03  |81033C;
 STX.W $033E                          ;C29BDD|8E3E03  |81033E;
 STX.W $0340                          ;C29BE0|8E4003  |810340;
 STZ.W $043B                          ;C29BE3|9C3B04  |81043B;
@@ -7429,9 +7431,9 @@ TRB.W $032B                          ;C29C03|1C2B03  |81032B;
 STZ.W $0323                          ;C29C06|9C2303  |810323;
 JSL.L wait_vblank                    ;C29C09|22B7B182|82B1B7;
 LDX.W $0466                          ;C29C0D|AE6604  |810466;
-STX.W $033A                          ;C29C10|8E3A03  |81033A;
+STX.W bg1_hofs                          ;C29C10|8E3A03  |81033A;
 LDX.W $0468                          ;C29C13|AE6804  |810468;
-STX.W $033C                          ;C29C16|8E3C03  |81033C;
+STX.W bg1_vofs                          ;C29C16|8E3C03  |81033C;
 LDX.W $046A                          ;C29C19|AE6A04  |81046A;
 STX.W $033E                          ;C29C1C|8E3E03  |81033E;
 LDX.W $046C                          ;C29C1F|AE6C04  |81046C;
@@ -8118,7 +8120,7 @@ giveItem:
     STA.W $1B1E,Y                        ;C2A11F|991E1B  |811B1E;
     BPL .already_equipped                      ;C2A122|1005    |C2A129;
     AND.B #$7F
-    STA Equipment.item
+    STA.W Equipment.item
 
 .already_equipped:
     PLA                                  ;C2A129|68      |      ;
@@ -8568,19 +8570,19 @@ RTS                                  ;C2A41A|60      |      ;
 
 CODE_C2A41B:
 LDX.W #$2000                         ;C2A41B|A20020  |      ;
-STX.W $2116                          ;C2A41E|8E1621  |812116;
+STX.W VMADDL                          ;C2A41E|8E1621  |812116;
 LDA.B #$01                           ;C2A421|A901    |      ;
-STA.W $4300                          ;C2A423|8D0043  |814300;
+STA.W DMAP0                          ;C2A423|8D0043  |814300;
 LDA.B #$18                           ;C2A426|A918    |      ;
-STA.W $4301                          ;C2A428|8D0143  |814301;
+STA.W BBAD0                          ;C2A428|8D0143  |814301;
 LDX.W #$B000                         ;C2A42B|A200B0  |      ;
-STX.W $4302                          ;C2A42E|8E0243  |814302;
+STX.W A1T0L                          ;C2A42E|8E0243  |814302;
 LDA.B #$89                           ;C2A431|A989    |      ;
-STA.W $4304                          ;C2A433|8D0443  |814304;
+STA.W A1B0                          ;C2A433|8D0443  |814304;
 LDX.W #$2000                         ;C2A436|A20020  |      ;
-STX.W $4305                          ;C2A439|8E0543  |814305;
+STX.W DAS0L                          ;C2A439|8E0543  |814305;
 LDA.B #$01                           ;C2A43C|A901    |      ;
-STA.W $420B                          ;C2A43E|8D0B42  |81420B;
+STA.W MDMAEN                          ;C2A43E|8D0B42  |81420B;
 RTS                                  ;C2A441|60      |      ;
 
 CODE_C2A442:
@@ -8605,19 +8607,19 @@ SEP #$20                             ;C2A464|E220    |      ;
 PLB                                  ;C2A466|AB      |      ;
 RTS                                  ;C2A467|60      |      ;
 LDX.W #$2000                         ;C2A468|A20020  |      ;
-STX.W $2116                          ;C2A46B|8E1621  |812116;
+STX.W VMADDL                          ;C2A46B|8E1621  |812116;
 LDA.B #$01                           ;C2A46E|A901    |      ;
-STA.W $4300                          ;C2A470|8D0043  |814300;
+STA.W DMAP0                          ;C2A470|8D0043  |814300;
 LDA.B #$18                           ;C2A473|A918    |      ;
-STA.W $4301                          ;C2A475|8D0143  |814301;
+STA.W BBAD0                          ;C2A475|8D0143  |814301;
 LDX.W #$C000                         ;C2A478|A200C0  |      ;
-STX.W $4302                          ;C2A47B|8E0243  |814302;
+STX.W A1T0L                          ;C2A47B|8E0243  |814302;
 LDA.B #$7F                           ;C2A47E|A97F    |      ;
-STA.W $4304                          ;C2A480|8D0443  |814304;
+STA.W A1B0                          ;C2A480|8D0443  |814304;
 LDX.W #$2000                         ;C2A483|A20020  |      ;
-STX.W $4305                          ;C2A486|8E0543  |814305;
+STX.W DAS0L                          ;C2A486|8E0543  |814305;
 LDA.B #$01                           ;C2A489|A901    |      ;
-STA.W $420B                          ;C2A48B|8D0B42  |81420B;
+STA.W MDMAEN                          ;C2A48B|8D0B42  |81420B;
 PHB                                  ;C2A48E|8B      |      ;
 REP #$20                             ;C2A48F|C220    |      ;
 LDX.W #$F300                         ;C2A491|A200F3  |      ;
@@ -8642,19 +8644,19 @@ PLX                                  ;C2A4B5|FA      |      ;
 TAX                                  ;C2A4B6|AA      |      ;
 SEP #$20                             ;C2A4B7|E220    |      ;
 LDY.W #$2600                         ;C2A4B9|A00026  |      ;
-STY.W $2116                          ;C2A4BC|8C1621  |812116;
+STY.W VMADDL                          ;C2A4BC|8C1621  |812116;
 LDA.B #$01                           ;C2A4BF|A901    |      ;
-STA.W $4300                          ;C2A4C1|8D0043  |814300;
+STA.W DMAP0                          ;C2A4C1|8D0043  |814300;
 LDA.B #$18                           ;C2A4C4|A918    |      ;
-STA.W $4301                          ;C2A4C6|8D0143  |814301;
+STA.W BBAD0                          ;C2A4C6|8D0143  |814301;
 LDY.W UNREACH_81FB88,X               ;C2A4C9|BC88FB  |81FB88;
-STY.W $4302                          ;C2A4CC|8C0243  |814302;
+STY.W A1T0L                          ;C2A4CC|8C0243  |814302;
 LDA.W UNREACH_81FB8A,X               ;C2A4CF|BD8AFB  |81FB8A;
-STA.W $4304                          ;C2A4D2|8D0443  |814304;
+STA.W A1B0                          ;C2A4D2|8D0443  |814304;
 LDY.W #$0800                         ;C2A4D5|A00008  |      ;
-STY.W $4305                          ;C2A4D8|8C0543  |814305;
+STY.W DAS0L                          ;C2A4D8|8C0543  |814305;
 LDA.B #$01                           ;C2A4DB|A901    |      ;
-STA.W $420B                          ;C2A4DD|8D0B42  |81420B;
+STA.W MDMAEN                          ;C2A4DD|8D0B42  |81420B;
 REP #$20                             ;C2A4E0|C220    |      ;
 PHB                                  ;C2A4E2|8B      |      ;
 LDA.W UNREACH_81FBA0,X               ;C2A4E3|BDA0FB  |81FBA0;
@@ -9013,24 +9015,27 @@ printOsdStringFromBank2:
     STA.L $7F6FBE, X
     BRL .loop
 
-.load_new_txt_ptr:
-    db $B9,$01,$00,$EB,$B9,$00,$00,$A8   ;C2A7F4|        |000001;
-    db $82,$6E,$FF                       ;C2A7FC|        |C2A76D;
+.load_new_txt_ptr: ; $13
+    LDA.W 1, Y
+    XBA
+    LDA.W 0, Y
+    TAY
+    BRL .loop
 
-.print_spaces:
-    LDA.B #$20                           ;C2A7FF|A920    |      ;
-    XBA                                  ;C2A801|EB      |      ;
-    LDA.W $0000,Y                        ;C2A802|B90000  |820000;
-    INY                                  ;C2A805|C8      |      ;
+.print_spaces: ; $14
+    LDA.B #$20
+    XBA
+    LDA.W 0, Y
+    INY
 
-.space_loop:
+..space_loop:
     XBA
     STA.L L3_Text, X
     INX
     INX
     XBA
     DEC A
-    BNE .space_loop
+    BNE ..space_loop
     BRL .loop
 
 .unknown2:
@@ -9281,7 +9286,7 @@ printOsdStringFromBank2:
     REP #$20
     PLA
     CLC
-    ADC.W #$0040
+    ADC.W #!Row_Width
     TAX
     PHA
     SEP #$20
@@ -9623,56 +9628,56 @@ STA.L $7F7002,X                      ;C2ABC0|9F02707F|7F7002;
 RTS                                  ;C2ABC4|60      |      ;
 
 clearTextbox:
-PHY                                  ;C2ABC5|5A      |      ;
-LDA.L L3_Text,X                      ;C2ABC6|BF00707F|7F7000;
-CMP.B #$01                           ;C2ABCA|C901    |      ;
-BNE CODE_C2AC10                      ;C2ABCC|D042    |C2AC10;
-STZ.B $00                            ;C2ABCE|6400    |000000;
-STZ.B $01                            ;C2ABD0|6401    |000001;
-PHX                                  ;C2ABD2|DA      |      ;
+    PHY
+    LDA.L L3_Text, X
+    CMP.B #1
+    BNE .end
+    STZ.B $00
+    STZ.B $01
+    PHX
 
-CODE_C2ABD3:
-LDA.L L3_Text,X                      ;C2ABD3|BF00707F|7F7000;
-CMP.B #$02                           ;C2ABD7|C902    |      ;
-BEQ CODE_C2ABE1                      ;C2ABD9|F006    |C2ABE1;
-INX                                  ;C2ABDB|E8      |      ;
-INX                                  ;C2ABDC|E8      |      ;
-INC.B $00                            ;C2ABDD|E600    |000000;
-BRA CODE_C2ABD3                      ;C2ABDF|80F2    |C2ABD3;
+.first_loop:
+    LDA.L L3_Text, X
+    CMP.B #2
+    BEQ ..break
+    INX
+    INX
+    INC.B 0
+    BRA .first_loop
 
-CODE_C2ABE1:
-PLX                                  ;C2ABE1|FA      |      ;
+..break:
+    PLX
 
-CODE_C2ABE2:
-REP #$20                             ;C2ABE2|C220    |      ;
-LDA.B $00                            ;C2ABE4|A500    |000000;
-STA.B $0C                            ;C2ABE6|850C    |00000C;
-PHX                                  ;C2ABE8|DA      |      ;
-LDA.W #$2000                         ;C2ABE9|A90020  |      ;
+.second_loop:
+    REP #$20
+    LDA.B $00
+    STA.B $0C
+    PHX
+    LDA.W #' '<<8
 
-CODE_C2ABEC:
-STA.L L3_Text,X                      ;C2ABEC|9F00707F|7F7000;
-INX                                  ;C2ABF0|E8      |      ;
-INX                                  ;C2ABF1|E8      |      ;
-DEC.B $0C                            ;C2ABF2|C60C    |00000C;
-BNE CODE_C2ABEC                      ;C2ABF4|D0F6    |C2ABEC;
-LDA.L L3_Text,X                      ;C2ABF6|BF00707F|7F7000;
-TAY                                  ;C2ABFA|A8      |      ;
-LDA.W #$2000                         ;C2ABFB|A90020  |      ;
-STA.L L3_Text,X                      ;C2ABFE|9F00707F|7F7000;
-PLX                                  ;C2AC02|FA      |      ;
-TXA                                  ;C2AC03|8A      |      ;
-CLC                                  ;C2AC04|18      |      ;
-ADC.W #$0040                         ;C2AC05|694000  |      ;
-TAX                                  ;C2AC08|AA      |      ;
-SEP #$20                             ;C2AC09|E220    |      ;
-TYA                                  ;C2AC0B|98      |      ;
-CMP.B #$06                           ;C2AC0C|C906    |      ;
-BNE CODE_C2ABE2                      ;C2AC0E|D0D2    |C2ABE2;
+..inner_loop:
+    STA.L L3_Text, X
+    INX
+    INX
+    DEC.B $0C
+    BNE ..inner_loop
+    LDA.L L3_Text, X
+    TAY
+    LDA.W #$2000
+    STA.L L3_Text,X
+    PLX
+    TXA
+    CLC
+    ADC.W #$0040
+    TAX
+    SEP #$20
+    TYA
+    CMP.B #$06
+    BNE .second_loop
 
-CODE_C2AC10:
-PLY                                  ;C2AC10|7A      |      ;
-RTL                                  ;C2AC11|6B      |      ;
+.end:
+    PLY
+    RTL
 
 printOsdStringFromBankX:
 PHP                                  ;C2AC12|08      |      ;
@@ -9854,7 +9859,7 @@ db $7F,$EB,$AD,$EB,$03,$9F,$BF,$6F   ;C2AD23|        |EBADEB;
 db $7F,$EB                           ;C2AD2B|        |2420EB;
 
 CODE_C2AD2D:
-JSR.W CODE_C2B124                    ;C2AD2D|2024B1  |C2B124;
+JSR.W print_string_with_delay                    ;C2AD2D|2024B1  |C2B124;
 BRL CODE_C2AC58                      ;C2AD30|8225FF  |C2AC58;
 
 CODE_C2AD33:
@@ -10133,83 +10138,83 @@ PLP                                  ;C2AF57|28      |      ;
 RTL                                  ;C2AF58|6B      |      ;
 
 CODE_C2AF59:
-LDA.W $0000,Y                        ;C2AF59|B90000  |800000;
-BMI CODE_C2AF6C                      ;C2AF5C|300E    |C2AF6C;
-INY                                  ;C2AF5E|C8      |      ;
-CMP.B #$20                           ;C2AF5F|C920    |      ;
-BNE CODE_C2AF6B                      ;C2AF61|D008    |C2AF6B;
-LDA.L L3_Text,X                      ;C2AF63|BF00707F|7F7000;
-CMP.B #$08                           ;C2AF67|C908    |      ;
-BEQ CODE_C2AF59                      ;C2AF69|F0EE    |C2AF59;
+    LDA.W 0, Y
+    BMI .do_lookup ; do a lookup if the high bit ($80) is set
+    INY
+    CMP.B #' '
+    BNE .end
+    LDA.L L3_Text,X
+    CMP.B #$08
+    BEQ CODE_C2AF59
 
-CODE_C2AF6B:
-RTS                                  ;C2AF6B|60      |      ;
+.end:
+    RTS
 
-CODE_C2AF6C:
-INY                                  ;C2AF6C|C8      |      ;
-PHB                                  ;C2AF6D|8B      |      ;
-PHY                                  ;C2AF6E|5A      |      ;
-REP #$20                             ;C2AF6F|C220    |      ;
-AND.W #$007F                         ;C2AF71|297F00  |      ;
-PHA                                  ;C2AF74|48      |      ;
-ASL A                                ;C2AF75|0A      |      ;
-CLC                                  ;C2AF76|18      |      ;
-ADC.B $01,S                          ;C2AF77|6301    |000001;
-ASL A                                ;C2AF79|0A      |      ;
-ASL A                                ;C2AF7A|0A      |      ;
-TAY                                  ;C2AF7B|A8      |      ;
-PLA                                  ;C2AF7C|68      |      ;
-SEP #$20                             ;C2AF7D|E220    |      ;
-LDA.B #$86                           ;C2AF7F|A986    |      ;
-PHA                                  ;C2AF81|48      |      ;
-PLB                                  ;C2AF82|AB      |      ;
-LDA.B #$0C                           ;C2AF83|A90C    |      ;
-STA.B $14                            ;C2AF85|8514    |000014;
-LDA.W $03EB                          ;C2AF87|ADEB03  |8603EB;
-XBA                                  ;C2AF8A|EB      |      ;
+.do_lookup:
+    INY
+    PHB
+    PHY
+    REP #$20
+    AND.W #datasize(Words_LUT)/!WORDLUT_ENTRY_SIZE-1
+    PHA
+    ASL A
+    CLC
+    ADC.B 1, S
+    ASL A
+    ASL A
+    TAY
+    PLA
+    SEP #$20
+    LDA.B #$86
+    PHA
+    PLB
+    LDA.B #$0C
+    STA.B $14
+    LDA.W $03EB
+    XBA
 
-CODE_C2AF8B:
-LDA.W UNREACH_86C000,Y               ;C2AF8B|B900C0  |86C000;
-BEQ CODE_C2AFB4                      ;C2AF8E|F024    |C2AFB4;
-INY                                  ;C2AF90|C8      |      ;
-ORA.W $03FB                          ;C2AF91|0DFB03  |8603FB;
-REP #$20                             ;C2AF94|C220    |      ;
-STA.L L3_Text,X                      ;C2AF96|9F00707F|7F7000;
-INX                                  ;C2AF9A|E8      |      ;
-INX                                  ;C2AF9B|E8      |      ;
-BIT.W #$0200                         ;C2AF9C|890002  |      ;
-BNE CODE_C2AFAB                      ;C2AF9F|D00A    |C2AFAB;
-ORA.W #$0100                         ;C2AFA1|090001  |      ;
-STA.L $7F6FBE,X                      ;C2AFA4|9FBE6F7F|7F6FBE;
-AND.W #$FEFF                         ;C2AFA8|29FFFE  |      ;
+.print_loop:
+    LDA.W Words_LUT, Y
+    BEQ ..break
+    INY
+    ORA.W $03FB
+    REP #$20
+    STA.L L3_Text, X
+    INX
+    INX
+    BIT.W #$0200
+    BNE +
+    ORA.W #$0100
+    STA.L $7F6FBE, X
+    AND.W #$FEFF
 
-CODE_C2AFAB:
-SEP #$20                             ;C2AFAB|E220    |      ;
-JSR.W CODE_C2B124                    ;C2AFAD|2024B1  |C2B124;
-DEC.B $14                            ;C2AFB0|C614    |000014;
-BNE CODE_C2AF8B                      ;C2AFB2|D0D7    |C2AF8B;
++:
+    SEP #$20
+    JSR.W print_string_with_delay
+    DEC.B $14
+    BNE .print_loop
 
-CODE_C2AFB4:
-LDA.L L3_Text,X                      ;C2AFB4|BF00707F|7F7000;
-CMP.B #$08                           ;C2AFB8|C908    |      ;
-BEQ CODE_C2AFD8                      ;C2AFBA|F01C    |C2AFD8;
-LDA.B #$20                           ;C2AFBC|A920    |      ;
-ORA.W $03FB                          ;C2AFBE|0DFB03  |8603FB;
-REP #$20                             ;C2AFC1|C220    |      ;
-STA.L L3_Text,X                      ;C2AFC3|9F00707F|7F7000;
-INX                                  ;C2AFC7|E8      |      ;
-INX                                  ;C2AFC8|E8      |      ;
-BIT.W #$0200                         ;C2AFC9|890002  |      ;
-BNE CODE_C2AFD8                      ;C2AFCC|D00A    |C2AFD8;
-ORA.W #$0100                         ;C2AFCE|090001  |      ;
-STA.L $7F6FBE,X                      ;C2AFD1|9FBE6F7F|7F6FBE;
-AND.W #$FEFF                         ;C2AFD5|29FFFE  |      ;
+..break:
+    LDA.L L3_Text, X
+    CMP.B #$08
+    BEQ .out
+    LDA.B #$20
+    ORA.W $03FB
+    REP #$20
+    STA.L L3_Text, X
+    INX
+    INX
+    BIT.W #$0200
+    BNE .out
+    ORA.W #$0100
+    STA.L $7F6FBE, X
+    AND.W #$FEFF
 
-CODE_C2AFD8:
-SEP #$20                             ;C2AFD8|E220    |      ;
-PLY                                  ;C2AFDA|7A      |      ;
-PLB                                  ;C2AFDB|AB      |      ;
-BRL CODE_C2AF59                      ;C2AFDC|827AFF  |C2AF59;
+.out:
+    SEP #$20
+    PLY
+    PLB
+    BRL CODE_C2AF59
 
 CODE_C2AFDF:
 LDA.W $0000,Y                        ;C2AFDF|B90000  |820000;
@@ -10232,7 +10237,7 @@ AND.W #$FEFF                         ;C2AFFF|29FFFE  |      ;
 
 CODE_C2B002:
 SEP #$20                             ;C2B002|E220    |      ;
-JSR.W CODE_C2B124                    ;C2B004|2024B1  |C2B124;
+JSR.W print_string_with_delay                    ;C2B004|2024B1  |C2B124;
 BRA CODE_C2AFDF                      ;C2B007|80D6    |C2AFDF;
 
 CODE_C2B009:
@@ -10391,7 +10396,7 @@ PLY                                  ;C2B121|7A      |      ;
 PLX                                  ;C2B122|FA      |      ;
 RTS                                  ;C2B123|60      |      ;
 
-CODE_C2B124:
+print_string_with_delay:
 AND.B #$7F                           ;C2B124|297F    |      ;
 CMP.B #$20                           ;C2B126|C920    |      ;
 BNE CODE_C2B12B                      ;C2B128|D001    |C2B12B;
@@ -10448,49 +10453,57 @@ PHP                                  ;C2B176|08      |      ;
 SEP #$20                             ;C2B177|E220    |      ;
 JSL.L wait_vblank                    ;C2B179|22B7B182|82B1B7;
 LDA.B #$A1                           ;C2B17D|A9A1    |      ;
-STA.W $4200                          ;C2B17F|8D0042  |814200;
+STA.W NMITIMEN                          ;C2B17F|8D0042  |814200;
 LDA.B #$0F                           ;C2B182|A90F    |      ;
 STA.W $2100                          ;C2B184|8D0021  |812100;
 INC.W vblank_interrupt_enabled                          ;C2B187|EED403  |8103D4;
 PLP                                  ;C2B18A|28      |      ;
 RTL                                  ;C2B18B|6B      |      ;
-PHP                                  ;C2B18C|08      |      ;
-SEP #$20                             ;C2B18D|E220    |      ;
-JSL.L wait_vblank                    ;C2B18F|22B7B182|82B1B7;
-LDA.B #$01                           ;C2B193|A901    |      ;
-STA.W $4200                          ;C2B195|8D0042  |814200;
-LDA.B #$80                           ;C2B198|A980    |      ;
-STA.W $2100                          ;C2B19A|8D0021  |812100;
-STZ.W vblank_interrupt_enabled                          ;C2B19D|9CD403  |8103D4;
-PLP                                  ;C2B1A0|28      |      ;
-RTL                                  ;C2B1A1|6B      |      ;
-LDA.W $4210                          ;C2B1A2|AD1042  |814210;
-LDA.B #$A1                           ;C2B1A5|A9A1    |      ;
-STA.W $4200                          ;C2B1A7|8D0042  |814200;
-INC.W vblank_interrupt_enabled                          ;C2B1AA|EED403  |8103D4;
-RTL                                  ;C2B1AD|6B      |      ;
-LDA.B #$01                           ;C2B1AE|A901    |      ;
-STA.W $4200                          ;C2B1B0|8D0042  |814200;
-STZ.W vblank_interrupt_enabled                          ;C2B1B3|9CD403  |8103D4;
-RTL                                  ;C2B1B6|6B      |      ;
-PHP                                  ;C2B1B7|08      |      ;
-SEP #$20                             ;C2B1B8|E220    |      ;
-PHA                                  ;C2B1BA|48      |      ;
-LDA.W $4210                          ;C2B1BB|AD1042  |814210;
 
-CODE_C2B1BE:
-LDA.W $4210                          ;C2B1BE|AD1042  |814210;
-BPL CODE_C2B1BE                      ;C2B1C1|10FB    |C2B1BE;
-LDA.W $4210                          ;C2B1C3|AD1042  |814210;
-PLA                                  ;C2B1C6|68      |      ;
-PLP                                  ;C2B1C7|28      |      ;
-RTL                                  ;C2B1C8|6B      |      ;
+CODE_C2B18C:
+    PHP
+    SEP #$20
+    JSL.L wait_vblank
+    LDA.B #1 ; enable joypad readout, but disable NMI v and h count
+    STA.W NMITIMEN
+    LDA.B #$80 ; turn screen off
+    STA.W INIDISP
+    STZ.W vblank_interrupt_enabled
+    PLP
+    RTL
 
-CODE_C2B1C9:
-JSL.L wait_vblank                    ;C2B1C9|22B7B182|82B1B7;
-DEC A                                ;C2B1CD|3A      |      ;
-BNE CODE_C2B1C9                      ;C2B1CE|D0F9    |C2B1C9;
-RTL                                  ;C2B1D0|6B      |      ;
+enable_interrupts:
+    LDA.W RDNMI ; ack the nmi flag
+    LDA.B #%10100001 ; enable NMI, V-Count and Joypad interrupts
+    STA.W NMITIMEN
+    INC.W vblank_interrupt_enabled
+    RTL
+
+disable_vblank_interrupt:
+    LDA.B #1
+    STA.W NMITIMEN ; enable joypad readout, but disable NMI v and h count
+    STZ.W vblank_interrupt_enabled
+    RTL
+
+wait_vblank:
+    PHP
+    SEP #$20
+    PHA
+    LDA.W RDNMI ; reset vblank interrupt bit
+.loop:
+    LDA.W RDNMI ; wait for vblank interrupt
+    BPL .loop
+
+    LDA.W RDNMI
+    PLA
+    PLP
+    RTL
+
+wait_for_n_vblanks:
+JSL.L wait_vblank
+DEC A
+BNE wait_for_n_vblanks
+RTL
 
 multiply:
     STA.L WRMPYA                        ;C2B1D1|8F024200|004202;
@@ -10923,7 +10936,7 @@ PHA                                  ;C2B460|48      |      ;
 XBA                                  ;C2B461|EB      |      ;
 CLC                                  ;C2B462|18      |      ;
 ADC.W #$0000                         ;C2B463|690000  |      ;
-STA.W $2116                          ;C2B466|8D1621  |812116;
+STA.W VMADDL                          ;C2B466|8D1621  |812116;
 LDX.W #$0029                         ;C2B469|A22900  |      ;
 JSR.W CODE_C2B731                    ;C2B46C|2031B7  |C2B731;
 LDA.B $01,S                          ;C2B46F|A301    |000001;
@@ -11021,7 +11034,7 @@ RTS                                  ;C2B517|60      |      ;
 
 CODE_C2B518:
 LDX.W #$0000                         ;C2B518|A20000  |      ;
-STX.W $2116                          ;C2B51B|8E1621  |812116;
+STX.W VMADDL                          ;C2B51B|8E1621  |812116;
 SEP #$20                             ;C2B51E|E220    |      ;
 LDX.W #$0000                         ;C2B520|A20000  |      ;
 
@@ -11296,7 +11309,7 @@ STX.B $25                            ;C2B708|8625    |000025;
 JSL.L CODE_82B272                    ;C2B70A|2272B282|82B272;
 SEP #$20                             ;C2B70E|E220    |      ;
 LDX.W #$0000                         ;C2B710|A20000  |      ;
-STX.W $2116                          ;C2B713|8E1621  |812116;
+STX.W VMADDL                          ;C2B713|8E1621  |812116;
 STZ.W $2115                          ;C2B716|9C1521  |812115;
 LDX.W #$0000                         ;C2B719|A20000  |      ;
 
@@ -11358,20 +11371,20 @@ PLP                                  ;C2B77C|28      |      ;
 RTS                                  ;C2B77D|60      |      ;
 
 CODE_C2B77E:
-JSR.W CODE_C2B964                    ;C2B77E|2064B9  |C2B964;
-BIT.B #$80                           ;C2B781|8980    |      ;
-BEQ CODE_C2B790                      ;C2B783|F00B    |C2B790;
-BIT.B #$40                           ;C2B785|8940    |      ;
-BEQ CODE_C2B78A                      ;C2B787|F001    |C2B78A;
-RTS                                  ;C2B789|60      |      ;
+    JSR.W CODE_C2B964
+    BIT.B #$80
+    BEQ CODE_C2B790
+    BIT.B #$40
+    BEQ CODE_C2B78A
+    RTS
 
 CODE_C2B78A:
-ORA.B #$40                           ;C2B78A|0940    |      ;
-JSR.W CODE_C2B96F                    ;C2B78C|206FB9  |C2B96F;
-RTS                                  ;C2B78F|60      |      ;
+    ORA.B #$40
+    JSR.W CODE_C2B96F
+    RTS
 
 CODE_C2B790:
-STA.W current_map_number                          ;C2B790|8D6A1C  |811C6A;
+STA.W current_map_number
 PHY                                  ;C2B793|5A      |      ;
 REP #$20                             ;C2B794|C220    |      ;
 AND.W #$00FF                         ;C2B796|29FF00  |      ;
@@ -11562,22 +11575,22 @@ RTS                                  ;C2B8F3|60      |      ;
 
 CODE_C2B8F4:
 LDA.B #$F0                           ;C2B8F4|A9F0    |      ;
-STA.W $2140                          ;C2B8F6|8D4021  |812140;
+STA.W APUI00                          ;C2B8F6|8D4021  |812140;
 
 CODE_C2B8F9:
-LDA.W $2140                          ;C2B8F9|AD4021  |812140;
+LDA.W APUI00                          ;C2B8F9|AD4021  |812140;
 BNE CODE_C2B8F9                      ;C2B8FC|D0FB    |C2B8F9;
 LDA.B #$02                           ;C2B8FE|A902    |      ;
 JSL.L CODE_82B1C9                    ;C2B900|22C9B182|82B1C9;
 LDA.B #$FF                           ;C2B904|A9FF    |      ;
-STA.W $2140                          ;C2B906|8D4021  |812140;
+STA.W APUI00                          ;C2B906|8D4021  |812140;
 LDA.B #$02                           ;C2B909|A902    |      ;
 JSL.L CODE_82B1C9                    ;C2B90B|22C9B182|82B1C9;
 JSL.L CODE_85C5AC                    ;C2B90F|22ACC585|85C5AC;
 LDA.B #$03                           ;C2B913|A903    |      ;
 JSL.L CODE_82B1C9                    ;C2B915|22C9B182|82B1C9;
 LDA.W $031A                          ;C2B919|AD1A03  |81031A;
-STA.W $2140                          ;C2B91C|8D4021  |812140;
+STA.W APUI00                          ;C2B91C|8D4021  |812140;
 RTS                                  ;C2B91F|60      |      ;
 
 CODE_C2B920:
@@ -11706,6 +11719,8 @@ STA.W $0000,X                        ;C2B9CB|9D0000  |810000;
 PLP                                  ;C2B9CE|28      |      ;
 SEC                                  ;C2B9CF|38      |      ;
 RTS                                  ;C2B9D0|60      |      ;
+
+init_system:
 PHP                                  ;C2B9D1|08      |      ;
 SEP #$20                             ;C2B9D2|E220    |      ;
 REP #$10                             ;C2B9D4|C210    |      ;
@@ -11722,25 +11737,25 @@ STZ.W $2109                          ;C2B9F0|9C0921  |812109;
 STZ.W $210A                          ;C2B9F3|9C0A21  |81210A;
 STZ.W $210B                          ;C2B9F6|9C0B21  |81210B;
 STZ.W $210C                          ;C2B9F9|9C0C21  |81210C;
-STZ.W $210D                          ;C2B9FC|9C0D21  |81210D;
-STZ.W $210D                          ;C2B9FF|9C0D21  |81210D;
-STZ.W $210E                          ;C2BA02|9C0E21  |81210E;
-STZ.W $210E                          ;C2BA05|9C0E21  |81210E;
+STZ.W BG1HOFS                          ;C2B9FC|9C0D21  |81210D;
+STZ.W BG1HOFS                          ;C2B9FF|9C0D21  |81210D;
+STZ.W BG1VOFS                          ;C2BA02|9C0E21  |81210E;
+STZ.W BG1VOFS                          ;C2BA05|9C0E21  |81210E;
 STZ.W $210F                          ;C2BA08|9C0F21  |81210F;
 STZ.W $210F                          ;C2BA0B|9C0F21  |81210F;
 STZ.W $2110                          ;C2BA0E|9C1021  |812110;
 STZ.W $2110                          ;C2BA11|9C1021  |812110;
-STZ.W $2111                          ;C2BA14|9C1121  |812111;
-STZ.W $2111                          ;C2BA17|9C1121  |812111;
-STZ.W $2112                          ;C2BA1A|9C1221  |812112;
-STZ.W $2112                          ;C2BA1D|9C1221  |812112;
+STZ.W BG3HOFS                          ;C2BA14|9C1121  |812111;
+STZ.W BG3HOFS                          ;C2BA17|9C1121  |812111;
+STZ.W BG3VOFS                          ;C2BA1A|9C1221  |812112;
+STZ.W BG3VOFS                          ;C2BA1D|9C1221  |812112;
 STZ.W $2113                          ;C2BA20|9C1321  |812113;
 STZ.W $2113                          ;C2BA23|9C1321  |812113;
 STZ.W $2114                          ;C2BA26|9C1421  |812114;
 STZ.W $2114                          ;C2BA29|9C1421  |812114;
 LDA.B #$80                           ;C2BA2C|A980    |      ;
 STA.W $2115                          ;C2BA2E|8D1521  |812115;
-STZ.W $2116                          ;C2BA31|9C1621  |812116;
+STZ.W VMADDL                          ;C2BA31|9C1621  |812116;
 STZ.W $2117                          ;C2BA34|9C1721  |812117;
 LDA.B #$80                           ;C2BA37|A980    |      ;
 STA.W $211A                          ;C2BA39|8D1A21  |81211A;
@@ -11757,7 +11772,7 @@ STZ.W $211F                          ;C2BA56|9C1F21  |81211F;
 STZ.W $211F                          ;C2BA59|9C1F21  |81211F;
 STZ.W $2120                          ;C2BA5C|9C2021  |812120;
 STZ.W $2120                          ;C2BA5F|9C2021  |812120;
-STZ.W $2121                          ;C2BA62|9C2121  |812121;
+STZ.W CGADD                          ;C2BA62|9C2121  |812121;
 STZ.W $2123                          ;C2BA65|9C2321  |812123;
 STZ.W $2124                          ;C2BA68|9C2421  |812124;
 STZ.W $2125                          ;C2BA6B|9C2521  |812125;
@@ -11775,9 +11790,9 @@ LDA.B #$02                           ;C2BA8C|A902    |      ;
 STA.W $2130                          ;C2BA8E|8D3021  |812130;
 STZ.W $2131                          ;C2BA91|9C3121  |812131;
 LDA.B #$E0                           ;C2BA94|A9E0    |      ;
-STA.W $2132                          ;C2BA96|8D3221  |812132;
+STA.W COLDATA                          ;C2BA96|8D3221  |812132;
 STZ.W $2133                          ;C2BA99|9C3321  |812133;
-STZ.W $4200                          ;C2BA9C|9C0042  |814200;
+STZ.W NMITIMEN                          ;C2BA9C|9C0042  |814200;
 LDA.B #$FF                           ;C2BA9F|A9FF    |      ;
 STA.W $4201                          ;C2BAA1|8D0142  |814201;
 LDA.B #$00                           ;C2BAA4|A900    |      ;
@@ -11790,8 +11805,8 @@ STZ.W $4207                          ;C2BAB5|9C0742  |814207;
 STZ.W $4208                          ;C2BAB8|9C0842  |814208;
 STZ.W $4209                          ;C2BABB|9C0942  |814209;
 STZ.W $420A                          ;C2BABE|9C0A42  |81420A;
-STZ.W $420B                          ;C2BAC1|9C0B42  |81420B;
-STZ.W $420C                          ;C2BAC4|9C0C42  |81420C;
+STZ.W MDMAEN                          ;C2BAC1|9C0B42  |81420B;
+STZ.W HDMAEN                         ;C2BAC4|9C0C42  |81420C;
 LDA.B #$01                           ;C2BAC7|A901    |      ;
 STA.W $420D                          ;C2BAC9|8D0D42  |81420D;
 REP #$20                             ;C2BACC|C220    |      ;
@@ -11825,6 +11840,8 @@ LDA.B #$86                           ;C2BAFB|A986    |      ;
 STA.B $31                            ;C2BAFD|8531    |000031;
 PLP                                  ;C2BAFF|28      |      ;
 RTL                                  ;C2BB00|6B      |      ;
+
+init_window_system:
 SEP #$20                             ;C2BB01|E220    |      ;
 LDA.B #$01                           ;C2BB03|A901    |      ;
 STA.W $2101                          ;C2BB05|8D0121  |812101;
@@ -12177,19 +12194,36 @@ db $67,$6C,$61,$75,$62,$74,$20,$94   ;C2C536|        |00006C;
 db $61,$6E,$20,$69,$68,$72,$20,$47   ;C2C53E|        |00006E;
 db $6C,$5B,$63,$6B,$2E,$00,$09,$01   ;C2C546|        |00635B;
 db $58,$03,$8A,$45,$6E,$64,$65,$00   ;C2C54E|        |      ;
-db $01,$88,$00,$07,$16,$16,$01,$4C   ;C2C556|        |000088;
-db $01,$57,$65,$6C,$63,$68,$65,$72   ;C2C55E|        |000057;
-db $20,$53,$70,$69,$65,$6C,$73,$74   ;C2C566|        |C27053;
-db $61,$6E,$64,$20,$3F,$01,$18,$02   ;C2C56E|        |00006E;
-db $4E,$61,$6D,$65,$01,$26,$02,$4C   ;C2C576|        |006D61;
-db $65,$76,$01,$2E,$02,$41,$72,$65   ;C2C57E|        |000076;
-db $61,$01,$CA,$02,$20,$4E,$72,$31   ;C2C586|        |000001;
-db $3A,$0D,$0D,$0D,$20,$4E,$72,$32   ;C2C58E|        |      ;
-db $3A,$0D,$0D,$0D,$20,$4E,$72,$33   ;C2C596|        |      ;
-db $3A,$0D,$0D,$0D,$20,$4E,$72,$34   ;C2C59E|        |      ;
-db $3A,$0D,$0D,$0D,$20,$53,$70,$69   ;C2C5A6|        |      ;
-db $65,$6C,$73,$74,$61,$6E,$64,$20   ;C2C5AE|        |00006C;
-db $6C,$2A,$73,$63,$68,$65,$6E,$00   ;C2C5B6|        |00732A;
+
+txt_main_menu:
+; @NEW_TEXTBOX@
+; SETPOS $88 $00
+; DRAWBOX $16 $16
+; SETPOS $4C $01 "Welcher Spielstand ?" NO_NEWLINE
+; SETPOS $18 $02 "Name" NO_NEWLINE
+; SETPOS $26 $02 "Lev" NO_NEWLINE
+; SETPOS $2E $02 "Area" NO_NEWLINE
+; SETPOS $CA $02
+; " Nr1:\n\n\n" NO_NEWLINE
+; " Nr2:\n\n\n" NO_NEWLINE
+; " Nr3:\n\n\n" NO_NEWLINE
+; " Nr4:\n\n\n" NO_NEWLINE
+; " Spielstand löschen" NO_NEWLINE
+db $01,$88,$00
+db $07,$16,$16
+db $01,$4C,$01,$57,$65,$6C,$63,$68,$65,$72,$20,$53,$70,$69,$65,$6C,$73,$74,$61,$6E,$64,$20,$3F
+db $01,$18,$02,$4E,$61,$6D,$65
+db $01,$26,$02,$4C,$65,$76
+db $01,$2E,$02,$41,$72,$65,$61
+db $01,$CA,$02
+db $20,$4E,$72,$31,$3A,$0D,$0D,$0D
+db $20,$4E,$72,$32,$3A,$0D,$0D,$0D
+db $20,$4E,$72,$33,$3A,$0D,$0D,$0D
+db $20,$4E,$72,$34,$3A,$0D,$0D,$0D
+db $20,$53,$70,$69,$65,$6C,$73,$74,$61,$6E,$64,$20,$6C,$2A,$73,$63,$68,$65,$6E
+db $00
+; @ENDSTRING@
+
 db $01,$D4,$02,$02,$03,$01,$E8,$02   ;C2C5BE|        |0000D4;
 db $06,$02,$5C,$04,$01,$F2,$02,$06   ;C2C5C6|        |000002;
 db $01,$5E,$04,$00,$01,$94,$03,$02   ;C2C5CE|        |00005E;
@@ -12583,7 +12617,7 @@ choice_yes_no:
 ; @NEW_TEXTBOX@
 ; SETPOS $88 2
 ; DRAWBOX 5 4
-; " Ja" NEWLINE NEWLINE
+; " Ja\n\n" NO_NEWLINE
 ; " Nein" NO_NEWLINE
 ; SETPOS $0A 3
 db $01,$88,$02
@@ -12611,8 +12645,8 @@ choice_record_move_quit:
 ; @NEW_TEXTBOX@
 ; SETPOS 8 2
 ; DRAWBOX 9 6
-; " Sichern" NEWLINE NEWLINE
-; " Bewegen" NEWLINE NEWLINE
+; " Sichern\n\n" NO_NEWLINE
+; " Bewegen\n\n" NO_NEWLINE
 ; " Aufgeben" NO_NEWLINE
 ; SETPOS $8A 2
 db $01,$08,$02
@@ -12628,7 +12662,7 @@ choice_record_quit:
 ; @NEW_TEXTBOX@
 ; SETPOS $88 2
 ; DRAWBOX 9 4
-; " Sichern" NEWLINE NEWLINE
+; " Sichern\n\n" NO_NEWLINE
 ; " Aufgeben" NO_NEWLINE
 ; SETPOS $0A 3
 db $01,$88,$02
@@ -12643,7 +12677,7 @@ choice_stay_go_back:
 ; @NEW_TEXTBOX@
 ; SETPOS $88 2
 ; DRAWBOX 8 4
-; " Bleiben" NEWLINE NEWLINE
+; " Bleiben\n\n" NO_NEWLINE
 ; " Zurück" NO_NEWLINE
 ; SETPOS $0A 3
 db $01,$88,$02
@@ -12975,19 +13009,19 @@ SequenceTable:
 
 db 0
 ItemStrenghTable:
-    db 01, 02, 03, 04, 06, 08, 10, 12
+    db 1, 2, 3, 4, 6, 8, 10, 12
     db 0, 0, 0, 0, 0, 0, 0, 0
 
 db 0, 0, 0, 0, 0, 0, 0, 0
 db 0
 ItemDefenseTable:
-    db  01, 02, 03, 04, 06, 08, 10, 12
+    db  1, 2, 3, 4, 6, 8, 10, 12
 WeaponLevelRequirement: ; BCD values
     dw $1, $5, $11, $15, $16, $19, $22, $24
 
 Txt_Soul_Still_Captured:
 ; @DEFAULT_TEXTBOX@
-; * LOOKUP CharacterNamesTable text_lut_id * NEWLINE
+; * LOOKUP CharacterNamesTable text_lut_id * "\n" NO_NEWLINE
 ; "ist noch gefangen." -> $E521
 db $10
 db $03,$24,$05 : dw CharacterNamesTable,text_lut_id : db $03,$20,$0D
@@ -13344,184 +13378,162 @@ db $20,$20,$20,$50,$72,$7B,$73,$65   ;C2EE8E|        |C22020;
 db $6E,$74,$69,$65,$72,$74,$20,$76   ;C2EE96|        |006974;
 db $6F,$6E,$20,$55,$42,$49,$20,$53   ;C2EE9E|        |55206E;
 db $4F,$46,$54,$0D,$0D,$0D,$0D,$00   ;C2EEA6|        |0D5446;
-db $AE,$EF,$BA,$EF,$C6,$EF,$D2,$EF   ;C2EEAE|        |00BAEF;
-db $DE,$EF,$EA,$EF,$F6,$EF,$02,$F0   ;C2EEB6|        |00EAEF;
-db $0E,$F0,$1A,$F0,$26,$F0,$32,$F0   ;C2EEBE|        |001AF0;
-db $3E,$F0,$4A,$F0,$56,$F0,$62,$F0   ;C2EEC6|        |004AF0;
-db $6E,$F0,$7A,$F0,$86,$F0,$92,$F0   ;C2EECE|        |007AF0;
-db $9E,$F0,$AA,$F0,$B6,$F0,$C2,$F0   ;C2EED6|        |00AAF0;
-db $CE,$F0,$F2,$F0,$FE,$F0,$0A,$F1   ;C2EEDE|        |00F2F0;
-db $16,$F1,$22,$F1,$2E,$F1,$3A,$F1   ;C2EEE6|        |0000F1;
-db $46,$F1,$52,$F1,$5E,$F1,$DA,$F0   ;C2EEEE|        |0000F1;
-db $E6,$F0,$00,$00,$00,$00,$00,$00   ;C2EEF6|        |0000F0;
-db $6A,$F1,$76,$F1,$82,$F1,$8E,$F1   ;C2EEFE|        |      ;
-db $9A,$F1,$A6,$F1,$BE,$F1,$CA,$F1   ;C2EF06|        |      ;
-db $D6,$F1,$E2,$F1,$EE,$F1,$FA,$F1   ;C2EF0E|        |0000F1;
-db $B2,$F1,$00,$00,$00,$00,$00,$00   ;C2EF16|        |0000F1;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C2EF1E|        |      ;
-db $06,$F2,$12,$F2,$1E,$F2,$2A,$F2   ;C2EF26|        |0000F2;
-db $36,$F2,$42,$F2,$4E,$F2,$5A,$F2   ;C2EF2E|        |0000F2;
-db $66,$F2,$72,$F2,$7E,$F2,$8A,$F2   ;C2EF36|        |0000F2;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C2EF3E|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C2EF46|        |      ;
-db $96,$F2,$A2,$F2,$AE,$F2,$BA,$F2   ;C2EF4E|        |0000F2;
-db $C6,$F2,$D2,$F2,$DE,$F2,$EA,$F2   ;C2EF56|        |0000F2;
-db $F6,$F2,$02,$F3,$0E,$F3,$1A,$F3   ;C2EF5E|        |0000F2;
-db $26,$F3,$00,$00,$00,$00,$00,$00   ;C2EF66|        |0000F3;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C2EF6E|        |      ;
-db $32,$F3,$3E,$F3,$4A,$F3,$56,$F3   ;C2EF76|        |0000F3;
-db $62,$F3,$6E,$F3,$7A,$F3,$86,$F3   ;C2EF7E|        |C25E74;
-db $92,$F3,$9E,$F3,$AA,$F3,$B6,$F3   ;C2EF86|        |0000F3;
-db $C2,$F3,$CE,$F3,$DA,$F3,$E6,$F3   ;C2EF8E|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C2EF96|        |      ;
-db $F2,$F3,$FE,$F3,$0A,$F4,$16,$F4   ;C2EF9E|        |0000F3;
-db $22,$F4,$2E,$F4,$00,$00,$00,$00   ;C2EFA6|        |F42EF4;
-db $17,$00,$80,$00,$E4,$0F,$09,$11   ;C2EFAE|        |000000;
-db $11,$11,$11,$20,$17,$12,$82,$43   ;C2EFB6|        |000011;
-db $24,$8F,$09,$11,$11,$00,$00,$20   ;C2EFBE|        |00008F;
-db $15,$00,$80,$00,$64,$0F,$09,$11   ;C2EFC6|        |000000;
-db $11,$00,$00,$20,$15,$00,$80,$00   ;C2EFCE|        |000000;
-db $64,$0F,$09,$11,$11,$00,$00,$20   ;C2EFD6|        |00000F;
-db $15,$00,$80,$81,$64,$0F,$09,$11   ;C2EFDE|        |000000;
-db $11,$00,$00,$20,$17,$00,$80,$02   ;C2EFE6|        |000000;
-db $24,$0F,$09,$11,$11,$12,$12,$00   ;C2EFEE|        |00000F;
-db $17,$00,$80,$02,$24,$0F,$09,$11   ;C2EFF6|        |000000;
-db $11,$12,$12,$00,$17,$00,$80,$82   ;C2EFFE|        |000012;
-db $24,$0F,$09,$11,$11,$00,$00,$00   ;C2F006|        |00000F;
-db $17,$00,$80,$82,$64,$0F,$09,$11   ;C2F00E|        |000000;
-db $11,$00,$00,$00,$17,$00,$80,$82   ;C2F016|        |000000;
-db $24,$0F,$09,$11,$11,$00,$00,$00   ;C2F01E|        |00000F;
-db $17,$00,$80,$82,$64,$0F,$09,$11   ;C2F026|        |000000;
-db $11,$00,$00,$A0,$17,$00,$80,$82   ;C2F02E|        |000000;
-db $24,$0F,$09,$11,$11,$00,$00,$00   ;C2F036|        |00000F;
-db $17,$00,$80,$82,$64,$0F,$09,$11   ;C2F03E|        |000000;
-db $11,$00,$00,$C0,$15,$00,$80,$00   ;C2F046|        |000000;
-db $64,$0F,$09,$11,$11,$00,$00,$00   ;C2F04E|        |00000F;
-db $17,$00,$80,$00,$24,$0F,$09,$11   ;C2F056|        |000000;
-db $11,$12,$12,$A0,$17,$00,$80,$00   ;C2F05E|        |000012;
-db $24,$0F,$09,$11,$11,$11,$11,$00   ;C2F066|        |00000F;
-db $15,$00,$80,$95,$24,$0F,$0F,$11   ;C2F06E|        |000000;
-db $11,$00,$00,$00,$17,$00,$80,$00   ;C2F076|        |000000;
-db $E4,$0F,$09,$11,$11,$00,$00,$00   ;C2F07E|        |00000F;
-db $04,$00,$80,$00,$04,$00,$09,$11   ;C2F086|        |000000;
-db $11,$00,$00,$00,$16,$00,$80,$82   ;C2F08E|        |000000;
-db $24,$8F,$09,$11,$11,$00,$00,$20   ;C2F096|        |00008F;
-db $17,$00,$80,$00,$E4,$0F,$09,$11   ;C2F09E|        |000000;
-db $11,$11,$11,$21,$17,$12,$82,$01   ;C2F0A6|        |000011;
-db $26,$8F,$09,$11,$11,$00,$00,$21   ;C2F0AE|        |00008F;
-db $15,$00,$80,$00,$24,$0F,$09,$11   ;C2F0B6|        |000000;
-db $11,$11,$11,$21,$15,$00,$80,$00   ;C2F0BE|        |000011;
-db $64,$0F,$09,$11,$11,$11,$11,$21   ;C2F0C6|        |00000F;
-db $15,$00,$80,$00,$64,$0F,$09,$11   ;C2F0CE|        |000000;
-db $11,$11,$11,$21,$15,$00,$80,$00   ;C2F0D6|        |000011;
-db $24,$0F,$09,$11,$11,$11,$11,$A1   ;C2F0DE|        |00000F;
-db $17,$12,$82,$01,$26,$8F,$09,$11   ;C2F0E6|        |000012;
-db $11,$00,$00,$A1,$17,$00,$80,$00   ;C2F0EE|        |000000;
-db $64,$03,$09,$11,$11,$00,$00,$01   ;C2F0F6|        |000003;
-db $17,$00,$80,$00,$24,$03,$09,$11   ;C2F0FE|        |000000;
-db $11,$00,$00,$01,$17,$00,$80,$00   ;C2F106|        |000000;
-db $24,$03,$09,$11,$11,$00,$00,$01   ;C2F10E|        |000003;
-db $15,$02,$82,$83,$24,$03,$09,$11   ;C2F116|        |000002;
-db $11,$11,$11,$01,$17,$00,$80,$00   ;C2F11E|        |000011;
-db $24,$03,$09,$11,$11,$11,$00,$01   ;C2F126|        |000003;
-db $17,$00,$80,$00,$24,$03,$09,$11   ;C2F12E|        |000000;
-db $11,$11,$00,$01,$17,$00,$80,$00   ;C2F136|        |000011;
-db $24,$03,$09,$11,$11,$11,$00,$01   ;C2F13E|        |000003;
-db $15,$00,$80,$00,$24,$03,$09,$11   ;C2F146|        |000000;
-db $11,$11,$11,$01,$15,$02,$82,$83   ;C2F14E|        |000011;
-db $64,$0F,$09,$11,$11,$11,$11,$01   ;C2F156|        |00000F;
-db $15,$00,$80,$00,$64,$0F,$09,$11   ;C2F15E|        |000000;
-db $11,$11,$11,$C1,$17,$00,$80,$00   ;C2F166|        |000011;
-db $E4,$0F,$09,$11,$11,$11,$11,$22   ;C2F16E|        |00000F;
-db $17,$00,$80,$02,$24,$0F,$09,$11   ;C2F176|        |000000;
-db $11,$00,$12,$22,$17,$12,$82,$03   ;C2F17E|        |000000;
-db $24,$8C,$09,$11,$11,$12,$12,$02   ;C2F186|        |00008C;
-db $17,$12,$82,$03,$24,$8C,$09,$11   ;C2F18E|        |000012;
-db $11,$12,$12,$02,$15,$00,$80,$00   ;C2F196|        |000012;
-db $64,$0F,$09,$11,$11,$02,$02,$22   ;C2F19E|        |00000F;
-db $17,$12,$82,$03,$24,$8C,$09,$11   ;C2F1A6|        |000012;
-db $11,$12,$12,$A2,$17,$12,$82,$03   ;C2F1AE|        |000012;
-db $24,$8C,$09,$11,$11,$12,$12,$02   ;C2F1B6|        |00008C;
-db $17,$00,$80,$02,$24,$03,$09,$11   ;C2F1BE|        |000000;
-db $11,$11,$11,$02,$17,$00,$80,$02   ;C2F1C6|        |000011;
-db $24,$03,$09,$11,$11,$11,$11,$02   ;C2F1CE|        |000003;
-db $17,$03,$80,$03,$24,$03,$09,$11   ;C2F1D6|        |000003;
-db $11,$11,$11,$02,$17,$12,$82,$43   ;C2F1DE|        |000011;
-db $24,$8C,$09,$11,$11,$00,$00,$02   ;C2F1E6|        |00008C;
-db $17,$00,$80,$02,$24,$03,$09,$11   ;C2F1EE|        |000000;
-db $11,$12,$12,$C2,$17,$00,$80,$02   ;C2F1F6|        |000012;
-db $24,$03,$09,$11,$11,$12,$12,$A2   ;C2F1FE|        |000003;
-db $17,$00,$80,$00,$E4,$0F,$09,$11   ;C2F206|        |000000;
-db $11,$11,$11,$23,$15,$00,$80,$03   ;C2F20E|        |000011;
-db $24,$03,$09,$11,$11,$00,$12,$23   ;C2F216|        |000003;
-db $17,$00,$80,$02,$24,$03,$09,$11   ;C2F21E|        |000000;
-db $11,$12,$01,$03,$17,$00,$80,$A2   ;C2F226|        |000012;
-db $24,$0F,$09,$11,$11,$12,$02,$03   ;C2F22E|        |00000F;
-db $17,$00,$80,$A2,$24,$0F,$09,$11   ;C2F236|        |000000;
-db $11,$12,$02,$A3,$17,$00,$80,$02   ;C2F23E|        |000012;
-db $24,$03,$09,$11,$11,$14,$14,$03   ;C2F246|        |000003;
-db $17,$00,$80,$02,$24,$03,$09,$11   ;C2F24E|        |000000;
-db $11,$11,$11,$03,$17,$00,$80,$02   ;C2F256|        |000011;
-db $24,$03,$09,$11,$11,$11,$11,$A3   ;C2F25E|        |000003;
-db $17,$00,$80,$02,$64,$03,$09,$11   ;C2F266|        |000000;
-db $11,$11,$11,$C3,$15,$00,$80,$02   ;C2F26E|        |000011;
-db $24,$03,$09,$11,$11,$12,$12,$03   ;C2F276|        |000003;
-db $17,$00,$80,$02,$26,$8F,$09,$11   ;C2F27E|        |000000;
-db $11,$14,$14,$03,$17,$00,$80,$02   ;C2F286|        |000014;
-db $24,$0F,$09,$11,$11,$12,$12,$03   ;C2F28E|        |00000F;
-db $17,$00,$80,$00,$E4,$0F,$09,$11   ;C2F296|        |000000;
-db $11,$11,$11,$24,$17,$00,$80,$02   ;C2F29E|        |000011;
-db $24,$03,$09,$11,$11,$12,$12,$24   ;C2F2A6|        |000003;
-db $17,$00,$80,$02,$24,$03,$09,$11   ;C2F2AE|        |000000;
-db $11,$12,$12,$24,$15,$00,$80,$02   ;C2F2B6|        |000012;
-db $64,$03,$09,$11,$11,$12,$12,$24   ;C2F2BE|        |000003;
-db $15,$00,$80,$02,$64,$03,$09,$11   ;C2F2C6|        |000000;
-db $11,$12,$12,$24,$17,$00,$80,$02   ;C2F2CE|        |000012;
-db $24,$03,$09,$11,$11,$12,$12,$A4   ;C2F2D6|        |000003;
-db $17,$00,$80,$02,$35,$03,$09,$11   ;C2F2DE|        |000000;
-db $11,$12,$12,$04,$17,$12,$82,$43   ;C2F2E6|        |000012;
-db $26,$8F,$09,$11,$11,$11,$11,$04   ;C2F2EE|        |00008F;
-db $17,$00,$80,$02,$35,$0F,$09,$11   ;C2F2F6|        |000000;
-db $11,$12,$12,$04,$15,$00,$80,$02   ;C2F2FE|        |000012;
-db $24,$0F,$09,$11,$11,$12,$12,$C4   ;C2F306|        |00000F;
-db $17,$12,$82,$43,$26,$8F,$09,$11   ;C2F30E|        |000012;
-db $11,$11,$11,$A4,$17,$00,$80,$02   ;C2F316|        |000011;
-db $B6,$0F,$09,$11,$11,$11,$11,$04   ;C2F31E|        |00000F;
-db $17,$00,$80,$02,$B6,$0F,$09,$11   ;C2F326|        |000000;
-db $11,$11,$11,$04,$17,$00,$80,$00   ;C2F32E|        |000011;
-db $E4,$0F,$09,$11,$11,$11,$11,$25   ;C2F336|        |00000F;
-db $17,$00,$80,$00,$24,$0F,$09,$11   ;C2F33E|        |000000;
-db $11,$11,$11,$25,$15,$00,$80,$02   ;C2F346|        |000011;
-db $24,$03,$09,$11,$11,$01,$01,$05   ;C2F34E|        |000003;
-db $17,$00,$80,$00,$B6,$0F,$09,$11   ;C2F356|        |000000;
-db $11,$11,$11,$05,$17,$00,$80,$00   ;C2F35E|        |000011;
-db $B6,$0F,$09,$11,$11,$11,$11,$05   ;C2F366|        |00000F;
-db $17,$00,$80,$00,$B6,$0F,$09,$11   ;C2F36E|        |000000;
-db $11,$11,$11,$A5,$15,$00,$80,$02   ;C2F376|        |000011;
-db $24,$03,$09,$11,$11,$01,$01,$05   ;C2F37E|        |000003;
-db $17,$00,$82,$00,$B6,$0F,$09,$11   ;C2F386|        |000000;
-db $11,$11,$11,$05,$15,$00,$80,$02   ;C2F38E|        |000011;
-db $24,$03,$09,$11,$11,$02,$02,$05   ;C2F396|        |000003;
-db $17,$00,$80,$00,$B6,$0F,$09,$11   ;C2F39E|        |000000;
-db $11,$11,$11,$05,$17,$00,$80,$00   ;C2F3A6|        |000011;
-db $B6,$0F,$09,$11,$11,$11,$11,$05   ;C2F3AE|        |00000F;
-db $15,$00,$80,$02,$24,$03,$09,$11   ;C2F3B6|        |000000;
-db $11,$02,$02,$05,$17,$00,$80,$02   ;C2F3BE|        |000002;
-db $24,$03,$09,$11,$11,$11,$01,$05   ;C2F3C6|        |000003;
-db $17,$00,$80,$02,$24,$0F,$09,$11   ;C2F3CE|        |000000;
-db $11,$11,$11,$25,$17,$12,$82,$43   ;C2F3D6|        |000011;
-db $26,$8F,$09,$11,$11,$01,$11,$C5   ;C2F3DE|        |00008F;
-db $17,$12,$82,$43,$26,$8F,$09,$11   ;C2F3E6|        |000012;
-db $11,$01,$11,$A5,$17,$00,$80,$03   ;C2F3EE|        |000001;
-db $E4,$0F,$09,$11,$11,$11,$11,$26   ;C2F3F6|        |00000F;
-db $17,$02,$82,$43,$24,$0F,$09,$11   ;C2F3FE|        |000002;
-db $11,$00,$12,$06,$17,$02,$82,$43   ;C2F406|        |000000;
-db $24,$0F,$09,$11,$11,$00,$12,$06   ;C2F40E|        |00000F;
-db $17,$02,$82,$43,$24,$0F,$09,$11   ;C2F416|        |000002;
-db $11,$11,$11,$06,$15,$00,$80,$01   ;C2F41E|        |000011;
-db $64,$0F,$09,$11,$11,$00,$00,$06   ;C2F426|        |00000F;
-db $17,$00,$80,$82,$74,$03,$09,$11   ;C2F42E|        |000000;
-db $11,$11,$11,$06,$07,$07,$07,$07   ;C2F436|        |000011;
+
+dw BgmArray+0, BgmArray+12, BgmArray+24, BgmArray+36
+dw BgmArray+48, BgmArray+60, BgmArray+72, BgmArray+84
+dw BgmArray+96, BgmArray+108, BgmArray+120, BgmArray+132
+dw BgmArray+144, BgmArray+156, BgmArray+168, BgmArray+180
+dw BgmArray+192, BgmArray+204, BgmArray+216, BgmArray+228
+dw BgmArray+240, BgmArray+252, BgmArray+264, BgmArray+276
+dw BgmArray+288, BgmArray+324, BgmArray+336, BgmArray+348
+dw BgmArray+360, BgmArray+372, BgmArray+384, BgmArray+396
+dw BgmArray+408, BgmArray+420, BgmArray+432, BgmArray+300
+dw BgmArray+312, 0, 0, 0
+dw BgmArray+444, BgmArray+456, BgmArray+468, BgmArray+480
+dw BgmArray+492, BgmArray+504, BgmArray+528, BgmArray+540
+dw BgmArray+552, BgmArray+564, BgmArray+576, BgmArray+588
+dw BgmArray+516, 0, 0, 0
+dw 0, 0, 0, 0, BgmArray+600
+dw BgmArray+612, BgmArray+624, BgmArray+636, BgmArray+648
+dw BgmArray+660, BgmArray+672, BgmArray+684, BgmArray+696
+dw BgmArray+708, BgmArray+720, BgmArray+732, 0
+dw 0, 0, 0, 0, 0
+dw 0, 0, BgmArray+744, BgmArray+756
+dw BgmArray+768, BgmArray+780, BgmArray+792, BgmArray+804
+dw BgmArray+816, BgmArray+828, BgmArray+840, BgmArray+852
+dw BgmArray+864, BgmArray+876, BgmArray+888, 0
+dw 0, 0, 0, 0, 0
+dw 0, BgmArray+900, BgmArray+912, BgmArray+924
+dw BgmArray+936, BgmArray+948, BgmArray+960, BgmArray+972
+dw BgmArray+984, BgmArray+996, BgmArray+1008, BgmArray+1020
+dw BgmArray+1032, BgmArray+1044, BgmArray+1056, BgmArray+1068
+dw BgmArray+1080, 0, 0, 0
+dw 0, BgmArray+1092, BgmArray+1104, BgmArray+1116
+dw BgmArray+1128, BgmArray+1140, BgmArray+1152, 0
+dw 0
+
+macro BgMode(a, b, c, d, e, f, g, h, i, j, k, l)
+    db <a>, <b>, <c>, <d>, <e>, <f>, <g>, <h>, <i>, <j>, <k>, <l>
+endmacro
+
+
+BgmArray:
+struct BgmArray BgmArray
+    .main_window: skip 1
+    .sub_window: skip 1
+    .color_math_a: skip 1
+    .color_math_b: skip 1
+    .e: skip 1
+    .f: skip 1
+    .bgmode: skip 1
+    .h: skip 1
+    .i: skip 1
+    .j: skip 1
+    .k: skip 1
+    .l: skip 1
+endstruct
+
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $20)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $24, $8F, $09, $11, $11, $00, $00, $20)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $00, $00, $20)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $00, $00, $20)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $81, $64, $0F, $09, $11, $11, $00, $00, $20)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $12, $12, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $12, $12, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $24, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $64, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $24, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $64, $0F, $09, $11, $11, $00, $00, $A0)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $24, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $64, $0F, $09, $11, $11, $00, $00, $C0)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $0F, $09, $11, $11, $12, $12, $A0)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $0F, $09, $11, $11, $11, $11, $00)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $95, $24, $0F, $0F, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG3, $00, $80, $00, $04, $00, $09, $11, $11, $00, $00, $00)
+    %BgMode(!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $24, $8F, $09, $11, $11, $00, $00, $20)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $21)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $01, $26, $8F, $09, $11, $11, $00, $00, $21)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $0F, $09, $11, $11, $11, $11, $21)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $11, $11, $21)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $11, $11, $21)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $0F, $09, $11, $11, $11, $11, $A1)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $01, $26, $8F, $09, $11, $11, $00, $00, $A1)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $03, $09, $11, $11, $00, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $00, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $00, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $02, $82, $83, $24, $03, $09, $11, $11, $11, $11, $01)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $11, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $11, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $11, $00, $01)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $03, $09, $11, $11, $11, $11, $01)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $02, $82, $83, $64, $0F, $09, $11, $11, $11, $11, $01)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $11, $11, $C1)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $22)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $00, $12, $22)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $03, $24, $8C, $09, $11, $11, $12, $12, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $03, $24, $8C, $09, $11, $11, $12, $12, $02)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $00, $64, $0F, $09, $11, $11, $02, $02, $22)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $03, $24, $8C, $09, $11, $11, $12, $12, $A2)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $03, $24, $8C, $09, $11, $11, $12, $12, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $11, $11, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $11, $11, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $03, $80, $03, $24, $03, $09, $11, $11, $11, $11, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $24, $8C, $09, $11, $11, $00, $00, $02)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $C2)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $A2)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $23)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $03, $24, $03, $09, $11, $11, $00, $12, $23)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $01, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $A2, $24, $0F, $09, $11, $11, $12, $02, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $A2, $24, $0F, $09, $11, $11, $12, $02, $A3)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $14, $14, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $11, $11, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $11, $11, $A3)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $64, $03, $09, $11, $11, $11, $11, $C3)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $26, $8F, $09, $11, $11, $14, $14, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $12, $12, $03)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $24)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $24)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $24)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $64, $03, $09, $11, $11, $12, $12, $24)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $64, $03, $09, $11, $11, $12, $12, $24)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $12, $12, $A4)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $35, $03, $09, $11, $11, $12, $12, $04)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $26, $8F, $09, $11, $11, $11, $11, $04)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $35, $0F, $09, $11, $11, $12, $12, $04)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $12, $12, $C4)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $26, $8F, $09, $11, $11, $11, $11, $A4)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $B6, $0F, $09, $11, $11, $11, $11, $04)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $B6, $0F, $09, $11, $11, $11, $11, $04)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $E4, $0F, $09, $11, $11, $11, $11, $25)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $24, $0F, $09, $11, $11, $11, $11, $25)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $01, $01, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $B6, $0F, $09, $11, $11, $11, $11, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $B6, $0F, $09, $11, $11, $11, $11, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $B6, $0F, $09, $11, $11, $11, $11, $A5)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $01, $01, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $82, $00, $B6, $0F, $09, $11, $11, $11, $11, $05)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $02, $02, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $B6, $0F, $09, $11, $11, $11, $11, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $00, $B6, $0F, $09, $11, $11, $11, $11, $05)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $02, $02, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $03, $09, $11, $11, $11, $01, $05)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $02, $24, $0F, $09, $11, $11, $11, $11, $25)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $26, $8F, $09, $11, $11, $01, $11, $C5)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $12, $82, $43, $26, $8F, $09, $11, $11, $01, $11, $A5)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $03, $E4, $0F, $09, $11, $11, $11, $11, $26)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $02, $82, $43, $24, $0F, $09, $11, $11, $00, $12, $06)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $02, $82, $43, $24, $0F, $09, $11, $11, $00, $12, $06)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $02, $82, $43, $24, $0F, $09, $11, $11, $11, $11, $06)
+    %BgMode(!BGM_BG1|!BGM_BG3|!BGM_Obj, $00, $80, $01, $64, $0F, $09, $11, $11, $00, $00, $06)
+    %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $74, $03, $09, $11, $11, $11, $11, $06)
+
+
+
+db $07,$07,$07,$07   ;C2F436|        |000011;
 db $07,$07,$07,$07,$07,$07,$07,$07   ;C2F43E|        |000007;
 db $07,$07,$07,$07,$00,$01,$02,$03   ;C2F446|        |000007;
 db $04,$05,$06,$07,$08,$09,$0A,$0B   ;C2F44E|        |000005;

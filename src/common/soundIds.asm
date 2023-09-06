@@ -16,5 +16,6 @@
 
 !Sound_OpenChest = $15
 !Sound_DiaglogConfirm = $18
+!Sound_MetalEnemyHitWithNormalSword = $4C
 !Sound_WheelStartSpinning = $4F
 !Sound_ReceiveItem = $5E

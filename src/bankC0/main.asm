@@ -12,7 +12,7 @@ main:
     JSL.L init_system                    ;C08028|22D1B982|82B9D1;
     JSL.L init_window_system                    ;C0802C|2201BB82|82BB01;
     JSL.L init_game_variables                    ;C08030|22468883|838846;
-    JSL.L clearL3                    ;C08034|22228683|838622;
+    JSL.L ClearL3                    ;C08034|22228683|838622;
     LDX.W #$000C                         ;C08038|A20C00  |      ;
     STX.W $0318                          ;C0803B|8E1803  |810318;
     JSL.L enable_interrupts                    ;C0803E|22A2B182|82B1A2;
@@ -103,9 +103,9 @@ main:
     STA.W $0318                          ;C08134|8D1803  |810318;
     REP #$20                             ;C08137|C220    |      ;
     LDA.W $0403                          ;C08139|AD0304  |810403;
-    STA.W $037C                          ;C0813C|8D7C03  |81037C;
+    STA.W TeleportPos.x                          ;C0813C|8D7C03  |81037C;
     LDA.W $0405                          ;C0813F|AD0504  |810405;
-    STA.W $037E                          ;C08142|8D7E03  |81037E;
+    STA.W TeleportPos.y                          ;C08142|8D7E03  |81037E;
     SEP #$20                             ;C08145|E220    |      ;
     JSL.L enable_interrupts                    ;C08147|22A2B182|82B1A2;
     BRL .game_loop                       ;C0814B|82F8FE  |C08046;

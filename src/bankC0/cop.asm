@@ -325,7 +325,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDA.B [CopTemp] ; load facing
     INC.B CopTemp
     AND.W #$FF
-    STA.W teleport_facing
+    STA.W TeleportPos.facing
     LDA.B [CopTemp] ; load X
     INC.B CopTemp
     INC.B CopTemp
