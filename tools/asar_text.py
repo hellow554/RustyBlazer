@@ -274,7 +274,9 @@ class TextMapper:
         r = {
             "ß": 0x25,
             "Ü": 0x28,
+            "Ö": 0x29,
             "ö": 0x2A,
+            "▶": 0x2B,
             "ü": 0x5B,
             "↑": 0x5C,
             "↗": 0x5D,
@@ -282,6 +284,7 @@ class TextMapper:
             "↘": 0x5F,
             "ä": 0x7B,
             "↓": 0x7C,
+            "Ä": 0x7D,
         }.get(c)
 
         if r is None:
@@ -452,11 +455,11 @@ class Translator:
                 else:
                     self._append([0x03, 0x24])
                 self._bold = not self._bold
-            elif arg == "WFE":
+            elif arg == "WFE":  # wait for enter
                 self._append(0x11)
-            elif arg == "WFAK":
+            elif arg == "WFAK":  # wait for any key
                 self._append(0x12)
-            elif arg == "SETPOS":
+            elif arg == "SETPOS":  # set position
                 pos_x = next(iterator)
                 pos_y = next(iterator)
 
@@ -470,7 +473,7 @@ class Translator:
                     pos_y = m
 
                 self._append([0x01, pos_x, pos_y])
-            elif arg == "DRAWBOX":
+            elif arg == "DRAWBOX":  # draw box
                 width = next(iterator)
                 height = next(iterator)
 
@@ -484,28 +487,28 @@ class Translator:
                     height = m
 
                 self._append([0x07, width, height])
-            elif arg == "CONT":
+            elif arg == "CONT":  # continue with previous textbox settings
                 self._append(0x0C)
-            elif arg == "PLAYER_NAME":
+            elif arg == "PLAYER_NAME":  # player name lookup
                 self._append([2, 2])
             elif arg == "NEWLINE":
                 self._append(0x0D)
             elif arg == "NO_NEWLINE":
                 pass
-            elif arg == "->":
+            elif arg == "->":  # set new textpointer
                 target = next(iterator)
                 if (m := self.parse_int(target, DataWidth.WORD)) is not None:
                     target = m
 
                 self._append(0x13)
                 self._append(target, DataWidth.WORD)
-            elif arg == "WAIT":
+            elif arg == "WAIT":  # wait n frames
                 amount = next(iterator)
                 if self.parse_int(amount, DataWidth.BYTE) is None:
                     self._raise(ParseException, f"Cannot parse number to wait `{amount}`")
 
                 self._append([0x0E, amount])
-            elif arg == "LOOKUP":
+            elif arg == "LOOKUP":  # lookup into a dictionary
                 table = next(iterator)
                 offset = next(iterator)
 
@@ -516,7 +519,7 @@ class Translator:
 
                 self._append(0x05)
                 self._append([table, offset], DataWidth.WORD)
-            elif arg == "DECVAL":
+            elif arg == "DECVAL":  # print a decimal value @ address
                 width = next(iterator)
                 addr = next(iterator)
 
@@ -529,7 +532,7 @@ class Translator:
 
                 self._append([0x06, width])
                 self._append(addr, DataWidth.WORD)
-            elif arg == "REPEAT":
+            elif arg == "REPEAT":  # repeat a certain location n times
                 amount = next(iterator)
                 addr = next(iterator)
 

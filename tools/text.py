@@ -37,7 +37,11 @@ class IdaAddr(Addr):
                 offset = int(args[0][4:], 16)
                 super().__init__(bank * 0x10000 + offset)
             else:
-                bank = int(bank, 16) - 0x80
+                bank = int(bank, 16)
+                if bank > 0xC0:
+                    bank -= 0xC0
+                else:
+                    bank -= 0x80
                 offset = int(args[0][4:], 16) - 0x8000
                 super().__init__(bank * 0x8000 + offset)
 
@@ -216,12 +220,24 @@ class SbString:
                         0xC7C2: 0x80,
                     }
 
-                    lut_addr = bh << 8 | bl
-                    if lut_addr not in known_luts:
-                        raise Exception(f"Unsupported LUT @ {lut_addr:04X}")
+                    known_luts_hirom = {
+                        # section names
+                        0xC994: 0x80,
+                    }
 
-                    random_id = random.randint(0, known_luts[lut_addr])
-                    name_ptr = IdaAddr(bank=0x82, offset=lut_addr) + random_id * 2
+                    lut_addr = bh << 8 | bl
+                    hirom = False
+                    if lut_addr not in known_luts:
+                        if lut_addr in known_luts_hirom:
+                            hirom = True
+                        else:
+                            raise Exception(f"Unsupported LUT @ {lut_addr:04X}")
+
+                    if hirom:
+                        random_id = random.randint(0, known_luts_hirom[lut_addr])
+                    else:
+                        random_id = random.randint(0, known_luts[lut_addr])
+                    name_ptr = IdaAddr(bank=0xC2, offset=lut_addr) + random_id * 2
                     addr_value = ROM[name_ptr] | ROM[name_ptr + 1] << 8
                     name_addr = IdaAddr(
                         bank=0x82,
