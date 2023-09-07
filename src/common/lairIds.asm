@@ -13,4 +13,6 @@
 !Lair_A1_SonOfShopKeep          = $14
 !Lair_A1_GourmetGoat            = $15
 !Lair_A1_Painter                = $1A
+!Lair_A1_Sleeping_Tulip         = $22
+!Lair_A1_SecretShackKid         = $23
 !Lair_A1_Crabwalk_Guy           = $29

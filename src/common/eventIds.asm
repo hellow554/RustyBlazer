@@ -1,11 +1,13 @@
 !EV_A1_CrabwalkGuyNoticedUs             = $0000
 !EV_A1_WatermillKeeperFirstTalk         = $0001
 !EV_A1_BridgeGuard_GotOutOfWay          = $0004
+!EV_A1_Hideout_Kid_Hint_Given           = $0005
 !EV_A1_Saw_Chief_In_Picture             = $0006
 !EV_A1_ChiefsWifeAsk                    = $0101
 !EV_A1_FoundHerbsOnTheGround            = $0103
 !EV_A1_TulipBeforeHouseSecondTalk       = $0104
 !EV_A1_Talked_To_Bridge_Guard           = $0202
+!EV_A1_Found_APass                      = $0206
 !EV_A1_WatermillwheelRotated            = $0404
 !EV_A1_MagicianTalk                     = $0504
 !EV_A1_JewelSomething                   = $0505
