@@ -61,14 +61,14 @@ endmacro
 macro CopSetEventFlag(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
     assert <eventId><$8000, "EventId must be less than $8000"
-    Cop #$09
+    COP #$09
     dw <eventId>|$8000
 endmacro
 
 macro CopClearEventFlag(eventId)
     assert <eventId>&$FF<8, "Second byte must be less than 8"
     assert <eventId><$8000, "EventId must be less than $8000"
-    Cop #$09
+    COP #$09
     dw <eventId>
 endmacro
 
@@ -152,7 +152,7 @@ macro CopJumpIfItemIsNotEquipped(itemId, target)
 endmacro
 
 macro CopShowMenu(choices_txt_ptr, number_of_choices, abort_ptr)
-    Cop #$1A
+    COP #$1A
     dw <choices_txt_ptr>
     db <number_of_choices>
     dw <abort_ptr>
@@ -243,7 +243,7 @@ macro Cop29()
 endmacro
 
 macro CopAddBlockRelativeToNpc(x, y)
-    Cop #$2A
+    COP #$2A
     dw <x>
     dw <y>
 endmacro
@@ -306,7 +306,7 @@ macro HarmPlayer(amount)
 endmacro
 
 macro CopChooseName()
-    Cop #$3A
+    COP #$3A
 endmacro
 
 macro Cop3B(lair_id, target)
@@ -314,15 +314,20 @@ macro Cop3B(lair_id, target)
     dw <lair_id>, <target>
 endmacro
 
+macro Cop3C(a)
+    COP #$3C
+    db <a>
+endmacro
+
 ; COPs 3D to 7F are not implemented
 
 macro Cop80(x)
-    Cop #$80
+    COP #$80
     db <x>
 endmacro
 
 macro Cop81(a, b)
-    Cop #$81
+    COP #$81
     db <a>, <b>
 endmacro
 
@@ -356,11 +361,11 @@ macro CopSetScriptAddrToNextInstruction()
 endmacro
 
 macro Cop96()
-    Cop #$96
+    COP #$96
 endmacro
 
 macro Cop97()
-    Cop #$97
+    COP #$97
 endmacro
 
 macro CopJumpDependingOnPlayerXProximity(x_proximity, too_left, inside, too_right)

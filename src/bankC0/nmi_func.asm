@@ -20,7 +20,7 @@ NMI_Func:
     JSR.W CODE_C08511                    ;C0838B|201185  |C08511;
     JSR.W CODE_C0856F                    ;C0838E|206F85  |C0856F;
     JSR.W CODE_C085B7                    ;C08391|20B785  |C085B7;
-    JSL.L CODE_80EC11                    ;C08394|2211EC80|80EC11;
+    JSL.L CODE_C0EC11                    ;C08394|2211EC80|80EC11;
     LDA.B HDMA_channel_enable_bits                            ;C08398|A542    |000042;
     STA.W HDMAEN
 

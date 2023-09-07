@@ -7146,7 +7146,7 @@ LDA.B #$C1                           ;C5C591|A9C1    |      ;
 STA.B $2B                            ;C5C593|852B    |00002B;
 LDX.W #$3000                         ;C5C595|A20030  |      ;
 STX.W $0320                          ;C5C598|8E2003  |810320;
-JSL.L CODE_85C5AC                    ;C5C59B|22ACC585|85C5AC;
+JSL.L CODE_C5C5AC                    ;C5C59B|22ACC585|85C5AC;
 REP #$20                             ;C5C59F|C220    |      ;
 LDA.B $02                            ;C5C5A1|A502    |000002;
 CLC                                  ;C5C5A3|18      |      ;

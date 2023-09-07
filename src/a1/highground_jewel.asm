@@ -1,5 +1,5 @@
 A1_script_highground_jewel:
-    JSL.L CODE_83C040
+    JSL.L CODE_C3C040
     %CopAssignTalkCallback(.talk)
     SEP #$20
     LDA.B #$83
@@ -23,7 +23,7 @@ A1_script_highground_jewel:
 
 
 A1_script_highground_jewel_message:
-    JSL.L CODE_83C040
+    JSL.L CODE_C3C040
     %CopAssignTalkCallback(.talk)
 
 .loop:

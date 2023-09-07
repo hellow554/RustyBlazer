@@ -33,21 +33,21 @@ main:
     else
         JSL.L check_buttons                    ;C0805D|22019982|829901;
     endif
-    JSL.L CODE_83849A                    ;C08061|229A8483|83849A;
+    JSL.L CODE_C3849A                    ;C08061|229A8483|83849A;
     JSL.L disable_vblank_interrupt                    ;C08065|22AEB182|82B1AE;
-    JSL.L CODE_8289D6                    ;C08069|22D68982|8289D6;
+    JSL.L CODE_C289D6                    ;C08069|22D68982|8289D6;
     JSL.L prepare_dma_bank0                    ;C0806D|22639882|829863;
-    JSL.L CODE_8085D2                    ;C08071|22D28580|8085D2;
-    JSL.L CODE_8085F0                    ;C08075|22F08580|8085F0;
+    JSL.L CODE_C085D2                    ;C08071|22D28580|8085D2;
+    JSL.L CODE_C085F0                    ;C08075|22F08580|8085F0;
     JSL.L check_entity_collision                    ;C08079|22608A80|808A60;
-    JSL.L CODE_808E20                    ;C0807D|22208E80|808E20;
+    JSL.L CODE_C08E20                    ;C0807D|22208E80|808E20;
     JSL.L check_player_dead                    ;C08081|223DB080|80B03D;
-    JSL.L CODE_828069                    ;C08085|22698082|828069;
-    JSL.L CODE_82810B                    ;C08089|220B8182|82810B;
-    JSL.L CODE_80871A                    ;C0808D|221A8780|80871A;
+    JSL.L CODE_C28069                    ;C08085|22698082|828069;
+    JSL.L CODE_C2810B                    ;C08089|220B8182|82810B;
+    JSL.L CODE_C0871A                    ;C0808D|221A8780|80871A;
     JSL.L update_hud                    ;C08091|225EA682|82A65E;
-    JSL.L CODE_829695                    ;C08095|22959682|829695;
-    JSL.L CODE_83814B                    ;C08099|224B8183|83814B;
+    JSL.L CODE_C29695                    ;C08095|22959682|829695;
+    JSL.L CODE_C3814B                    ;C08099|224B8183|83814B;
     JSL.L enable_interrupts                    ;C0809D|22A2B182|82B1A2;
     JSR.W CODE_C08344                    ;C080A1|204483  |C08344;
     BRA .game_loop                       ;C080A4|80A0    |C08046;
@@ -55,33 +55,33 @@ main:
 .main_menu_scene: ; TODO: I'm not sure if this is really the main menu
     JSL.L disable_vblank_interrupt                    ;C080A6|22AEB182|82B1AE;
     JSL.L prepare_dma_bank0                    ;C080AA|22639882|829863;
-    JSL.L CODE_8085D2                    ;C080AE|22D28580|8085D2;
-    JSL.L CODE_8085F0                    ;C080B2|22F08580|8085F0;
-    JSL.L CODE_80871A                    ;C080B6|221A8780|80871A;
+    JSL.L CODE_C085D2                    ;C080AE|22D28580|8085D2;
+    JSL.L CODE_C085F0                    ;C080B2|22F08580|8085F0;
+    JSL.L CODE_C0871A                    ;C080B6|221A8780|80871A;
     JSL.L enable_interrupts                    ;C080BA|22A2B182|82B1A2;
     BRL .game_loop                       ;C080BE|8285FF  |C08046;
 
 .lair_reveal:
     JSL.L disable_vblank_interrupt                    ;C080C1|22AEB182|82B1AE;
-    JSL.L CODE_828EA9                    ;C080C5|22A98E82|828EA9;
+    JSL.L CODE_C28EA9                    ;C080C5|22A98E82|828EA9;
     JSL.L prepare_dma_bank0                    ;C080C9|22639882|829863;
     STZ.W buttons_pressed+1                          ;C080CD|9C2303  |810323;
-    JSL.L CODE_8085D2                    ;C080D0|22D28580|8085D2;
-    JSL.L CODE_8085F0                    ;C080D4|22F08580|8085F0;
-    JSL.L CODE_80871A                    ;C080D8|221A8780|80871A;
+    JSL.L CODE_C085D2                    ;C080D0|22D28580|8085D2;
+    JSL.L CODE_C085F0                    ;C080D4|22F08580|8085F0;
+    JSL.L CODE_C0871A                    ;C080D8|221A8780|80871A;
     JSL.L update_hud                    ;C080DC|225EA682|82A65E;
-    JSL.L CODE_829695                    ;C080E0|22959682|829695;
-    JSL.L CODE_83814B                    ;C080E4|224B8183|83814B;
+    JSL.L CODE_C29695                    ;C080E0|22959682|829695;
+    JSL.L CODE_C3814B                    ;C080E4|224B8183|83814B;
     JSL.L enable_interrupts                    ;C080E8|22A2B182|82B1A2;
     JSL.L wait_vblank                    ;C080EC|22B7B182|82B1B7;
     JSL.L disable_vblank_interrupt                    ;C080F0|22AEB182|82B1AE;
-    JSL.L CODE_8081E5                    ;C080F4|22E58180|8081E5;
-    JSL.L CODE_8081E5                    ;C080F8|22E58180|8081E5;
-    JSL.L CODE_8081E5                    ;C080FC|22E58180|8081E5;
-    JSL.L CODE_8081E5                    ;C08100|22E58180|8081E5;
+    JSL.L CODE_C081E5                    ;C080F4|22E58180|8081E5;
+    JSL.L CODE_C081E5                    ;C080F8|22E58180|8081E5;
+    JSL.L CODE_C081E5                    ;C080FC|22E58180|8081E5;
+    JSL.L CODE_C081E5                    ;C08100|22E58180|8081E5;
 
 ..lair_reveal_loop:
-    JSL.L CODE_8081E5                    ;C08104|22E58180|8081E5;
+    JSL.L CODE_C081E5                    ;C08104|22E58180|8081E5;
     LDX.W lair_reveal_in_progress                          ;C08108|AEFD03  |8103FD;
     BMI ..lair_reveal_loop                      ;C0810B|30F7    |C08104;
     STZ.W lair_reveal_in_progress                          ;C0810D|9CFD03  |8103FD;
@@ -94,7 +94,7 @@ main:
     ADC.W player_health_restore                          ;C0811A|6D4704  |810447;
     STA.W player_health_restore                          ;C0811D|8D4704  |810447;
     LDA.B #$78                           ;C08120|A978    |      ;
-    JSL.L CODE_82B140                    ;C08122|2240B182|82B140;
+    JSL.L CODE_C2B140                    ;C08122|2240B182|82B140;
     LDA.B #$80                           ;C08126|A980    |      ;
     STA.W $03E5                          ;C08128|8DE503  |8103E5;
     LDA.W $03FF                          ;C0812B|ADFF03  |8103FF;

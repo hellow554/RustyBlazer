@@ -1070,7 +1070,7 @@ TYX
 
 .cop_82:
     TYX
-    JSL.L CODE_80891F
+    JSL.L CODE_C0891F
     BCC ..out
     BRL .ret_in_tmp
 
@@ -1081,7 +1081,7 @@ TYX
 .cop_83:
     TYX
 ..loop:
-    JSL.L CODE_80891F
+    JSL.L CODE_C0891F
     BCC ..out
     DEC.W $002A,X
     BNE ..loop
@@ -1324,8 +1324,8 @@ TYX
     AND.W #$FF
     STA.W $1E, X
     STZ.W $20, X
-    JSL.L CODE_82865B
-    JSL.L CODE_8286CD
+    JSL.L CODE_C2865B
+    JSL.L CODE_C286CD
     BRL .set_script_ret_addr_and_get_out
 
 .cop_93:
@@ -1339,15 +1339,15 @@ TYX
     INC.B CopTemp
     AND.W #$FF
     STA.W $2A, X
-    JSL.L CODE_82865B
-    JSL.L CODE_8286CD
+    JSL.L CODE_C2865B
+    JSL.L CODE_C286CD
     BRL .set_script_ret_addr_and_get_out
 
 .cop_94:
     TYX
     DEC.W $26, X
     BPL +
-    JSL.L CODE_82865B
+    JSL.L CODE_C2865B
     BCC ++
     BRL .ret_in_tmp
 
@@ -1356,7 +1356,7 @@ TYX
     STA.W $0014,X
 
 ++:
-    JSL.L CODE_8286CD
+    JSL.L CODE_C286CD
     BRL .ret_out_of_script
 
 .cop_95:
@@ -1364,7 +1364,7 @@ TYX
     DEC.W $26, X
     BPL +
 ..loop:
-    JSL.L CODE_82865B
+    JSL.L CODE_C2865B
     BCC ++
     DEC.W $2A, X
     BNE ..loop
@@ -1375,7 +1375,7 @@ TYX
     STA.W $0014,X
 
 ++:
-    JSL.L CODE_8286CD
+    JSL.L CODE_C286CD
     BRL .ret_out_of_script
 
 .cop_96:
@@ -1509,7 +1509,7 @@ TYX
     LDA.W $16, X
     BIT.W #4
     BNE ..do_jump
-    JSL.L CODE_80891F
+    JSL.L CODE_C0891F
     BCC + : BRL .skip_2_args : +
     BRL .ret_out_of_script
 
