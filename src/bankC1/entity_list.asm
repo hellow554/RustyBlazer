@@ -46,12 +46,13 @@ entities_GrassValley:
         0, 0, 0, $1E, $50, $30, $7E3800, A1_script_Tulip_Before_Painter_House)
     %create_entity(entity_act1_painter,
         0, 0, 0, $00, $48, $20, $7E3800, A1_script_painter)
+    %create_entity(entity_act1_secret_shack_kid,
+        0, 0, 0, $1C, $50, $30, $7E3800, A1_script_spinning_watermillwheel_inside)
+    %create_entity(entity_act1_walking_goat,
+        0, 0, 0, $1D, $50, $30, $7E3800, A1_script_spinning_watermillwheel_outside)
 
-db $00,$00   ;C18158|        |      ;
-db $00,$00,$00,$1C,$50,$30,$00,$38   ;C18160|        |      ;
-db $7E,$BA,$A2,$83,$00,$00,$00,$00   ;C18168|        |00A2BA;
-db $00,$1D,$50,$30,$00,$38,$7E,$CC   ;C18170|        |      ;
-db $A2,$83,$00,$00,$00,$00,$00,$0C   ;C18178|        |      ;
+
+db $00,$00,$00,$00,$00,$0C   ;C18178|        |      ;
 db $40,$30,$00,$38,$7E,$DE,$A2,$83   ;C18180|        |      ;
 db $00,$00,$00,$00,$00,$1E,$40,$30   ;C18188|        |      ;
 db $00,$38,$7E,$67,$A4,$83,$00,$00   ;C18190|        |      ;

@@ -19,7 +19,7 @@ A1_script_mill_keeper:
     %Cop9D($04)
     %Cop9E(+)
 +
-    %Cop80($0)
+    %CopPlayAnimation($0)
     %Cop82()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
     TRB.W button_mask
@@ -65,7 +65,7 @@ A1_script_mill_keeper:
 .already_turned:
     %CopTeleportEntityTo(!Entity_MillKeeper, $27, $17)
     %CopMakeNpcUnpassable()
-    %Cop80($0)
+    %CopPlayAnimation($0)
     %Cop82()
     BRA .after_turn
 

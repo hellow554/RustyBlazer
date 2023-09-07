@@ -1,21 +1,4 @@
-A1_script_watermillwheel1:
-    %CopJumpIfSealed(!Lair_A1_Mill_Keeper, .loop) : RTL
-.loop
-    %CopWaitForEventFlagToBeSet(!EV_A1_WatermillwheelRotated)
-    %Cop80($1C)
-    %Cop82()
-    BRA .loop
-
-A1_script_watermillwheel2:
-    %CopJumpIfSealed(!Lair_A1_Mill_Keeper, .loop) : RTL
-.loop
-    %CopWaitForEventFlagToBeSet(!EV_A1_WatermillwheelRotated)
-    %Cop80($1D)
-    %Cop82()
-    BRA .loop
-
 A1_script_secret_shack_kid:
-
     %CopJumpIfSealed(!Lair_A1_SecretShackKid, +) : RTL : +
     %CopMakeNpcUnpassable()
     %CopAssignTalkCallback(.talk_in_entry)
@@ -31,12 +14,12 @@ A1_script_secret_shack_kid:
 
     %CopAssignTalkCallback(0)
     %CopMakeNpcPassable()
-    %Cop80($0F)
+    %CopPlayAnimation($0F)
     %Cop82()
     %Cop9D($0F)
     %Cop9E(+) : +
 
-    %Cop80($11)
+    %CopPlayAnimation($11)
     %Cop82()
     %Cop9D($11)
     %Cop9E(+) : +
@@ -52,7 +35,7 @@ A1_script_secret_shack_kid:
     %Cop9E(+) : +
 
     %Cop97()
-    %Cop80($0E)
+    %CopPlayAnimation($0E)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopAssignTalkCallback(.talk_out_of_way)
@@ -60,7 +43,7 @@ A1_script_secret_shack_kid:
     %Cop0C(!Entity_Player, $02, +) : RTL : +
 
     %Cop96()
-    %Cop80($0C)
+    %CopPlayAnimation($0C)
     %Cop82()
     %CopShowText(.text_followed)
     %CopSetScriptAddrToNextInstruction()

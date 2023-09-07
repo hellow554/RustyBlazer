@@ -7,12 +7,12 @@ A1_script_painter:
 
 
 .loop:
-    %Cop80($03)
+    %CopPlayAnimation($03)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)
     %Cop83()
-    %Cop80($04)
+    %CopPlayAnimation($04)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)

@@ -5,7 +5,7 @@ A1_script_crabwalkguy:
     %CopMakeNpcUnpassable()
     %CopWaitForEventFlagToBeSet(!EV_A1_CrabwalkGuyNoticedUs)
     %Cop8F()
-    %Cop80(2)
+    %CopPlayAnimation(2)
     %Cop82()
     %CopSetScriptAddrToNextInstruction()
     ; --

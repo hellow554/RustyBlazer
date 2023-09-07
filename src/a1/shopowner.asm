@@ -14,7 +14,7 @@ A1_script_ShopOwner:
     %Cop9E(.left_jump)
 
 .left_jump:
-    %Cop80($06)
+    %CopPlayAnimation($06)
     %Cop82()
     BRL .inside
 
@@ -24,7 +24,7 @@ A1_script_ShopOwner:
     %Cop9D($0B)
     %Cop9E(.right_jump)
 .right_jump:
-    %Cop80($06)
+    %CopPlayAnimation($06)
     %Cop82()
 
 .inside:
@@ -84,6 +84,6 @@ db $D1,$84,$6E,$65,$75,$65,$20,$67,$65,$62,$65,$6E,$2E,$13 : dw Default_Text_End
 
 ShopOwnerTurnRight:
     %Cop96()
-    %Cop80($08)
+    %CopPlayAnimation($08)
     %Cop82()
     BRL ShopOwnerTurnRight

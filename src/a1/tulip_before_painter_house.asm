@@ -6,7 +6,7 @@ A1_script_Tulip_Before_Painter_House:
 
 
 .dong:
-    %Cop80($1E)
+    %CopPlayAnimation($1E)
     %Cop82()
     BRA .dong
 

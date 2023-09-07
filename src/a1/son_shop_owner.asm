@@ -23,7 +23,7 @@ A1_script_son_shop_owner:
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %Cop80($0C)
+    %CopPlayAnimation($0C)
     %Cop82()
     BRL .stand_inside
 
@@ -33,7 +33,7 @@ A1_script_son_shop_owner:
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %Cop80($0C)
+    %CopPlayAnimation($0C)
     %Cop82()
 
 .stand_inside:

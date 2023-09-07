@@ -6,7 +6,7 @@ A1_script_chiefs_house_tulip:
     %CopMakeNpcUnpassable()
 
 .loop:
-    %Cop80($1E)
+    %CopPlayAnimation($1E)
     %Cop82()
     BRA .loop
 

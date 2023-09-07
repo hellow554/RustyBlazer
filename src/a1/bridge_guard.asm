@@ -21,7 +21,7 @@ A1_script_bridge_guard:
 .too_right:
     %Cop96()
 +
-    %Cop80($02)
+    %CopPlayAnimation($02)
     %Cop82()
     BRL .todo3
 
@@ -40,14 +40,14 @@ A1_script_bridge_guard:
     %Cop9D($03)
     %Cop9E(+)
 +
-    %Cop80($01)
+    %CopPlayAnimation($01)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopSetEventFlag(!EV_A1_BridgeGuard_GotOutOfWay)
     BRL .todo3
 
 .todo4:
-    %Cop80($01)
+    %CopPlayAnimation($01)
     %Cop82()
 
 .todo3:

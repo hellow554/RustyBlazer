@@ -321,9 +321,9 @@ endmacro
 
 ; COPs 3D to 7F are not implemented
 
-macro Cop80(x)
+macro CopPlayAnimation(animation_id)
     COP #$80
-    db <x>
+    db <animation_id>
 endmacro
 
 macro Cop81(a, b)
