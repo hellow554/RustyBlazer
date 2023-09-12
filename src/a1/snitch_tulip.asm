@@ -1,31 +1,40 @@
 A1_script_snitch_tulip:
-COP #$14                             ;C3AC63|0214    |      ;
-db $2F,$00,$6A,$AC                   ;C3AC65|        |AC6A00;
-RTL                                  ;C3AC69|6B      |      ;
-COP #$85                             ;C3AC6A|0285    |      ;
-db $C9,$A9,$80                       ;C3AC6C|        |      ;
-COP #$17                             ;C3AC6F|0217    |      ;
-db $7D,$AC                           ;C3AC71|        |0002AC;
-COP #$15                             ;C3AC73|0215    |      ;
-COP #$91                             ;C3AC75|0291    |      ;
-COP #$80                             ;C3AC77|0280    |      ;
-db $24                               ;C3AC79|        |000002;
-COP #$82                             ;C3AC7A|0282    |      ;
-RTL                                  ;C3AC7C|6B      |      ;
-COP #$01                             ;C3AC7D|0201    |      ;
-db $82,$AC                           ;C3AC7F|        |C3182E;
-RTL                                  ;C3AC81|6B      |      ;
-db $10,$8F,$77,$65,$69,$25,$20,$6E   ;C3AC82|        |C3AC13;
-db $69,$63,$68,$74,$2C,$20,$6F,$62   ;C3AC8A|        |      ;
-db $20,$C3,$0D,$E9,$C2,$F6,$52,$65   ;C3AC92|        |C30DC3;
-db $69,$6E,$6B,$61,$72,$2D,$0D,$6E   ;C3AC9A|        |      ;
-db $61,$74,$69,$6F,$6E,$20,$67,$69   ;C3ACA2|        |000074;
-db $62,$74,$2E,$11,$41,$75,$63,$68   ;C3ACAA|        |C3DB21;
-db $20,$F3,$D1,$DF,$0D,$DA,$DD,$4D   ;C3ACB2|        |C3D1F3;
-db $61,$6E,$6E,$20,$72,$65,$64,$65   ;C3ACBA|        |00006E;
-db $6E,$20,$0D,$6B,$61,$6E,$6E,$2C   ;C3ACC2|        |000D20;
-db $20,$E9,$67,$65,$6E,$69,$65,$25   ;C3ACCA|        |C367E9;
-db $65,$20,$D1,$0D,$73,$65,$69,$6E   ;C3ACD2|        |000020;
-db $65,$20,$41,$6E,$77,$65,$73,$65   ;C3ACDA|        |000020;
-db $6E,$68,$65,$69,$74,$2E,$13,$F0   ;C3ACE2|        |006568;
-db $C8                               ;C3ACEA|        |      ;
+    %CopJumpIfSealed(!Lair_A1_SnitchTulip, +) : RTL : +
+    %CopSetScriptAddr(CODE_C0A9C9)
+    %CopAssignTalkCallback(.talk)
+    %CopMakeNpcUnpassable()
+.anim_loop:
+    %CopPlayAnimation(!Anim_Village_Tulip_Left_Right)
+    %Cop82()
+    BRA .anim_loop
+
+.talk:
+    %CopShowText(.text)
+    RTL
+
+.text:
+; @DEFAULT_TEXTBOX@
+; "Vergewissere Dich,"
+; "unter allen Tulpen "
+; "nachzuschauen." WFE
+; "Es könnte sein, daß "
+; "einer der Jungen,"
+; "etwas darunter ver-"
+; "steckt hat." WFE
+; "Er hat gedacht,daß ihn "
+; "niemand gesehen hat,"
+; "aber ich habe ihn be-"
+; "obachtet!" -> Default_Text_End
+db $10
+db $56,$65,$72,$67,$65,$77,$69,$73,$73,$65,$72,$65,$20,$44,$69,$63,$68,$2C,$0D
+db $75,$6E,$74,$65,$72,$20,$61,$6C,$6C,$65,$6E,$20,$54,$75,$6C,$70,$65,$6E,$20,$0D
+db $6E,$61,$63,$68,$7A,$75,$73,$63,$68,$61,$75,$65,$6E,$2E,$11
+db $8C,$6B,$2A,$6E,$6E,$74,$65,$20,$73,$65,$69,$6E,$2C,$20,$BA,$0D
+db $C6,$B6,$4A,$75,$6E,$67,$65,$6E,$2C,$0D
+db $C2,$64,$61,$72,$75,$6E,$74,$65,$72,$20,$76,$65,$72,$2D,$0D
+db $73,$74,$65,$63,$6B,$74,$20,$68,$61,$74,$2E,$11
+db $45,$72,$20,$CF,$67,$65,$64,$61,$63,$68,$74,$2C,$BA,$69,$68,$6E,$20,$0D
+db $6E,$69,$65,$6D,$61,$6E,$64,$20,$67,$65,$73,$65,$68,$65,$6E,$20,$68,$61,$74,$2C,$0D
+db $AB,$D1,$CC,$69,$68,$6E,$20,$62,$65,$2D,$0D
+db $6F,$62,$61,$63,$68,$74,$65,$74,$21,$13 : dw Default_Text_End
+; @END@

@@ -4,7 +4,7 @@ A1_script_sleeping_tulip:
     %CopAssignTalkCallback(.default_talk)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $2F, $36, .pushing_tulip)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $2F, $36, .pushing_tulip)
     RTL
 
 .pushing_tulip:
@@ -12,7 +12,7 @@ A1_script_sleeping_tulip:
     LDA.W buttons_pressed
     AND.W #!Key16_Left
     BEQ .stopped_pushing
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $2F, $36, .still_pushing)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $2F, $36, .still_pushing)
     BRL .stopped_pushing
 
 .still_pushing:
@@ -27,7 +27,7 @@ A1_script_sleeping_tulip:
     %CopMakeNpcUnpassable()
     %CopJumpIfEventFlagIsSet(!EV_A1_Found_APass, .already_found_pass)
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $2E, $36, .find_pass)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $2E, $36, .find_pass)
     RTL
 
 .find_pass:

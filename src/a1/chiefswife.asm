@@ -82,7 +82,7 @@ db $77,$7B,$72,$73,$74,$20,$3F,$0C
 ; @END@
 
 .text_said_no:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; "Nun,"
 ; "das ist schade." -> Default_Text_End
 db $4E,$75,$6E,$2C,$0D
@@ -90,7 +90,7 @@ db $B9,$D2,$73,$63,$68,$61,$64,$65,$2E,$13 : dw Default_Text_End
 ; @END@
 
 .text_said_yes:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; "Wirklich?!"
 ; "Ich werde Dich von nun "
 ; "an "

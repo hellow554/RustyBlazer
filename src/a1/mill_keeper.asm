@@ -11,7 +11,7 @@ A1_script_mill_keeper:
     %CopMakeNpcPassable()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
     TSB.W button_mask
-    %Cop96()
+    %CopFlipSpriteVertically()
     %Cop9D($05)
     %Cop9E(+)
 
@@ -19,7 +19,7 @@ A1_script_mill_keeper:
     %Cop9D($04)
     %Cop9E(+)
 +
-    %CopPlayAnimation($0)
+    %CopPlayAnimation(!Anim_Village_Man_Facing_Down)
     %Cop82()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
     TRB.W button_mask
@@ -27,7 +27,7 @@ A1_script_mill_keeper:
 
 .wait_for_player_to_stand_in_front_of_wheel:
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $26, $17, .player_in_front_of_wheel)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $26, $17, .player_in_front_of_wheel)
     RTL
 
 .player_in_front_of_wheel:
@@ -51,13 +51,13 @@ A1_script_mill_keeper:
 .after_turn:
     %CopAssignTalkCallback(.talk_after_turn)
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $2F, $32, .spawn_emblem_a)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $2F, $32, .spawn_emblem_a)
     RTL
 
 .said_no:
     %CopShowText(Default_Text_End+1)
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $26, $17, +)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $26, $17, +)
     BRA .wait_for_player_to_stand_in_front_of_wheel
 +
     RTL
@@ -65,7 +65,7 @@ A1_script_mill_keeper:
 .already_turned:
     %CopTeleportEntityTo(!Entity_MillKeeper, $27, $17)
     %CopMakeNpcUnpassable()
-    %CopPlayAnimation($0)
+    %CopPlayAnimation(!Anim_Village_Man_Facing_Down)
     %Cop82()
     BRA .after_turn
 
@@ -170,7 +170,7 @@ db $73,$75,$63,$68,$65,$6E,$20,$C3,$FD,$64,$72,$65,$68,$65,$6E,$20,$3F,$0C
 ; @END@
 
 .text_said_yes:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; PLAYER_NAME " hat am "
 ; "Rad gedreht." WFE
 ; "Als sich das Rad ge-"

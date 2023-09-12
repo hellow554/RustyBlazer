@@ -1,3 +1,4 @@
+!Lair_A1_Magician               = $00
 !Lair_A1_Chiefs_Wife            = $02
 !Lair_A1_Highground_Jewel       = $04
 !Lair_A1_Shop_Owner             = $06
@@ -15,4 +16,8 @@
 !Lair_A1_Painter                = $1A
 !Lair_A1_Sleeping_Tulip         = $22
 !Lair_A1_SecretShackKid         = $23
+!Lair_A1_SecretCaveKid          = $25
+!Lair_A1_OldManWithGoat         = $28
 !Lair_A1_Crabwalk_Guy           = $29
+!Lair_A1_SnitchTulip            = $2E
+!Lair_A1_OldManGoat             = $2F

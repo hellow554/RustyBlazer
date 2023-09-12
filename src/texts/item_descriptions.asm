@@ -1,5 +1,5 @@
 
-DescriptionTable:
+ItemDescriptionTable:
     dw .drawBox
 .weapons:
     dw .life_sword, .psycho_sword, .critical_sword, .lucky_blade
@@ -30,7 +30,7 @@ DescriptionTable:
 db $8A, $DD, $B4, $DD, $D9, $DD, $09, $DE, $51, $DE, $8B, $DE, $CF, $DE, $12, $DF, $5A, $DF, $7F, $DF, $C0, $DF, $F7, $DF, $29, $E0, $5D, $E0, $96, $E0, $C4, $E0, $FC, $E0, $30, $E1, $70, $E1, $7B, $E1, $86, $E1, $91, $E1, $9C, $E1, $A7, $E1, $B2, $E1, $BD, $E1, $FB, $E1, $06, $E2, $11, $E2, $5B, $E2, $8B, $E2, $C0, $E2, $08, $E3, $49, $E3, $82, $E3, $8D, $E3, $98, $E3, $A3, $E3, $AE, $E3, $B9, $E3
 
 .drawBox:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS 8 4
 ; DRAWBOX $16 8
 db $01,$08,$04
@@ -39,7 +39,7 @@ db $00
 ; @ENDSTRING@
 
 .life_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+0
 ; SETPOS $B2 4
@@ -62,7 +62,7 @@ db $00
 ; @ENDSTRING@
 
 .psycho_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+2
 ; SETPOS $B2 4
@@ -85,7 +85,7 @@ db $00
 ; @ENDSTRING@
 
 .critical_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+4
 ; SETPOS $B2 4
@@ -109,7 +109,7 @@ db $00
 
 
 .lucky_blade:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+6
 ; SETPOS $B2 4
@@ -132,7 +132,7 @@ db $00
 ; @ENDSTRING@
 
 .zantetsu_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+8
 ; SETPOS $B2 4
@@ -155,7 +155,7 @@ db $00
 ; @ENDSTRING@
 
 .spirit_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+10
 ; SETPOS $B2 4
@@ -178,7 +178,7 @@ db $00
 ; @ENDSTRING@
 
 .recovery_sword:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+12
 ; SETPOS $B2 4
@@ -201,7 +201,7 @@ db $00
 ; @ENDSTRING@
 
 .soul_blade:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+14
 ; SETPOS $B2 4
@@ -224,7 +224,7 @@ db $00
 ; @ENDSTRING@
 
 .iron_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+16
 ; SETPOS $1E 5
@@ -243,7 +243,7 @@ db $00
 ; @ENDSTRING@
 
 .ice_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+18
 ; SETPOS $1E 5
@@ -262,7 +262,7 @@ db $00
 ; @ENDSTRING@
 
 .bubble_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+20
 ; SETPOS $1E 5
@@ -281,7 +281,7 @@ db $00
 ; @ENDSTRING@
 
 .magic_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+22
 ; SETPOS $1E 5
@@ -300,7 +300,7 @@ db $00
 ; @ENDSTRING@
 
 .mystic_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+24
 ; SETPOS $1E 5
@@ -319,7 +319,7 @@ db $00
 ; @ENDSTRING@
 
 .light_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+26
 ; SETPOS $1E 5
@@ -338,7 +338,7 @@ db $00
 ; @ENDSTRING@
 
 .elemental_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+28
 ; SETPOS $1E 5
@@ -357,7 +357,7 @@ db $00
 ; @ENDSTRING@
 
 .soul_armor:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+30
 ; SETPOS $1E 5
@@ -376,7 +376,7 @@ db $00
 ; @ENDSTRING@
 
 .flame_ball:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+32
 ; SETPOS $A 5
@@ -393,7 +393,7 @@ db $00
 ; @ENDSTRING@
 
 .light_arrow:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+34
 ; SETPOS $A 5
@@ -410,7 +410,7 @@ db $00
 ; @ENDSTRING@
 
 .magic_flair:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+36
 ; SETPOS $A 5
@@ -427,7 +427,7 @@ db $00
 ; @ENDSTRING@
 
 .rotator:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+38
 ; SETPOS $A 5
@@ -444,7 +444,7 @@ db $00
 ; @ENDSTRING@
 
 .spark_bomb:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+40
 ; SETPOS $A 5
@@ -461,7 +461,7 @@ db $00
 ; @ENDSTRING@
 
 .flame_pillar:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+42
 ; SETPOS $A 5
@@ -478,7 +478,7 @@ db $00
 ; @ENDSTRING@
 
 .tornado:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+44
 ; SETPOS $A 5
@@ -495,7 +495,7 @@ db $00
 ; @ENDSTRING@
 
 .phoenix:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $8A 4
 ; LOOKUP AllItemsTable SequenceTable+46
 ; SETPOS $A 5
@@ -511,39 +511,88 @@ db $62,$65,$67,$6C,$65,$69,$74,$65,$6E,$2E
 db $00
 ; @ENDSTRING@
 
-db $01,$8A,$04,$05   ;C2DD86|        |00006E;
-db $3B,$D1,$2D,$E4,$01,$0A,$05,$5A   ;C2DD8E|        |      ;
-db $69,$65,$67,$65,$6E,$66,$75,$74   ;C2DD96|        |      ;
-db $74,$65,$72,$20,$F1,$5A,$75,$62   ;C2DD9E|        |000065;
-db $65,$2D,$0D,$0D,$68,$2A,$72,$6C   ;C2DDA6|        |00002D;
-db $61,$64,$65,$6E,$2E,$00,$01,$8A   ;C2DDAE|        |000064;
-db $04,$05,$3B,$D1,$2F,$E4,$01,$0A   ;C2DDB6|        |000005;
-db $05,$53,$61,$69,$74,$65,$20,$C6   ;C2DDBE|        |000053;
-db $48,$61,$72,$66,$65,$20,$76,$6F   ;C2DDC6|        |      ;
-db $6D,$0D,$0D,$53,$7B,$6E,$67,$65   ;C2DDCE|        |000D0D;
-db $72,$2E,$00,$01,$8A,$04,$05,$3B   ;C2DDD6|        |00002E;
-db $D1,$31,$E4,$01,$0A,$05,$45,$69   ;C2DDDE|        |000031;
-db $6E,$20,$50,$61,$73,$73,$20,$EE   ;C2DDE6|        |005020;
-db $B7,$0D,$0D,$4B,$69,$6E,$64,$65   ;C2DDEE|        |00000D;
-db $72,$6E,$20,$AD,$47,$72,$61,$73   ;C2DDF6|        |00006E;
-db $73,$0D,$0D,$56,$61,$6C,$6C,$65   ;C2DDFE|        |00000D;
-db $79,$2E,$00,$01,$8A,$04,$05,$3B   ;C2DE06|        |00002E;
-db $D1,$33,$E4,$01,$0A,$05,$45,$69   ;C2DE0E|        |000033;
-db $6E,$20,$73,$65,$6C,$74,$73,$61   ;C2DE16|        |007320;
-db $6D,$20,$61,$75,$73,$73,$65,$68   ;C2DE1E|        |006120;
-db $65,$6E,$64,$2D,$0D,$0D,$C8,$53   ;C2DE26|        |00006E;
-db $74,$61,$62,$2C,$20,$DA,$BB,$83   ;C2DE2E|        |000061;
-db $69,$6E,$0D,$0D,$54,$72,$7B,$75   ;C2DE36|        |      ;
-db $6D,$65,$20,$73,$63,$68,$61,$75   ;C2DE3E|        |002065;
-db $65,$6E,$20,$6B,$61,$6E,$6E,$73   ;C2DE46|        |00006E;
-db $74,$2E,$00,$01,$8A,$04,$05,$3B   ;C2DE4E|        |00002E;
-db $D1,$35,$E4,$01,$0A,$05,$88,$50   ;C2DE56|        |000035;
-db $69,$6E,$73,$65,$6C,$20,$B6,$FE   ;C2DE5E|        |      ;
-db $0D,$0D,$4D,$61,$6C,$65,$6E,$20   ;C2DE66|        |004D0D;
-db $EE,$3C,$A9,$B8,$0D,$0D,$42,$2A   ;C2DE6E|        |00A93C;
-db $73,$65,$6E,$3E,$20,$76,$65,$72   ;C2DE76|        |000065;
-db $77,$65,$6E,$64,$65,$74,$20,$77   ;C2DE7E|        |000065;
-db $75,$72,$64,$65,$00,$01,$8A,$04   ;C2DE86|        |000072;
+.goat_food:
+; @NEW_TEXT@
+; SETPOS $8A 4
+; LOOKUP AllItemsTable SequenceTable+48
+; SETPOS $A 5
+; "Ziegenfutter vom Zube-\n\n" NO_NEWLINE
+; "hörladen." NO_NEWLINE
+db $01,$8A,$04
+db $05 : dw AllItemsTable,SequenceTable+48
+db $01,$0A,$05
+db $5A,$69,$65,$67,$65,$6E,$66,$75,$74,$74,$65,$72,$20,$F1,$5A,$75,$62,$65,$2D,$0D,$0D
+db $68,$2A,$72,$6C,$61,$64,$65,$6E,$2E
+db $00
+; @ENDSTRING@
+
+.harp_string:
+; @NEW_TEXT@
+; SETPOS $8A 4
+; LOOKUP AllItemsTable SequenceTable+50
+; SETPOS $A 5
+; "Saite einer Harfe vom\n\n" NO_NEWLINE
+; "Sänger." NO_NEWLINE
+db $01,$8A,$04
+db $05 : dw AllItemsTable,SequenceTable+50
+db $01,$0A,$05
+db $53,$61,$69,$74,$65,$20,$C6,$48,$61,$72,$66,$65,$20,$76,$6F,$6D,$0D,$0D
+db $53,$7B,$6E,$67,$65,$72,$2E
+db $00
+; @ENDSTRING@
+
+.pass:
+; @NEW_TEXT@
+; SETPOS $8A 4
+; LOOKUP AllItemsTable SequenceTable+52
+; SETPOS $A 5
+; "Ein Pass von den \n\n" NO_NEWLINE
+; "Kindern aus Grass\n\n" NO_NEWLINE
+; "Valley." NO_NEWLINE
+db $01,$8A,$04
+db $05 : dw AllItemsTable,SequenceTable+52
+db $01,$0A,$05
+db $45,$69,$6E,$20,$50,$61,$73,$73,$20,$EE,$B7,$0D,$0D
+db $4B,$69,$6E,$64,$65,$72,$6E,$20,$AD,$47,$72,$61,$73,$73,$0D,$0D
+db $56,$61,$6C,$6C,$65,$79,$2E
+db $00
+; @ENDSTRING@
+
+.dream_rod:
+; @NEW_TEXT@
+; SETPOS $8A 4
+; LOOKUP AllItemsTable SequenceTable+54
+; SETPOS $A 5
+; "Ein seltsam aussehend-\n\n" NO_NEWLINE
+; "er Stab, mit dem Du in\n\n" NO_NEWLINE
+; "Träume schauen kannst." NO_NEWLINE
+db $01,$8A,$04
+db $05 : dw AllItemsTable,SequenceTable+54
+db $01,$0A,$05
+db $45,$69,$6E,$20,$73,$65,$6C,$74,$73,$61,$6D,$20,$61,$75,$73,$73,$65,$68,$65,$6E,$64,$2D,$0D,$0D
+db $C8,$53,$74,$61,$62,$2C,$20,$DA,$BB,$83,$69,$6E,$0D,$0D
+db $54,$72,$7B,$75,$6D,$65,$20,$73,$63,$68,$61,$75,$65,$6E,$20,$6B,$61,$6E,$6E,$73,$74,$2E
+db $00
+; @ENDSTRING@
+
+.leos_brush:
+; @NEW_TEXT@
+; SETPOS $8A 4
+; LOOKUP AllItemsTable SequenceTable+56
+; SETPOS $A 5
+; "Der Pinsel der zum \n\n" NO_NEWLINE
+; "Malen von \x3c\xa9\xb8\n\n" NO_NEWLINE
+; "Bösen\x3e verwendet wurde" NO_NEWLINE
+db $01,$8A,$04
+db $05 : dw AllItemsTable,SequenceTable+56
+db $01,$0A,$05
+db $88,$50,$69,$6E,$73,$65,$6C,$20,$B6,$FE,$0D,$0D
+db $4D,$61,$6C,$65,$6E,$20,$EE,$3C,$A9,$B8,$0D,$0D
+db $42,$2A,$73,$65,$6E,$3E,$20,$76,$65,$72,$77,$65,$6E,$64,$65,$74,$20,$77,$75,$72,$64,$65
+db $00
+; @ENDSTRING@
+
+db $01,$8A,$04   ;C2DE86|        |000072;
 db $05,$3B,$D1,$37,$E4,$01,$0A,$05   ;C2DE8E|        |00003B;
 db $53,$79,$6D,$62,$6F,$6C,$20,$EE   ;C2DE96|        |000079;
 db $54,$75,$72,$62,$6F,$2E,$4A,$65   ;C2DE9E|        |      ;

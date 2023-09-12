@@ -28,7 +28,7 @@ A1_script_highground_jewel_message:
 
 .loop:
     %CopJumpIfSealed(!Lair_A1_Highground_Jewel, .lair_sealed)
-    %CopPlayAnimation($07)
+    %CopPlayAnimation(!Anim_Village_Woman_Facing_Up)
     %Cop82()
     BRA .loop
 

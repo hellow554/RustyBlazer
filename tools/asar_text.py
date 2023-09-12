@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from contextlib import contextmanager
 from enum import Enum, auto
 from functools import partial
 from pathlib import Path
@@ -10,7 +9,7 @@ import sys
 from typing import Never, Iterator
 
 DEFAULT_START_BLOCK = re.compile(r"^\s*;\s*@DEFAULT_TEXTBOX@\s*$")
-NEW_BLOCK = re.compile(r"^\s*;\s*@NEW_TEXTBOX@\s*$")
+NEW_BLOCK = re.compile(r"^\s*;\s*@NEW_TEXT@\s*$")
 ENDBLOCK = re.compile(r"^\s*;\s*@END@\s*$")
 ENDSTRING = re.compile(r"^\s*;\s*@ENDSTRING@\s*$")
 SINGLE_STRING = re.compile(r";\s*@STRING@ ")
@@ -217,7 +216,8 @@ class DataWidth(Enum):
 
 
 class TextMapper:
-    _regex = re.compile("( )")
+    _regex = re.compile("( |,|\\.)")
+
     @staticmethod
     def map(txt: str) -> list[int]:
         res = []
@@ -487,6 +487,11 @@ class Translator:
                     height = m
 
                 self._append([0x07, width, height])
+            elif arg == "SPACE":  # print ` ` n times
+                count = next(iterator)
+                if (n := self.parse_int(count, DataWidth.BYTE)) is None:
+                    self._raise(ParseException, f"Cannot parse count for spaces `{count}`")
+                self._append([0x14, n])
             elif arg == "CONT":  # continue with previous textbox settings
                 self._append(0x0C)
             elif arg == "PLAYER_NAME":  # player name lookup

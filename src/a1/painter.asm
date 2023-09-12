@@ -6,18 +6,18 @@ A1_script_painter:
     %CopAssignTalkCallback(.talk)
 
 
-.loop:
-    %CopPlayAnimation($03)
+.walking_loop:
+    %CopPlayAnimation(!Anim_Village_Man_Walking_Down)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)
     %Cop83()
-    %CopPlayAnimation($04)
+    %CopPlayAnimation(!Anim_Village_Man_Walking_Up)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)
     %Cop83()
-    BRL .loop
+    BRL .walking_loop
 
 .chief_is_sealed:
     %CopAssignTalkCallback(.talk_chief_is_there)
@@ -27,7 +27,7 @@ A1_script_painter:
 
 .player_touched_picture:
     %Cop20(..pos_jump)
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $30, $04, ..reached_pos)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $30, $04, ..reached_pos)
 ..pos_jump:
     %CopClearEventFlag(!EV_A1_Saw_Chief_In_Picture)
     RTL

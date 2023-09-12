@@ -5,10 +5,10 @@ A1_script_Tulip_Before_Painter_House:
     %CopMakeNpcUnpassable()
 
 
-.dong:
-    %CopPlayAnimation($1E)
+.moving_loop:
+    %CopPlayAnimation(!Anim_Village_Tulip_Left_Right)
     %Cop82()
-    BRA .dong
+    BRA .moving_loop
 
 .talk:
     %CopJumpIfEventFlagIsSet(!EV_A1_TulipBeforeHouseSecondTalk, .second_talk)

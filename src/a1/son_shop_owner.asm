@@ -19,21 +19,21 @@ A1_script_son_shop_owner:
 
 .too_left:
     %Cop23(..xxx)
-    %Cop97()
+    %CopResetSpriteVertically()
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %CopPlayAnimation($0C)
+    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
     %Cop82()
     BRL .stand_inside
 
 .too_right:
     %Cop24(..xxx)
-    %Cop96()
+    %CopFlipSpriteVertically()
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %CopPlayAnimation($0C)
+    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
     %Cop82()
 
 .stand_inside:

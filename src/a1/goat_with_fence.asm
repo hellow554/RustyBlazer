@@ -16,7 +16,7 @@ A1_script_GoatWithFence:
 
 .herbs_on_the_ground:
     %CopJumpIfEventFlagIsSet(!EV_A1_FoundHerbsOnTheGround, .herbs_found)
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $34, $2C, .find_herbs)
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $34, $2C, .find_herbs)
     RTL
 .find_herbs:
     %CopShowText(.text_hk)

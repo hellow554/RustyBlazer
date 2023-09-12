@@ -4663,7 +4663,7 @@ LDY.W #$C6FD                         ;C384B7|A0FDC6  |      ;
 JSL.L printOsdStringFromBank2                    ;C384BA|2254A782|82A754;
 LDA.W $0445                          ;C384BE|AD4504  |810445;
 BNE CODE_C384D4                      ;C384C1|D011    |C384D4;
-LDA.W $0462                          ;C384C3|AD6204  |810462;
+LDA.W remaining_lair                          ;C384C3|AD6204  |810462;
 LDX.W #$1B80                         ;C384C6|A2801B  |      ;
 JSL.L CODE_C2B215                    ;C384C9|2215B282|82B215;
 LDY.W #$C70E                         ;C384CD|A00EC7  |      ;
@@ -5339,56 +5339,14 @@ incsrc "a1/sleeping_tulip.asm"
 incsrc "a1/secret_cave_kid.asm"
 incsrc "a1/walking_goat.asm"
 incsrc "a1/gourmet_goat.asm"
+incsrc "a1/old_man_with_goat.asm"
 incsrc "a1/old_man_goat.asm"
 incsrc "a1/snitch_tulip.asm"
 incsrc "a1/chief.asm"
+incsrc "a1/chief_chair.asm"
+incsrc "a1/dreaming_tulip.asm"
 
-COP #$15                             ;C3B09E|0215    |      ;
-COP #$17                             ;C3B0A0|0217    |      ;
-db $B5,$B0                           ;C3B0A2|        |0000B0;
-COP #$91                             ;C3B0A4|0291    |      ;
-COP #$14                             ;C3B0A6|0214    |      ;
-db $09,$00,$B2,$B0                   ;C3B0A8|        |      ;
-COP #$80                             ;C3B0AC|0280    |      ;
-db $23                               ;C3B0AE|        |000002;
-COP #$82                             ;C3B0AF|0282    |      ;
-db $6B                               ;C3B0B1|        |      ;
-COP #$86                             ;C3B0B2|0286    |      ;
-RTL                                  ;C3B0B4|6B      |      ;
-db $02,$01,$BA,$B0,$6B,$10,$89,$D2   ;C3B0B5|        |      ;
-db $B9,$5A,$69,$6D,$6D,$65,$72,$20   ;C3B0BD|        |00695A;
-db $0D,$B8,$42,$5B,$72,$67,$65,$72   ;C3B0C5|        |0042B8;
-db $6D,$65,$69,$73,$74,$65,$72,$73   ;C3B0CD|        |006965;
-db $2E,$20,$45,$72,$20,$0D,$73,$61   ;C3B0D5|        |004520;
-db $25,$20,$CE,$73,$74,$75,$6E,$64   ;C3B0DD|        |000020;
-db $65,$6E,$6C,$61,$6E,$67,$20,$0D   ;C3B0E5|        |00006E;
-db $EB,$CF,$6E,$61,$63,$68,$67,$65   ;C3B0ED|        |      ;
-db $64,$61,$63,$68,$74,$2E,$11,$8F   ;C3B0F5|        |000061;
-db $66,$72,$61,$67,$65,$20,$6D,$69   ;C3B0FD|        |000072;
-db $63,$68,$2C,$20,$77,$61,$6E,$6E   ;C3B105|        |000068;
-db $20,$0D,$C8,$7A,$75,$72,$5B,$63   ;C3B10D|        |C3C80D;
-db $6B,$6B,$6F,$6D,$6D,$65,$6E,$20   ;C3B115|        |      ;
-db $77,$69,$72,$64,$2E,$0D,$13,$F0   ;C3B11D|        |000069;
-db $C8,$02,$14,$22,$00,$2D,$B1,$6B   ;C3B125|        |      ;
-db $02,$17,$4B,$B1,$02,$15,$02,$80   ;C3B12D|        |      ;
-db $1E,$02,$82,$82,$F8,$FF,$02,$AC   ;C3B135|        |008202;
-db $B6,$BB,$83,$70,$00,$80,$00,$50   ;C3B13D|        |0000BB;
-db $00,$00,$1C,$82,$E8,$FF,$02,$01   ;C3B145|        |      ;
-db $5C,$B1,$02,$17,$57,$B1,$02,$27   ;C3B14D|        |1702B1;
-db $3B,$B1,$02,$01,$8E,$B1,$6B,$10   ;C3B155|        |      ;
-db $49,$6E,$20,$6D,$65,$69,$6E,$65   ;C3B15D|        |      ;
-db $6E,$20,$54,$72,$7B,$75,$6D,$65   ;C3B165|        |005420;
-db $6E,$20,$D7,$0D,$D1,$61,$6C,$6C   ;C3B16D|        |00D720;
-db $65,$73,$20,$74,$75,$6E,$20,$F9   ;C3B175|        |000073;
-db $D1,$0D,$77,$69,$6C,$6C,$2E,$2E   ;C3B17D|        |00000D;
-db $2E,$2E,$11,$48,$41,$21,$13,$F0   ;C3B185|        |00112E;
-db $C8,$10,$57,$61,$72,$75,$6D,$20   ;C3B18D|        |      ;
-db $76,$65,$72,$73,$75,$63,$68,$73   ;C3B195|        |000065;
-db $74,$20,$44,$75,$0D,$DF,$6D,$61   ;C3B19D|        |000020;
-db $6C,$20,$DA,$BB,$0D,$4A,$75,$77   ;C3B1A5|        |00DA20;
-db $65,$6C,$20,$FD,$73,$70,$72,$65   ;C3B1AD|        |00006C;
-db $63,$68,$65,$6E,$20,$3F,$13,$F0   ;C3B1B5|        |000068;
-db $C8                               ;C3B1BD|        |      ;
+
 COP #$14                             ;C3B1BE|0214    |      ;
 db $10,$00,$C5,$B1,$6B               ;C3B1C0|        |C3B1C2;
 COP #$07                             ;C3B1C5|0207    |      ;
@@ -5752,7 +5710,7 @@ db $81,$6E,$69,$6D,$6D,$60,$20,$64,$69,$65,$73,$2E,$11
 ; @END@
 
 Text_Player_Gets_Exp:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; PLAYER_NAME " erhielt EXP!" -> Default_Text_End
 db $02,$02,$20,$C1,$45,$58,$50,$21,$13 : dw Default_Text_End
 ; @END@
@@ -5783,6 +5741,7 @@ Jewel_Return_to_GrassValley:
     RTL
 
 
+CODE_C3BBB6:
 db $22,$40,$C0   ;C3BBB1|        |      ;
 db $83,$02,$17,$CA,$BB,$E2,$20,$A9   ;C3BBB9|        |000002;
 db $83,$48,$C2,$20,$A9,$5A,$C0,$48   ;C3BBC1|        |000048;

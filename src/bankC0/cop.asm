@@ -1352,8 +1352,8 @@ TYX
     BRL .ret_in_tmp
 
 +:
-    LDA.W $000E,X
-    STA.W $0014,X
+    LDA.W $000E, X
+    STA.W $0014, X
 
 ++:
     JSL.L CODE_C286CD

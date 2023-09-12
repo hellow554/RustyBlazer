@@ -248,10 +248,12 @@ vblank_interrupt_enabled = $7E03D4 ; if 0 the nmi interrupt is disabled, if 1 no
 text_modifier = $7E03EB
 textbox_tlc = $7E03F9 ; top left corner of a default textbox
 lair_reveal_in_progress = $7E03FD ; 0 if no revealing is in progress, elsewise != 0 (mostly 1)
+magic_cast_in_progress = $7E043F ; 0 if no player magic is currently on screen, else 1
 revealing_lair_id = $7E0407 ; this is the lair id that is currently revealed
 player_health_restore = $7E0447
 exp_to_give = $7E0449
 player_name8 = $7E0453
+remaining_lair = $7E0462
 inhibit_buttons_readout = $7E0474
 
 oam_data = $7E0492 ; 544 bytes in size including $6B1
@@ -299,10 +301,16 @@ player_name = $7E1B92
 
 
 current_map_number = $7E1C6A
-
+tile_map = $7E8000
+DATA_7EC000 = $7EC000
 coldata_1 = $7F0200
 coldata_2 = $7F0201
 coldata_3 = $7F0202
+; A value of $00 means, that the lair is cleared, but not sealed yet
+; A value of $C0 means, that the sealing is in progress
+; A Value of $80 means, that the lair is sealed
+; Any other value indicates the amount of monsters to spawn
+lair_spawn = $7F0203
 cg_data = $7F0200
 
 
@@ -533,11 +541,9 @@ CODE_C092DB = $8092DB
 CODE_C0930A = $80930A
 CODE_C29395 = $829395
 CODE_C292F5 = $8292F5
-CODE_C2957E = $82957E
 CODE_C29445 = $829445
 CODE_C294D0 = $8294D0
 CODE_C294E4 = $8294E4
-CODE_C295F1 = $8295F1
 CODE_C3863A = $83863A
 CODE_C2820E = $82820E
 CODE_C3C040 = $83C040

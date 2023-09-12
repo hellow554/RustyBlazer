@@ -1,30 +1,32 @@
 A1_script_old_man_goat:
-COP #$14                             ;C3ABBF|0214    |      ;
-db $28,$00,$C6,$AB                   ;C3ABC1|        |      ;
-RTL                                  ;C3ABC5|6B      |      ;
-COP #$17                             ;C3ABC6|0217    |      ;
-db $CF,$AB                           ;C3ABC8|        |1502AB;
-COP #$15                             ;C3ABCA|0215    |      ;
-COP #$91                             ;C3ABCC|0291    |      ;
-RTL                                  ;C3ABCE|6B      |      ;
-COP #$01                             ;C3ABCF|0201    |      ;
-db $D4,$AB                           ;C3ABD1|        |0000AB;
-RTL                                  ;C3ABD3|6B      |      ;
-db $10,$4E,$61,$63,$68,$64,$65,$6D   ;C3ABD4|        |C3AC24;
-db $20,$D1,$DC,$0D,$46,$72,$61,$75   ;C3ABDC|        |C3DCD1;
-db $20,$61,$6E,$20,$B7,$46,$6F,$6C   ;C3ABE4|        |C36E61;
-db $67,$65,$6E,$20,$0D,$C6,$4B,$72   ;C3ABEC|        |000065;
-db $61,$6E,$6B,$68,$65,$69,$74,$20   ;C3ABF4|        |00006E;
-db $76,$65,$72,$2D,$0D,$6C,$6F,$72   ;C3ABFC|        |000065;
-db $65,$6E,$20,$68,$61,$62,$65,$2C   ;C3AC04|        |00006E;
-db $20,$66,$69,$65,$6C,$20,$11,$DB   ;C3AC0C|        |C36966;
-db $BF,$5A,$69,$65,$67,$65,$20,$61   ;C3AC14|        |65695A;
-db $75,$66,$2C,$0D,$B5,$E5,$61,$6D   ;C3AC1C|        |000066;
-db $20,$48,$61,$75,$73,$20,$0D,$61   ;C3AC24|        |C36148;
-db $75,$66,$68,$69,$65,$6C,$74,$2E   ;C3AC2C|        |000066;
-db $20,$8F,$FC,$E9,$0D,$65,$69,$6E   ;C3AC34|        |C3FC8F;
-db $73,$61,$6D,$2C,$20,$BA,$D1,$D9   ;C3AC3C|        |000061;
-db $11,$64,$61,$7A,$75,$20,$65,$6E   ;C3AC44|        |000064;
-db $74,$73,$63,$68,$6C,$6F,$25,$20   ;C3AC4C|        |000073;
-db $E6,$0D,$FD,$62,$65,$68,$61,$6C   ;C3AC54|        |00000D;
-db $74,$65,$6E,$2E,$13,$F0,$C8       ;C3AC5C|        |000065;
+    %CopJumpIfSealed(!Lair_A1_OldManGoat, +) : RTL : +
+    %CopSetScriptAddr(CODE_C0A9C9)
+    %CopAssignTalkCallback(.talk)
+    %CopMakeNpcUnpassable()
+    %CopSetScriptAddrToNextInstruction()
+    %CopPlayAnimation(!Anim_Village_Goat_Eating_And_Blinking)
+    %Cop82()
+    RTL
+
+.talk:
+    %CopShowText(.text)
+    RTL
+
+.text:
+; @DEFAULT_TEXTBOX@
+; "Ich weiß nicht, ob es "
+; "so etwas wie Reinkar-"
+; "nation gibt." WFE
+; "Auch wenn ich nicht "
+; "mit meinem Mann reden "
+; "kann, so genieße ich "
+; "seine Anwesenheit." -> Default_Text_End
+db $10
+db $8F,$77,$65,$69,$25,$20,$6E,$69,$63,$68,$74,$2C,$20,$6F,$62,$20,$C3,$0D
+db $E9,$C2,$F6,$52,$65,$69,$6E,$6B,$61,$72,$2D,$0D
+db $6E,$61,$74,$69,$6F,$6E,$20,$67,$69,$62,$74,$2E,$11
+db $41,$75,$63,$68,$20,$F3,$D1,$DF,$0D
+db $DA,$DD,$4D,$61,$6E,$6E,$20,$72,$65,$64,$65,$6E,$20,$0D
+db $6B,$61,$6E,$6E,$2C,$20,$E9,$67,$65,$6E,$69,$65,$25,$65,$20,$D1,$0D
+db $73,$65,$69,$6E,$65,$20,$41,$6E,$77,$65,$73,$65,$6E,$68,$65,$69,$74,$2E,$13 : dw Default_Text_End
+; @END@

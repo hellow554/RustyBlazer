@@ -5690,9 +5690,9 @@ UNREACH_C28C57:
 db $6B                               ;C28C57|        |      ;
 
 CODE_C28C58:
-LDA.W $0462                          ;C28C58|AD6204  |810462;
+LDA.W remaining_lair                          ;C28C58|AD6204  |810462;
 BEQ CODE_C28C60                      ;C28C5B|F003    |C28C60;
-DEC.W $0462                          ;C28C5D|CE6204  |810462;
+DEC.W remaining_lair                          ;C28C5D|CE6204  |810462;
 
 CODE_C28C60:
 PHX                                  ;C28C60|DA      |      ;
@@ -6717,103 +6717,106 @@ BRL CODE_C294FA                      ;C2957A|827DFF  |C294FA;
 
 CODE_C2957D:
 RTL                                  ;C2957D|6B      |      ;
-LDX.W #$0000                         ;C2957E|A20000  |      ;
-TXY                                  ;C29581|9B      |      ;
-STZ.W $0462                          ;C29582|9C6204  |810462;
 
-CODE_C29585:
-LDA.W UNREACH_81BA0D,Y               ;C29585|B90DBA  |81BA0D;
-CMP.B #$FF                           ;C29588|C9FF    |      ;
-BEQ CODE_C295B0                      ;C2958A|F024    |C295B0;
-LDA.W UNREACH_81BA18,Y               ;C2958C|B918BA  |81BA18;
-CMP.W current_map_number                          ;C2958F|CD6A1C  |811C6A;
-BNE CODE_C295A3                      ;C29592|D00F    |C295A3;
-INC.W $0462                          ;C29594|EE6204  |810462;
-LDA.L $7F0203,X                      ;C29597|BF03027F|7F0203;
-BMI CODE_C295B1                      ;C2959B|3014    |C295B1;
-BEQ CODE_C295B1                      ;C2959D|F012    |C295B1;
-JSL.L CODE_C0947B                    ;C2959F|227B9480|80947B;
+CODE_C2957E:
+    LDX.W #0
+    TXY
+    STZ.W remaining_lair
 
-CODE_C295A3:
-REP #$20                             ;C295A3|C220    |      ;
-TYA                                  ;C295A5|98      |      ;
-CLC                                  ;C295A6|18      |      ;
-ADC.W #$0020                         ;C295A7|692000  |      ;
-TAY                                  ;C295AA|A8      |      ;
-SEP #$20                             ;C295AB|E220    |      ;
-INX                                  ;C295AD|E8      |      ;
-BRA CODE_C29585                      ;C295AE|80D5    |C29585;
+.count_loop:
+    LDA.W LairDataStructure, Y
+    CMP.B #$FF ; $FF is the endmarker for that table
+    BEQ .ret
+    LDA.W LairDataStructure.lair_location, Y
+    CMP.W current_map_number
+    BNE .next_lair
+    INC.W remaining_lair
+    LDA.L lair_spawn, X
+    BMI .handle_cleared_lair
+    BEQ .handle_cleared_lair
+    JSL.L CODE_C0947B
 
-CODE_C295B0:
-RTL                                  ;C295B0|6B      |      ;
+.next_lair:
+    REP #$20
+    ; increase Y by `objectsize(LairDataStructure)` ($20)
+    TYA
+    CLC
+    ADC.W #objectsize(LairDataStructure)
+    TAY
+    SEP #$20
+    ; increase X by one
+    INX
+    BRA .count_loop
 
-CODE_C295B1:
-PHX                                  ;C295B1|DA      |      ;
-PHY                                  ;C295B2|5A      |      ;
-PHP                                  ;C295B3|08      |      ;
-REP #$20                             ;C295B4|C220    |      ;
-LDA.W UNREACH_81BA19,Y               ;C295B6|B919BA  |81BA19;
-AND.W #$00FF                         ;C295B9|29FF00  |      ;
-ASL A                                ;C295BC|0A      |      ;
-ASL A                                ;C295BD|0A      |      ;
-ASL A                                ;C295BE|0A      |      ;
-ASL A                                ;C295BF|0A      |      ;
-STA.B $16                            ;C295C0|8516    |000016;
-LDA.W UNREACH_81BA1A,Y               ;C295C2|B91ABA  |81BA1A;
-AND.W #$00FF                         ;C295C5|29FF00  |      ;
-ASL A                                ;C295C8|0A      |      ;
-ASL A                                ;C295C9|0A      |      ;
-ASL A                                ;C295CA|0A      |      ;
-ASL A                                ;C295CB|0A      |      ;
-STA.B $18                            ;C295CC|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C295CE|22E08183|8381E0;
-SEP #$20                             ;C295D2|E220    |      ;
-LDA.B #$FE                           ;C295D4|A9FE    |      ;
-PLP                                  ;C295D6|28      |      ;
-BPL CODE_C295DE                      ;C295D7|1005    |C295DE;
-LDA.B #$FF                           ;C295D9|A9FF    |      ;
-DEC.W $0462                          ;C295DB|CE6204  |810462;
+.ret:
+    RTL
 
-CODE_C295DE:
-STA.L $7E8000,X                      ;C295DE|9F00807E|7E8000;
-XBA                                  ;C295E2|EB      |      ;
-LDA.W UNREACH_81BA15,Y               ;C295E3|B915BA  |81BA15;
-BEQ CODE_C295ED                      ;C295E6|F005    |C295ED;
-db $EB,$9F,$00,$C0,$7E               ;C295E8|        |      ;
+.handle_cleared_lair:
+    PHX
+    PHY
+    PHP
+    REP #$20
+    ; convert lair short x pos to a long position
+    LDA.W LairDataStructure.lair_pos_x, Y
+    AND.W #$FF
+    ASL #4
+    STA.B $16
+    ; convert lair short y pos to a long position
+    LDA.W LairDataStructure.lair_pos_y, Y
+    AND.W #$FF
+    ASL #4
+    STA.B $18
+    JSL.L CalcPassablemapOffset
+    SEP #$20
+    LDA.B #$FE
+    PLP
+    BPL + ; highest bit is not set, so it's open
+    LDA.B #!TM_SealedLair
+    DEC.W remaining_lair
 
-CODE_C295ED:
-PLY                                  ;C295ED|7A      |      ;
-PLX                                  ;C295EE|FA      |      ;
-BRA CODE_C295A3                      ;C295EF|80B2    |C295A3;
-LDX.W #$0000                         ;C295F1|A20000  |      ;
-TXY                                  ;C295F4|9B      |      ;
++:
+    STA.L tile_map, X
+    XBA
+    LDA.W LairDataStructure.field_08, Y
+    BEQ +
+    XBA
+    STA.L DATA_7EC000, X
 
-CODE_C295F5:
-LDA.L UNREACH_82F89A,X               ;C295F5|BF9AF882|82F89A;
-CMP.B #$FF                           ;C295F9|C9FF    |      ;
-BEQ CODE_C29620                      ;C295FB|F023    |C29620;
++:
+    PLY
+    PLX
+    BRA .next_lair
+
+CODE_C295F1:
+    LDX.W #0
+    TXY
+
+.loop:
+    LDA.L UNREACH_82F89A, X
+    CMP.B #$FF ; end marker
+    BEQ .ret                      ;C295FB|F023    |C29620;
 CMP.W current_map_number                          ;C295FD|CD6A1C  |811C6A;
-BNE CODE_C29614                      ;C29600|D012    |C29614;
+BNE .CODE_C29614                      ;C29600|D012    |C29614;
 LDA.L UNREACH_82F89C,X               ;C29602|BF9CF882|82F89C;
 XBA                                  ;C29606|EB      |      ;
 LDA.L UNREACH_82F89B,X               ;C29607|BF9BF882|82F89B;
 LDY.W #$1A5E                         ;C2960B|A05E1A  |      ;
 JSL.L checkIfBitIsSet                    ;C2960E|22CA8283|8382CA;
-BCS CODE_C29621                      ;C29612|B00D    |C29621;
+BCS .CODE_C29621                      ;C29612|B00D    |C29621;
 
-CODE_C29614:
+.CODE_C29614:
 REP #$20                             ;C29614|C220    |      ;
 TXA                                  ;C29616|8A      |      ;
 CLC                                  ;C29617|18      |      ;
 ADC.W #$0009                         ;C29618|690900  |      ;
 TAX                                  ;C2961B|AA      |      ;
 SEP #$20                             ;C2961C|E220    |      ;
-BRA CODE_C295F5                      ;C2961E|80D5    |C295F5;
+BRA .loop                      ;C2961E|80D5    |C295F5;
 
-CODE_C29620:
-RTL                                  ;C29620|6B      |      ;
+.ret:
+    RTL
 
-CODE_C29621:
+.CODE_C29621:
 PHX                                  ;C29621|DA      |      ;
 LDA.L UNREACH_82F89D,X               ;C29622|BF9DF882|82F89D;
 STA.W $1C71                          ;C29626|8D711C  |811C71;
@@ -6841,22 +6844,22 @@ STA.B $18                            ;C29658|8518    |000018;
 JSR.W CODE_C291CB                    ;C2965A|20CB91  |C291CB;
 SEP #$20                             ;C2965D|E220    |      ;
 PLX                                  ;C2965F|FA      |      ;
-BRA CODE_C29614                      ;C29660|80B2    |C29614;
+BRA .CODE_C29614                      ;C29660|80B2    |C29614;
 PHX                                  ;C29662|DA      |      ;
 PHY                                  ;C29663|5A      |      ;
 LDX.W #$0000                         ;C29664|A20000  |      ;
 
-CODE_C29667:
+.CODE_C29667:
 LDA.W UNREACH_81F99A,X               ;C29667|BD9AF9  |81F99A;
-BMI CODE_C29691                      ;C2966A|3025    |C29691;
+BMI .CODE_C29691                      ;C2966A|3025    |C29691;
 CMP.W current_map_number                          ;C2966C|CD6A1C  |811C6A;
-BNE CODE_C2968B                      ;C2966F|D01A    |C2968B;
+BNE .CODE_C2968B                      ;C2966F|D01A    |C2968B;
 LDA.W UNREACH_81F99C,X               ;C29671|BD9CF9  |81F99C;
 XBA                                  ;C29674|EB      |      ;
 LDA.W UNREACH_81F99B,X               ;C29675|BD9BF9  |81F99B;
 LDY.W #$1ADE                         ;C29678|A0DE1A  |      ;
 JSL.L checkIfBitIsSet                    ;C2967B|22CA8283|8382CA;
-BCC CODE_C2968B                      ;C2967F|900A    |C2968B;
+BCC .CODE_C2968B                      ;C2967F|900A    |C2968B;
 LDA.W UNREACH_81F99D,X               ;C29681|BD9DF9  |81F99D;
 STA.W $031E                          ;C29684|8D1E03  |81031E;
 SEC                                  ;C29687|38      |      ;
@@ -6864,14 +6867,14 @@ PLY                                  ;C29688|7A      |      ;
 PLX                                  ;C29689|FA      |      ;
 RTL                                  ;C2968A|6B      |      ;
 
-CODE_C2968B:
+.CODE_C2968B:
 INX                                  ;C2968B|E8      |      ;
 INX                                  ;C2968C|E8      |      ;
 INX                                  ;C2968D|E8      |      ;
 INX                                  ;C2968E|E8      |      ;
-BRA CODE_C29667                      ;C2968F|80D6    |C29667;
+BRA .CODE_C29667                      ;C2968F|80D6    |C29667;
 
-CODE_C29691:
+.CODE_C29691:
 CLC                                  ;C29691|18      |      ;
 PLY                                  ;C29692|7A      |      ;
 PLX                                  ;C29693|FA      |      ;
@@ -11314,7 +11317,7 @@ STZ.W $2115                          ;C2B716|9C1521  |812115;
 LDX.W #$0000                         ;C2B719|A20000  |      ;
 
 CODE_C2B71C:
-LDA.L $7EC000,X                      ;C2B71C|BF00C07E|7EC000;
+LDA.L DATA_7EC000,X                      ;C2B71C|BF00C07E|7EC000;
 STA.W $2118                          ;C2B720|8D1821  |812118;
 INX                                  ;C2B723|E8      |      ;
 CPX.W #$4000                         ;C2B724|E00040  |      ;
@@ -12196,7 +12199,7 @@ db $6C,$5B,$63,$6B,$2E,$00,$09,$01   ;C2C546|        |00635B;
 db $58,$03,$8A,$45,$6E,$64,$65,$00   ;C2C54E|        |      ;
 
 txt_main_menu:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; SETPOS $88 $00
 ; DRAWBOX $16 $16
 ; SETPOS $4C $01 "Welcher Spielstand ?" NO_NEWLINE
@@ -12268,11 +12271,23 @@ db $40,$40,$40,$40,$40,$40,$40,$40   ;C2C6EE|        |      ;
 db $40,$40,$40,$40,$40,$40,$00,$01   ;C2C6F6|        |      ;
 db $12,$02,$14,$0E,$01,$84,$01,$07   ;C2C6FE|        |000002;
 db $1A,$02,$05,$94,$C9,$6A,$1C,$00   ;C2C706|        |      ;
-db $01,$1E,$05,$07,$0D,$04,$4D,$6F   ;C2C70E|        |00001E;
-db $6E,$73,$74,$65,$72,$68,$2A,$68   ;C2C716|        |007473;
-db $6C,$65,$6E,$0D,$0D,$14,$05,$28   ;C2C71E|        |006E65;
-db $62,$72,$69,$67,$20,$06,$02,$80   ;C2C726|        |C2309B;
-db $1B,$00,$08,$84,$01,$08,$1E,$05   ;C2C72E|        |      ;
+
+txt_lairs_remaining:
+; @NEW_TEXT@
+; SETPOS $1E $05
+; DRAWBOX 13 4
+; "Monsterhöhlen\n\n" NO_NEWLINE
+; SPACE 5 "Übrig " NO_NEWLINE
+; DECVAL 2 lair_remaining_ascii
+db $01,$1E,$05
+db $07,$0D,$04
+db $4D,$6F,$6E,$73,$74,$65,$72,$68,$2A,$68,$6C,$65,$6E,$0D,$0D
+db $14,$05,$28,$62,$72,$69,$67,$20
+db $06,$02 : dw lair_remaining_ascii
+db $00
+; @ENDSTRING@
+
+db $08,$84,$01,$08,$1E,$05   ;C2C72E|        |      ;
 db $00,$01,$12,$02,$14,$0E,$01,$86   ;C2C736|        |      ;
 db $01,$07,$17,$13,$03,$20,$01,$0C   ;C2C73E|        |000007;
 db $02,$02,$02,$01,$22,$02,$48,$50   ;C2C746|        |      ;
@@ -12382,623 +12397,12 @@ osd2lut:
 .sym2:          db $3C, $3D, $3E, $3F, $00
 .lmno:          db $4C, $4D, $4E, $4F, $00
 
-db $94,$CA   ;C2C98E|        |      ;
-db $AB,$CA,$C2,$CA,$D7,$CA,$E6,$CA   ;C2C996|        |      ;
-db $FC,$CA,$14,$CB,$2C,$CB,$3B,$CB   ;C2C99E|        |C214CA;
-db $4A,$CB,$59,$CB,$63,$CB,$72,$CB   ;C2C9A6|        |      ;
-db $7D,$CB,$8C,$CB,$9B,$CB,$9C,$CB   ;C2C9AE|        |008CCB;
-db $9D,$CB,$9E,$CB,$9F,$CB,$A0,$CB   ;C2C9B6|        |009ECB;
-db $B5,$CB,$CA,$CB,$DB,$CB,$F1,$CB   ;C2C9BE|        |0000CB;
-db $08,$CC,$13,$CC,$23,$CC,$33,$CC   ;C2C9C6|        |      ;
-db $43,$CC,$52,$CC,$61,$CC,$70,$CC   ;C2C9CE|        |0000CC;
-db $7F,$CC,$8E,$CC,$A2,$CC,$AE,$CC   ;C2C9D6|        |CC8ECC;
-db $BB,$CC,$BC,$CC,$BD,$CC,$BE,$CC   ;C2C9DE|        |      ;
-db $D2,$CC,$E5,$CC,$FC,$CC,$0D,$CD   ;C2C9E6|        |0000CC;
-db $1E,$CD,$2B,$CD,$37,$CD,$4C,$CD   ;C2C9EE|        |002BCD;
-db $55,$CD,$5F,$CD,$73,$CD,$83,$CD   ;C2C9F6|        |0000CD;
-db $9A,$CD,$9B,$CD,$9C,$CD,$9D,$CD   ;C2C9FE|        |      ;
-db $9E,$CD,$9F,$CD,$A0,$CD,$A1,$CD   ;C2CA06|        |009FCD;
-db $B6,$CD,$C9,$CD,$DE,$CD,$F3,$CD   ;C2CA0E|        |0000CD;
-db $03,$CE,$10,$CE,$25,$CE,$30,$CE   ;C2CA16|        |0000CE;
-db $3B,$CE,$51,$CE,$60,$CE,$73,$CE   ;C2CA1E|        |      ;
-db $74,$CE,$75,$CE,$76,$CE,$77,$CE   ;C2CA26|        |0000CE;
-db $78,$CE,$79,$CE,$7A,$CE,$7B,$CE   ;C2CA2E|        |      ;
-db $8A,$CE,$98,$CE,$A6,$CE,$B7,$CE   ;C2CA36|        |      ;
-db $C7,$CE,$D2,$CE,$E6,$CE,$FA,$CE   ;C2CA3E|        |0000CE;
-db $06,$CF,$12,$CF,$1B,$CF,$2B,$CF   ;C2CA46|        |0000CF;
-db $3B,$CF,$3C,$CF,$3D,$CF,$3E,$CF   ;C2CA4E|        |      ;
-db $3F,$CF,$40,$CF,$41,$CF,$42,$CF   ;C2CA56|        |CF40CF;
-db $55,$CF,$60,$CF,$70,$CF,$86,$CF   ;C2CA5E|        |0000CF;
-db $9C,$CF,$A5,$CF,$B3,$CF,$C1,$CF   ;C2CA66|        |00A5CF;
-db $D1,$CF,$E0,$CF,$EF,$CF,$FE,$CF   ;C2CA6E|        |0000CF;
-db $13,$D0,$28,$D0,$3D,$D0,$4A,$D0   ;C2CA76|        |0000D0;
-db $4B,$D0,$4C,$D0,$4D,$D0,$4E,$D0   ;C2CA7E|        |      ;
-db $63,$D0,$6D,$D0,$77,$D0,$8F,$D0   ;C2CA86|        |0000D0;
-db $A3,$D0,$B9,$D0,$BA,$D0,$20,$20   ;C2CA8E|        |0000D0;
-db $54,$65,$6D,$70,$65,$6C,$20,$D3   ;C2CA96|        |      ;
-db $47,$72,$61,$73,$73,$20,$56,$61   ;C2CA9E|        |000072;
-db $6C,$6C,$65,$79,$00,$48,$6F,$63   ;C2CAA6|        |00656C;
-db $68,$6C,$61,$6E,$64,$20,$EE,$47   ;C2CAAE|        |      ;
-db $72,$61,$73,$73,$20,$56,$61,$6C   ;C2CAB6|        |000061;
-db $6C,$65,$79,$00,$20,$20,$47,$65   ;C2CABE|        |007965;
-db $68,$65,$69,$6D,$67,$61,$6E,$67   ;C2CAC6|        |      ;
-db $20,$B6,$4B,$69,$6E,$64,$65,$72   ;C2CACE|        |C24BB6;
-db $00,$14,$07,$53,$63,$68,$61,$74   ;C2CAD6|        |      ;
-db $7A,$6B,$61,$6D,$6D,$65,$72,$00   ;C2CADE|        |      ;
-db $20,$52,$61,$75,$6D,$20,$B8,$42   ;C2CAE6|        |C26152;
-db $5B,$72,$67,$65,$72,$6D,$65,$69   ;C2CAEE|        |      ;
-db $73,$74,$65,$72,$73,$00,$20,$20   ;C2CAF6|        |000074;
-db $55,$6E,$74,$65,$72,$69,$72,$64   ;C2CAFE|        |00006E;
-db $69,$73,$63,$68,$65,$73,$20,$53   ;C2CB06|        |      ;
-db $63,$68,$6C,$6F,$25,$00,$20,$20   ;C2CB0E|        |000068;
-db $55,$6E,$74,$65,$72,$69,$72,$64   ;C2CB16|        |00006E;
-db $69,$73,$63,$68,$65,$73,$20,$53   ;C2CB1E|        |      ;
-db $63,$68,$6C,$6F,$25,$00,$14,$07   ;C2CB26|        |000068;
-db $4C,$65,$6F,$60,$73,$20,$42,$69   ;C2CB2E|        |C26F65;
-db $6C,$64,$65,$72,$00,$14,$07,$4C   ;C2CB36|        |006564;
-db $65,$6F,$60,$73,$20,$42,$69,$6C   ;C2CB3E|        |00006F;
-db $64,$65,$72,$00,$14,$07,$4C,$65   ;C2CB46|        |000065;
-db $6F,$60,$73,$20,$42,$69,$6C,$64   ;C2CB4E|        |207360;
-db $65,$72,$00,$14,$05,$A5,$B6,$54   ;C2CB56|        |000072;
-db $75,$6C,$70,$65,$00,$14,$07,$4C   ;C2CB5E|        |00006C;
-db $65,$6F,$60,$73,$20,$42,$69,$6C   ;C2CB66|        |00006F;
-db $64,$65,$72,$00,$14,$04,$95,$B8   ;C2CB6E|        |000065;
-db $42,$69,$6C,$64,$65,$73,$00,$14   ;C2CB76|        |      ;
-db $07,$47,$65,$72,$69,$63,$68,$74   ;C2CB7E|        |000047;
-db $73,$73,$61,$61,$6C,$00,$14,$07   ;C2CB86|        |000073;
-db $4C,$69,$73,$61,$60,$73,$20,$54   ;C2CB8E|        |C27369;
-db $72,$61,$75,$6D,$00,$00,$00,$00   ;C2CB96|        |000061;
-db $00,$00,$20,$20,$54,$65,$6D,$70   ;C2CB9E|        |      ;
-db $65,$6C,$20,$EE,$47,$72,$65,$65   ;C2CBA6|        |00006C;
-db $6E,$20,$57,$6F,$6F,$64,$00,$20   ;C2CBAE|        |005720;
-db $20,$57,$7B,$6C,$64,$65,$72,$20   ;C2CBB6|        |C27B57;
-db $EE,$47,$72,$65,$65,$6E,$20,$57   ;C2CBBE|        |007247;
-db $6F,$6F,$64,$00,$20,$88,$42,$61   ;C2CBC6|        |00646F;
-db $75,$20,$C5,$4D,$61,$75,$6C,$77   ;C2CBCE|        |000020;
-db $75,$72,$66,$73,$00,$20,$20,$48   ;C2CBD6|        |000072;
-db $61,$75,$73,$20,$B8,$45,$69,$63   ;C2CBDE|        |000075;
-db $68,$68,$2A,$72,$6E,$63,$68,$65   ;C2CBE6|        |      ;
-db $6E,$73,$00,$14,$03,$45,$69,$63   ;C2CBEE|        |000073;
-db $68,$68,$2A,$72,$6E,$63,$68,$65   ;C2CBF6|        |      ;
-db $6E,$2D,$48,$7B,$6E,$64,$6C,$65   ;C2CBFE|        |00482D;
-db $72,$00,$14,$09,$4C,$6F,$73,$74   ;C2CC06|        |000000;
-db $73,$69,$64,$65,$00,$14,$06,$57   ;C2CC0E|        |000069;
-db $61,$73,$73,$65,$72,$20,$54,$65   ;C2CC16|        |000073;
-db $6D,$70,$65,$6C,$00,$14,$06,$57   ;C2CC1E|        |006570;
-db $61,$73,$73,$65,$72,$20,$54,$65   ;C2CC26|        |000073;
-db $6D,$70,$65,$6C,$00,$14,$06,$57   ;C2CC2E|        |006570;
-db $61,$73,$73,$65,$72,$20,$54,$65   ;C2CC36|        |000073;
-db $6D,$70,$65,$6C,$00,$14,$07,$46   ;C2CC3E|        |006570;
-db $65,$75,$65,$72,$20,$54,$65,$6D   ;C2CC46|        |000075;
-db $70,$65,$6C,$00,$14,$07,$46,$65   ;C2CC4E|        |C2CCB5;
-db $75,$65,$72,$20,$54,$65,$6D,$70   ;C2CC56|        |000065;
-db $65,$6C,$00,$14,$07,$46,$65,$75   ;C2CC5E|        |00006C;
-db $65,$72,$20,$54,$65,$6D,$70,$65   ;C2CC66|        |000072;
-db $6C,$00,$14,$07,$4C,$69,$63,$68   ;C2CC6E|        |001400;
-db $74,$20,$54,$65,$6D,$70,$65,$6C   ;C2CC76|        |000020;
-db $00,$14,$07,$4C,$69,$63,$68,$74   ;C2CC7E|        |      ;
-db $20,$54,$65,$6D,$70,$65,$6C,$00   ;C2CC86|        |C26554;
-db $20,$47,$72,$61,$62,$73,$74,$7B   ;C2CC8E|        |C27247;
-db $74,$74,$65,$20,$C6,$53,$74,$61   ;C2CC96|        |000074;
-db $74,$75,$65,$00,$14,$03,$88,$A5   ;C2CC9E|        |000075;
-db $B8,$56,$6F,$67,$65,$6C,$73,$00   ;C2CCA6|        |      ;
-db $14,$04,$A5,$B8,$53,$74,$75,$6D   ;C2CCAE|        |000004;
-db $70,$66,$65,$73,$00,$00,$00,$00   ;C2CCB6|        |C2CD1E;
-db $20,$88,$54,$65,$6D,$70,$65,$6C   ;C2CCBE|        |C25488;
-db $20,$EE,$53,$74,$2E,$20,$45,$6C   ;C2CCC6|        |C253EE;
-db $6C,$65,$73,$00,$14,$03,$41,$75   ;C2CCCE|        |007365;
-db $66,$20,$BB,$4D,$65,$65,$72,$65   ;C2CCD6|        |000020;
-db $73,$62,$6F,$64,$65,$6E,$00,$20   ;C2CCDE|        |000062;
-db $4D,$65,$65,$72,$65,$73,$62,$6F   ;C2CCE6|        |006565;
-db $64,$65,$6E,$20,$EE,$53,$74,$2E   ;C2CCEE|        |000065;
-db $45,$6C,$6C,$65,$73,$00,$14,$04   ;C2CCF6|        |00006C;
-db $87,$67,$65,$68,$65,$69,$6D,$65   ;C2CCFE|        |000067;
-db $20,$48,$2A,$68,$6C,$65,$00,$14   ;C2CD06|        |C22A48;
-db $04,$87,$67,$65,$68,$65,$69,$6D   ;C2CD0E|        |000087;
-db $65,$20,$48,$2A,$68,$6C,$65,$00   ;C2CD16|        |000020;
-db $14,$03,$A5,$C5,$44,$65,$6C,$70   ;C2CD1E|        |000003;
-db $68,$69,$6E,$73,$00,$14,$08,$53   ;C2CD26|        |      ;
-db $6F,$75,$74,$68,$65,$72,$74,$61   ;C2CD2E|        |687475;
-db $00,$20,$20,$55,$66,$65,$72,$72   ;C2CD36|        |      ;
-db $69,$66,$66,$20,$EE,$52,$6F,$63   ;C2CD3E|        |      ;
-db $6B,$62,$69,$72,$64,$00,$14,$0A   ;C2CD46|        |      ;
-db $44,$75,$72,$65,$61,$6E,$00,$14   ;C2CD4E|        |      ;
-db $09,$42,$6C,$65,$73,$74,$65,$72   ;C2CD56|        |      ;
-db $00,$14,$04,$45,$69,$6E,$20,$47   ;C2CD5E|        |      ;
-db $65,$69,$73,$74,$65,$72,$73,$63   ;C2CD66|        |000069;
-db $68,$69,$66,$66,$00,$14,$06,$53   ;C2CD6E|        |      ;
-db $65,$72,$76,$61,$73,$60,$20,$54   ;C2CD76|        |000072;
-db $72,$61,$75,$6D,$00,$20,$4D,$65   ;C2CD7E|        |000061;
-db $65,$72,$65,$73,$62,$6F,$64,$65   ;C2CD86|        |000072;
-db $6E,$20,$EE,$53,$74,$2E,$45,$6C   ;C2CD8E|        |00EE20;
-db $6C,$65,$73,$00,$00,$00,$00,$00   ;C2CD96|        |007365;
-db $00,$00,$00,$20,$20,$52,$75,$68   ;C2CD9E|        |      ;
-db $65,$73,$74,$7B,$74,$74,$65,$20   ;C2CDA6|        |000073;
-db $C9,$53,$65,$65,$6C,$65,$6E,$00   ;C2CDAE|        |      ;
-db $14,$03,$53,$65,$65,$6C,$65,$20   ;C2CDB6|        |000003;
-db $B6,$42,$65,$72,$67,$68,$5B,$74   ;C2CDBE|        |000042;
-db $74,$65,$00,$14,$04,$4E,$6F,$72   ;C2CDC6|        |000065;
-db $64,$68,$61,$6E,$67,$20,$B8,$42   ;C2CDCE|        |000068;
-db $65,$72,$67,$65,$73,$2C,$20,$00   ;C2CDD6|        |000072;
-db $14,$04,$41,$75,$72,$6F,$72,$61   ;C2CDDE|        |000004;
-db $60,$73,$20,$56,$6F,$72,$73,$70   ;C2CDE6|        |      ;
-db $72,$75,$6E,$67,$00,$20,$A5,$C5   ;C2CDEE|        |000075;
-db $61,$6C,$74,$65,$6E,$20,$4D,$61   ;C2CDF6|        |00006C;
-db $6E,$6E,$65,$73,$00,$14,$04,$88   ;C2CDFE|        |00656E;
-db $57,$65,$67,$20,$E3,$4C,$75,$6E   ;C2CE06|        |000065;
-db $65,$00,$14,$04,$55,$6E,$74,$65   ;C2CE0E|        |000000;
-db $72,$69,$72,$64,$69,$73,$63,$68   ;C2CE16|        |000069;
-db $65,$72,$20,$53,$65,$65,$00,$14   ;C2CE1E|        |000072;
-db $04,$A5,$C5,$50,$69,$6C,$7A,$65   ;C2CE26|        |0000A5;
-db $73,$00,$14,$09,$50,$6F,$73,$65   ;C2CE2E|        |000000;
-db $69,$64,$6F,$6E,$00,$20,$53,$70   ;C2CE36|        |      ;
-db $69,$74,$7A,$65,$20,$B8,$53,$63   ;C2CE3E|        |      ;
-db $68,$6E,$65,$65,$62,$65,$72,$67   ;C2CE46|        |      ;
-db $65,$73,$00,$14,$07,$45,$69,$6E   ;C2CE4E|        |000073;
-db $20,$45,$69,$73,$68,$5B,$67,$65   ;C2CE56|        |C26945;
-db $6C,$00,$14,$03,$45,$69,$73,$66   ;C2CE5E|        |001400;
-db $65,$6C,$64,$20,$EE,$4C,$61,$79   ;C2CE66|        |00006C;
-db $6E,$6F,$6C,$65,$00,$00,$00,$00   ;C2CE6E|        |006C6F;
-db $00,$00,$00,$00,$00,$14,$05,$88   ;C2CE76|        |      ;
-db $4C,$61,$62,$6F,$72,$74,$65,$6D   ;C2CE7E|        |C26261;
-db $70,$65,$6C,$00,$14,$07,$4C,$65   ;C2CE86|        |C2CEED;
-db $6F,$60,$73,$20,$4C,$61,$62,$6F   ;C2CE8E|        |207360;
-db $72,$00,$14,$07,$4C,$65,$6F,$60   ;C2CE96|        |000000;
-db $73,$20,$4C,$61,$62,$6F,$72,$00   ;C2CE9E|        |000020;
-db $14,$04,$41,$75,$66,$20,$BB,$44   ;C2CEA6|        |000004;
-db $61,$63,$68,$62,$6F,$64,$65,$6E   ;C2CEAE|        |000063;
-db $00,$14,$06,$45,$69,$6E,$20,$4D   ;C2CEB6|        |      ;
-db $7B,$75,$73,$65,$6C,$6F,$63,$68   ;C2CEBE|        |      ;
-db $00,$20,$20,$88,$A5,$C6,$4B,$61   ;C2CEC6|        |      ;
-db $74,$7A,$65,$00,$14,$03,$49,$6D   ;C2CECE|        |00007A;
-db $20,$4B,$65,$6C,$6C,$65,$72,$20   ;C2CED6|        |C2654B;
-db $B8,$4C,$61,$62,$6F,$72,$73,$00   ;C2CEDE|        |      ;
-db $14,$03,$49,$6D,$20,$4B,$65,$6C   ;C2CEE6|        |000003;
-db $6C,$65,$72,$20,$B8,$4C,$61,$62   ;C2CEEE|        |007265;
-db $6F,$72,$73,$00,$14,$08,$4B,$72   ;C2CEF6|        |007372;
-db $61,$66,$74,$77,$65,$72,$6B,$00   ;C2CEFE|        |000066;
-db $14,$08,$5A,$69,$6E,$6E,$70,$75   ;C2CF06|        |000008;
-db $70,$70,$65,$00,$14,$07,$45,$69   ;C2CF0E|        |C2CF80;
-db $6E,$20,$A5,$31,$00,$14,$05,$4D   ;C2CF16|        |00A520;
-db $6F,$64,$65,$6C,$6C,$20,$B6,$53   ;C2CF1E|        |6C6564;
-db $74,$61,$64,$74,$00,$14,$05,$4D   ;C2CF26|        |000061;
-db $6F,$64,$65,$6C,$6C,$20,$B6,$53   ;C2CF2E|        |6C6564;
-db $74,$61,$64,$74,$00,$00,$00,$00   ;C2CF36|        |000061;
-db $00,$00,$00,$00,$14,$05,$4D,$61   ;C2CF3E|        |      ;
-db $67,$72,$69,$64,$64,$60,$73,$20   ;C2CF46|        |000072;
-db $53,$63,$68,$6C,$6F,$25,$00,$9E   ;C2CF4E|        |000063;
-db $EE,$91,$4D,$61,$67,$72,$69,$64   ;C2CF56|        |004D91;
-db $64,$00,$14,$05,$87,$46,$6F,$6C   ;C2CF5E|        |000000;
-db $74,$65,$72,$6B,$61,$6D,$6D,$65   ;C2CF66|        |000065;
-db $72,$00,$20,$20,$49,$6D,$20,$4B   ;C2CF6E|        |000000;
-db $65,$6C,$6C,$65,$72,$20,$B8,$53   ;C2CF76|        |00006C;
-db $63,$68,$6C,$6F,$25,$65,$73,$00   ;C2CF7E|        |000068;
-db $20,$20,$49,$6D,$20,$4B,$65,$6C   ;C2CF86|        |C24920;
-db $6C,$65,$72,$20,$B8,$53,$63,$68   ;C2CF8E|        |007265;
-db $6C,$6F,$25,$65,$73,$00,$14,$07   ;C2CF96|        |00256F;
-db $45,$69,$6E,$20,$A5,$31,$00,$14   ;C2CF9E|        |000069;
-db $06,$88,$6C,$69,$6E,$6B,$65,$20   ;C2CFA6|        |000088;
-db $54,$75,$72,$6D,$00,$14,$06,$88   ;C2CFAE|        |      ;
-db $6C,$69,$6E,$6B,$65,$20,$54,$75   ;C2CFB6|        |006E69;
-db $72,$6D,$00,$14,$06,$45,$69,$6E   ;C2CFBE|        |00006D;
-db $20,$47,$65,$66,$7B,$6E,$67,$6E   ;C2CFC6|        |C26547;
-db $69,$73,$00,$14,$05,$88,$72,$65   ;C2CFCE|        |      ;
-db $63,$68,$74,$65,$20,$54,$75,$72   ;C2CFD6|        |000068;
-db $6D,$00,$14,$05,$88,$72,$65,$63   ;C2CFDE|        |001400;
-db $68,$74,$65,$20,$54,$75,$72,$6D   ;C2CFE6|        |      ;
-db $00,$14,$05,$88,$72,$65,$63,$68   ;C2CFEE|        |      ;
-db $74,$65,$20,$54,$75,$72,$6D,$00   ;C2CFF6|        |000065;
-db $20,$20,$45,$69,$6E,$20,$4B,$6F   ;C2CFFE|        |C24520;
-db $72,$72,$69,$64,$6F,$72,$20,$FE   ;C2D006|        |000072;
-db $50,$69,$65,$72,$00,$20,$20,$50   ;C2D00E|        |C2D079;
-db $69,$65,$72,$20,$B8,$4C,$75,$66   ;C2D016|        |      ;
-db $74,$73,$63,$68,$69,$66,$66,$65   ;C2D01E|        |000073;
-db $73,$00,$20,$20,$44,$65,$63,$6B   ;C2D026|        |000000;
-db $20,$B8,$4C,$75,$66,$74,$73,$63   ;C2D02E|        |C24CB8;
-db $68,$69,$66,$66,$65,$73,$00,$14   ;C2D036|        |      ;
-db $03,$A5,$C5,$53,$6F,$6C,$64,$61   ;C2D03E|        |0000A5;
-db $74,$65,$6E,$00,$00,$00,$00,$00   ;C2D046|        |000065;
-db $20,$20,$54,$65,$6D,$70,$65,$6C   ;C2D04E|        |C25420;
-db $20,$B6,$62,$2A,$73,$65,$6E,$20   ;C2D056|        |C262B6;
-db $57,$65,$6C,$74,$00,$14,$06,$A9   ;C2D05E|        |000065;
-db $B8,$42,$2A,$73,$65,$6E,$00,$14   ;C2D066|        |      ;
-db $06,$A9,$B8,$42,$2A,$73,$65,$6E   ;C2D06E|        |0000A9;
-db $00,$20,$20,$56,$65,$72,$7A,$61   ;C2D076|        |      ;
-db $75,$62,$65,$72,$74,$65,$72,$20   ;C2D07E|        |000062;
-db $57,$65,$6C,$74,$72,$61,$75,$6D   ;C2D086|        |000065;
-db $00,$14,$03,$54,$65,$6D,$70,$65   ;C2D08E|        |      ;
-db $6C,$20,$EE,$44,$65,$61,$74,$68   ;C2D096|        |00EE20;
-db $74,$6F,$6C,$6C,$00,$20,$20,$53   ;C2D09E|        |00006F;
-db $63,$68,$6C,$61,$63,$68,$74,$20   ;C2D0A6|        |000068;
-db $DA,$44,$65,$61,$74,$68,$74,$6F   ;C2D0AE|        |      ;
-db $6C,$6C,$00,$00,$00
-
-choice_yes_no:
-; @NEW_TEXTBOX@
-; SETPOS $88 2
-; DRAWBOX 5 4
-; " Ja\n\n" NO_NEWLINE
-; " Nein" NO_NEWLINE
-; SETPOS $0A 3
-db $01,$88,$02
-db $07,$05,$04
-db $20,$4A,$61,$0D,$0D
-db $20,$4E,$65,$69,$6E
-db $01,$0A,$03
-db $00
-; @ENDSTRING@
-
-choice_yes:
-; @NEW_TEXTBOX@
-; SETPOS 8 3
-; DRAWBOX 3 2
-; " Ja" NO_NEWLINE
-; SETPOS $8A 3
-db $01,$08,$03
-db $07,$03,$02
-db $20,$4A,$61
-db $01,$8A,$03
-db $00
-; @ENDSTRING@
-
-choice_record_move_quit:
-; @NEW_TEXTBOX@
-; SETPOS 8 2
-; DRAWBOX 9 6
-; " Sichern\n\n" NO_NEWLINE
-; " Bewegen\n\n" NO_NEWLINE
-; " Aufgeben" NO_NEWLINE
-; SETPOS $8A 2
-db $01,$08,$02
-db $07,$09,$06
-db $20,$53,$69,$63,$68,$65,$72,$6E,$0D,$0D
-db $20,$42,$65,$77,$65,$67,$65,$6E,$0D,$0D
-db $20,$41,$75,$66,$67,$65,$62,$65,$6E
-db $01,$8A,$02
-db $00
-; @ENDSTRING@
-
-choice_record_quit:
-; @NEW_TEXTBOX@
-; SETPOS $88 2
-; DRAWBOX 9 4
-; " Sichern\n\n" NO_NEWLINE
-; " Aufgeben" NO_NEWLINE
-; SETPOS $0A 3
-db $01,$88,$02
-db $07,$09,$04
-db $20,$53,$69,$63,$68,$65,$72,$6E,$0D,$0D
-db $20,$41,$75,$66,$67,$65,$62,$65,$6E
-db $01,$0A,$03
-db $00
-; @ENDSTRING@
-
-choice_stay_go_back:
-; @NEW_TEXTBOX@
-; SETPOS $88 2
-; DRAWBOX 8 4
-; " Bleiben\n\n" NO_NEWLINE
-; " Zurück" NO_NEWLINE
-; SETPOS $0A 3
-db $01,$88,$02
-db $07,$08,$04
-db $20,$42,$6C,$65,$69,$62,$65,$6E,$0D,$0D
-db $20,$5A,$75,$72,$5B,$63,$6B
-db $01,$0A,$03
-db $00
-; @ENDSTRING@
-
-AllItemsTable:
-    dw .not_equipped
-.sword_names_table:
-    dw .life_sword, .psycho_sword, .critical_sword, .lucky_blade
-    dw .zantetsu_sword, .spirit_sword, .recovery_sword, .soul_blade
-.armor_names_table:
-    dw .iron_armor, .ice_armor, .bubble_armor, .magic_armor
-    dw .mystic_armor, .light_armor, .elemental_armor, .soul_armor
-.magic_names_table:
-    dw .flame_ball, .light_arrow, .magic_flair, .rotator
-    dw .spark_bomb, .flame_pillar, .tornado, .phoenix
-.item_names_table:
-    dw .goats_food, .harp_string, .pass, .dream_rod
-    dw .leos_brush, .greenwood_leaves, .moles_ribbon, .big_pearl
-    dw .mermaids_tears, .mushroom_shoes, .door_key, .thunder_ring
-    dw .delicious_seeds, .plant_leaves, .mobile_key, .platinum_card
-    dw .vip_card
-    dw .emblem_a, .emblem_b, .emblem_c, .emblem_d
-    dw .emblem_e, .emblem_f, .emblem_g, .emblem_h
-    dw .hot_mirror, .hot_ball, .hot_stick
-    dw .power_bracelet, .shield_bracelet, .super_bracelet
-    dw .medical_herb, .strange_bottle
-    dw .brown_stone, .green_stone, .blue_stone
-    dw .silver_stone, .purple_stone, .black_stone
-    dw .magic_bell
-
-.not_equipped:
-db $DF,$62,$65,$6E,$75,$74,$7A,$74,$00 ; @STRING@ "nicht benutzt"
-.life_sword:
-db $4C,$65,$62,$65,$6E,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Lebens Schwert"
-.psycho_sword:
-db $50,$73,$79,$63,$68,$6F,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Psycho Schwert"
-.critical_sword:
-db $54,$6F,$64,$65,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Todes Schwert"
-.lucky_blade:
-db $47,$6C,$5B,$63,$6B,$73,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Glücks Klinge"
-.zantetsu_sword:
-db $5A,$61,$6E,$74,$65,$74,$73,$75,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Zantetsu Klinge"
-.spirit_sword:
-db $47,$65,$69,$73,$74,$65,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Geistes Schwert"
-.recovery_sword:
-db $48,$65,$69,$6C,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Heil Schwert"
-.soul_blade:
-db $53,$65,$65,$6C,$65,$6E,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Seelen Klinge"
-
-.iron_armor:
-db $45,$69,$73,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Eisen Rüstung"
-.ice_armor:
-db $45,$69,$73,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Eis Rüstung"
-.bubble_armor:
-db $42,$6C,$61,$73,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Blasen Rüstung"
-.magic_armor:
-db $9A,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Magie Rüstung"
-.mystic_armor:
-db $4D,$79,$73,$74,$69,$6B,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Mystik Rüstung"
-.light_armor:
-db $4C,$69,$63,$68,$74,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Licht Rüstung"
-.elemental_armor:
-db $45,$6C,$65,$6D,$65,$6E,$74,$61,$72,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "ElementarRüstung"
-.soul_armor:
-db $53,$65,$65,$6C,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Seelen Rüstung"
-
-.flame_ball:
-db $46,$6C,$61,$6D,$6D,$65,$6E,$20,$42,$61,$6C,$6C,$00 ; @STRING@ "Flammen Ball"
-.light_arrow:
-db $4C,$69,$63,$68,$74,$20,$50,$66,$65,$69,$6C,$00 ; @STRING@ "Licht Pfeil"
-.magic_flair:
-db $4D,$61,$67,$69,$73,$63,$68,$65,$72,$20,$46,$6C,$61,$69,$72,$00 ; @STRING@ "Magischer Flair"
-.rotator:
-db $52,$6F,$74,$61,$74,$69,$6F,$6E,$00 ; @STRING@ "Rotation"
-.spark_bomb:
-db $46,$75,$6E,$6B,$65,$6E,$20,$42,$6F,$6D,$62,$65,$00 ; @STRING@ "Funken Bombe"
-.flame_pillar:
-db $46,$6C,$61,$6D,$6D,$65,$6E,$20,$53,$7B,$75,$6C,$65,$00 ; @STRING@ "Flammen Säule"
-.tornado:
-db $54,$6F,$72,$6E,$61,$64,$6F,$00 ; @STRING@ "Tornado"
-.phoenix:
-db $46,$65,$75,$65,$72,$20,$50,$68,$2A,$6E,$69,$78,$00 ; @STRING@ "Feuer Phönix"
-
-.goats_food:
-db $5A,$69,$65,$67,$65,$6E,$66,$75,$74,$74,$65,$72,$00 ; @STRING@ "Ziegenfutter"
-.harp_string:
-db $48,$61,$72,$66,$65,$6E,$20,$53,$61,$69,$74,$65,$00 ; @STRING@ "Harfen Saite"
-.pass:
-db $C0,$50,$61,$25,$00 ; @STRING@ "einen Paß"
-.dream_rod:
-db $54,$72,$61,$75,$6D,$73,$74,$61,$62,$00 ; @STRING@ "Traumstab"
-.leos_brush:
-db $4C,$65,$6F,$60,$73,$20,$50,$69,$6E,$73,$65,$6C,$00 ; @STRING@ "Leo`s Pinsel"
-.greenwood_leaves:
-db $42,$6C,$7B,$74,$74,$65,$72,$00 ; @STRING@ "Blätter"
-.moles_ribbon:
-db $4D,$61,$75,$6C,$77,$75,$72,$66,$73,$62,$61,$6E,$64,$00 ; @STRING@ "Maulwurfsband"
-.big_pearl:
-db $B5,$67,$72,$6F,$25,$65,$20,$50,$65,$72,$6C,$65,$00 ; @STRING@ "die große Perle"
-.mermaids_tears:
-db $4A,$75,$6E,$67,$66,$72,$61,$75,$74,$72,$7B,$6E,$65,$00 ; @STRING@ "Jungfrauträne"
-.mushroom_shoes:
-db $50,$69,$6C,$7A,$73,$63,$68,$75,$68,$65,$00 ; @STRING@ "Pilzschuhe"
-.door_key:
-db $C0,$53,$63,$68,$6C,$5B,$73,$73,$65,$6C,$00 ; @STRING@ "einen Schlüssel"
-.thunder_ring:
-db $44,$6F,$6E,$6E,$65,$72,$20,$52,$69,$6E,$67,$00 ; @STRING@ "Donner Ring"
-.delicious_seeds:
-db $4C,$65,$63,$6B,$65,$72,$65,$20,$53,$61,$6D,$65,$6E,$00 ; @STRING@ "Leckere Samen"
-.plant_leaves:
-db $42,$6C,$7B,$74,$74,$65,$72,$00 ; @STRING@ "Blätter"
-.mobile_key:
-db $65,$69,$6E,$65,$6E,$54,$5B,$72,$73,$63,$68,$6C,$5B,$25,$65,$6C,$00 ; @STRING@ "einenTürschlüßel"
-.platinum_card:
-db $4B,$61,$72,$74,$65,$20,$AD,$50,$6C,$61,$74,$69,$6E,$00 ; @STRING@ "Karte aus Platin"
-.vip_card:
-db $56,$49,$50,$20,$4B,$61,$72,$74,$65,$00 ; @STRING@ "VIP Karte"
-.emblem_a:
-db $45,$6D,$62,$6C,$65,$6D,$20,$41,$00 ; @STRING@ "Emblem A"
-.emblem_b:
-db $45,$6D,$62,$6C,$65,$6D,$20,$42,$00 ; @STRING@ "Emblem B"
-.emblem_c:
-db $45,$6D,$62,$6C,$65,$6D,$20,$43,$00 ; @STRING@ "Emblem C"
-.emblem_d:
-db $45,$6D,$62,$6C,$65,$6D,$20,$44,$00 ; @STRING@ "Emblem D"
-.emblem_e:
-db $45,$6D,$62,$6C,$65,$6D,$20,$45,$00 ; @STRING@ "Emblem E"
-.emblem_f:
-db $45,$6D,$62,$6C,$65,$6D,$20,$46,$00 ; @STRING@ "Emblem F"
-.emblem_g:
-db $45,$6D,$62,$6C,$65,$6D,$20,$47,$00 ; @STRING@ "Emblem G"
-.emblem_h:
-db $45,$6D,$62,$6C,$65,$6D,$20,$48,$00 ; @STRING@ "Emblem H"
-.hot_mirror:
-db $68,$65,$69,$25,$65,$6E,$20,$53,$70,$69,$65,$67,$65,$6C,$00 ; @STRING@ "heißen Spiegel"
-.hot_ball:
-db $68,$65,$69,$25,$65,$6E,$20,$42,$61,$6C,$6C,$00 ; @STRING@ "heißen Ball"
-.hot_stick:
-db $68,$65,$69,$25,$65,$6E,$20,$53,$74,$6F,$63,$6B,$00 ; @STRING@ "heißen Stock"
-.power_bracelet:
-db $4B,$72,$61,$66,$74,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Kraft Armband"
-.shield_bracelet:
-db $53,$63,$68,$69,$6C,$64,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Schild Armband"
-.super_bracelet:
-db $53,$75,$70,$65,$72,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Super Armband"
-.medical_herb:
-db $48,$65,$69,$6C,$6B,$72,$7B,$75,$74,$65,$72,$00 ; @STRING@ "Heilkräuter"
-.strange_bottle:
-db $73,$65,$6C,$74,$73,$61,$6D,$65,$20,$46,$6C,$61,$73,$63,$68,$65,$00 ; @STRING@ "seltsame Flasche"
-.brown_stone:
-db $62,$72,$61,$75,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "braunen Stein"
-.green_stone:
-db $67,$72,$5B,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "grünen Stein"
-.blue_stone:
-db $62,$6C,$61,$75,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "blauen Stein"
-.silver_stone:
-db $73,$69,$6C,$62,$65,$72,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "silbernen Stein"
-.purple_stone:
-db $6C,$69,$6C,$61,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "lila Stein"
-.black_stone:
-db $73,$63,$68,$77,$61,$72,$7A,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "schwarzen Stein"
-.magic_bell:
-db $6D,$61,$67,$69,$73,$63,$68,$65,$20,$47,$6C,$6F,$63,$6B,$65,$00 ; @STRING@ "magische Glocke"
-
-CharacterNamesTable:
-    dw .old_man, .old_woman, .a_boy, .lisa
-    dw .chief, .bridge_guard, .architect, .son_of_shop_owner
-    dw .shop_owner, .goat, .lonely_goat, .tulip
-    dw .ivy, .water_mill_keeper, .squirrel, .deer
-    dw .crocodil, .turbo, .guardian, .mole
-    dw .none, .chief2, .bird, .dog
-    dw .mermaid, .dolphin, .angelfish, .queen
-    dw .lue, .mermaid_statue, .boy, .girl
-    dw .grandfather, .grandmother, .snail, .king
-    dw .mushroom, .nome, .stairs, .great_door
-    dw .cat, .plant, .mouse, .drawers
-    dw .doll, .marie, .town_model, .soldier
-    dw .maid, .singer, .magridd, .leo, .queen2
-
-.old_man:
-db $C0,$61,$6C,$74,$65,$6E,$20,$4D,$61,$6E,$6E,$00 ; @STRING@ "einen alten Mann"
-.old_woman:
-db $BF,$61,$6C,$74,$65,$20,$46,$72,$61,$75,$00 ; @STRING@ "eine alte Frau"
-.a_boy:
-db $C0,$4A,$75,$6E,$67,$65,$6E,$00 ; @STRING@ "einen Jungen"
-.lisa
-db $4C,$69,$73,$61,$00 ; @STRING@ "Lisa"
-.chief:
-db $B7,$42,$5B,$72,$67,$65,$72,$6D,$65,$69,$73,$74,$65,$72,$00 ; @STRING@ "den Bürgermeister"
-.bridge_guard:
-db $B7,$42,$72,$5B,$63,$6B,$65,$6E,$77,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "den Brückenwächter"
-.architect:
-db $C0,$41,$72,$63,$68,$69,$74,$65,$6B,$74,$00 ; @STRING@ "einen Architekt"
-.son_of_shop_owner:
-db $4B,$69,$6E,$64,$20,$B8,$42,$65,$73,$69,$74,$7A,$65,$72,$73,$00 ; @STRING@ "Kind des Besitzers"
-.shop_owner:
-db $B5,$4C,$61,$64,$65,$6E,$62,$65,$73,$69,$74,$7A,$65,$72,$69,$6E,$00 ; @STRING@ "die Ladenbesitzerin"
-.goat:
-db $BF,$5A,$69,$65,$67,$65,$00 ; @STRING@ "eine Ziege"
-.lonely_goat:
-db $BF,$65,$69,$6E,$73,$61,$6D,$65,$20,$5A,$69,$65,$67,$65,$00 ; @STRING@ "eine einsame Ziege"
-.tulip:
-db $BF,$54,$75,$6C,$70,$65,$00 ; @STRING@ "eine Tulpe"
-.ivy:
-db $45,$66,$65,$75,$00 ; @STRING@ "Efeu"
-.water_mill_keeper:
-db $57,$61,$73,$73,$65,$72,$6D,$5B,$68,$6C,$65,$6E,$20,$57,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "Wassermühlen Wächter"
-.squirrel:
-db $BE,$45,$69,$63,$68,$68,$2A,$72,$6E,$63,$68,$65,$6E,$00 ; @STRING@ "ein Eichhörnchen"
-.deer:
-db $BE,$52,$65,$68,$00 ; @STRING@ "ein Reh"
-.crocodil:
-db $BE,$4B,$72,$6F,$6B,$6F,$64,$69,$6C,$00 ; @STRING@ "ein Krokodil"
-.turbo:
-db $20,$3C,$54,$75,$72,$62,$6F,$3E,$2C,$20,$B7,$48,$75,$6E,$64,$00 ; @STRING@ " <Turbo>, den Hund"
-.guardian:
-db $57,$6F,$6F,$64,$60,$73,$20,$57,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "Wood`s Wächter"
-.mole:
-db $C0,$4D,$61,$75,$6C,$77,$75,$72,$66,$00 ; @STRING@ "einen Maulwurf"
-.none:
-db $6B,$65,$69,$6E,$65,$00 ; @STRING@ "keine"
-.chief2:
-db $B7,$42,$5B,$72,$67,$65,$72,$6D,$65,$69,$73,$74,$65,$72,$00 ; @STRING@ "den Bürgermeister"
-.bird:
-db $C0,$56,$6F,$67,$65,$6C,$00 ; @STRING@ "einen Vogel"
-.dog:
-db $C0,$48,$75,$6E,$64,$00 ; @STRING@ "einen Hund"
-.mermaid:
-db $BF,$4D,$65,$65,$72,$6A,$75,$6E,$67,$66,$72,$61,$75,$00 ; @STRING@ "eine Meerjungfrau"
-.dolphin:
-db $C0,$44,$65,$6C,$70,$68,$69,$6E,$00 ; @STRING@ "einen Delphin"
-.angelfish:
-db $C0,$45,$6E,$67,$65,$6C,$66,$69,$73,$63,$68,$00 ; @STRING@ "einen Engelfisch"
-.queen:
-db $B5,$4B,$2A,$6E,$69,$67,$69,$6E,$00 ; @STRING@ "die Königin"
-.lue:
-db $3C,$4C,$75,$65,$3E,$2C,$20,$B7,$44,$65,$6C,$70,$68,$69,$6E,$00 ; @STRING@ "<Lue>, den Delphin"
-.mermaid_statue:
-db $4D,$65,$65,$72,$6A,$75,$6E,$67,$66,$72,$61,$75,$73,$74,$61,$74,$75,$65,$00 ; @STRING@ "Meerjungfraustatue"
-.boy:
-db $C0,$4A,$75,$6E,$67,$65,$6E,$00 ; @STRING@ "einen Jungen"
-.girl:
-db $BE,$4D,$7B,$64,$63,$68,$65,$6E,$00 ; @STRING@ "ein Mädchen"
-.grandfather:
-db $C0,$47,$72,$6F,$25,$76,$61,$74,$65,$72,$00 ; @STRING@ "einen Großvater"
-.grandmother:
-db $BF,$47,$72,$6F,$25,$6D,$75,$74,$74,$65,$72,$00 ; @STRING@ "eine Großmutter"
-.snail:
-db $BF,$53,$63,$68,$6E,$65,$63,$6B,$65,$00 ; @STRING@ "eine Schnecke"
-.king:
-db $B7,$4B,$2A,$6E,$69,$67,$00 ; @STRING@ "den König"
-.mushroom:
-db $C0,$50,$69,$6C,$7A,$00 ; @STRING@ "einen Pilz"
-.nome:
-db $3C,$4E,$6F,$6D,$65,$3E,$2C,$20,$B5,$53,$63,$68,$6E,$65,$63,$6B,$65,$00 ; @STRING@ "<Nome>, die Schnecke"
-.stairs:
-db $BF,$54,$72,$65,$70,$70,$65,$00 ; @STRING@ "eine Treppe"
-.great_door:
-db $BF,$67,$72,$6F,$25,$65,$20,$54,$5B,$72,$00 ; @STRING@ "eine große Tür"
-.cat:
-db $BF,$4B,$61,$74,$7A,$65,$00 ; @STRING@ "eine Katze"
-.plant:
-db $BF,$50,$66,$6C,$61,$6E,$7A,$65,$00 ; @STRING@ "eine Pflanze"
-.mouse:
-db $BF,$4D,$61,$75,$73,$00 ; @STRING@ "eine Maus"
-.drawers:
-db $4B,$69,$73,$74,$65,$20,$DA,$53,$63,$68,$75,$62,$6C,$61,$64,$65,$6E,$00 ; @STRING@ "Kiste mit Schubladen"
-.doll:
-db $BF,$50,$75,$70,$70,$65,$00 ; @STRING@ "eine Puppe"
-.marie:
-db $3C,$4D,$61,$72,$69,$65,$3E,$2C,$20,$B5,$50,$75,$70,$70,$65,$00 ; @STRING@ "<Marie>, die Puppe"
-.town_model:
-db $BE,$4D,$6F,$64,$65,$6C,$20,$B6,$53,$74,$61,$64,$74,$00 ; @STRING@ "ein Model der Stadt"
-.soldier:
-db $C0,$53,$6F,$6C,$64,$61,$74,$00 ; @STRING@ "einen Soldat"
-.maid:
-db $BF,$4A,$75,$6E,$67,$66,$72,$61,$75,$00 ; @STRING@ "eine Jungfrau"
-.singer:
-db $C0,$53,$7B,$6E,$67,$65,$72,$00 ; @STRING@ "einen Sänger"
-.magridd:
-db $91,$4D,$61,$67,$72,$69,$64,$64,$00 ; @STRING@ "König Magridd"
-.leo:
-db $44,$72,$2E,$4C,$65,$6F,$00 ; @STRING@ "Dr.Leo"
-.queen2:
-db $B5,$4B,$2A,$6E,$69,$67,$69,$6E,$00 ; @STRING@ "die Königin"
-
-UI_LevelStrengthDefense:
-; @NEW_TEXTBOX@
-; SETPOS 8 4
-; DRAWBOX $16 8
-; SETPOS $AA 4
-; "Lev:" SETPOS $A 5
-; "Stärke  :\0" NO_NEWLINE
-; SETPOS 8 4
-; DRAWBOX $16 8
-; SETPOS $A 5
-; "Abwehr  :\0" NO_NEWLINE
-; SETPOS 8 4
-; DRAWBOX $16 8
-db $01,$08,$04
-db $07,$16,$08
-db $01,$AA,$04
-db $4C,$65,$76,$3A,$01,$0A,$05
-db $53,$74,$7B,$72,$6B,$65,$20,$20,$3A,$00
-db $01,$08,$04
-db $07,$16,$08
-db $01,$0A,$05
-db $41,$62,$77,$65,$68,$72,$20,$20,$3A,$00
-db $01,$08,$04
-db $07,$16,$08
-db $00
-; @ENDSTRING@
-
-
-incsrc "bankC2/descriptions.asm"
+incsrc "texts/section_names.asm"
+incsrc "texts/choices.asm"
+incsrc "texts/all_items.asm"
+incsrc "texts/character_names.asm"
+incsrc "texts/lvl_str_def.asm"
+incsrc "texts/item_descriptions.asm"
 
 
 SequenceTable:
@@ -13064,7 +12468,7 @@ db $03,$24,$06,$03 : dw text_lut_id : db $20,$4A,$55,$57,$45,$4C,$45,$4E,$2E,$03
 ; @END@
 
 Txt_Rcv_End:
-; @NEW_TEXTBOX@
+; @NEW_TEXT@
 ; WFAK
 ;; TODO: figure out what this does
 ; "\x08\x06\x04\x0c" NO_NEWLINE

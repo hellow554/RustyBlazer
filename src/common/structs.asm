@@ -33,9 +33,10 @@ struct LiveEntities $7E0800
     .pos_y: skip 2                      ; 02
     ._04 : skip 2                       ; 04
     ._06 : skip 2                       ; 06
-    ._08 : skip 4                       ; 08
+    ._08 : skip 2                       ; 08
+    ._0a : skip 2                       ; 0A
     ._0c : skip 2                       ; 0C
-    ._0e : skip 2                       ; 0C
+    ._0e : skip 2                       ; 0E
     ._10 : skip 2                       ; 10
     ._12 : skip 2                       ; 12
     .frame_wait_counter : skip 2        ; 14 - used in COP-1B,
@@ -69,7 +70,8 @@ endstruct
 
 assert objectsize(LiveEntities) == $40
 
-struct LairDataStructure $C1BA0D
+LairDataStructure = $C1BA0D
+struct LairDataStructure LairDataStructure
     .resur_map_num : skip 1
     .resur_facing : skip 1
     .resur_pos_x : skip 1

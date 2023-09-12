@@ -88,7 +88,7 @@ macro Cop0C(npc_id, b, target)
     dw <target>
 endmacro
 
-macro CopBranchIfEntityHasReachedXY(npc_id, x, y, target)
+macro CopJumpIfEntityHasReachedXY(npc_id, x, y, target)
     COP #$0D
     db <npc_id>, <x>, <y>
     dw <target>
@@ -360,11 +360,11 @@ macro CopSetScriptAddrToNextInstruction()
     COP #$91
 endmacro
 
-macro Cop96()
+macro CopFlipSpriteVertically()
     COP #$96
 endmacro
 
-macro Cop97()
+macro CopResetSpriteVertically()
     COP #$97
 endmacro
 
@@ -404,16 +404,13 @@ macro CopAC(target_24, a, b, c)
     dw <a>, <b>, <c>
 endmacro
 
-macro create_entity(name, offsense, hp, exp, spriteId, facing, flags, zUknown, behaviour_ptr)
+macro create_entity(name, offsense, flags1, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
 if not(stringsequal("<name>", "_"))
 <name>:
 endif
-    dw <offsense>
-    db <hp>
-    dw <exp>
-    db <spriteId>
-    db <facing>
-    db <flags>
+    db <offsense>, <flags1>, <hp>
+    dw <bcd_exp>
+    db <spriteId>, <facing>, <flags2>
     dl <zUknown>
     dl <behaviour_ptr>
 endmacro

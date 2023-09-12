@@ -7,76 +7,81 @@ entities_lut:
 
 entities_GrassValley:
     ; unknown
-    %create_entity(_, $201, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
-    %create_entity(_, 0,    0, 0, 0, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 1, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 2, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 3, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 4, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 5, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 0, $10, $20, 0,              CODE_C3C0DE)
-    %create_entity(_, 0,    0, 0, 0, $10, $20, 0,              CODE_C3C101)
-    %create_entity(_, 0,    0, 0, 6, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0,    0, 0, 0, $10, $20, 0,              CODE_C3C15A)
+    %create_entity(_, 1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 1, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 2, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 3, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 4, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 5, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C0DE)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C101)
+    %create_entity(_, 0, 0, 0, 0, 6, $10, $20, UNREACH_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C15A)
 
     ; npcs in town
     %create_entity(entity_act1_crabwalk_guy,
-        0, 0, 0, $02, $48, $30, $7E3800, A1_script_crabwalkguy)
+        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, $7E3800, A1_script_crabwalkguy)
     %create_entity(entity_act1_chiefs_wife,
-        0, 0, 0, $06, $48, $30, $7E3800, A1_script_chiefs_wife)
+        0, 0, 0, 0, !Anim_Village_Woman_Facing_Down, $48, $30, $7E3800, A1_script_chiefs_wife)
     %create_entity(entity_act1_shop_owner,
-        0, 0, 0, $06, $58, $30, $7E3800, A1_script_ShopOwner)
+        0, 0, 0, 0, !Anim_Village_Woman_Facing_Down, $58, $30, $7E3800, A1_script_ShopOwner)
     %create_entity(entity_act1_chiefs_house_tulip,
-        0, 0, 0, $1E, $50, $30, $7E3800, A1_script_chiefs_house_tulip)
+        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, $7E3800, A1_script_chiefs_house_tulip)
     %create_entity(entity_act1_bridge_guard,
-        0, 0, 0, $02, $48, $30, $7E3800, A1_script_bridge_guard)
+        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, $7E3800, A1_script_bridge_guard)
     %create_entity(entity_act1_mill_keeper,
-        0, 0, 0, $01, $48, $30, $7E3800, A1_script_mill_keeper)
+        0, 0, 0, 0, !Anim_Village_Man_Facing_Up, $48, $30, $7E3800, A1_script_mill_keeper)
     %create_entity(entity_act1_goat_with_fence,
-        0, 0, 0, $18, $40, $30, $7E3800, A1_script_GoatWithFence)
+        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $30, $7E3800, A1_script_GoatWithFence)
     %create_entity(entity_act1_lisa,
-        0, 0, 0, $12, $40, $30, $7E3800, A1_script_Lisa)
+        0, 0, 0, 0, !Anim_Village_Lisa_Snoring, $40, $30, $7E3800, A1_script_Lisa)
     %create_entity(entity_act1_tulip_above_entrace,
-        0, 0, 0, $1E, $50, $30, $7E3800, A1_script_Tulip_Above_Entrance)
+        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, $7E3800, A1_script_Tulip_Above_Entrance)
     %create_entity(entity_act1_architect,
-        0, 0, 0, $02, $48, $30, $7E3800, A1_script_Architect)
+        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, $7E3800, A1_script_Architect)
     %create_entity(entity_act1_son_shop_owner,
-        0, 0, 0, $0C, $48, $30, $7E3800, A1_script_son_shop_owner)
+        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $48, $30, $7E3800, A1_script_son_shop_owner)
     %create_entity(entity_act1_tulip_before_painter_house,
-        0, 0, 0, $1E, $50, $30, $7E3800, A1_script_Tulip_Before_Painter_House)
+        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, $7E3800, A1_script_Tulip_Before_Painter_House)
     %create_entity(entity_act1_painter,
-        0, 0, 0, $00, $48, $20, $7E3800, A1_script_painter)
+        0, 0, 0, 0, !Anim_Village_Man_Facing_Down, $48, $20, $7E3800, A1_script_painter)
+    %create_entity(_,
+        0, 0, 0, 0, !Anim_Village_Watermillwheel_outside, $50, $30, $7E3800, A1_script_spinning_watermillwheel_inside)
+    %create_entity(_,
+        0, 0, 0, 0, !Anim_Village_Watermillwheel_inside, $50, $30, $7E3800, A1_script_spinning_watermillwheel_outside)
     %create_entity(entity_act1_secret_shack_kid,
-        0, 0, 0, $1C, $50, $30, $7E3800, A1_script_spinning_watermillwheel_inside)
+        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $40, $30, $7E3800, A1_script_secret_shack_kid)
+    %create_entity(entity_act1_sleeping_tulip,
+        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $40, $30, $7e3800, A1_script_sleeping_tulip)
+    %create_entity(entity_act1_secret_cave_kid,
+        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $48, $30, $7E3800, A1_script_secret_cave_kid)
     %create_entity(entity_act1_walking_goat,
-        0, 0, 0, $1D, $50, $30, $7E3800, A1_script_spinning_watermillwheel_outside)
+        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $30, $7E3800, A1_script_walking_goat)
+    %create_entity(entity_act1_gourmet_goat,
+        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $20, $7E3800, A1_script_gourmet_goat)
+    ; --- ENEMIES ---
+    %create_entity(entity_act1_metal_mantis,
+        $06, $02, $32, $50, 0, 0, $10, $7E3800, CODE_C0B1E5)
+    %create_entity(entity_act1_cherry_head,
+        $01, $00, $03, $01, $00, $00, $10, $7E3800, CODE_C58000)
+    %create_entity(entity_act1_bondguard,
+        $01, $01, $04, $02, $06, $00, $10, $7E3800, CODE_C58046)
+    %create_entity(entity_act1_zipfly,
+        $01, $01, $03, $01, $1B, $00, $00, $7E3800, CODE_C58151)
+    %create_entity(entity_act1_pineapple_plant,
+        $01, $00, $03, $01, $12, $00, $10, $7E3800, CODE_C581E8)
+    %create_entity(entity_act1_waterslime,
+        $01, $00, $03, $01, $2E, $00, $10, $7E3800, CODE_C58231)
+    %create_entity(entity_act1_gepper,
+        $01, $00, $05, $02, $18, $00, $00, $7E3800, CODE_C582A9)
+    %create_entity(entity_act1_spear_guy,
+        $03, $00, $09, $05, $12, $00, $10, $7E3800, CODE_C582E1)
+    %create_entity(entity_act1_metagrinner,
+        $04, $08, $18, $250,$1E, $00, $00, $7E3800, CODE_C5849C)
+    
 
-
-db $00,$00,$00,$00,$00,$0C   ;C18178|        |      ;
-db $40,$30,$00,$38,$7E,$DE,$A2,$83   ;C18180|        |      ;
-db $00,$00,$00,$00,$00,$1E,$40,$30   ;C18188|        |      ;
-db $00,$38,$7E,$67,$A4,$83,$00,$00   ;C18190|        |      ;
-db $00,$00,$00,$0C,$48,$30,$00,$38   ;C18198|        |      ;
-db $7E,$2E,$A5,$83,$00,$00,$00,$00   ;C181A0|        |00A52E;
-db $00,$18,$40,$30,$00,$38,$7E,$C2   ;C181A8|        |      ;
-db $A6,$83,$00,$00,$00,$00,$00,$18   ;C181B0|        |000083;
-db $40,$20,$00,$38,$7E,$79,$A9,$83   ;C181B8|        |      ;
-db $06,$02,$32,$50,$00,$00,$00,$10   ;C181C0|        |000002;
-db $00,$38,$7E,$E5,$B1,$80,$01,$00   ;C181C8|        |      ;
-db $03,$01,$00,$00,$00,$10,$00,$38   ;C181D0|        |000001;
-db $7E,$00,$80,$85,$01,$01,$04,$02   ;C181D8|        |008000;
-db $00,$06,$00,$10,$00,$38,$7E,$46   ;C181E0|        |      ;
-db $80,$85,$01,$01,$03,$01,$00,$1B   ;C181E8|        |C1816F;
-db $00,$00,$00,$38,$7E,$51,$81,$85   ;C181F0|        |      ;
-db $01,$00,$03,$01,$00,$12,$00,$10   ;C181F8|        |000000;
-db $00,$38,$7E,$E8,$81,$85,$01,$00   ;C18200|        |      ;
-db $03,$01,$00,$2E,$00,$10,$00,$38   ;C18208|        |000001;
-db $7E,$31,$82,$85,$01,$00,$05,$02   ;C18210|        |008231;
-db $00,$18,$00,$00,$00,$38,$7E,$A9   ;C18218|        |      ;
-db $82,$85,$03,$00,$09,$05,$00,$12   ;C18220|        |C185A8;
-db $00,$10,$00,$38,$7E,$E1,$82,$85   ;C18228|        |      ;
-db $04,$08,$18,$50,$02,$1E,$00,$00   ;C18230|        |000008;
-db $00,$38,$7E,$9C,$84,$85,$03,$00   ;C18238|        |      ;
+db $03,$00   ;C18238|        |      ;
 db $04,$03,$00,$18,$00,$00,$00,$38   ;C18240|        |000003;
 db $7E,$FB,$84,$85,$03,$00,$09,$04   ;C18248|        |0084FB;
 db $00,$22,$00,$00,$00,$38,$7E,$64   ;C18250|        |      ;
@@ -107,7 +112,7 @@ db $00,$00,$00,$00,$00,$07,$50,$20   ;C18310|        |      ;
 db $00,$38,$7E,$B4,$B9,$83
 
     %create_entity(entity_act1_highground_jewel,
-        0, 0, 0, $07, $50, $00, $7E3800, A1_script_highground_jewel)
+        0, 0, 0, 0, $07, $50, $00, $7E3800, A1_script_highground_jewel)
 
 db $00,$00,$00,$00   ;C18328|        |00BA71;
 db $00,$07,$40,$00,$00,$38,$7E,$9D   ;C18330|        |      ;

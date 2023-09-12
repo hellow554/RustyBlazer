@@ -3,23 +3,23 @@ A1_script_secret_shack_kid:
     %CopMakeNpcUnpassable()
     %CopAssignTalkCallback(.talk_in_entry)
     %CopSetScriptAddrToNextInstruction()
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $38, $3A, +) : RTL : +
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $38, $3A, +) : RTL : +
 
     %CopJumpIfEventFlagIsSet(!EV_A1_Found_APass, .already_talked)
     %CopShowText(.text_default)
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfSealed(!Lair_A1_Sleeping_Tulip, +) : RTL : +
 
-    %CopBranchIfEntityHasReachedXY(!Entity_Player, $3C, $37, +) : RTL : +
+    %CopJumpIfEntityHasReachedXY(!Entity_Player, $3C, $37, +) : RTL : +
 
     %CopAssignTalkCallback(0)
     %CopMakeNpcPassable()
-    %CopPlayAnimation($0F)
+    %CopPlayAnimation(!Anim_Village_Kid_Walking_Down)
     %Cop82()
     %Cop9D($0F)
     %Cop9E(+) : +
 
-    %CopPlayAnimation($11)
+    %CopPlayAnimation(!Anim_Village_Kid_Walking_Left)
     %Cop82()
     %Cop9D($11)
     %Cop9E(+) : +
@@ -34,16 +34,16 @@ A1_script_secret_shack_kid:
     %Cop9D($10)
     %Cop9E(+) : +
 
-    %Cop97()
-    %CopPlayAnimation($0E)
+    %CopResetSpriteVertically()
+    %CopPlayAnimation(!Anim_Village_Kid_Facing_Left)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopAssignTalkCallback(.talk_out_of_way)
     %CopSetScriptAddrToNextInstruction()
     %Cop0C(!Entity_Player, $02, +) : RTL : +
 
-    %Cop96()
-    %CopPlayAnimation($0C)
+    %CopFlipSpriteVertically()
+    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
     %Cop82()
     %CopShowText(.text_followed)
     %CopSetScriptAddrToNextInstruction()

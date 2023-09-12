@@ -9370,6 +9370,7 @@ db $DF,$B1                           ;C0B1DD|        |269CB1;
 STZ.W $0326                          ;C0B1DF|9C2603  |810326;
 COP #$86                             ;C0B1E2|0286    |      ;
 RTL                                  ;C0B1E4|6B      |      ;
+CODE_C0B1E5:
 STZ.W $03B4                          ;C0B1E5|9CB403  |8103B4;
 INC.W $0464                          ;C0B1E8|EE6404  |810464;
 STX.W $039C                          ;C0B1EB|8E9C03  |81039C;

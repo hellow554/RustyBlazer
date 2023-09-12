@@ -9,22 +9,22 @@ A1_script_ShopOwner:
 
 .too_left:
     %Cop23(.left_jump)
-    %Cop97()
+    %CopResetSpriteVertically()
     %Cop9D($0B)
     %Cop9E(.left_jump)
 
 .left_jump:
-    %CopPlayAnimation($06)
+    %CopPlayAnimation(!Anim_Village_Woman_Facing_Down)
     %Cop82()
     BRL .inside
 
 .too_right:
     %Cop24(.right_jump)
-    %Cop96()
+    %CopFlipSpriteVertically()
     %Cop9D($0B)
     %Cop9E(.right_jump)
 .right_jump:
-    %CopPlayAnimation($06)
+    %CopPlayAnimation(!Anim_Village_Woman_Facing_Down)
     %Cop82()
 
 .inside:
@@ -83,7 +83,7 @@ db $D1,$84,$6E,$65,$75,$65,$20,$67,$65,$62,$65,$6E,$2E,$13 : dw Default_Text_End
 ; @END@
 
 ShopOwnerTurnRight:
-    %Cop96()
-    %CopPlayAnimation($08)
+    %CopFlipSpriteVertically()
+    %CopPlayAnimation(!Anim_Village_Woman_Facing_Left)
     %Cop82()
     BRL ShopOwnerTurnRight

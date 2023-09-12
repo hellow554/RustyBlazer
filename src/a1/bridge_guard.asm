@@ -16,12 +16,12 @@ A1_script_bridge_guard:
     %CopJumpDependingOnPlayerXProximity(0, .too_left, .inside, .too_right)
 
 .too_left:
-    %Cop97()
+    %CopResetSpriteVertically()
     BRL +
 .too_right:
-    %Cop96()
+    %CopFlipSpriteVertically()
 +
-    %CopPlayAnimation($02)
+    %CopPlayAnimation(!Anim_Village_Man_Facing_Left)
     %Cop82()
     BRL .todo3
 
@@ -40,14 +40,14 @@ A1_script_bridge_guard:
     %Cop9D($03)
     %Cop9E(+)
 +
-    %CopPlayAnimation($01)
+    %CopPlayAnimation(!Anim_Village_Man_Facing_Up)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopSetEventFlag(!EV_A1_BridgeGuard_GotOutOfWay)
     BRL .todo3
 
 .todo4:
-    %CopPlayAnimation($01)
+    %CopPlayAnimation(!Anim_Village_Man_Facing_Up)
     %Cop82()
 
 .todo3:
@@ -69,9 +69,7 @@ A1_script_bridge_guard:
 ; "Ich glaube nicht, daß "
 ; "es nötig ist so eine "
 ; "kleine Brücke zu be-"
-;; My current parser is not smart enough for the following one.
-;; Let's help him out
-; "wachen.\x83darfst durch." -> Default_Text_End
+; "wachen.Du darfst durch." -> Default_Text_End
 db $10
 db $8F,$B1,$B6,$57,$7B,$63,$68,$74,$65,$72,$20,$0D
 db $BD,$42,$72,$5B,$63,$6B,$65,$2E,$11

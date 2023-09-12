@@ -13,9 +13,14 @@
 !Sound_HittingMetal = $0C
 !Sound_ReceivingGem = $0D
 !Sound_SomebodyAppears = $0E
-
+!Sound_CastLightarrow = $12
 !Sound_OpenChest = $15
+!Sound_CastTornado = $16
 !Sound_DiaglogConfirm = $18
+!Sound_CastFlameBall = $1B
+!Sound_ReleaseCreature = $1C
+!Sound_MagicFlareExplode = $21
+!Sound_CastMagicRotator = $24
 !Sound_MetalEnemyHitWithNormalSword = $4C
 !Sound_WheelStartSpinning = $4F
 !Sound_ReceiveItem = $5E
