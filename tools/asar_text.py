@@ -351,7 +351,10 @@ class Translator:
         _, x = line
         if len(x) > 0:
             dw, bytes = line
-            return f"{dw} " + ",".join(target_to_str((dw, x)) for x in bytes)
+            if dw is None:
+                return " : ".join(bytes)
+            else:
+                return f"{dw} " + ",".join(target_to_str((dw, x)) for x in bytes)
         else:
             return None
 
@@ -372,16 +375,14 @@ class Translator:
             self._single_string(m, line)
             return  # we do a return here, because this is a single line comment
         elif self._byte_list is not None:
-            if line.startswith(("db", "dw", "dl", "dd")):
-                # we ignore these ones and replace them later with our code
-                return
-            elif line.startswith(";;"):
+            if line.startswith(";;"):
                 # this is a comment inside a comment, let's ignore, but not delete it
                 pass
             elif (rest := line.removeprefix(";")) is not line:
                 self._parse_comment(rest)
             else:
-                self._raise(UnsupportedContent, line)
+                # we ignore these ones and replace them later with our code
+                return
         self._transpiled.append(line)
 
     def _single_string(self, match: Match[str], string: str):
@@ -427,7 +428,7 @@ class Translator:
                 yield text
                 text = ""
 
-    def _append(self, data: list[Target] | Target, size: DataWidth = DataWidth.BYTE):
+    def _append(self, data: list[Target] | Target, size: DataWidth | None = DataWidth.BYTE):
         if self._to_append is None:
             self._to_append = []
         if not isinstance(data, list):
@@ -492,6 +493,9 @@ class Translator:
                 if (n := self.parse_int(count, DataWidth.BYTE)) is None:
                     self._raise(ParseException, f"Cannot parse count for spaces `{count}`")
                 self._append([0x14, n])
+            elif arg == "LABEL":  # set label at this position
+                label = next(iterator)
+                self._append(f"{label}:", None)
             elif arg == "CONT":  # continue with previous textbox settings
                 self._append(0x0C)
             elif arg == "PLAYER_NAME":  # player name lookup
