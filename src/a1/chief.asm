@@ -21,7 +21,7 @@ RTL                                  ;C3ADE0|6B      |      ;
 
 CODE_C3ADE1:
 LDA.W #$2F80                         ;C3ADE1|A9802F  |      ;
-TSB.W $0326                          ;C3ADE4|0C2603  |810326;
+TSB.W button_mask                          ;C3ADE4|0C2603  |810326;
 COP #$17                             ;C3ADE7|0217    |      ;
 db $00,$00                           ;C3ADE9|        |      ;
 COP #$31                             ;C3ADEB|0231    |      ;
@@ -36,7 +36,7 @@ db $19,$B0                           ;C3ADFA|        |0002B0;
 COP #$09                             ;C3ADFC|0209    |      ;
 db $00,$9B                           ;C3ADFE|        |      ;
 LDA.W #$2F80                         ;C3AE00|A9802F  |      ;
-TSB.W $0326                          ;C3AE03|0C2603  |810326;
+TSB.W button_mask                          ;C3AE03|0C2603  |810326;
 COP #$85                             ;C3AE06|0285    |      ;
 db $2D,$AE,$83                       ;C3AE08|        |0083AE;
 COP #$32                             ;C3AE0B|0232    |      ;
@@ -45,7 +45,7 @@ COP #$03                             ;C3AE0E|0203    |      ;
 db $3D                               ;C3AE10|        |000402;
 COP #$04                             ;C3AE11|0204    |      ;
 LDA.W #$2F80                         ;C3AE13|A9802F  |      ;
-TRB.W $0326                          ;C3AE16|1C2603  |810326;
+TRB.W button_mask                          ;C3AE16|1C2603  |810326;
 COP #$17                             ;C3AE19|0217    |      ;
 db $3A,$AE                           ;C3AE1B|        |      ;
 COP #$91                             ;C3AE1D|0291    |      ;

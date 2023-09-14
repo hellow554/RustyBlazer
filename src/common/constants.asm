@@ -32,6 +32,8 @@
 !UpdateHud_Health   = %100
 !UpdateHud_Level    = %1000
 !UpdateHud_Gold     = %10000
+!UpdateHud_All      = !UpdateHud_Text|!UpdateHud_Exp|!UpdateHud_Health|!UpdateHud_Level|!UpdateHud_Gold  
+
 
 !FullBlockSize  = $10
 
@@ -56,3 +58,7 @@
 !BGM_BG3 = %100
 !BGM_BG4 = %1000
 !BGM_Obj = %10000
+
+!PlayerMaxLevel = 50
+!PlayerMaxHealth = 100
+!HealthGainPerLvl = 2

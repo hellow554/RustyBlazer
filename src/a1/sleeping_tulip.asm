@@ -8,7 +8,7 @@ A1_script_sleeping_tulip:
     RTL
 
 .pushing_tulip:
-    %CopLoop(40)
+    %CopLoopStart(40)
     LDA.W buttons_pressed
     AND.W #!Key16_Left
     BEQ .stopped_pushing

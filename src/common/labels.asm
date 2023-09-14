@@ -250,14 +250,15 @@ textbox_tlc = $7E03F9 ; top left corner of a default textbox
 lair_reveal_in_progress = $7E03FD ; 0 if no revealing is in progress, elsewise != 0 (mostly 1)
 magic_cast_in_progress = $7E043F ; 0 if no player magic is currently on screen, else 1
 revealing_lair_id = $7E0407 ; this is the lair id that is currently revealed
-player_health_restore = $7E0447
+player_health_restore = $7E0447 ; how many hitpoints to restore
 exp_to_give = $7E0449
+player_died = $7E044B
 player_name8 = $7E0453
 remaining_lair = $7E0462
 inhibit_buttons_readout = $7E0474
 
 oam_data = $7E0492 ; 544 bytes in size including $6B1
-unk_7E06B2 = $7E06B2
+unk_7E06B2 = $7E06B2 ; don't remove, because we need it for the size of `oam_data`
 
 
 entities_table = $800
@@ -389,8 +390,6 @@ UNREACH_81FB4B = $81FB4B
 CODE_C5C5AC = $85C5AC
 CODE_C2B1E8 = $82B1E8
 CODE_C385D9 = $8385D9
-UNREACH_81FBB8 = $81FBB8
-UNREACH_81FBBA = $81FBBA
 CODE_C288BB = $8288BB
 UNREACH_81BA2B = $81BA2B
 CODE_C2865B = $82865B

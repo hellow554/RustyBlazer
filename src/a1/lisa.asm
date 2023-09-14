@@ -28,7 +28,7 @@ db $12                               ;C3958F|        |000002;
 COP #$82                             ;C39590|0282    |      ;
 BRL .CODE_C3956F                      ;C39592|82DAFF  |C3956F;
 LDA.W #$AF80                         ;C39595|A980AF  |      ;
-TSB.W $0326                          ;C39598|0C2603  |810326;
+TSB.W button_mask                          ;C39598|0C2603  |810326;
 COP #$80                             ;C3959B|0280    |      ;
 db $13                               ;C3959D|        |000002;
 COP #$82                             ;C3959E|0282    |      ;
@@ -36,7 +36,7 @@ COP #$80                             ;C395A0|0280    |      ;
 db $14                               ;C395A2|        |000002;
 COP #$82                             ;C395A3|0282    |      ;
 LDA.W #$AF80                         ;C395A5|A980AF  |      ;
-TRB.W $0326                          ;C395A8|1C2603  |810326;
+TRB.W button_mask                          ;C395A8|1C2603  |810326;
 COP #$01                             ;C395AB|0201    |      ;
 db $18,$97                           ;C395AD|        |      ;
 COP #$09                             ;C395AF|0209    |      ;
@@ -92,17 +92,29 @@ db $AA,$96                           ;C3960F|        |      ;
 COP #$91                             ;C39611|0291    |      ;
 RTL                                  ;C39613|6B      |      ;
 .todo:
-db $A9,$C0,$BF,$0C,$26,$03,$02,$A0   ;C39614|        |      ;
-db $F8,$FF,$02,$07,$01,$9F,$47,$96   ;C3961C|        |      ;
-db $02,$03,$29,$02,$04,$02,$01,$52   ;C39624|        |      ;
-db $9B,$02,$03,$79,$02,$04,$02,$3C   ;C3962C|        |      ;
-db $04,$02,$10,$02,$03,$01,$08,$01   ;C39634|        |000002;
-db $48,$03,$A9,$C0,$BF,$1C,$26,$03   ;C3963C|        |      ;
-db $02,$91,$6B,$02,$34,$02,$80,$13   ;C39644|        |      ;
-db $02,$82,$02,$03,$5B,$02,$04,$02   ;C3964C|        |      ;
-db $01,$8E,$9B,$02,$03,$F1,$02,$04   ;C39654|        |00008E;
-db $02,$10,$00,$0B,$01,$00,$00,$00   ;C3965C|        |      ;
-db $00,$02,$91,$6B                   ;C39664|        |      ;
+LDA.W #$BFC0
+TSB.W button_mask
+%CopAdjustNpcYPosition(-8)
+%CopJumpIfEventFlagIsSet(!EV_A1_Another_thing_with_lisa, .loc_9647)
+%CopLoopStart(41) : %CopLoopEnd()
+%CopShowText(.txt_ending_lisa_sleeping)
+%CopLoopStart(121) : %CopLoopEnd()
+%Cop3C(4)
+%CopTeleportPlayerToMap($302, !Facing_Up, $108, $348)
+LDA.W #$BFC0
+TRB.W button_mask
+%CopSetScriptAddrToNextInstruction()
+RTL
+.loc_9647:
+COP #$34
+%CopPlayAnimation(!Anim_Village_Lisa_Waking_up)
+%Cop82()
+%CopLoopStart(91) : %CopLoopEnd()
+%CopShowText(.txt_ending_ask_for_promise)
+%CopLoopStart(241) : %CopLoopEnd()
+%CopTeleportPlayerToMap($B00, !Facing_Up, 0, 0)
+%CopSetScriptAddrToNextInstruction()
+RTL
 
 .talk_first:
 COP #$07                             ;C39668|0207    |      ;
@@ -285,7 +297,10 @@ db $63,$68,$2C,$20,$F9,$0D,$DC,$4D   ;C39B2E|        |000068;
 db $75,$74,$74,$65,$72,$20,$77,$6F   ;C39B36|        |000074;
 db $68,$6C,$20,$67,$65,$2D,$0D,$72   ;C39B3E|        |      ;
 db $61,$64,$65,$20,$74,$75,$74,$20   ;C39B46|        |000064;
-db $3F,$13,$F0,$C8,$10,$0F,$8C,$73   ;C39B4E|        |C8F013;
+db $3F,$13,$F0,$C8
+
+.txt_ending_lisa_sleeping:
+db $10,$0F,$8C,$73   ;C39B4E|        |C8F013;
 db $63,$68,$65,$69,$6E,$74,$2C,$20   ;C39B56|        |000068;
 db $AF,$6F,$62,$20,$0D,$94,$73,$63   ;C39B5E|        |20626F;
 db $68,$6C,$7B,$66,$74,$2E,$0D,$0E   ;C39B66|        |      ;
@@ -293,6 +308,7 @@ db $5A,$02,$02,$2C,$20,$6C,$65,$67   ;C39B6E|        |      ;
 db $74,$20,$0D,$B7,$A4,$AC,$0D,$4C   ;C39B76|        |000020;
 db $69,$73,$61,$60,$73,$20,$4B,$6F   ;C39B7E|        |      ;
 db $70,$66,$2E,$0E,$78,$13,$F1,$C8   ;C39B86|        |C39BEE;
+.txt_ending_ask_for_promise:
 db $10,$02,$02,$2C,$0D,$76,$65,$72   ;C39B8E|        |C39B92;
 db $73,$70,$72,$69,$63,$68,$60,$20   ;C39B96|        |000070;
 db $6D,$69,$72,$2C,$20,$BA,$0D,$83   ;C39B9E|        |007269;

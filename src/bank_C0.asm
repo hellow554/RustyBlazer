@@ -5637,14 +5637,14 @@ INC A                                ;C08F13|1A      |      ;
 
 CODE_C08F14:
 PHA                                  ;C08F14|48      |      ;
-LDA.W $1B88                          ;C08F15|AD881B  |811B88;
+LDA.W player_current_health                          ;C08F15|AD881B  |811B88;
 SEC                                  ;C08F18|38      |      ;
 SBC.B $01,S                          ;C08F19|E301    |000001;
 BPL CODE_C08F1F                      ;C08F1B|1002    |C08F1F;
 LDA.B #$00                           ;C08F1D|A900    |      ;
 
 CODE_C08F1F:
-STA.W $1B88                          ;C08F1F|8D881B  |811B88;
+STA.W player_current_health                          ;C08F1F|8D881B  |811B88;
 PLA                                  ;C08F22|68      |      ;
 REP #$20                             ;C08F23|C220    |      ;
 LDA.W #$0004                         ;C08F25|A90400  |      ;
@@ -6574,7 +6574,7 @@ CODE_C0965C:
 JSR.W CODE_C0975F                    ;C0965C|205F97  |C0975F;
 
 CODE_C0965F:
-LDA.W $0326                          ;C0965F|AD2603  |810326;
+LDA.W button_mask                          ;C0965F|AD2603  |810326;
 BIT.W #$0F00                         ;C09662|89000F  |      ;
 BNE CODE_C09683                      ;C09665|D01C    |C09683;
 LDA.W $03D6                          ;C09667|ADD603  |8103D6;
@@ -9192,134 +9192,147 @@ PLY                                  ;C0AF8B|7A      |      ;
 PLP                                  ;C0AF8C|28      |      ;
 RTL                                  ;C0AF8D|6B      |      ;
 
-CODE_C0AF8E:
-LDA.W $1B86                          ;C0AF8E|AD861B  |811B86;
-CMP.W #$0032                         ;C0AF91|C93200  |      ;
-BCC CODE_C0AF99                      ;C0AF94|9003    |C0AF99;
-db $82,$A1,$00                       ;C0AF96|        |C0B03A;
+Player_LevelUp:
+    LDA.W player_level
+    CMP.W #!PlayerMaxLevel
+    BCC + : BRL .end : +
 
-CODE_C0AF99:
-ASL A                                ;C0AF99|0A      |      ;
-ASL A                                ;C0AF9A|0A      |      ;
-TAY                                  ;C0AF9B|A8      |      ;
-LDA.W UNREACH_81FBB8,Y               ;C0AF9C|B9B8FB  |81FBB8;
-STA.W $1B7E                          ;C0AF9F|8D7E1B  |811B7E;
-LDA.W UNREACH_81FBBA,Y               ;C0AFA2|B9BAFB  |81FBBA;
-STA.W $1B7C                          ;C0AFA5|8D7C1B  |811B7C;
-COP #$91                             ;C0AFA8|0291    |      ;
-LDA.W PlayerExp.lower10k                          ;C0AFAA|AD781B  |811B78;
-SEC                                  ;C0AFAD|38      |      ;
-SBC.W $1B7C                          ;C0AFAE|ED7C1B  |811B7C;
-LDA.W $1B7A                          ;C0AFB1|AD7A1B  |811B7A;
-SBC.W $1B7E                          ;C0AFB4|ED7E1B  |811B7E;
-BCS CODE_C0AFBA                      ;C0AFB7|B001    |C0AFBA;
-RTL                                  ;C0AFB9|6B      |      ;
+    ASL #2
+    TAY
+    LDA.W ExpTable, Y
+    STA.W ExpNeededForNextLevel.upper10k
+    LDA.W ExpTable+2, Y
+    STA.W ExpNeededForNextLevel.lower10k
+    %CopSetScriptAddrToNextInstruction()
+    LDA.W PlayerExp.lower10k
+    SEC
+    SBC.W ExpNeededForNextLevel.lower10k
+    LDA.W PlayerExp.upper10k
+    SBC.W ExpNeededForNextLevel.upper10k
+    BCS + : RTL : +
 
-CODE_C0AFBA:
-LDA.W $1B8A                          ;C0AFBA|AD8A1B  |811B8A;
-CLC                                  ;C0AFBD|18      |      ;
-ADC.W #$0002                         ;C0AFBE|690200  |      ;
-CMP.W #$0065                         ;C0AFC1|C96500  |      ;
-BCC CODE_C0AFC9                      ;C0AFC4|9003    |C0AFC9;
-db $A9,$64,$00                       ;C0AFC6|        |      ;
+; next level reached
+; increase max health
+    LDA.W player_max_health
+    CLC
+    ADC.W #!HealthGainPerLvl
+    CMP.W #!PlayerMaxHealth+1
+    BCC + : LDA.W #!PlayerMaxHealth : +
+    STA.W player_max_health
+    LDA.W player_current_health
+    CLC
+    ADC.W #!HealthGainPerLvl
+    CMP.W #!PlayerMaxHealth+1
+    BCC + : LDA.W #!PlayerMaxHealth : +
+    STA.W player_current_health
+    %CopRestoreToFullHealth()
+; increase player level and also ascii representation
+    INC.W player_level
+    SED
+    LDA.W player_level_ascii
+    CLC
+    ADC.W #1
+    STA.W player_level_ascii
+    CLD
+; on every even level increase strength, on every odd level increase defense
+    LSR
+    BCS .inc_def
+    INC.W player_strength_from_level
+    BRA +
+.inc_def:
+    INC.W player_defense_from_level
++
+; update HUD
+    LDA.W #!UpdateHud_All
+    TSB.W display_hud_bitfield
+; get next exp needed and store it
+    LDA.W player_level
+    ASL #2
+    TAY
+    LDA.W ExpTable, Y
+    STA.W ExpNeededForNextLevel.upper10k
+    LDA.W ExpTable+2, Y
+    STA.W ExpNeededForNextLevel.lower10k
+; play sound and display message on screen three times
+    %PlaySound(!Sound_NextLevel)
+    %CopLoopStart(3)
+    PHX
+    LDY.W #txt_next_level
+    JSL.L printOsdStringFromBank2
+    PLX
+    %CopJumpAfterNoFramesPassed(+, 20) : +
+    PHX
+    LDY.W #txt_delete_next_level
+    JSL.L printOsdStringFromBank2
+    PLX
+    %CopJumpAfterNoFramesPassed(+, 10) : +
+    %CopLoopEnd()
+; do loop to the start of the function to increase the level further if needed
+    BRL Player_LevelUp
 
-CODE_C0AFC9:
-STA.W $1B8A                          ;C0AFC9|8D8A1B  |811B8A;
-LDA.W $1B88                          ;C0AFCC|AD881B  |811B88;
-CLC                                  ;C0AFCF|18      |      ;
-ADC.W #$0002                         ;C0AFD0|690200  |      ;
-CMP.W #$0065                         ;C0AFD3|C96500  |      ;
-BCC CODE_C0AFDB                      ;C0AFD6|9003    |C0AFDB;
-db $A9,$64,$00                       ;C0AFD8|        |      ;
+.end:
+    %Cop86()
+    RTL
 
-CODE_C0AFDB:
-STA.W $1B88                          ;C0AFDB|8D881B  |811B88;
-COP #$37                             ;C0AFDE|0237    |      ;
-INC.W $1B86                          ;C0AFE0|EE861B  |811B86;
-SED                                  ;C0AFE3|F8      |      ;
-LDA.W player_level_ascii                          ;C0AFE4|AD6A1B  |811B6A;
-CLC                                  ;C0AFE7|18      |      ;
-ADC.W #$0001                         ;C0AFE8|690100  |      ;
-STA.W player_level_ascii                          ;C0AFEB|8D6A1B  |811B6A;
-CLD                                  ;C0AFEE|D8      |      ;
-LSR A                                ;C0AFEF|4A      |      ;
-BCS CODE_C0AFF7                      ;C0AFF0|B005    |C0AFF7;
-INC.W player_strength_from_level                          ;C0AFF2|EE721B  |811B72;
-BRA CODE_C0AFFA                      ;C0AFF5|8003    |C0AFFA;
-
-CODE_C0AFF7:
-INC.W player_defense_from_level                          ;C0AFF7|EE761B  |811B76;
-
-CODE_C0AFFA:
-LDA.W #$001F                         ;C0AFFA|A91F00  |      ;
-TSB.W display_hud_bitfield                          ;C0AFFD|0C3203  |810332;
-LDA.W $1B86                          ;C0B000|AD861B  |811B86;
-ASL A                                ;C0B003|0A      |      ;
-ASL A                                ;C0B004|0A      |      ;
-TAY                                  ;C0B005|A8      |      ;
-LDA.W UNREACH_81FBB8,Y               ;C0B006|B9B8FB  |81FBB8;
-STA.W $1B7E                          ;C0B009|8D7E1B  |811B7E;
-LDA.W UNREACH_81FBBA,Y               ;C0B00C|B9BAFB  |81FBBA;
-STA.W $1B7C                          ;C0B00F|8D7C1B  |811B7C;
-BRK #$97                             ;C0B012|0097    |      ;
-COP #$03                             ;C0B014|0203    |      ;
-db $03                               ;C0B016|        |0000DA;
-PHX                                  ;C0B017|DA      |      ;
-LDY.W #$C6D5                         ;C0B018|A0D5C6  |      ;
-JSL.L printOsdStringFromBank2                    ;C0B01B|2254A782|82A754;
-PLX                                  ;C0B01F|FA      |      ;
-COP #$1B                             ;C0B020|021B    |      ;
-db $26,$B0,$14,$00                   ;C0B022|        |0000B0;
-PHX                                  ;C0B026|DA      |      ;
-LDY.W #$C6EA                         ;C0B027|A0EAC6  |      ;
-JSL.L printOsdStringFromBank2                    ;C0B02A|2254A782|82A754;
-PLX                                  ;C0B02E|FA      |      ;
-COP #$1B                             ;C0B02F|021B    |      ;
-db $35,$B0,$0A,$00                   ;C0B031|        |0000B0;
-COP #$04                             ;C0B035|0204    |      ;
-BRL CODE_C0AF8E                      ;C0B037|8254FF  |C0AF8E;
-db $02,$86,$6B                       ;C0B03A|        |      ;
-PHP                                  ;C0B03D|08      |      ;
-REP #$20                             ;C0B03E|C220    |      ;
-LDX.W $039E                          ;C0B040|AE9E03  |81039E;
-LDA.W $0016,X                        ;C0B043|BD1600  |810016;
-BIT.W #$0400                         ;C0B046|890004  |      ;
-BNE CODE_C0B095                      ;C0B049|D04A    |C0B095;
-LDA.W $1B88                          ;C0B04B|AD881B  |811B88;
-ORA.W $0447                          ;C0B04E|0D4704  |810447;
-BNE CODE_C0B095                      ;C0B051|D042    |C0B095;
-COP #$19                             ;C0B053|0219    |      ;
-db $38,$63,$B0                       ;C0B055|        |      ;
-LDA.W $1B8A                          ;C0B058|AD8A1B  |811B8A;
-STA.W $0447                          ;C0B05B|8D4704  |810447;
-COP #$0B                             ;C0B05E|020B    |      ;
-db $38                               ;C0B060|        |      ;
-BRA CODE_C0B095                      ;C0B061|8032    |C0B095;
-COP #$19                             ;C0B063|0219    |      ;
-db $39,$6D,$B0,$02,$0B,$39,$80,$0D   ;C0B065|        |00B06D;
-COP #$19                             ;C0B06D|0219    |      ;
-db $40,$74,$B0,$80,$06               ;C0B06F|        |      ;
-STZ.W PlayerGold.lower10k                          ;C0B074|9C661B  |811B66;
-STZ.W PlayerGold.upper10k                         ;C0B077|9C681B  |811B68;
-LDA.W $0016,X                        ;C0B07A|BD1600  |810016;
-AND.W #$F7FF                         ;C0B07D|29FFF7  |      ;
-STA.W $0016,X                        ;C0B080|9D1600  |810016;
-LDA.W $0016,X                        ;C0B083|BD1600  |810016;
-ORA.W #$0400                         ;C0B086|090004  |      ;
-STA.W $0016,X                        ;C0B089|9D1600  |810016;
-LDA.W #$2080                         ;C0B08C|A98020  |      ;
-STA.W $0326                          ;C0B08F|8D2603  |810326;
-INC.W $044B                          ;C0B092|EE4B04  |81044B;
-
-CODE_C0B095:
-PLP                                  ;C0B095|28      |      ;
+Player_CheckDead:
+    PHP
+    REP #$20
+    LDX.W $039E
+    LDA.W $0016, X
+    BIT.W #$0400
+    BNE .end
+; Load current health as well has health to restore and check if we're dead
+    LDA.W player_current_health
+    ORA.W player_health_restore
+    BNE .end
+    %CopJumpIfItemIsNotEquipped(!MedicalHerb, .no_herbs)
+    ; revive player if herbs are equipped
+    LDA.W player_max_health
+    STA.W player_health_restore
+    %CopRemoveItem(!MedicalHerb)
+    BRA .end
+.no_herbs:
+    %CopJumpIfItemIsNotEquipped(!StrangeBottle, .no_bottle)
+    %CopRemoveItem(!StrangeBottle)
+    BRA .kill_player
+.no_bottle:
+    %CopJumpIfItemIsNotEquipped(!MagicBell, +)
+    BRA .kill_player
++
+; if neither herbs, bottle nor bell is equipped, remove all gold and kill the player
+    STZ.W PlayerGold.lower10k
+    STZ.W PlayerGold.upper10k
+.kill_player: ; jump here if you want to kill the player, but keep his gold
+    LDA.W $0016, X
+    AND.W #$F7FF
+    STA.W $0016, X
+    LDA.W $0016, X
+    ORA.W #$0400
+    STA.W $0016, X
+    LDA.W #!Key16_A|!Key16_Select
+    STA.W button_mask                
+    INC.W player_died                          ;C0B092|EE4B04  |81044B;
+.end:
+    PLP
 CODE_C0B096:
-RTL                                  ;C0B096|6B      |      ;
-db $E2,$20,$A9,$80,$9D,$36,$00,$C2   ;C0B097|        |      ;
-db $20,$BD,$16,$00,$29,$F7,$DF,$9D   ;C0B09F|        |C016BD;
-db $16,$00,$02,$A8,$00,$80,$8E,$BD   ;C0B0A7|        |000000;
-db $1C,$00,$9D,$32,$00,$29,$FF,$FE   ;C0B0AF|        |009D00;
-db $9D,$1C,$00,$02,$15,$02,$80,$0D   ;C0B0B7|        |00001C;
+    RTL                                  ;C0B096|6B      |      ;
+
+CODE_C0B097:
+    SEP #$20
+    LDA.B #$80
+    STA.W $36, X
+    REP #$20
+    LDA.W $16, X
+    AND.W #$DFF7
+    STA.W $16, X
+    %CopA8($8E8000)
+    LDA.W $1C, X
+    STA.W $32, X
+    AND.W #$FEFF
+    STA.W $1C, X
+    %CopMakeNpcUnpassable()
+
+db $02,$80,$0D   ;C0B0B7|        |00001C;
 db $02,$82,$BD,$34,$00,$0A,$0A,$0A   ;C0B0BF|        |      ;
 db $0A,$0A,$A8,$B9,$2B,$BA,$A0,$DE   ;C0B0C7|        |      ;
 db $1A,$22,$CA,$82,$83,$90,$E6,$02   ;C0B0CF|        |      ;
@@ -9353,8 +9366,10 @@ db $1C,$B0,$DE,$E2,$20,$A9,$80,$9D   ;C0B1A7|        |00DEB0;
 db $36,$00,$C2,$20,$A9,$18,$AA,$9D   ;C0B1AF|        |000000;
 db $18,$00,$9E,$14,$00,$80,$CA,$FA   ;C0B1B7|        |      ;
 db $6B                               ;C0B1BF|        |      ;
+
+CODE_C0B1C0:
 LDA.W #$FFFF                         ;C0B1C0|A9FFFF  |      ;
-STA.W $0326                          ;C0B1C3|8D2603  |810326;
+STA.W button_mask                          ;C0B1C3|8D2603  |810326;
 COP #$1B                             ;C0B1C6|021B    |      ;
 db $CC,$B1,$01,$00                   ;C0B1C8|        |0001B1;
 LDA.W $1C7B                          ;C0B1CC|AD7B1C  |811C7B;
@@ -9367,7 +9382,7 @@ LDA.W $0030,X                        ;C0B1D4|BD3000  |810030;
 JSL.L CODE_C288BB                    ;C0B1D7|22BB8882|8288BB;
 COP #$27                             ;C0B1DB|0227    |      ;
 db $DF,$B1                           ;C0B1DD|        |269CB1;
-STZ.W $0326                          ;C0B1DF|9C2603  |810326;
+STZ.W button_mask                          ;C0B1DF|9C2603  |810326;
 COP #$86                             ;C0B1E2|0286    |      ;
 RTL                                  ;C0B1E4|6B      |      ;
 CODE_C0B1E5:
@@ -10961,7 +10976,7 @@ STA.W $0030,Y                        ;C0E737|993000  |810030;
 STA.W $0014,Y                        ;C0E73A|991400  |810014;
 RTS                                  ;C0E73D|60      |      ;
 LDA.W #$3080                         ;C0E73E|A98030  |      ;
-TSB.W $0326                          ;C0E741|0C2603  |810326;
+TSB.W button_mask                          ;C0E741|0C2603  |810326;
 STX.W $039E                          ;C0E744|8E9E03  |81039E;
 SEP #$20                             ;C0E747|E220    |      ;
 LDA.W STAT78                          ;C0E749|AD3F21  |81213F;
@@ -10990,7 +11005,7 @@ db $00,$0A,$01,$00,$00,$00,$00       ;C0E784|        |      ;
 COP #$91                             ;C0E78B|0291    |      ;
 RTL                                  ;C0E78D|6B      |      ;
 LDA.W #$3000                         ;C0E78E|A90030  |      ;
-TSB.W $0326                          ;C0E791|0C2603  |810326;
+TSB.W button_mask                          ;C0E791|0C2603  |810326;
 STZ.W buttons_pressed                          ;C0E794|9C2203  |810322;
 STX.W $039E                          ;C0E797|8E9E03  |81039E;
 LDA.W $0451                          ;C0E79A|AD5104  |810451;
@@ -11071,7 +11086,7 @@ LDY.W #$BBC5                         ;C0E845|A0C5BB  |      ;
 JSL.L printOsdStringFromBank2                    ;C0E848|2254A782|82A754;
 PLX                                  ;C0E84C|FA      |      ;
 LDA.W #$3000                         ;C0E84D|A90030  |      ;
-TRB.W $0326                          ;C0E850|1C2603  |810326;
+TRB.W button_mask                          ;C0E850|1C2603  |810326;
 COP #$03                             ;C0E853|0203    |      ;
 db $F1                               ;C0E855|        |000002;
 COP #$04                             ;C0E856|0204    |      ;
@@ -11612,7 +11627,7 @@ INC.W $0460                          ;C0EEC6|EE6004  |810460;
 COP #$85                             ;C0EEC9|0285    |      ;
 db $D3,$F1,$80                       ;C0EECB|        |0000F1;
 LDA.W #$3080                         ;C0EECE|A98030  |      ;
-TSB.W $0326                          ;C0EED1|0C2603  |810326;
+TSB.W button_mask                          ;C0EED1|0C2603  |810326;
 COP #$A3                             ;C0EED4|02A3    |      ;
 STX.W $039E                          ;C0EED6|8E9E03  |81039E;
 STZ.W $0413                          ;C0EED9|9C1304  |810413;
@@ -12088,7 +12103,7 @@ PHX                                  ;C0F795|DA      |      ;
 JSL.L CODE_C38000                    ;C0F796|22008083|838000;
 PLX                                  ;C0F79A|FA      |      ;
 LDA.W #$7FC0                         ;C0F79B|A9C07F  |      ;
-TSB.W $0326                          ;C0F79E|0C2603  |810326;
+TSB.W button_mask                          ;C0F79E|0C2603  |810326;
 COP #$03                             ;C0F7A1|0203    |      ;
 db $3D                               ;C0F7A3|        |000402;
 COP #$04                             ;C0F7A4|0204    |      ;
@@ -12105,9 +12120,9 @@ UNREACH_C0F7E6:
 db $02,$01,$E5,$F8,$02,$91,$02,$0D   ;C0F7E6|        |      ;
 db $00,$07,$04,$F6,$F7,$82,$0A,$FF   ;C0F7EE|        |      ;
 db $6B                               ;C0F7F6|        |      ;
-LDA.W $044B                          ;C0F7F7|AD4B04  |81044B;
+LDA.W player_died                          ;C0F7F7|AD4B04  |81044B;
 BEQ CODE_C0F80D                      ;C0F7FA|F011    |C0F80D;
-STZ.W $044B                          ;C0F7FC|9C4B04  |81044B;
+STZ.W player_died                          ;C0F7FC|9C4B04  |81044B;
 COP #$1B                             ;C0F7FF|021B    |      ;
 db $05,$F8,$02,$00                   ;C0F801|        |0000F8;
 COP #$01                             ;C0F805|0201    |      ;

@@ -250,6 +250,8 @@ class TextMapper:
                             res.append(0x0D)
                         elif c == "0":
                             res.append(0x00)
+                        elif c == '"':
+                            res.append(ord('"'))
                         else:
                             raise UnknownEscapeSequence(c)
                         escape_start = False
@@ -368,9 +370,9 @@ class Translator:
         elif NEW_BLOCK.match(line):
             self._byte_list = []
         elif ENDBLOCK.match(line):
-            self._end_line()
+            self._end_block()
         elif ENDSTRING.match(line):
-            self._end_line(append_null=True)
+            self._end_block(append_null=True)
         elif (m := SINGLE_STRING.search(line)) is not None:
             self._single_string(m, line)
             return  # we do a return here, because this is a single line comment
@@ -398,7 +400,7 @@ class Translator:
         self._to_append = None
 
         self._line_comment = string[match.start() :]
-        self._end_line()
+        self._end_block()
 
     def _iter_args(self, text: str) -> Iterator[str]:
         while len(text) > 0:
@@ -450,12 +452,6 @@ class Translator:
                 assert arg[-1] == '"'
                 self._append(TextMapper.map(arg[1:-1]))
                 new_line = True
-            elif arg == "*":
-                if self._bold:
-                    self._append([0x03, 0x20])
-                else:
-                    self._append([0x03, 0x24])
-                self._bold = not self._bold
             elif arg == "WFE":  # wait for enter
                 self._append(0x11)
             elif arg == "WFAK":  # wait for any key
@@ -496,6 +492,14 @@ class Translator:
             elif arg == "LABEL":  # set label at this position
                 label = next(iterator)
                 self._append(f"{label}:", None)
+            elif arg == "*" or arg == "BOLD":  # toggle bold mode
+                if self._bold:
+                    self._append([0x03, 0x20])
+                else:
+                    self._append([0x03, 0x24])
+                self._bold = not self._bold
+            elif arg == "CURSIVE":  # toggle cursive mode
+                self._append(0x09)
             elif arg == "CONT":  # continue with previous textbox settings
                 self._append(0x0C)
             elif arg == "PLAYER_NAME":  # player name lookup
@@ -564,7 +568,7 @@ class Translator:
         self._to_append = None
         self._byte_list.append(append)
 
-    def _end_line(self, append_null=False):
+    def _end_block(self, append_null=False):
         if self._byte_list is None:
             self._raise(ParseException, "@END@ without begin")
 
@@ -581,6 +585,7 @@ class Translator:
             self._line_comment = None
 
         self._byte_list = None
+        self._bold = False
 
     def _raise(self, type: type, *args) -> Never:
         assert self._cur_line is not None

@@ -18,6 +18,7 @@
 !EV_A1_TalkedWithVillageChief           = $1B00
 !EV_A1_HighgroundJewelTalked            = $1C01
 !EV_A1_HighGroundJewelAppeared          = $1C02
+!EV_A1_Another_thing_with_lisa          = $1F01
 !EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE = $1F02
 !MC_NameChoosen                         = $1F06
 

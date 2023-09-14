@@ -24,3 +24,6 @@
 !Sound_MetalEnemyHitWithNormalSword = $4C
 !Sound_WheelStartSpinning = $4F
 !Sound_ReceiveItem = $5E
+!Sound_ReceiveGold = $8D
+!Sound_NextLevel = $97
+!Sound_ReceiveItemFromChest = $9E

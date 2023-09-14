@@ -5,7 +5,7 @@ A1_script_son_shop_owner:
     LDA.B #$80
     PHA
     REP #$20
-    LDA.W #CODE_C0B096
+    LDA.W #CODE_C0B097-1 ; -1 because we use it in RTL and it increases that by one again
     PHA
     RTL
 .next:

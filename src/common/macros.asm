@@ -12,7 +12,7 @@ macro CopYesNoChoice(noptr)
     dw <noptr>
 endmacro
 
-macro CopLoop(times)
+macro CopLoopStart(times)
     COP #$03
     db <times>
 endmacro
@@ -396,6 +396,11 @@ endmacro
 macro CopAdjustNpcYPosition(pos)
     COP #$A0
     dw <pos>
+endmacro
+
+macro CopA8(target_24)
+    COP #$A8
+    dl <target_24>
 endmacro
 
 macro CopAC(target_24, a, b, c)
