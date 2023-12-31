@@ -13,7 +13,7 @@ else
 ASAR_FLAGS = 
 endif
 
-german.sfc: $(shell find src -type f -name '*.asm')
+german.sfc: $(shell find src -type f) Makefile tools/asar_text.py
 	@echo "Precompile src/main.asm"
 	@tools/asar_text.py src/main.asm
 	@echo "Compiling src/main.asm"
