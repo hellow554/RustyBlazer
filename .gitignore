@@ -11,6 +11,8 @@ Cargo.lock
 
 # Generated snes file
 *.sfc
+# Generated symbole file
+*.sym
 
 # vim files
 *.swp
