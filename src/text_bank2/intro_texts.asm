@@ -2,14 +2,14 @@
 Txt_Warning_NTSC:
 ; @NEW_TEXT@
 ; SETPOS $42 1
-; * SPACE 11
-; "WARNING!\n\n\n\n" NO_NEWLINE
+; BOLD
+; "           WARNING!\n\n\n\n" NO_NEWLINE
 ; "This game pak is not designed\n\n\n\n" NO_NEWLINE
 ; "for your SUPER NINTENDO.\n\n\n\n\n\n" NO_NEWLINE
-; SPACE 20 "UBI SOFT" NO_NEWLINE
+; "                    UBI SOFT" NO_NEWLINE
 db $01,$42,$01
-db $03,$24,$14,$0B
-db $57,$41,$52,$4E,$49,$4E,$47,$21,$0D,$0D,$0D,$0D
+db $03,$24
+db $14,$0B,$57,$41,$52,$4E,$49,$4E,$47,$21,$0D,$0D,$0D,$0D
 db $54,$68,$69,$73,$20,$67,$61,$6D,$65,$20,$70,$61,$6B,$20,$69,$73,$20,$6E,$6F,$74,$20,$64,$65,$73,$69,$67,$6E,$65,$64,$0D,$0D,$0D,$0D
 db $66,$6F,$72,$20,$79,$6F,$75,$72,$20,$53,$55,$50,$45,$52,$20,$4E,$49,$4E,$54,$45,$4E,$44,$4F,$2E,$0D,$0D,$0D,$0D,$0D,$0D
 db $14,$14,$55,$42,$49,$20,$53,$4F,$46,$54
@@ -40,10 +40,10 @@ Txt_Rights_Reserved:
 ; @NEW_TEXT@
 ; CURSIVE
 ; SETPOS $80 5
-; SPACE 6 "ALL RIGHTS RESERVED"
+; "      ALL RIGHTS RESERVED"
 ; "  COPYRIGHT 1994 QUINTET/ENIX"
-; SPACE 9 "LICENSED TO UBI SOFT"
-; SPACE 9 "LICENSED BY NINTENDO" NO_NEWLINE
+; "         LICENSED TO UBI SOFT"
+; "         LICENSED BY NINTENDO" NO_NEWLINE
 db $09
 db $01,$80,$05
 db $14,$06,$41,$4C,$4C,$20,$52,$49,$47,$48,$54,$53,$20,$52,$45,$53,$45,$52,$56,$45,$44,$0D

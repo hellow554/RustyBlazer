@@ -15,9 +15,9 @@ db $00
 
 ; @NEW_TEXT@
 ; SETPOS $C0 $02
-; SPACE 3 "Alle Lebewesen erfreuten \n\n"
-; SPACE 3 "sich an der Schönheit des \n\n"
-; SPACE 3 "Sonnenaufganges." NO_NEWLINE
+; "   Alle Lebewesen erfreuten \n\n"
+; "   sich an der Schönheit des \n\n"
+; "   Sonnenaufganges." NO_NEWLINE
 db $01,$C0,$02
 db $14,$03,$41,$6C,$6C,$65,$20,$4C,$65,$62,$65,$77,$65,$73,$65,$6E,$20,$65,$72,$66,$72,$65,$75,$74,$65,$6E,$20,$0D,$0D,$0D
 db $14,$03,$E5,$61,$6E,$20,$B6,$53,$63,$68,$2A,$6E,$68,$65,$69,$74,$20,$B8,$0D,$0D,$0D
@@ -53,8 +53,8 @@ db $00
 
 ; @NEW_TEXT@
 ; SETPOS $C0 $02
-; SPACE 3 "Lisa stand dort ganz \n\n"
-; SPACE 3 "alleine." NO_NEWLINE
+; "   Lisa stand dort ganz \n\n"
+; "   alleine." NO_NEWLINE
 db $01,$C0,$02
 db $14,$03,$94,$73,$74,$61,$6E,$64,$20,$64,$6F,$72,$74,$20,$67,$61,$6E,$7A,$20,$0D,$0D,$0D
 db $14,$03,$61,$6C,$6C,$65,$69,$6E,$65,$2E
@@ -63,10 +63,10 @@ db $00
 
 ; @NEW_TEXT@
 ; SETPOS $40 02
-; SPACE 3 "Früher fühlte sie sich ein-\n\n"
-; SPACE 3 "sam, wenn sie den Sonnen-\n\n"
-; SPACE 3 "aufgang sah aber jetzt \n\n"
-; SPACE 3 "hält sie ihn für schön." NO_NEWLINE
+; "   Früher fühlte sie sich ein-\n\n"
+; "   sam, wenn sie den Sonnen-\n\n"
+; "   aufgang sah aber jetzt \n\n"
+; "   hält sie ihn für schön." NO_NEWLINE
 db $01,$40,$02
 db $14,$03,$46,$72,$5B,$68,$65,$72,$20,$66,$5B,$68,$6C,$74,$65,$20,$E6,$E5,$65,$69,$6E,$2D,$0D,$0D,$0D
 db $14,$03,$73,$61,$6D,$2C,$20,$F3,$E6,$B7,$53,$6F,$6E,$6E,$65,$6E,$2D,$0D,$0D,$0D

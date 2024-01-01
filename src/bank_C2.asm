@@ -7925,7 +7925,7 @@ txt_lairs_remaining:
 ; SETPOS $1E $05
 ; DRAWBOX 13 4
 ; "Monsterhöhlen\n\n" NO_NEWLINE
-; SPACE 5 "Übrig " NO_NEWLINE
+; "     Übrig " NO_NEWLINE
 ; DECVAL 2 lair_remaining_ascii
 db $01,$1E,$05
 db $07,$0D,$04

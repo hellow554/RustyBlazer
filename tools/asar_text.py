@@ -267,6 +267,28 @@ class TextMapper:
             for c in LUT[lut_idx]:
                 res.append(TextMapper._map_char(c))
 
+        return TextMapper._convert_consecutive_spaces(res)
+
+    @staticmethod
+    def _convert_consecutive_spaces(l: list[int]) -> list[int]:
+        res = []
+        counter = 0
+        push_spaces = lambda: res.extend(
+            [0x14, counter] if counter > 2 else map(ord, " " * counter)
+        )
+
+        for t in l:
+            if t == ord(" "):
+                counter += 1
+                continue
+            elif counter > 0:
+                push_spaces()
+                counter = 0
+
+            res.append(t)
+
+        push_spaces()
+
         return res
 
     @staticmethod
