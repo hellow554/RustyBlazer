@@ -2,6 +2,7 @@
 
 from enum import Enum, auto
 from functools import partial
+from more_itertools import peekable
 from pathlib import Path
 import re
 from re import Match
@@ -443,7 +444,7 @@ class Translator:
     def _parse_comment(self, comment: str, auto_newline: bool = True):
         assert self._byte_list is not None
 
-        iterator = self._iter_args(comment)
+        iterator = peekable(self._iter_args(comment))
         new_line = False
 
         for arg in iterator:
@@ -493,11 +494,21 @@ class Translator:
                 label = next(iterator)
                 self._append(f"{label}:", None)
             elif arg == "*" or arg == "BOLD":  # toggle bold mode
-                if self._bold:
-                    self._append([0x03, 0x20])
-                else:
+                peeked = iterator.peek(default="XYZ")
+                if peeked == "ON":
                     self._append([0x03, 0x24])
-                self._bold = not self._bold
+                    self._bold = True
+                    next(iterator)
+                elif peeked == "OFF":
+                    self._append([0x03, 0x20])
+                    self._bold = False
+                    next(iterator)
+                else:
+                    if self._bold:
+                        self._append([0x03, 0x20])
+                    else:
+                        self._append([0x03, 0x24])
+                    self._bold = not self._bold
             elif arg == "CURSIVE":  # toggle cursive mode
                 self._append(0x09)
             elif arg == "CONT":  # continue with previous textbox settings
