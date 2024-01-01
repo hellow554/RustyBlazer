@@ -146,7 +146,10 @@ class SbChar:
         base_addr = IdaAddr(".C6:C000").addr
         idx = self.ch & 0x7F
         idx *= 12
-        return ROM[base_addr + idx : base_addr + idx + 12].decode("ASCII").rstrip("\x00") + " "
+        return (
+            ROM[base_addr + idx : base_addr + idx + 12].decode("ASCII").rstrip("\x00")
+            + " "
+        )
 
 
 class SbString:
@@ -301,21 +304,45 @@ class SbString:
                     [bl, bh] = take(2)
                     # addr = Addr(start_addr)
                     addr_value = bh << 8 | bl
-                    yield from SbString._inner(IdaAddr(bank=start_addr.ida_bank, offset=addr_value))
+                    yield from SbString._inner(
+                        IdaAddr(bank=start_addr.ida_bank, offset=addr_value)
+                    )
                     return
                 case 0x14:
                     # write space n times
                     [n] = take(1)
                     yield from map(lambda _: " ", range(n))
-                    pass
                 case x:
                     yield SbChar(x).get()
 
+    def to_str(self, list):
+        r = []
+
+        for l in list:
+            if l == "\n":
+                counter = 0
+                while len(r) > 0:
+                    x = r.pop()
+                    if x == " ":
+                        counter += 1
+                    else:
+                        r.append(x)
+                        break
+                while counter != 0:
+                    r.append("␣")
+                    counter -= 1
+            r.append(l)
+
+        return "".join(r)
+
     def print(self):
+        t = []
         if self._addr.ida_bank == 0x82:
-            print("`{}`".format("".join(self.interpret2())))
+            t = self.interpret2()
         else:
-            print("`{}`".format("".join(self.interpretX())))
+            t = self.interpretX()
+
+        print(f"`{self.to_str(t)}`")
 
     def interpretX(self) -> Iterator[str]:
         skip = 0
