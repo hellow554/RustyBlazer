@@ -265,16 +265,15 @@ entities_table = $800
 
 game_state = $7E1A5E
 lair_sealed_table = $7E1ADE ; 64 bytes * 8 bits = 512 possible lairs
-Inventory = $7E1B1E
-struct Inventory Inventory
+
+struct Inventory $7E1B1E
     .swords: skip 8
     .armor: skip 8
     .magic: skip 8
     .items: skip 40
 endstruct
 
-Equipment = $7E1B5E
-struct Equipment Equipment
+struct Equipment $7E1B5E
     .sword: skip 2
     .armor: skip 2
     .magic: skip 2

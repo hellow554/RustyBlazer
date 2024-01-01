@@ -1,6 +1,5 @@
 macro LongPtr(name, ptr)
-    <name> = <ptr>
-    struct <name> <name>
+    struct <name> <ptr>
         .addr: skip 2
         .bank: skip 1
     endstruct
@@ -70,8 +69,7 @@ endstruct
 
 assert objectsize(LiveEntities) == $40
 
-LairDataStructure = $C1BA0D
-struct LairDataStructure LairDataStructure
+struct LairDataStructure $C1BA0D
     .resur_map_num : skip 1
     .resur_facing : skip 1
     .resur_pos_x : skip 1

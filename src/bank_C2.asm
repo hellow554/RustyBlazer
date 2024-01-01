@@ -8462,8 +8462,8 @@ macro BgMode(a, b, c, d, e, f, g, h, i, j, k, l)
 endmacro
 
 
-BgmArray:
-struct BgmArray BgmArray
+.bgm_array_start:
+struct BgmArray .bgm_array_start
     .main_window: skip 1
     .sub_window: skip 1
     .color_math_a: skip 1
