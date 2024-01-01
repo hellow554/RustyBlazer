@@ -2853,6 +2853,8 @@ db $78,$7E,$A9,$26,$EB,$A9,$7E,$A0   ;C29845|        |      ;
 db $00,$70,$22,$8F,$98,$82,$A9,$27   ;C2984D|        |      ;
 db $EB,$A9,$7E,$A0,$00,$78,$22,$8F   ;C29855|        |      ;
 db $98,$82,$FA,$C2,$20,$6B           ;C2985D|        |      ;
+
+prepare_dma_bank0:
 STZ.B $42                            ;C29863|6442    |000042;
 LDA.B #$10                           ;C29865|A910    |      ;
 STA.B $44                            ;C29867|8544    |000044;
@@ -2995,9 +2997,9 @@ LDA.W #$C0C0                         ;C29990|A9C0C0  |      ;
 TRB.W $032A                          ;C29993|1C2A03  |81032A;
 STZ.W buttons_pressed                          ;C29996|9C2203  |810322;
 SEP #$20                             ;C29999|E220    |      ;
-BRK #$07                             ;C2999B|0007    |      ;
+%PlaySound(!Sound_MenuBeep)
 JSR.W clearOsd                    ;C2999D|2055A3  |C2A355;
-LDA.B #$1F                           ;C299A0|A91F    |      ;
+LDA.B #!UpdateHud_All                           ;C299A0|A91F    |      ;
 STA.W display_hud_bitfield                          ;C299A2|8D3203  |810332;
 JSL.L update_hud                    ;C299A5|225EA682|82A65E;
 JSR.W CODE_C299AD                    ;C299A9|20AD99  |C299AD;
@@ -3039,15 +3041,15 @@ print_soul_names:
 
 
 CODE_C299DD:
-JSL.L disable_vblank_interrupt                    ;C299DD|22AEB182|82B1AE;
-JSR.W CODE_C299E9                    ;C299E1|20E999  |C299E9;
-JSL.L enable_interrupts                    ;C299E4|22A2B182|82B1A2;
-RTL                                  ;C299E8|6B      |      ;
+    JSL.L disable_vblank_interrupt                    ;C299DD|22AEB182|82B1AE;
+    JSR.W CODE_C299E9                    ;C299E1|20E999  |C299E9;
+    JSL.L enable_interrupts                    ;C299E4|22A2B182|82B1A2;
+    RTL                                  ;C299E8|6B      |      ;
 
 CODE_C299E9:
 JSL.L CODE_C382FC                    ;C299E9|22FC8283|8382FC;
 BCC CODE_C299F0                      ;C299ED|9001    |C299F0;
-db $60                               ;C299EF|        |      ;
+RTS
 
 CODE_C299F0:
 PHP                                  ;C299F0|08      |      ;
@@ -3217,7 +3219,7 @@ LDA.B #$82                           ;C29B0D|A982    |      ;
 PHA                                  ;C29B0F|48      |      ;
 PEA.W UNREACH_819B5E                 ;C29B10|F45E9B  |819B5E;
 LDY.W $0038,X                        ;C29B13|BC3800  |810038;
-LDA.W UNREACH_81800D,Y               ;C29B16|B90D80  |81800D;
+LDA.W Entity.behaviour_bank,Y               ;C29B16|B90D80  |81800D;
 PHA                                  ;C29B19|48      |      ;
 LDY.W $0030,X                        ;C29B1A|BC3000  |810030;
 DEY                                  ;C29B1D|88      |      ;
@@ -3242,7 +3244,7 @@ LDA.B #$82                           ;C29B40|A982    |      ;
 PHA                                  ;C29B42|48      |      ;
 PEA.W UNREACH_819B54                 ;C29B43|F4549B  |819B54;
 LDY.W $0038,X                        ;C29B46|BC3800  |810038;
-LDA.W UNREACH_81800D,Y               ;C29B49|B90D80  |81800D;
+LDA.W Entity.behaviour_bank,Y               ;C29B49|B90D80  |81800D;
 PHA                                  ;C29B4C|48      |      ;
 LDY.W $0030,X                        ;C29B4D|BC3000  |810030;
 DEY                                  ;C29B50|88      |      ;
@@ -4787,6 +4789,8 @@ PLY                                  ;C2A65A|7A      |      ;
 PLX                                  ;C2A65B|FA      |      ;
 PLP                                  ;C2A65C|28      |      ;
 RTL                                  ;C2A65D|6B      |      ;
+
+update_hud:
 LDA.W current_map_number                          ;C2A65E|AD6A1C  |811C6A;
 SEC                                  ;C2A661|38      |      ;
 SBC.B #$0F                           ;C2A662|E90F    |      ;
@@ -4795,7 +4799,7 @@ BCS CODE_C2A66B                      ;C2A666|B003    |C2A66B;
 BRL CODE_C2A6D0                      ;C2A668|826500  |C2A6D0;
 
 CODE_C2A66B:
-LDA.W $0330                          ;C2A66B|AD3003  |810330;
+LDA.W displayEnemeyHealthCounter                          ;C2A66B|AD3003  |810330;
 BEQ CODE_C2A67A                      ;C2A66E|F00A    |C2A67A;
 BPL CODE_C2A681                      ;C2A670|100F    |C2A681;
 DEC A                                ;C2A672|3A      |      ;
@@ -4810,8 +4814,8 @@ CODE_C2A67D:
 JSL.L printOsdStringFromBank2                    ;C2A67D|2254A782|82A754;
 
 CODE_C2A681:
-DEC.W $0330                          ;C2A681|CE3003  |810330;
-DEC.W $0330                          ;C2A684|CE3003  |810330;
+DEC.W displayEnemeyHealthCounter                          ;C2A681|CE3003  |810330;
+DEC.W displayEnemeyHealthCounter                          ;C2A684|CE3003  |810330;
 
 CODE_C2A687:
 JSL.L CODE_C38521                    ;C2A687|22218583|838521;

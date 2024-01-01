@@ -6,6 +6,7 @@ incsrc "bankC0/_data.asm"
 incsrc "bankC0/interruptvector.asm"
 incsrc "bankC0/main.asm"
 
+CODE_C0814E:
 PHB                                  ;C0814E|8B      |      ;
 PHA                                  ;C0814F|48      |      ;
 XBA                                  ;C08150|EB      |      ;
@@ -38,6 +39,8 @@ XBA                                  ;C08196|EB      |      ;
 PLA                                  ;C08197|68      |      ;
 PLB                                  ;C08198|AB      |      ;
 RTL                                  ;C08199|6B      |      ;
+
+CODE_C0819A:
 PHB                                  ;C0819A|8B      |      ;
 PHA                                  ;C0819B|48      |      ;
 XBA                                  ;C0819C|EB      |      ;
@@ -69,6 +72,8 @@ XBA                                  ;C081E1|EB      |      ;
 PLA                                  ;C081E2|68      |      ;
 PLB                                  ;C081E3|AB      |      ;
 RTL                                  ;C081E4|6B      |      ;
+
+CODE_C081E5:
 PHB                                  ;C081E5|8B      |      ;
 PHA                                  ;C081E6|48      |      ;
 XBA                                  ;C081E7|EB      |      ;
@@ -244,6 +249,8 @@ RTS                                  ;C085D0|60      |      ;
 
 IRQ_Func:
     RTI                              ;C085D1|        |      ;
+
+CODE_C085D2:
 PHP                                  ;C085D2|08      |      ;
 PHB                                  ;C085D3|8B      |      ;
 PEI.B ($38)                          ;C085D4|D438    |000038;
@@ -261,6 +268,8 @@ STX.B $38                            ;C085EB|8638    |000038;
 PLB                                  ;C085ED|AB      |      ;
 PLP                                  ;C085EE|28      |      ;
 RTL                                  ;C085EF|6B      |      ;
+
+CODE_C085F0:
 PHP                                  ;C085F0|08      |      ;
 REP #$20                             ;C085F1|C220    |      ;
 LDA.W $06B4                          ;C085F3|ADB406  |8106B4;
@@ -434,6 +443,8 @@ LDA.B $00                            ;C08715|A500    |000000;
 TCS                                  ;C08717|1B      |      ;
 PLP                                  ;C08718|28      |      ;
 RTL                                  ;C08719|6B      |      ;
+
+CODE_C0871A:
 PHB                                  ;C0871A|8B      |      ;
 PHP                                  ;C0871B|08      |      ;
 SEP #$20                             ;C0871C|E220    |      ;
@@ -749,6 +760,8 @@ RTS                                  ;C08916|60      |      ;
 
 UNREACH_C08917:
 db $A9,$80,$E0,$99,$92,$04,$80,$E3   ;C08917|        |      ;
+
+CODE_C0891F:
 PHB                                  ;C0891F|8B      |      ;
 SEP #$20                             ;C08920|E220    |      ;
 LDA.W $0024,X                        ;C08922|BD2400  |810024;
@@ -925,6 +938,8 @@ BRA CODE_C089E8                      ;C08A5D|8089    |C089E8;
 
 CODE_C08A5F:
 RTS                                  ;C08A5F|60      |      ;
+
+check_entity_collision:
 PHP                                  ;C08A60|08      |      ;
 PHB                                  ;C08A61|8B      |      ;
 REP #$20                             ;C08A62|C220    |      ;
@@ -1090,7 +1105,7 @@ db $29,$0F,$00,$F0,$70               ;C08B9E|        |      ;
 CODE_C08BA3:
 SEP #$20                             ;C08BA3|E220    |      ;
 LDX.W $0038,Y                        ;C08BA5|BE3800  |8C0038;
-LDA.L UNREACH_818001,X               ;C08BA8|BF018081|818001;
+LDA.L Entity.flags1,X               ;C08BA8|BF018081|818001;
 STA.B $00                            ;C08BAC|8500    |000000;
 LDA.W $1B8C                          ;C08BAE|AD8C1B  |8C1B8C;
 SEC                                  ;C08BB1|38      |      ;
@@ -1171,35 +1186,36 @@ LDA.W $0016,Y                        ;C08C3B|B91600  |8C0016;
 ORA.W #$0400                         ;C08C3E|090004  |      ;
 STA.W $0016,Y                        ;C08C41|991600  |8C0016;
 LDX.W $0038,Y                        ;C08C44|BE3800  |8C0038;
-LDA.L UNREACH_818003,X               ;C08C47|BF038081|818003;
-JSL.L CODE_C385BB                    ;C08C4B|22BB8583|8385BB;
-LDA.W #$0002                         ;C08C4F|A90200  |      ;
-TSB.W display_hud_bitfield                          ;C08C52|0C3203  |8C0332;
-LDA.W Equipment.sword                          ;C08C55|AD5E1B  |8C1B5E;
-CMP.W #$0007                         ;C08C58|C90700  |      ;
-BNE CODE_C08C6E                      ;C08C5B|D011    |C08C6E;
-db $AD,$88,$1B,$CD,$8A,$1B,$F0,$09   ;C08C5D|        |001B88;
-db $EE,$88,$1B,$A9,$04,$00,$0C,$32   ;C08C65|        |001B88;
-db $03                               ;C08C6D|        |000000;
+    LDA.L Entity.bcd_exp, X
+    JSL.L AddExp
+    LDA.W #!UpdateHud_Exp
+    TSB.W display_hud_bitfield
+    LDA.W Equipment.sword
+    CMP.W #!RecoverySword
+    BNE .no_recovery_sword
 
-CODE_C08C6E:
+    LDA.W player_current_health
+    CMP.W player_max_health
+    BEQ .no_recovery_sword ; we are at max health, skip this
+    INC.W player_current_health
+    LDA.W #!UpdateHud_Health
+    TSB.W display_hud_bitfield
+
+.no_recovery_sword:
 BRK #$43                             ;C08C6E|0043    |      ;
 
 CODE_C08C70:
 LDA.W $0016,Y                        ;C08C70|B91600  |8C0016;
 BIT.W #$0001                         ;C08C73|890100  |      ;
-BEQ CODE_C08C79                      ;C08C76|F001    |C08C79;
-db $60                               ;C08C78|        |      ;
-
-CODE_C08C79:
+BEQ + : RTS : +
 SEP #$20                             ;C08C79|E220    |      ;
 LDA.W $0025,Y                        ;C08C7B|B92500  |8C0025;
 STA.W $0336                          ;C08C7E|8D3603  |8C0336;
 LDX.W $0038,Y                        ;C08C81|BE3800  |8C0038;
-LDA.L UNREACH_818002,X               ;C08C84|BF028081|818002;
-STA.W $0338                          ;C08C88|8D3803  |8C0338;
+LDA.L Entity.hp,X               ;C08C84|BF028081|818002;
+STA.W enemy_max_health                          ;C08C88|8D3803  |8C0338;
 LDA.B #$80                           ;C08C8B|A980    |      ;
-STA.W $0330                          ;C08C8D|8D3003  |8C0330;
+STA.W displayEnemeyHealthCounter                          ;C08C8D|8D3003  |8C0330;
 REP #$20                             ;C08C90|C220    |      ;
 RTS                                  ;C08C92|60      |      ;
 
@@ -1282,8 +1298,8 @@ LDA.W $0016,Y                        ;C08D42|B91600  |8F0016;
 ORA.W #$0400                         ;C08D45|090004  |      ;
 STA.W $0016,Y                        ;C08D48|991600  |8F0016;
 LDX.W $0038,Y                        ;C08D4B|BE3800  |8F0038;
-LDA.L UNREACH_818003,X               ;C08D4E|BF038081|818003;
-JSL.L CODE_C385BB                    ;C08D52|22BB8583|8385BB;
+LDA.L Entity.bcd_exp,X               ;C08D4E|BF038081|818003;
+JSL.L AddExp                    ;C08D52|22BB8583|8385BB;
 LDA.W #$0002                         ;C08D56|A90200  |      ;
 TSB.W display_hud_bitfield                          ;C08D59|0C3203  |8F0332;
 BRK #$43                             ;C08D5C|0043    |      ;
@@ -1299,10 +1315,10 @@ SEP #$20                             ;C08D67|E220    |      ;
 LDA.W $0025,Y                        ;C08D69|B92500  |8F0025;
 STA.W $0336                          ;C08D6C|8D3603  |8F0336;
 LDX.W $0038,Y                        ;C08D6F|BE3800  |8F0038;
-LDA.L UNREACH_818002,X               ;C08D72|BF028081|818002;
-STA.W $0338                          ;C08D76|8D3803  |8F0338;
+LDA.L Entity.hp,X               ;C08D72|BF028081|818002;
+STA.W enemy_max_health                          ;C08D76|8D3803  |8F0338;
 LDA.B #$80                           ;C08D79|A980    |      ;
-STA.W $0330                          ;C08D7B|8D3003  |8F0330;
+STA.W displayEnemeyHealthCounter                          ;C08D7B|8D3003  |8F0330;
 REP #$20                             ;C08D7E|C220    |      ;
 RTS                                  ;C08D80|60      |      ;
 
@@ -1404,6 +1420,8 @@ PLY                                  ;C08E1C|7A      |      ;
 PLX                                  ;C08E1D|FA      |      ;
 CLC                                  ;C08E1E|18      |      ;
 RTS                                  ;C08E1F|60      |      ;
+
+CODE_C08E20:
 PHP                                  ;C08E20|08      |      ;
 REP #$30                             ;C08E21|C230    |      ;
 LDA.W $0439                          ;C08E23|AD3904  |810439;
@@ -1507,7 +1525,7 @@ db $B0,$04,$00,$0C,$80,$5D           ;C08EE9|        |C08EEF;
 CODE_C08EEF:
 SEP #$20                             ;C08EEF|E220    |      ;
 LDY.W $0038,X                        ;C08EF1|BC3800  |810038;
-LDA.W UNREACH_818000,Y               ;C08EF4|B90080  |818000;
+LDA.W Entity.offense,Y               ;C08EF4|B90080  |818000;
 DEC A                                ;C08EF7|3A      |      ;
 SEC                                  ;C08EF8|38      |      ;
 SBC.W $1B8E                          ;C08EF9|ED8E1B  |811B8E;
@@ -1564,6 +1582,8 @@ CODE_C08F4E:
 JSL.L CODE_C0AF42                    ;C08F4E|2242AF80|80AF42;
 SEC                                  ;C08F52|38      |      ;
 RTS                                  ;C08F53|60      |      ;
+
+CODE_C08F54:
 LDA.W $0010,X                        ;C08F54|BD1000  |810010;
 ORA.W $0012,X                        ;C08F57|1D1200  |810012;
 AND.W #$0008                         ;C08F5A|290800  |      ;
@@ -2067,6 +2087,8 @@ CLC                                  ;C092D3|18      |      ;
 ADC.W $0006,X                        ;C092D4|7D0600  |810006;
 STA.W $0002,X                        ;C092D7|9D0200  |810002;
 RTS                                  ;C092DA|60      |      ;
+
+CODE_C092DB:
 PHP                                  ;C092DB|08      |      ;
 REP #$20                             ;C092DC|C220    |      ;
 LDX.W #$1800                         ;C092DE|A20018  |      ;
@@ -2094,12 +2116,14 @@ CPX.W #$1000                         ;C09303|E00010  |      ;
 BNE CODE_C092FE                      ;C09306|D0F6    |C092FE;
 PLP                                  ;C09308|28      |      ;
 RTL                                  ;C09309|6B      |      ;
+
+CODE_C0930A:
 PHP                                  ;C0930A|08      |      ;
 REP #$20                             ;C0930B|C220    |      ;
 LDA.W $03BC                          ;C0930D|ADBC03  |8103BC;
 ASL A                                ;C09310|0A      |      ;
 TAX                                  ;C09311|AA      |      ;
-LDA.W UNREACH_818000,X               ;C09312|BD0080  |818000;
+LDA.W Entity.offense,X               ;C09312|BD0080  |818000;
 SEC                                  ;C09315|38      |      ;
 SBC.W #$8000                         ;C09316|E90080  |      ;
 STA.W $03B2                          ;C09319|8DB203  |8103B2;
@@ -2199,6 +2223,8 @@ LDA.W $0002,X                        ;C093CB|BD0200  |810002;
 STA.W PlayerPosReal.y                          ;C093CE|8D7603  |810376;
 STX.W $039E                          ;C093D1|8E9E03  |81039E;
 BRL CODE_C09351                      ;C093D4|827AFF  |C09351;
+
+CODE_C093D7:
 TXY                                  ;C093D7|9B      |      ;
 LDX.W $003A,Y                        ;C093D8|BE3A00  |81003A;
 LDA.L $810000,X                      ;C093DB|BF000081|810000;
@@ -2233,21 +2259,21 @@ ADC.W $03B2                          ;C09416|6DB203  |8103B2;
 TAX                                  ;C09419|AA      |      ;
 STA.W $0038,Y                        ;C0941A|993800  |810038;
 SEP #$20                             ;C0941D|E220    |      ;
-LDA.W UNREACH_818002,X               ;C0941F|BD0280  |818002;
+LDA.W Entity.hp,X               ;C0941F|BD0280  |818002;
 STA.W $0025,Y                        ;C09422|992500  |810025;
-LDA.W UNREACH_818005,X               ;C09425|BD0580  |818005;
+LDA.W Entity.sprite_id,X               ;C09425|BD0580  |818005;
 STA.W $001E,Y                        ;C09428|991E00  |81001E;
-LDA.W UNREACH_81800A,X               ;C0942B|BD0A80  |81800A;
+LDA.W Entity._unknown2,X               ;C0942B|BD0A80  |81800A;
 STA.W $0024,Y                        ;C0942E|992400  |810024;
-LDA.W UNREACH_81800D,X               ;C09431|BD0D80  |81800D;
+LDA.W Entity.behaviour_bank,X               ;C09431|BD0D80  |81800D;
 STA.W $0036,Y                        ;C09434|993600  |810036;
 REP #$20                             ;C09437|C220    |      ;
-LDA.W UNREACH_818006,X               ;C09439|BD0680  |818006;
+LDA.W Entity.facing,X               ;C09439|BD0680  |818006;
 ORA.W #$8000                         ;C0943C|090080  |      ;
 STA.W $0016,Y                        ;C0943F|991600  |810016;
-LDA.W UNREACH_818008,X               ;C09442|BD0880  |818008;
+LDA.W Entity._unknown1,X               ;C09442|BD0880  |818008;
 STA.W $0022,Y                        ;C09445|992200  |810022;
-LDA.W UNREACH_81800B,X               ;C09448|BD0B80  |81800B;
+LDA.W Entity.behaviour_addr,X               ;C09448|BD0B80  |81800B;
 STA.W $0018,Y                        ;C0944B|991800  |810018;
 TYX                                  ;C0944E|BB      |      ;
 LDA.W $0016,X                        ;C0944F|BD1600  |810016;
@@ -2270,6 +2296,8 @@ STZ.W $0014,X                        ;C09471|9E1400  |810014;
 STZ.W $0004,X                        ;C09474|9E0400  |810004;
 STZ.W $0006,X                        ;C09477|9E0600  |810006;
 RTL                                  ;C0947A|6B      |      ;
+
+CODE_C0947B:
 PHP                                  ;C0947B|08      |      ;
 PHX                                  ;C0947C|DA      |      ;
 PHY                                  ;C0947D|5A      |      ;
@@ -2333,14 +2361,14 @@ ADC.W $03B2                          ;C094FC|6DB203  |8103B2;
 STA.W $0038,Y                        ;C094FF|993800  |810038;
 TAX                                  ;C09502|AA      |      ;
 SEP #$20                             ;C09503|E220    |      ;
-LDA.W UNREACH_818002,X               ;C09505|BD0280  |818002;
+LDA.W Entity.hp,X               ;C09505|BD0280  |818002;
 STA.W $0025,Y                        ;C09508|992500  |810025;
-LDA.W UNREACH_818005,X               ;C0950B|BD0580  |818005;
+LDA.W Entity.sprite_id,X               ;C0950B|BD0580  |818005;
 STA.W $001E,Y                        ;C0950E|991E00  |81001E;
-LDA.W UNREACH_81800A,X               ;C09511|BD0A80  |81800A;
+LDA.W Entity._unknown2,X               ;C09511|BD0A80  |81800A;
 STA.W $0024,Y                        ;C09514|992400  |810024;
 REP #$20                             ;C09517|C220    |      ;
-LDA.W UNREACH_818008,X               ;C09519|BD0880  |818008;
+LDA.W Entity._unknown1,X               ;C09519|BD0880  |818008;
 STA.W $0022,Y                        ;C0951C|992200  |810022;
 LDA.W #$0010                         ;C0951F|A91000  |      ;
 STA.W $0010,Y                        ;C09522|991000  |810010;
@@ -2403,7 +2431,7 @@ PHX                                  ;C09593|DA      |      ;
 LDA.W $001E,Y                        ;C09594|B91E00  |81001E;
 ASL A                                ;C09597|0A      |      ;
 TAX                                  ;C09598|AA      |      ;
-LDA.L UNREACH_8095B4,X               ;C09599|BFB49580|8095B4;
+LDA.L DATA_C095B4,X               ;C09599|BFB49580|8095B4;
 PLX                                  ;C0959D|FA      |      ;
 AND.W buttons_pressed                          ;C0959E|2D2203  |810322;
 BEQ CODE_C095A4                      ;C095A1|F001    |C095A4;
@@ -2421,17 +2449,21 @@ LDA.W #$9A91                         ;C095AB|A9919A  |      ;
 STA.W $0018,Y                        ;C095AE|991800  |810018;
 COP #$91                             ;C095B1|0291    |      ;
 RTL                                  ;C095B3|6B      |      ;
-db $00,$04,$00,$08,$00,$02,$00,$01   ;C095B4|        |      ;
-db $00,$04,$00,$08,$00,$08,$00,$04   ;C095BC|        |      ;
-db $00,$02,$00,$01,$00,$01,$00,$02   ;C095C4|        |      ;
-db $00,$01,$00,$02,$00,$02,$00,$01   ;C095CC|        |      ;
-db $00,$04,$00,$08,$00,$08,$00,$04   ;C095D4|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C095DC|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C095E4|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C095EC|        |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C095F4|        |      ;
-db $00,$01,$00,$01,$00,$02,$00,$02   ;C095FC|        |      ;
-db $00,$04,$00,$04,$00,$08,$00,$08   ;C09604|        |      ;
+
+DATA_C095B4:
+dw $0400, $0800, $0200, $0100
+dw $0400, $0800, $0800, $0400
+dw $0200, $0100, $0100, $0200
+dw $0100, $0200, $0200, $0100
+dw $0400, $0800, $0800, $0400
+dw $0000, $0000, $0000, $0000
+dw $0000, $0000, $0000, $0000
+dw $0000, $0000, $0000, $0000
+dw $0000, $0000, $0000, $0000
+dw $0100, $0100, $0200, $0200
+dw $0400, $0400, $0800, $0800
+
+
 LDA.W $0016,X                        ;C0960C|BD1600  |810016;
 ORA.W #$0010                         ;C0960F|091000  |      ;
 STA.W $0016,X                        ;C09612|9D1600  |810016;
@@ -3164,7 +3196,7 @@ INX                                  ;C09AEE|E8      |      ;
 INX                                  ;C09AEF|E8      |      ;
 
 CODE_C09AF0:
-LDA.L UNREACH_809B57,X               ;C09AF0|BF579B80|809B57;
+LDA.L TABLE_C09B57,X               ;C09AF0|BF579B80|809B57;
 PLX                                  ;C09AF4|FA      |      ;
 DEC A                                ;C09AF5|3A      |      ;
 PHA                                  ;C09AF6|48      |      ;
@@ -3235,11 +3267,13 @@ BNE CODE_C09B4F                      ;C09B4C|D001    |C09B4F;
 SEC                                  ;C09B4E|38      |      ;
 
 CODE_C09B4F:
-LDA.L UNREACH_809B57,X               ;C09B4F|BF579B80|809B57;
+LDA.L TABLE_C09B57,X               ;C09B4F|BF579B80|809B57;
 PLX                                  ;C09B53|FA      |      ;
 DEC A                                ;C09B54|3A      |      ;
 PHA                                  ;C09B55|48      |      ;
 RTS                                  ;C09B56|60      |      ;
+
+TABLE_C09B57:
 db $47,$9F,$E3,$9E,$B9,$9E,$FD,$9D   ;C09B57|        |00009F;
 db $57,$9E,$85,$9D,$27,$9F,$D5,$9E   ;C09B5F|        |00009E;
 db $AB,$9E,$81,$9E,$DF,$9D,$67,$9D   ;C09B67|        |      ;
@@ -4283,7 +4317,7 @@ PHX                                  ;C0A919|DA      |      ;
 JSR.W CODE_C0E6DA                    ;C0A91A|20DAE6  |C0E6DA;
 LDA.W $0038,X                        ;C0A91D|BD3800  |810038;
 TAX                                  ;C0A920|AA      |      ;
-LDA.W UNREACH_818006,X               ;C0A921|BD0680  |818006;
+LDA.W Entity.facing,X               ;C0A921|BD0680  |818006;
 ORA.W #$8000                         ;C0A924|090080  |      ;
 STA.W $0016,Y                        ;C0A927|991600  |810016;
 LDA.W #$A954                         ;C0A92A|A954A9  |      ;
@@ -4328,29 +4362,29 @@ STA.W $001C,X                        ;C0A973|9D1C00  |81001C;
 LDA.W #$003C                         ;C0A976|A93C00  |      ;
 STA.W $0026,X                        ;C0A979|9D2600  |810026;
 LDY.W $0038,X                        ;C0A97C|BC3800  |810038;
-LDA.W UNREACH_818006,Y               ;C0A97F|B90680  |818006;
+LDA.W Entity.facing,Y               ;C0A97F|B90680  |818006;
 ORA.W #$8800                         ;C0A982|090088  |      ;
 STA.W $0016,X                        ;C0A985|9D1600  |810016;
 BRA CODE_C0A996                      ;C0A988|800C    |C0A996;
 LDY.W $0038,X                        ;C0A98A|BC3800  |810038;
-LDA.W UNREACH_818006,Y               ;C0A98D|B90680  |818006;
+LDA.W Entity.facing,Y               ;C0A98D|B90680  |818006;
 ORA.W #$8000                         ;C0A990|090080  |      ;
 STA.W $0016,X                        ;C0A993|9D1600  |810016;
 
 CODE_C0A996:
 SEP #$20                             ;C0A996|E220    |      ;
-LDA.W UNREACH_81800A,Y               ;C0A998|B90A80  |81800A;
+LDA.W Entity._unknown2,Y               ;C0A998|B90A80  |81800A;
 STA.W $0024,X                        ;C0A99B|9D2400  |810024;
-LDA.W UNREACH_81800D,Y               ;C0A99E|B90D80  |81800D;
+LDA.W Entity.behaviour_bank,Y               ;C0A99E|B90D80  |81800D;
 STA.W $0036,X                        ;C0A9A1|9D3600  |810036;
 PHA                                  ;C0A9A4|48      |      ;
 REP #$20                             ;C0A9A5|C220    |      ;
-LDA.W UNREACH_818005,Y               ;C0A9A7|B90580  |818005;
+LDA.W Entity.sprite_id,Y               ;C0A9A7|B90580  |818005;
 STA.W $001E,X                        ;C0A9AA|9D1E00  |81001E;
 STZ.W $0020,X                        ;C0A9AD|9E2000  |810020;
-LDA.W UNREACH_818008,Y               ;C0A9B0|B90880  |818008;
+LDA.W Entity._unknown1,Y               ;C0A9B0|B90880  |818008;
 STA.W $0022,X                        ;C0A9B3|9D2200  |810022;
-LDA.W UNREACH_81800B,Y               ;C0A9B6|B90B80  |81800B;
+LDA.W Entity.behaviour_addr,Y               ;C0A9B6|B90B80  |81800B;
 STA.W $0018,X                        ;C0A9B9|9D1800  |810018;
 DEC A                                ;C0A9BC|3A      |      ;
 PHA                                  ;C0A9BD|48      |      ;
@@ -4487,7 +4521,7 @@ COP #$A0                             ;C0AAD6|02A0    |      ;
 db $F0,$FF                           ;C0AAD8|        |C0AAD9;
 PHX                                  ;C0AADA|DA      |      ;
 LDY.W $0038,X                        ;C0AADB|BC3800  |810038;
-LDA.W UNREACH_818003,Y               ;C0AADE|B90380  |818003;
+LDA.W Entity.bcd_exp,Y               ;C0AADE|B90380  |818003;
 STA.B $00                            ;C0AAE1|8500    |000000;
 TXY                                  ;C0AAE3|9B      |      ;
 TXA                                  ;C0AAE4|8A      |      ;
@@ -4569,7 +4603,7 @@ CODE_C0AB87:
 AND.W #$000F                         ;C0AB87|290F00  |      ;
 PHX                                  ;C0AB8A|DA      |      ;
 TAX                                  ;C0AB8B|AA      |      ;
-LDA.L UNREACH_80ABA0,X               ;C0AB8C|BFA0AB80|80ABA0;
+LDA.L .data, X               ;C0AB8C|BFA0AB80|80ABA0;
 PLX                                  ;C0AB90|FA      |      ;
 SEP #$20                             ;C0AB91|E220    |      ;
 STA.L $7EF005,X                      ;C0AB93|9F05F07E|7EF005;
@@ -4579,8 +4613,10 @@ CLC                                  ;C0AB9A|18      |      ;
 ADC.W #$0007                         ;C0AB9B|690700  |      ;
 TAX                                  ;C0AB9E|AA      |      ;
 RTS                                  ;C0AB9F|60      |      ;
-db $B7,$C8,$C9,$D8,$D9,$CE,$CF,$DE   ;C0ABA0|        |0000C8;
-db $DF,$A7                           ;C0ABA8|        |32BCA7;
+
+.data:
+    dw $C8B7, $D8C9, $CED9, $DECF
+    dw $A7DF
 
 CODE_C0ABAA:
 LDY.W $0032,X                        ;C0ABAA|BC3200  |810032;
@@ -4713,6 +4749,8 @@ db $02,$86,$80,$EE                   ;C0ACA3|        |      ;
 CODE_C0ACA7:
 PLX                                  ;C0ACA7|FA      |      ;
 RTS                                  ;C0ACA8|60      |      ;
+
+CODE_C0ACA9:
 PHP                                  ;C0ACA9|08      |      ;
 PHX                                  ;C0ACAA|DA      |      ;
 REP #$20                             ;C0ACAB|C220    |      ;
@@ -5050,6 +5088,8 @@ db $06                               ;C0AF36|        |000002;
 COP #$82                             ;C0AF37|0282    |      ;
 db $02,$81,$0B,$04,$02,$83,$02,$86   ;C0AF39|        |      ;
 db $6B                               ;C0AF41|        |      ;
+
+CODE_C0AF42:
 PHP                                  ;C0AF42|08      |      ;
 PHY                                  ;C0AF43|5A      |      ;
 REP #$20                             ;C0AF44|C220    |      ;
@@ -5169,7 +5209,7 @@ Player_LevelUp:
     %Cop86()
     RTL
 
-Player_CheckDead:
+check_player_dead:
     PHP
     REP #$20
     LDX.W $039E
@@ -7221,6 +7261,8 @@ STA.W $031E                          ;C0EC08|8D1E03  |81031E;
 STA.W $0451                          ;C0EC0B|8D5104  |810451;
 COP #$86                             ;C0EC0E|0286    |      ;
 RTL                                  ;C0EC10|6B      |      ;
+
+CODE_C0EC11:
 LDA.W current_map_number                          ;C0EC11|AD6A1C  |811C6A;
 CMP.B #$10                           ;C0EC14|C910    |      ;
 BNE CODE_C0EC36                      ;C0EC16|D01E    |C0EC36;
@@ -7974,16 +8016,18 @@ LDA.W $03BC                          ;C0F74F|ADBC03  |8103BC;
 ASL A                                ;C0F752|0A      |      ;
 ASL A                                ;C0F753|0A      |      ;
 TAX                                  ;C0F754|AA      |      ;
-LDA.L UNREACH_80F765,X               ;C0F755|BF65F780|80F765;
+LDA.L .data,X               ;C0F755|BF65F780|80F765;
 STA.W TeleportPos.x                          ;C0F759|8D7C03  |81037C;
-LDA.L UNREACH_80F767,X               ;C0F75C|BF67F780|80F767;
+LDA.L .data+2,X               ;C0F75C|BF67F780|80F767;
 STA.W TeleportPos.y                          ;C0F760|8D7E03  |81037E;
 PLX                                  ;C0F763|FA      |      ;
 RTL                                  ;C0F764|6B      |      ;
-db $70,$00,$A0,$00,$30,$00,$60,$01   ;C0F765|        |C0F767;
-db $F0,$00,$60,$01,$F0,$00,$60,$00   ;C0F76D|        |C0F76F;
-db $B0,$01,$40,$01,$70,$01,$60,$00   ;C0F775|        |C0F778;
-db $F0,$00,$20,$00                   ;C0F77D|        |C0F77F;
+
+.data:
+    dw $0070, $00A0, $0030, $0160
+    dw $00F0, $0160, $00F0, $0060
+    dw $01B0, $0140, $0170, $0060
+    dw $00F0, $0020
 
 CODE_C0F781:
 COP #$01                             ;C0F781|0201    |      ;

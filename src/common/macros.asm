@@ -409,11 +409,11 @@ macro CopAC(target_24, a, b, c)
     dw <a>, <b>, <c>
 endmacro
 
-macro create_entity(name, offsense, flags1, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
+macro create_entity(name, offense, flags1, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
 if not(stringsequal("<name>", "_"))
 <name>:
 endif
-    db <offsense>, <flags1>, <hp>
+    db <offense>, <flags1>, <hp>
     dw <bcd_exp>
     db <spriteId>, <facing>, <flags2>
     dl <zUknown>

@@ -1,9 +1,22 @@
-
 entities_lut:
     dw entities_GrassValley, entities_GreenWood
     dw entities_StElles, entities_MountainOfSouls
     dw entities_DrLeosLab, entities_MagriddsCastle
     dw entities_WorldOfEvil
+
+struct Entity entities_lut
+    .offense: skip 1
+    .flags1: skip 1
+    .hp: skip 1
+    .bcd_exp: skip 2
+    .sprite_id: skip 1
+    .facing: skip 1
+    .flags2: skip 1
+    ._unknown1: skip 2
+    ._unknown2: skip 1
+    .behaviour_addr: skip 2
+    .behaviour_bank: skip 1
+endstruct
 
 entities_GrassValley:
     ; unknown
@@ -203,7 +216,10 @@ db $00,$00,$00,$0E,$10,$20,$00,$80   ;C185C0|        |      ;
 db $8D,$14,$AA,$80,$00,$00,$00,$00   ;C185C8|        |00AA14;
 db $00,$0F,$10,$20,$00,$80,$8D,$14   ;C185D0|        |      ;
 db $AA,$80,$00,$00,$00,$00,$00,$10   ;C185D8|        |      ;
-db $10,$20,$00,$80,$8D,$14,$AA,$80   ;C185E0|        |C18602;
+db $10,$20,$00,$80,$8D,$14
+
+UNREACH_8185E6:
+db $AA,$80   ;C185E0|        |C18602;
 db $00,$00,$00,$00,$00,$00,$10,$20   ;C185E8|        |      ;
 db $00,$00,$00,$ED,$FD,$83,$00,$00   ;C185F0|        |      ;
 db $00,$00,$00,$0E,$40,$30,$00,$38   ;C185F8|        |      ;
@@ -335,7 +351,10 @@ db $AA,$80,$00,$00,$00,$00,$00,$11   ;C189C8|        |      ;
 db $10,$20,$00,$80,$8D,$14,$AA,$80   ;C189D0|        |C189F2;
 db $00,$00,$00,$00,$00,$12,$10,$20   ;C189D8|        |      ;
 db $00,$80,$8D,$14,$AA,$80,$00,$00   ;C189E0|        |      ;
-db $00,$00,$00,$16,$10,$20,$00,$80   ;C189E8|        |      ;
+db $00,$00
+
+UNREACH_8189EA:
+db $00,$16,$10,$20,$00,$80   ;C189E8|        |      ;
 db $8D,$14,$AA,$80,$00,$00,$00,$00   ;C189F0|        |00AA14;
 db $00,$17,$10,$20,$00,$80,$8D,$14   ;C189F8|        |      ;
 db $AA,$80,$00,$00,$00,$00,$00,$18   ;C18A00|        |      ;
@@ -347,7 +366,10 @@ db $8D,$14,$AA,$80,$00,$00,$00,$00   ;C18A28|        |00AA14;
 db $00,$1B,$10,$20,$00,$80,$8D,$14   ;C18A30|        |      ;
 db $AA,$80,$00,$00,$00,$00,$00,$1C   ;C18A38|        |      ;
 db $10,$20,$00,$80,$8D,$14,$AA,$80   ;C18A40|        |C18A62;
-db $00,$00,$00,$00,$00,$1D,$10,$20   ;C18A48|        |      ;
+db $00,$00,$00,$00,$00
+
+UNREACH_818A4D:
+db $1D,$10,$20   ;C18A48|        |      ;
 db $00,$80,$8D,$14,$AA,$80,$00,$00   ;C18A50|        |      ;
 db $00,$00,$00,$1E,$10,$20,$00,$80   ;C18A58|        |      ;
 db $8D,$14,$AA,$80,$00,$00,$00,$00   ;C18A60|        |00AA14;
