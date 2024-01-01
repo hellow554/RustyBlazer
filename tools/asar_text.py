@@ -564,6 +564,8 @@ class Translator:
                 self._append(0x0C)
             elif arg == "PLAYER_NAME":  # player name lookup
                 self._append([2, 2])
+            elif arg == "PLAYER_NAME8":  # player name lookup, but reduced to 8 chars
+                self._append([2, 3])
             elif arg == "NEWLINE":
                 self._append(0x0D)
             elif arg == "NO_NEWLINE":

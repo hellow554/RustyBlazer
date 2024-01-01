@@ -104,10 +104,7 @@ incsrc "bankC0/debug_code.asm"
 
 CODE_C08344:
     LDA.W $0490
-    BNE +
-    RTS
-
-+
+    BNE + : RTS : +
     AND.B #$F0
     LSR
     LSR
@@ -127,13 +124,6 @@ CODE_C08344:
     RTS
 
 incsrc "bankC0/nmi_func.asm"
-
-
-
-
-
-
-
 
 CODE_C084F4:
     LDX.W #$3000
@@ -5215,7 +5205,7 @@ Player_CheckDead:
     ORA.W #$0400
     STA.W $0016, X
     LDA.W #!Key16_A|!Key16_Select
-    STA.W button_mask                
+    STA.W button_mask
     INC.W player_died                          ;C0B092|EE4B04  |81044B;
 .end:
     PLP
@@ -7416,7 +7406,7 @@ CODE_C0EDE0:
     JSL.L printOsdStringFromBank2
     STZ.W $03A6
     LDX.W #$6000
-    LDY.W #$C5BE
+    LDY.W #txt_save1_stats
     LDA.W #0 ; set default position
     PHA
 
