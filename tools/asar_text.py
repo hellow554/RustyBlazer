@@ -16,8 +16,6 @@ ENDSTRING = re.compile(r"^\s*;\s*@ENDSTRING@\s*$")
 SINGLE_STRING = re.compile(r";\s*@STRING@ ")
 INCSTMT = re.compile(r"^\s*incsrc\s*\"([^\"]+)\"\s*$")
 
-SIMPLE_STRING = re.compile(r";\s*@STRING@ ")
-
 LUT = [
     "Aber",
     "Bitte",
@@ -182,7 +180,9 @@ class UnclosedQuote(ParseException):
 
 class InvalidWidth(ParseException):
     def __init__(self, file: str, line: int, value: int, max_value: int):
-        super().__init__(file, line, f"value {value:#x} exceeds maximum value of {max_value:#x}")
+        super().__init__(
+            file, line, f"value {value:#x} exceeds maximum value of {max_value:#x}"
+        )
 
 
 class DataWidth(Enum):
@@ -317,7 +317,9 @@ class Translator:
                 self._cur_line = (line_num, line)
                 self._process_line()
 
-            self._transpiled.append("")  # append one empty line, so we have a newline in the end
+            self._transpiled.append(
+                ""
+            )  # append one empty line, so we have a newline in the end
         return "\n".join(self._transpiled)
 
     def inc_paths(self) -> list[Path]:
@@ -431,7 +433,9 @@ class Translator:
                 yield text
                 text = ""
 
-    def _append(self, data: list[Target] | Target, size: DataWidth | None = DataWidth.BYTE):
+    def _append(
+        self, data: list[Target] | Target, size: DataWidth | None = DataWidth.BYTE
+    ):
         if self._to_append is None:
             self._to_append = []
         if not isinstance(data, list):
@@ -480,15 +484,38 @@ class Translator:
                 else:
                     width = m
                 if (m := self.parse_int(height, DataWidth.BYTE)) is None:
-                    self._raise(ParseException, f"Cannot parse drawbox height `{height}`")
+                    self._raise(
+                        ParseException, f"Cannot parse drawbox height `{height}`"
+                    )
                 else:
                     height = m
 
                 self._append([0x07, width, height])
+            elif arg == "CLEARBOX":  # clear box
+                width = next(iterator)
+                height = next(iterator)
+
+                if (m := self.parse_int(width, DataWidth.BYTE)) is None:
+                    self._raise(
+                        ParseException, f"Cannot parse clearbox width `{width}`"
+                    )
+                else:
+                    width = m
+
+                if (m := self.parse_int(height, DataWidth.BYTE)) is None:
+                    self._raise(
+                        ParseException, f"Cannot parse clearbox height `{height}`"
+                    )
+                else:
+                    height = m
+
+                self._append([0x08, width, height])
             elif arg == "SPACE":  # print ` ` n times
                 count = next(iterator)
                 if (n := self.parse_int(count, DataWidth.BYTE)) is None:
-                    self._raise(ParseException, f"Cannot parse count for spaces `{count}`")
+                    self._raise(
+                        ParseException, f"Cannot parse count for spaces `{count}`"
+                    )
                 self._append([0x14, n])
             elif arg == "LABEL":  # set label at this position
                 label = next(iterator)
@@ -529,7 +556,9 @@ class Translator:
             elif arg == "WAIT":  # wait n frames
                 amount = next(iterator)
                 if self.parse_int(amount, DataWidth.BYTE) is None:
-                    self._raise(ParseException, f"Cannot parse number to wait `{amount}`")
+                    self._raise(
+                        ParseException, f"Cannot parse number to wait `{amount}`"
+                    )
 
                 self._append([0x0E, amount])
             elif arg == "LOOKUP":  # lookup into a dictionary
@@ -587,7 +616,9 @@ class Translator:
             if isinstance(byte, tuple):
                 self._transpiled.append(self._line_to_str(byte))
             else:
-                self._transpiled.append(" : ".join(x for x in map(self._line_to_str, byte) if x is not None))
+                self._transpiled.append(
+                    " : ".join(x for x in map(self._line_to_str, byte) if x is not None)
+                )
 
         if append_null:
             self._transpiled.append("db $00")
@@ -605,16 +636,6 @@ class Translator:
         curried = partial(type, self._path, self._cur_line[0])
         raise curried(*args)
 
-        # sig = signature(type)
-        # param_len = len(sig.parameters)
-        # if param_len == 2:
-        #     assert what is None
-        #     raise type(self._path, self._cur_line[0])
-        # elif param_len == 3:
-        #     raise type(self._path, self._cur_line[0], what)
-        # else:
-        #     assert False, f"Unsupported thing {sig}"
-
 
 def crawl(path: Path):
     todo = [path]
@@ -629,4 +650,8 @@ def crawl(path: Path):
 
 if __name__ == "__main__":
     main = sys.argv[1]
-    crawl(Path(main))
+    try:
+        crawl(Path(main))
+    except Exception as e:
+        print(f"\x1b[1;31mError:\x1b[0m {e}", file=sys.stderr)
+        sys.exit(1)
