@@ -121,35 +121,36 @@ class SbChar:
             # special chars
             0x23: "\u2419",
             0x24: "\u2408",
-            0x25: "\u2b1e",
+            0x25: "ß",
             0x26: "\u2694",
             0x27: "\u26e8",
+            0x28: "Ü",
+            0x29: "Ö",
+            0x2a: "ö",
+            0x2b: "▶",
             # TODO: topleft corner, bottomright corner, topleft big corner, sidewards heart, comma, hyphen, full stop, slash
             # TODO: numbers, colon, middle square,
             # TODO: depending on the context, 0x3d can also be a small heart
             0x3C: "\u201f",
             0x3D: "\U0001f783",
             0x3E: "\u201d",
-            0x5C: "\U0001f851",
-            0x5D: "\U0001f855",
-            0x5E: "\U0001f852",
-            0x5F: "\U0001F856",
+            0x5B: "ü",
+            0x5C: "↑",
+            0x5D: "↗",
+            0x5E: "→",
+            0x5F: "↘",
             0x7B: "ä",
-            0x7C: "\U0001f853",
-            0x7D: "\U0001f857",
-            0x7E: "\U0001f850",
-            0x7F: "\U0001f854"
+            0x7C: "↓",
+            0x7D: "Ä",
             # TODO: enix logo
         }.get(self.ch)
 
     def lut(self) -> str:
         base_addr = IdaAddr(".C6:C000").addr
+        # base_addr = IdaAddr(".90:8000").addr
         idx = self.ch & 0x7F
         idx *= 12
-        return (
-            ROM[base_addr + idx : base_addr + idx + 12].decode("ASCII").rstrip("\x00")
-            + " "
-        )
+        return ROM[base_addr + idx : base_addr + idx + 12].decode("ASCII").rstrip("\x00") + "␣"
 
 
 class SbString:
@@ -219,6 +220,7 @@ class SbString:
                         0xD2E6: 0x34,
                         # item names
                         0xCF74: 0x40,
+                        0xD13B: 0x40,
                         # location names
                         0xC7C2: 0x80,
                     }
@@ -252,7 +254,7 @@ class SbString:
                         if val == 0x14:
                             name_addr += 1
                             n = ROM[name_addr]
-                            yield from map(lambda _: " ", range(n))
+                            yield from map(lambda _: "␣", range(n))
                         else:
                             yield SbChar(ROM[name_addr]).get()
                         name_addr += 1
@@ -311,38 +313,20 @@ class SbString:
                 case 0x14:
                     # write space n times
                     [n] = take(1)
-                    yield from map(lambda _: " ", range(n))
+                    yield from map(lambda _: "␣", range(n))
+                case 0x20:
+                    yield '␣'
                 case x:
                     yield SbChar(x).get()
-
-    def to_str(self, list):
-        r = []
-
-        for l in list:
-            if l == "\n":
-                counter = 0
-                while len(r) > 0:
-                    x = r.pop()
-                    if x == " ":
-                        counter += 1
-                    else:
-                        r.append(x)
-                        break
-                while counter != 0:
-                    r.append("␣")
-                    counter -= 1
-            r.append(l)
-
-        return "".join(r)
 
     def print(self):
         t = []
         if self._addr.ida_bank == 0x82:
-            t = self.interpret2()
+            text = "".join(self.interpret2())
         else:
-            t = self.interpretX()
+            text = "".join(self.interpretX())
 
-        print(f"`{self.to_str(t)}`")
+        print(text)
 
     def interpretX(self) -> Iterator[str]:
         skip = 0
