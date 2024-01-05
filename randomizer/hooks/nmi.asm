@@ -13,4 +13,4 @@ NmiHook:
     INC NmiFrames+2
 +
 
-    JML.l NmiHookReturn
+    JML.L NmiHookReturn

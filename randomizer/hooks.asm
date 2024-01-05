@@ -1,18 +1,18 @@
 ; NMI Hook
-org $008342
-JML.l NmiHook
-org $008349
+org $C08369
+JML.L NmiHook
+org $C08370
 NmiHookReturn:
 
 ; UI refresh
 org $02A659
-JML.l RefreshUiHook
+JML.L RefreshUiHook
 org $02A661
 RefreshUiHookReturn:
 
 ; Lair reveal
 org $028C58
-JML.l LairRevealHook
+JML.L LairRevealHook
 org $028C60
 LairRevealHookReturn:
 
