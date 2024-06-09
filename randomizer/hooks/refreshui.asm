@@ -18,14 +18,14 @@ RefreshUiHook:
     LDA $0378 ; x position
     LDX.w #Temp0
     SEP #$20
-    JSL $02B215
+    JSL convert_hex_to_dec
     REP #$20
 
     LDA $037A ; y position
     INC       ; for whatever reason y position must be increased by one
     LDX.w #Temp1
     SEP #$20
-    JSL $02B215
+    JSL convert_hex_to_dec
     REP #$20
 
     LDY.w #XYPos
@@ -83,13 +83,13 @@ RefreshUiHook:
     LDA LairsCleared
     LDX.w #Temp0
     SEP #$20
-    JSL $02B215 ; convert_hex_to_dec
+    JSL convert_hex_to_dec
     REP #$20
 
     LDA LairsTotal
     LDX.w #Temp1
     SEP #$20
-    JSL $02B215
+    JSL convert_hex_to_dec
     REP #$20
 
     LDY.w #LairInfo

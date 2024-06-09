@@ -13,7 +13,11 @@ else
 ASAR_FLAGS = 
 endif
 
-german.sfc: $(shell find src -type f) Makefile tools/asar_text.py
+clean_german:
+	@echo "Removing german.sfc"
+	@$(RM) german.sfc
+
+german.sfc: $(shell find src -type f) Makefile tools/asar_text.py clean_german
 	@echo "Precompile src/main.asm"
 	@tools/asar_text.py src/main.asm
 	@echo "Compiling src/main.asm"
@@ -21,13 +25,13 @@ german.sfc: $(shell find src -type f) Makefile tools/asar_text.py
 
 verify_german: german.sfc
 	@echo "8763b634c427419dae84cc743b04f61841c1659a15a6f20d9ad2aec9a16755a8 german.sfc" | sha256sum --check --status \
-		&& echo -e "\e[32mVerify succesfull\e[0m" \
-		|| (echo -e "\e[31mVerify error\e[0m" && exit 1)
+		&& echo "\e[32mVerify succesfull\e[0m" \
+		|| (echo "\e[31mVerify error\e[0m" && exit 1)
 
-clean:
-	@echo "Removing german.sfc"
-	@$(RM) german.sfc
+clean_rando:
 	@echo "Removing rando.sfc"
 	@$(RM) rando.sfc
 
-.PHONY: clean
+clean: clean_german clean_rando
+
+.PHONY: clean_german clean_rando

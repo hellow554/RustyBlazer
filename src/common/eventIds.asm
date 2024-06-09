@@ -13,6 +13,7 @@
 !EV_A1_WatermillwheelRotated            = $0404
 !EV_A1_MagicianTalk                     = $0504
 !EV_A1_JewelSomething                   = $0505
+!EV_SH_BrownStoneTalkWithGod            = $0602
 !EV_A1_SecretPassageBottlePickedUp      = $0904
 !EV_A1_PickedEmblemAUp                  = $1A00
 !EV_A1_TalkedWithVillageChief           = $1B00
@@ -20,6 +21,9 @@
 !EV_A1_HighGroundJewelAppeared          = $1C02
 !EV_A1_Another_thing_with_lisa          = $1F01
 !EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE = $1F02
-!MC_NameChoosen                         = $1F06
+!EV_SH_CanEnterAct7                     = $1F03
+!EV_SH_Stones_Removed                   = $1F04
+!EV_SH_SOMETHING_with_stone             = $1F05
+!EV_SH_NameChoosen                      = $1F06
 
 

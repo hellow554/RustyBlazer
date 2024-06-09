@@ -36,8 +36,7 @@ A1_script_mill_keeper:
     LDY $039E
     LDA.W #$1
     STA.W $1E, Y
-    %CopLoopStart(3)
-    %CopLoopEnd()
+    %CopLoopStart(3) : %CopLoopEnd()
     LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
     TRB.W button_mask
     %CopShowText(.text_ask_to_turn)

@@ -7,8 +7,8 @@
 !Anim_Village_Woman_Facing_Down         = $06
 !Anim_Village_Woman_Facing_Up           = $07
 !Anim_Village_Woman_Facing_Left         = $08
-!Anim_Village_Woman_Walking_Down        = $09 ; this ons is broken
-!Anim_Village_Woman_Walking_Up          = $0A ; this ons is broken
+!Anim_Village_Woman_Walking_Down        = $09 ; this one is broken
+!Anim_Village_Woman_Walking_Up          = $0A ; this one is broken
 !Anim_Village_Woman_Walking_Left        = $0B
 !Anim_Village_Kid_Facing_Down           = $0C
 !Anim_Village_Kid_Facing_Up             = $0D

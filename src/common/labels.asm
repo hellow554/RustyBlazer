@@ -210,16 +210,31 @@ MIRR7 = $00437F
 ; please add new labels below this line, not above
 
 save_entries = $700000
-; CopTemp contains the address of the COP arguments stored directly after the `COP xx` opcode
+
+TempVar0 = $7E0000 ; a temporary place for a variable - might be override by any other function call
+
+;; CopTemp contains the address of the COP arguments stored directly after the `COP xx` opcode
 %LongPtr(CopTemp, $7E0038)
 %LongPtr(SoundId, $7E003B)
 
+;; each bit tells whether the DMA channel (0-7) is configured and should be enabled during NMI to transfer data to the PPU
 HDMA_channel_enable_bits = $7E0042
+;; the next free DMA channel in one-hot encoding (e.g. always only 1 bit is set, all others are 0)
+HDMA_channel_next_free_slot = $7E0044
+;; the offset of the next free DMA channel, so it can be used to access various DMA registers, because they are all $10*channel apart
+;; so you can write something like `LDX HDMA_channel_offset : STA DMAP0, X` to access the correct DMAP0 register for the active DMA channel
+HDMA_channel_offset = $7E0046
+
+_0301 = $7E0301
+_0302 = $7E0302
+_0312 = $7E0312
 map_number = $7E0314
 map_sub_number = $7E0316
 sceneId = $7E0318
 buttons_pressed = $7E0322
+buttons_pressed8 = $7E0323
 button_mask = $7E0326
+_032A = $7E032A
 ; this is set to $80 if you want to display the enemy health, it's getting
 ; decremented until it's 0 and the code will make it disappear again
 displayEnemeyHealthCounter = $7E0330
@@ -230,11 +245,15 @@ bg1_hofs = $7E033A
 bg1_vofs = $7E033C
 bg2_hofs = $7E033E
 bg2_vofs = $7E0340
+_0372     = $7E0372
 %Position(PlayerPosReal, $7E0374)
 %Position(PlayerPosInt, $7E0378)
 %PositionFacing(TeleportPos, $7E037C) ; the X, Y and facing after the next teleportation event
 bg3_horizontal_scroll = $7E0386
 bg3_vertical_scroll = $7E0388
+_03B6 = $7E03B6
+_03BA = $7E03BA
+_03BC = $7E03BC
 TmTemp = $7E03C2 ; the current TM register value
 CGadSubTemp = $7E03C3 ; the current CGadSub register value
 Bg2ScTemp = $7E03C4 ; the current BG2Sc register value
@@ -251,7 +270,11 @@ magic_cast_in_progress = $7E043F ; 0 if no player magic is currently on screen, 
 revealing_lair_id = $7E0407 ; this is the lair id that is currently revealed
 player_health_restore = $7E0447 ; how many hitpoints to restore
 exp_to_give = $7E0449
-player_died = $7E044B
+player_died = $7E044B ; 0 if player is alive, else otherwise
+
+player_name_dialog_x = $7E044D
+player_name_dialog_y = $7E044F
+
 player_name8 = $7E0453
 remaining_lair = $7E0462
 inhibit_buttons_readout = $7E0474
@@ -260,9 +283,10 @@ oam_data = $7E0492 ; 544 bytes in size including $6B1
 unk_7E06B2 = $7E06B2 ; don't remove, because we need it for the size of `oam_data`
 
 
-entities_table = $800
+entities_table = $7E0800
 
 game_state = $7E1A5E
+something_table   = $7E1A9E ; 64 bytes * 8 bits = 512 possiblities
 lair_sealed_table = $7E1ADE ; 64 bytes * 8 bits = 512 possible lairs
 
 struct Inventory $7E1B1E
@@ -299,39 +323,55 @@ player_total_defense = $7E1B8E
 player_name = $7E1B92
 
 
+_1C62 = $7E1C62
+_1C64 = $7E1C64
+_1C66 = $7E1C66
+_1C68 = $7E1C68
 current_map_number = $7E1C6A
-tile_map = $7E8000
+_1C71 = $7E1C71
+_1C72 = $7E1C72
+_1C73 = $7E1C73
+_1C74 = $7E1C74
+UNKN_7E3800 = $7E3800
+tilemap = $7E8000
 DATA_7EC000 = $7EC000
-coldata_1 = $7F0200
-coldata_2 = $7F0201
-coldata_3 = $7F0202
-; A value of $00 means, that the lair is cleared, but not sealed yet
-; A value of $C0 means, that the sealing is in progress
-; A Value of $80 means, that the lair is sealed
-; Any other value indicates the amount of monsters to spawn
+struct CgData $7F0000
+    ; the data for the color palette
+    .data:  skip $200
+    ; fixed color data (COLDATA)
+    .blue:  skip 1
+    .green: skip 1
+    .red:   skip 1
+endstruct
+;; A value of $00 means, that the lair is cleared, but not sealed yet
+;; A value of $C0 means, that the sealing is in progress
+;; A Value of $80 means, that the lair is sealed
+;; Any other value indicates the amount of monsters to spawn
 lair_spawn = $7F0203
-cg_data = $7F0200
 
 
+
+StackBegin = $7E1FFF
+
+_7F0483 = $7F0483
+;; Each two bytes in this array corresponds to the following tilemap defintion
+;; vhopppcc cccccccc
+;; v/h        = Vertical/Horizontal flip this tile.
+;; o          = Tile priority.
+;; ppp        = Tile palette. The number of entries in the palette depends on the Mode and the BG.
+;; cccccccccc = Tile number.
 L3_Text = $7F7000
+SomeOtherTypeToTransferToVram = $7F7800
 
-
-; for each tile on the map, this is where the
-; information stored whether it's passable or not
-;
-; $F0 means not passable
-; $00 means passable
-;
-; Not sure if other values are possible
+;; for each tile on the map, this is where the
+;; information stored whether it's passable or not
+;;
+;; $F0 means not passable
+;; $00 means passable
+;;
+;; Not sure if other values are possible
 passable_map = $7F8000
 
-CODE_C28069 = $828069
-CODE_C2810B = $82810B
-CODE_C29695 = $829695
-CODE_C3814B = $83814B
-CODE_C28EA9 = $828EA9
-CODE_C28000 = $828000
-CODE_C28EEA = $828EEA
 CODE_C2857D = $82857D
 UNREACH_8199B4 = $8199B4
 UNREACH_8199B5 = $8199B5
@@ -364,38 +404,27 @@ CODE_C286CD = $8286CD
 CODE_C5C573 = $85C573
 CODE_C2A468 = $82A468
 CODE_C380C7 = $8380C7
-CODE_C2988F = $82988F
 CODE_C2A330 = $82A330
-CODE_C2A1ED = $82A1ED
 CODE_C38052 = $838052
 CODE_C38092 = $838092
-CODE_C38000 = $838000
 CODE_00800F = $00800F
 CODE_008013 = $008013
 CODE_008007 = $008007
 UNREACH_00800B = $00800B
-CODE_008000 = $008000
 UNREACH_8B8000 = $8B8000
 UNREACH_8D8000 = $8D8000
-CODE_C3820E = $83820E
+
 UNREACH_82FB15 = $82FB15
 UNREACH_82FB17 = $82FB17
 UNREACH_82FB11 = $82FB11
 UNREACH_82FB12 = $82FB12
 UNREACH_82FB13 = $82FB13
 UNREACH_82FB14 = $82FB14
-CODE_C28C25 = $828C25
-CODE_C28B9B = $828B9B
-CODE_C28A29 = $828A29
-CODE_C28AF2 = $828AF2
-CODE_C382FC = $8382FC
-UNREACH_81A9DE = $81A9DE
+
 UNREACH_81A9DF = $81A9DF
 UNREACH_81A9E0 = $81A9E0
-CODE_C38270 = $838270
 UNREACH_81A9E1 = $81A9E1
 UNREACH_81A9E2 = $81A9E2
-UNREACH_81AC96 = $81AC96
 UNREACH_81AC98 = $81AC98
 UNREACH_81AC97 = $81AC97
 UNREACH_81AC99 = $81AC99
@@ -404,22 +433,18 @@ UNREACH_81AC9B = $81AC9B
 UNREACH_81AC9C = $81AC9C
 UNREACH_81AC9D = $81AC9D
 UNREACH_81AC9F = $81AC9F
-UNREACH_81B69A = $81B69A
 UNREACH_81B69B = $81B69B
 UNREACH_81B69D = $81B69D
 UNREACH_81B69C = $81B69C
 UNREACH_81BA0D = $81BA0D
-UNREACH_81BA18 = $81BA18
 UNREACH_81BA1B = $81BA1B
 UNREACH_81BA1C = $81BA1C
-UNREACH_81BA17 = $81BA17
 UNREACH_81BA2A = $81BA2A
 UNREACH_81BA0F = $81BA0F
 UNREACH_81BA10 = $81BA10
 UNREACH_82FC39 = $82FC39
 UNREACH_82FC3A = $82FC3A
 UNREACH_81BA16 = $81BA16
-CODE_C28DBD = $828DBD
 UNREACH_82F43A = $82F43A
 UNREACH_82F44A = $82F44A
 UNREACH_81BA13 = $81BA13
@@ -439,17 +464,8 @@ UNREACH_81F99A = $81F99A
 UNREACH_81F99C = $81F99C
 UNREACH_81F99B = $81F99B
 UNREACH_81F99D = $81F99D
-UNREACH_8298C1 = $8298C1
-CODE_C2B215 = $82B215
 UNREACH_819B5E = $819B5E
 UNREACH_819B54 = $819B54
-CODE_C38313 = $838313
-CODE_C2A4A1 = $82A4A1
-CODE_C38321 = $838321
-CODE_C2B176 = $82B176
-UNREACH_82D7CE = $82D7CE
-UNREACH_82E47D = $82E47D
-UNREACH_82E48E = $82E48E
 UNREACH_81F9F7 = $81F9F7
 UNREACH_81FA07 = $81FA07
 UNREACH_81FA17 = $81FA17
@@ -458,30 +474,11 @@ UNREACH_898802 = $898802
 UNREACH_898804 = $898804
 UNREACH_898806 = $898806
 UNREACH_81FA27 = $81FA27
-UNREACH_82A27C = $82A27C
 UNREACH_81FB88 = $81FB88
 UNREACH_81FB8A = $81FB8A
 UNREACH_81FBA0 = $81FBA0
-CODE_C38521 = $838521
-CODE_C38548 = $838548
-UNREACH_82C95B = $82C95B
 UNREACH_81FB2F = $81FB2F
 UNREACH_81FB30 = $81FB30
-CODE_C2B272 = $82B272
-UNREACH_82EEAE = $82EEAE
-UNREACH_82EEAF = $82EEAF
-UNREACH_82EEB0 = $82EEB0
-UNREACH_82EEB1 = $82EEB1
-UNREACH_82EEB2 = $82EEB2
-UNREACH_82EEB3 = $82EEB3
-UNREACH_82EEB4 = $82EEB4
-UNREACH_82EEB5 = $82EEB5
-CODE_C29662 = $829662
-UNREACH_82EEB9 = $82EEB9
-CODE_C2B1C9 = $82B1C9
-CODE_C38188 = $838188
-UNREACH_838180 = $838180
-CODE_C388E9 = $8388E9
 UNREACH_898000 = $898000
 UNREACH_898002 = $898002
 UNREACH_898004 = $898004
@@ -491,18 +488,5 @@ UNREACH_89800A = $89800A
 UNREACH_89800C = $89800C
 UNREACH_89800E = $89800E
 UNREACH_81BA20 = $81BA20
-CODE_C2B3A6 = $82B3A6
-CODE_C38657 = $838657
 UNREACH_82FB39 = $82FB39
 UNREACH_82FB3A = $82FB3A
-CODE_C29395 = $829395
-CODE_C292F5 = $8292F5
-CODE_C29445 = $829445
-CODE_C294D0 = $8294D0
-CODE_C294E4 = $8294E4
-CODE_C3863A = $83863A
-CODE_C2820E = $82820E
-CODE_C3C040 = $83C040
-UNREACH_83FD6D = $83FD6D
-CODE_C29873 = $829873
-UNREACH_83FE74 = $83FE74

@@ -46,8 +46,7 @@ A1_script_son_shop_owner:
 
 .has_not_food:
     %CopShowText(.txt_no_food)
-    %CopShowMenu(choice_yes_no, 2, +)
-+
+    %CopShowMenu(choice_yes_no, 2, +) : +
     %CopSetEntityScriptAddr(!Entity_ShopOwner, ShopOwnerTurnRight)
     %CopShowText(.txt_scream)
     %CopSetEntityScriptAddr(!Entity_ShopOwner, A1_script_ShopOwner)

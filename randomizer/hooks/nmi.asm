@@ -10,7 +10,7 @@ NmiHook:
     ; increase the framecounter
     INC NmiFrames
     BNE + ; rollover?
-    INC NmiFrames+2
+    INC NmiFrames + 2
 +
 
     JML.L NmiHookReturn

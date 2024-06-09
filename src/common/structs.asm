@@ -65,45 +65,43 @@ struct LiveEntities $7E0800
     .entities_palcement_ptr : skip 2    ; 3A
     ._3c : skip 2                       ; 3C
     ._3e : skip 2                       ; 3E
-endstruct
-
+endstruct                               ; 40
 assert objectsize(LiveEntities) == $40
 
 struct LairDataStructure $C1BA0D
-    .resur_map_num : skip 1
-    .resur_facing : skip 1
-    .resur_pos_x : skip 1
-    .resur_pos_y : skip 1
-    .resur_zone_tlc_x : skip 1
-    .resur_zone_tlc_y : skip 1
-    .resur_zone_width : skip 1
-    .resur_zone_height : skip 1
+    .resur_map_num : skip 1         ; 00
+    .resur_facing : skip 1          ; 01
+    .resur_pos_x : skip 1           ; 02
+    .resur_pos_y : skip 1           ; 03
+    .resur_zone_tlc_x : skip 1      ; 04
+    .resur_zone_tlc_y : skip 1      ; 05
+    .resur_zone_width : skip 1      ; 06
+    .resur_zone_height : skip 1     ; 07
 
-    .field_08 : skip 1
-    .npc_name : skip 1
-    .act_number : skip 1
+    .field_08 : skip 1              ; 08
+    .npc_name : skip 1              ; 09
+    .field_0A : skip 1              ; 0A
+    
+    .lair_map_number : skip 1       ; 0B
+    .lair_pos_x : skip 1            ; 0C
+    .lair_pos_y : skip 1            ; 0D
 
-    .lair_location : skip 1
-    .lair_pos_x : skip 1
-    .lair_pos_y : skip 1
-
-    .field_0E : skip 1
-    .field_0F : skip 1
-    .field_10 : skip 1
-    .field_11 : skip 1
-    .field_12 : skip 1
-    .enemies_to_spawn : skip 1
-    .spawn_delay : skip 1
-    .enemy_id : skip 1
-    .facing : skip 1
-    .field_17 : skip 1
-    .field_18 : skip 1
-    .field_19 : skip 1
-    .field_1A : skip 1
-    .field_1B : skip 1
-    .field_1C : skip 1
-    .field_1D : skip 1
-    .lair_dependency : skip 2
-endstruct
-
+    .field_0E : skip 1              ; 0E
+    .field_0F : skip 1              ; 0F
+    .field_10 : skip 1              ; 10
+    .field_11 : skip 1              ; 11
+    .field_12 : skip 1              ; 12
+    .enemies_to_spawn : skip 1      ; 13
+    .spawn_delay : skip 1           ; 14
+    .enemy_id : skip 1              ; 15
+    .facing : skip 1                ; 16
+    .field_17 : skip 1              ; 17
+    .field_18 : skip 1              ; 18
+    .field_19 : skip 1              ; 19
+    .field_1A : skip 1              ; 1A
+    .field_1B : skip 1              ; 1B
+    .field_1C : skip 1              ; 1C
+    .field_1D : skip 1              ; 1D
+    .lair_dependency : skip 2       ; 1E
+endstruct                           ; 20
 assert objectsize(LairDataStructure) == $20

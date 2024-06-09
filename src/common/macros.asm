@@ -22,8 +22,8 @@ macro CopLoopEnd()
 endmacro
 
 macro CopWaitForEventFlagToBeSet(eventId)
-    assert <eventId>&$FF<8, "Second byte must be less than 8"
-    assert <eventId><$8000, "EventId must be less than $8000"
+    assert (<eventId> & $FF) < 8, "Second byte must be less than 8"
+    assert <eventId> < $8000, "EventId must be less than $8000"
     COP #$05
     dw <eventId>
 endmacro
@@ -35,18 +35,18 @@ macro CopJump(addr)
 endmacro
 
 macro CopJumpIfEventFlagIsUnset(eventId, addr)
-    assert <eventId>&$FF<8, "Second byte must be less than 8"
-    assert <eventId><$8000, "EventId must be less than $8000"
+    assert (<eventId> & $FF) < 8, "Second byte must be less than 8"
+    assert <eventId> < $8000, "EventId must be less than $8000"
     COP #$07
     dw <eventId>
     dw <addr>
 endmacro
 
 macro CopJumpIfEventFlagIsSet(eventId, addr)
-    assert <eventId>&$FF<8, "Second byte must be less than 8"
-    assert <eventId><$8000, "EventId must be less than $8000"
+    assert (<eventId> & $FF) < 8, "Second byte must be less than 8"
+    assert <eventId> < $8000, "EventId must be less than $8000"
     COP #$07
-    dw <eventId>|$8000
+    dw <eventId> | $8000
     dw <addr>
 endmacro
 
@@ -59,15 +59,15 @@ endmacro
 ; endmacro
 
 macro CopSetEventFlag(eventId)
-    assert <eventId>&$FF<8, "Second byte must be less than 8"
-    assert <eventId><$8000, "EventId must be less than $8000"
+    assert (<eventId> & $FF) < 8, "Second byte must be less than 8"
+    assert <eventId> < $8000, "EventId must be less than $8000"
     COP #$09
-    dw <eventId>|$8000
+    dw <eventId> | $8000
 endmacro
 
 macro CopClearEventFlag(eventId)
-    assert <eventId>&$FF<8, "Second byte must be less than 8"
-    assert <eventId><$8000, "EventId must be less than $8000"
+    assert (<eventId> & $FF) < 8, "Second byte must be less than 8"
+    assert <eventId> < $8000, "EventId must be less than $8000"
     COP #$09
     dw <eventId>
 endmacro
@@ -132,6 +132,10 @@ endmacro
 
 macro CopMakeNpcPassable()
     COP #$16
+endmacro
+
+macro CopRemoveTalkCallback()
+    %CopAssignTalkCallback(0)
 endmacro
 
 macro CopAssignTalkCallback(ptr)
@@ -238,10 +242,6 @@ macro Cop28(target)
     dw <target>
 endmacro
 
-macro Cop29()
-
-endmacro
-
 macro CopAddBlockRelativeToNpc(x, y)
     COP #$2A
     dw <x>
@@ -274,16 +274,20 @@ macro CopJumpIfRevealing(lairId, target_24)
     dl <target_24>
 endmacro
 
-; sets the script address to CODE_C0E6DA as well setting that byte into $30
+;; sets the script address to CODE_C0E6DA as well setting that byte into $30
 macro Cop31(byte)
     COP #$31
     db <byte>
 endmacro
 
-; sets the script address to CODE_C0ACFA as well setting that byte into $30
+;; sets the script address to CODE_C0ACFA as well setting that byte into $30
 macro Cop32(byte)
     COP #$32
     db <byte>
+endmacro
+
+macro Cop34()
+    COP #$34
 endmacro
 
 macro CopGiveInstantExp(bcd_exp)
@@ -360,6 +364,15 @@ macro CopSetScriptAddrToNextInstruction()
     COP #$91
 endmacro
 
+macro Cop92(b)
+    COP #$92
+    db <b>
+endmacro
+
+macro Cop94()
+    COP #$94
+endmacro
+
 macro CopFlipSpriteVertically()
     COP #$96
 endmacro
@@ -398,6 +411,15 @@ macro CopAdjustNpcYPosition(pos)
     dw <pos>
 endmacro
 
+macro CopA2(val)
+    COP #$A2
+    db <val>
+endmacro
+
+macro CopA3()
+    COP #$A3
+endmacro
+
 macro CopA8(target_24)
     COP #$A8
     dl <target_24>
@@ -409,9 +431,15 @@ macro CopAC(target_24, a, b, c)
     dw <a>, <b>, <c>
 endmacro
 
+macro CopB2(target_24, x, y, _z)
+    COP #$B2
+    dl <target_24>
+    dw <x>, <y>, <_z>
+endmacro
+
 macro create_entity(name, offense, flags1, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
 if not(stringsequal("<name>", "_"))
-<name>:
+#<name>:
 endif
     db <offense>, <flags1>, <hp>
     dw <bcd_exp>
@@ -422,10 +450,9 @@ endmacro
 
 macro create_entities_placement(name, mapNumber, mapSubnumber, addr)
 if not(stringsequal("<name>", "_"))
-<name>:
+#<name>:
 endif
-    db <mapNumber>
-    db <mapSubnumber>
+    db <mapNumber>, <mapSubnumber>
     dw <addr>
 endmacro
 
@@ -435,7 +462,7 @@ macro PlaySound(id)
 endmacro
 
 macro SwitchToBank(id)
-    LDA.B <id>
+    LDA.B #<id>
     PHA
     PLB
 endmacro

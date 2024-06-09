@@ -1,4 +1,4 @@
-ORG $C0FFB0
+org $C0FFB0
 
 db "41" ; dev id
 db "SO  " ; game code
@@ -11,9 +11,8 @@ db $00 ; CO-Cpu
 db "SOULBLAZER 1 GRM"
 padbyte $20
 pad $C0FFD5
-warnpc $C0FFD5
+assert pc() == $C0FFD5
 
-org $C0FFD5
 db $31  ; Map Mode:         HiRom, Fastrom
 db $02  ; Cartridge Type:   ROM, RAM and Battery
 db $0A  ; ROM Size:         2^$0A = 1024kB

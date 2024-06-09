@@ -100,7 +100,7 @@ TSB.W button_mask
 %CopShowText(.txt_ending_lisa_sleeping)
 %CopLoopStart(121) : %CopLoopEnd()
 %Cop3C(4)
-%CopTeleportPlayerToMap($302, !Facing_Up, $108, $348)
+%CopTeleportPlayerToMap(_0302, !Facing_Up, $108, $348)
 LDA.W #$BFC0
 TRB.W button_mask
 %CopSetScriptAddrToNextInstruction()

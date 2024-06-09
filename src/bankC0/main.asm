@@ -1,20 +1,25 @@
 main:
-    CLD                                  ;C08017|D8      |      ;
-    REP #$30                             ;C08018|C230    |      ;
-    LDA.W #$0000                         ;C0801A|A90000  |      ;
-    TCD                                  ;C0801D|5B      |      ;
-    LDA.W #$1FFF                         ;C0801E|A9FF1F  |      ;
-    TCS                                  ;C08021|1B      |      ;
+    ; setup code
+    CLD
+    REP #$30
+    ; reset all flags to 0
+    LDA.W #$0000
+    TCD
+    ; setup stack pointer
+    LDA.W #StackBegin
+    TCS
+
     SEP #$20                             ;C08022|E220    |      ;
     LDA.B #$81                           ;C08024|A981    |      ;
     PHA                                  ;C08026|48      |      ;
     PLB                                  ;C08027|AB      |      ;
+
     JSL.L init_system                    ;C08028|22D1B982|82B9D1;
     JSL.L init_window_system                    ;C0802C|2201BB82|82BB01;
     JSL.L init_game_variables                    ;C08030|22468883|838846;
     JSL.L ClearL3                    ;C08034|22228683|838622;
     LDX.W #$000C                         ;C08038|A20C00  |      ;
-    STX.W $0318                          ;C0803B|8E1803  |810318;
+    STX.W sceneId
     JSL.L enable_interrupts                    ;C0803E|22A2B182|82B1A2;
     JSL.L check_map_change                    ;C08042|22B58683|8386B5;
 
@@ -35,13 +40,13 @@ main:
     endif
     JSL.L CODE_C3849A                    ;C08061|229A8483|83849A;
     JSL.L disable_vblank_interrupt                    ;C08065|22AEB182|82B1AE;
-    JSL.L CODE_C289D6                    ;C08069|22D68982|8289D6;
+    JSL.L check_current_tile_for_action                    ;C08069|22D68982|8289D6;
     JSL.L prepare_dma_bank0                    ;C0806D|22639882|829863;
     JSL.L CODE_C085D2                    ;C08071|22D28580|8085D2;
     JSL.L CODE_C085F0                    ;C08075|22F08580|8085F0;
-    JSL.L check_entity_collision                    ;C08079|22608A80|808A60;
+    JSL.L check_entity_collision
     JSL.L CODE_C08E20                    ;C0807D|22208E80|808E20;
-    JSL.L check_player_dead                    ;C08081|223DB080|80B03D;
+    JSL.L check_player_dead
     JSL.L CODE_C28069                    ;C08085|22698082|828069;
     JSL.L CODE_C2810B                    ;C08089|220B8182|82810B;
     JSL.L CODE_C0871A                    ;C0808D|221A8780|80871A;
@@ -100,7 +105,7 @@ main:
     LDA.W $03FF                          ;C0812B|ADFF03  |8103FF;
     STA.W $0319                          ;C0812E|8D1903  |810319;
     LDA.W $0401                          ;C08131|AD0104  |810401;
-    STA.W $0318                          ;C08134|8D1803  |810318;
+    STA.W sceneId                          ;C08134|8D1803  |810318;
     REP #$20                             ;C08137|C220    |      ;
     LDA.W $0403                          ;C08139|AD0304  |810403;
     STA.W TeleportPos.x                          ;C0813C|8D7C03  |81037C;

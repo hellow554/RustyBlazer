@@ -1,4 +1,3 @@
-
 ItemDescriptionTable:
     dw .drawBox
 .weapons:

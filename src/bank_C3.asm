@@ -3,11 +3,12 @@ BASE $830000
 
 incsrc "bankC3/_data.asm"
 
+CODE_C38000:
 PHP                                  ;C38000|08      |      ;
 PHX                                  ;C38001|DA      |      ;
 PHB                                  ;C38002|8B      |      ;
 REP #$20                             ;C38003|C220    |      ;
-LDA.W $03BC                          ;C38005|ADBC03  |8103BC;
+LDA.W _03BC                          ;C38005|ADBC03  |8103BC;
 INC A                                ;C38008|1A      |      ;
 STA.W $1B90                          ;C38009|8D901B  |811B90;
 LDA.W $03A6                          ;C3800C|ADA603  |8103A6;
@@ -44,6 +45,8 @@ PLB                                  ;C3804E|AB      |      ;
 PLX                                  ;C3804F|FA      |      ;
 PLP                                  ;C38050|28      |      ;
 RTL                                  ;C38051|6B      |      ;
+
+
 PHP                                  ;C38052|08      |      ;
 PHB                                  ;C38053|8B      |      ;
 PHX                                  ;C38054|DA      |      ;
@@ -170,35 +173,38 @@ PLB                                  ;C38144|AB      |      ;
 JSL.L CODE_C38188                    ;C38145|22888183|838188;
 PLP                                  ;C38149|28      |      ;
 RTL                                  ;C3814A|6B      |      ;
+
+CODE_C3814B:
 PHP                                  ;C3814B|08      |      ;
 REP #$20                             ;C3814C|C220    |      ;
 LDA.W current_map_number                          ;C3814E|AD6A1C  |811C6A;
 SEC                                  ;C38151|38      |      ;
 SBC.W #$000F                         ;C38152|E90F00  |      ;
 CMP.W #$0004                         ;C38155|C90400  |      ;
-BCS CODE_C3815D                      ;C38158|B003    |C3815D;
-BRL CODE_C3817E                      ;C3815A|822100  |C3817E;
-
-CODE_C3815D:
-LDA.W $0312                          ;C3815D|AD1203  |810312;
+BCS + : BRL .ret : +
+LDA.W _0312                          ;C3815D|AD1203  |810312;
 AND.W #$001F                         ;C38160|291F00  |      ;
 XBA                                  ;C38163|EB      |      ;
 LSR A                                ;C38164|4A      |      ;
 CLC                                  ;C38165|18      |      ;
 ADC.W #$1000                         ;C38166|690010  |      ;
 STA.W $03DF                          ;C38169|8DDF03  |8103DF;
-LDA.W $0312                          ;C3816C|AD1203  |810312;
+LDA.W _0312                          ;C3816C|AD1203  |810312;
 AND.W #$0003                         ;C3816F|290300  |      ;
 ASL A                                ;C38172|0A      |      ;
 TAX                                  ;C38173|AA      |      ;
-LDA.L UNREACH_838180,X               ;C38174|BF808183|838180;
+LDA.L .data, X               ;C38174|BF808183|838180;
 STA.W $03E1                          ;C38178|8DE103  |8103E1;
 INC.W $03E3                          ;C3817B|EEE303  |8103E3;
 
-CODE_C3817E:
+.ret:
 PLP                                  ;C3817E|28      |      ;
 RTL                                  ;C3817F|6B      |      ;
-db $60,$20,$80,$20,$A0,$20,$C0,$20   ;C38180|        |      ;
+
+.data:
+    dw $2060, $2080, $20A0, $20C0
+
+CODE_C38188:
 PHP                                  ;C38188|08      |      ;
 REP #$20                             ;C38189|C220    |      ;
 LDX.W #$0000                         ;C3818B|A20000  |      ;
@@ -230,13 +236,13 @@ db $6B                               ;C381DF|        |      ;
 ; This function takes two words at position $16 and $18 and calculates the
 ; offset in the `passable_map` table.
 ; The offset is return in the `X` register
-CalcPassablemapOffset:
+ConvPosToArrayIdx:
 LDA.B $18                            ;C381E0|A518    |000018;
 PHA                                  ;C381E2|48      |      ;
 SEP #$20                             ;C381E3|E220    |      ;
 LDA.W $0343                          ;C381E5|AD4303  |810343;
 JSL.L multiply                    ;C381E8|22D1B182|82B1D1;
-STA.B $02,S                          ;C381EC|8302    |000002;
+STA.B 2, S                          ;C381EC|8302    |000002;
 LDA.B $16                            ;C381EE|A516    |000016;
 LSR A                                ;C381F0|4A      |      ;
 LSR A                                ;C381F1|4A      |      ;
@@ -253,11 +259,13 @@ STA.B $02,S                          ;C38200|8302    |000002;
 REP #$20                             ;C38202|C220    |      ;
 PLX                                  ;C38204|FA      |      ;
 CPX.W #$4000                         ;C38205|E00040  |      ;
-BCC CODE_C3820D                      ;C38208|9003    |C3820D;
-db $A2,$00,$00                       ;C3820A|        |      ;
+BCC .ret                      ;C38208|9003    |C3820D;
+LDX.W #0
 
-CODE_C3820D:
+.ret:
 RTL                                  ;C3820D|6B      |      ;
+
+CODE_C3820E:
 LDA.B $18                            ;C3820E|A518    |000018;
 AND.W #$00F8                         ;C38210|29F800  |      ;
 ASL A                                ;C38213|0A      |      ;
@@ -439,7 +447,7 @@ checkIfBitIsSet:
     SEC
     RTL
 
-
+CODE_C382FC:
 PHP                                  ;C382FC|08      |      ;
 SEP #$20                             ;C382FD|E220    |      ;
 LDY.W $039E                          ;C382FF|AC9E03  |81039E;
@@ -455,6 +463,8 @@ CODE_C38310:
 PLP                                  ;C38310|28      |      ;
 SEC                                  ;C38311|38      |      ;
 RTL                                  ;C38312|6B      |      ;
+
+CODE_C38313:
 PHP                                  ;C38313|08      |      ;
 REP #$20                             ;C38314|C220    |      ;
 LDA.W $001C,X                        ;C38316|BD1C00  |81001C;
@@ -463,7 +473,7 @@ STA.W $001C,X                        ;C3831C|9D1C00  |81001C;
 PLP                                  ;C3831F|28      |      ;
 RTL                                  ;C38320|6B      |      ;
 
-SUB_C38321:
+CODE_C38321:
     PHP                                  ;C38321|08      |      ;
     PHX                                  ;C38322|DA      |      ;
     SEP #$20                             ;C38323|E220    |      ;
@@ -564,14 +574,14 @@ STA.W APUI00                          ;C384AD|8D4021  |812140;
 LDA.W $4218                          ;C384B0|AD1842  |814218;
 BIT.B #$80                           ;C384B3|8980    |      ;
 BNE CODE_C384D9                      ;C384B5|D022    |C384D9;
-LDY.W #$C6FD                         ;C384B7|A0FDC6  |      ;
+LDY.W #txt_current_map                         ;C384B7|A0FDC6  |      ;
 JSL.L printOsdStringFromBank2                    ;C384BA|2254A782|82A754;
 LDA.W $0445                          ;C384BE|AD4504  |810445;
 BNE CODE_C384D4                      ;C384C1|D011    |C384D4;
 LDA.W remaining_lair                          ;C384C3|AD6204  |810462;
 LDX.W #$1B80                         ;C384C6|A2801B  |      ;
-JSL.L CODE_C2B215                    ;C384C9|2215B282|82B215;
-LDY.W #$C70E                         ;C384CD|A00EC7  |      ;
+JSL.L convert_hex_to_dec                    ;C384C9|2215B282|82B215;
+LDY.W #txt_lairs_remaining                         ;C384CD|A00EC7  |      ;
 JSL.L printOsdStringFromBank2                    ;C384D0|2254A782|82A754;
 
 CODE_C384D4:
@@ -585,7 +595,7 @@ BNE CODE_C384D9                      ;C384DC|D0FB    |C384D9;
 CODE_C384DE:
 JSR.W CODE_C38510                    ;C384DE|201085  |C38510;
 BEQ CODE_C384DE                      ;C384E1|F0FB    |C384DE;
-LDY.W #$C730                         ;C384E3|A030C7  |      ;
+LDY.W #txt_clear_pause_menu                         ;C384E3|A030C7  |      ;
 JSL.L printOsdStringFromBank2                    ;C384E6|2254A782|82A754;
 LDA.B #$01                           ;C384EA|A901    |      ;
 STA.W $03BA                          ;C384EC|8DBA03  |8103BA;
@@ -608,41 +618,43 @@ CODE_C3850F:
 RTL                                  ;C3850F|6B      |      ;
 
 CODE_C38510:
-LDX.W $0312                          ;C38510|AE1203  |810312;
+LDX.W _0312                          ;C38510|AE1203  |810312;
 DEX                                  ;C38513|CA      |      ;
-STX.W $0312                          ;C38514|8E1203  |810312;
+STX.W _0312                          ;C38514|8E1203  |810312;
 JSL.L wait_vblank                    ;C38517|22B7B182|82B1B7;
 LDA.W $0323                          ;C3851B|AD2303  |810323;
 BIT.B #$10                           ;C3851E|8910    |      ;
 RTS                                  ;C38520|60      |      ;
-LDA.W player_health_restore                          ;C38521|AD4704  |810447;
-BEQ CODE_C38547                      ;C38524|F021    |C38547;
-LDA.W $0312                          ;C38526|AD1203  |810312;
-AND.B #$03                           ;C38529|2903    |      ;
-BNE CODE_C38547                      ;C3852B|D01A    |C38547;
-DEC.W player_health_restore                          ;C3852D|CE4704  |810447;
-LDA.W player_current_health                          ;C38530|AD881B  |811B88;
-CMP.W player_max_health                          ;C38533|CD8A1B  |811B8A;
-BCS CODE_C3853F                      ;C38536|B007    |C3853F;
-INC.W player_current_health                          ;C38538|EE881B  |811B88;
-BRK #$48                             ;C3853B|0048    |      ;
-BRA CODE_C38542                      ;C3853D|8003    |C38542;
 
-CODE_C3853F:
-STZ.W player_health_restore                          ;C3853F|9C4704  |810447;
+RestoreHealth:
+    LDA.W player_health_restore
+    BEQ .ret
+    LDA.W _0312
+    AND.B #$03
+    BNE .ret
+    DEC.W player_health_restore
+    LDA.W player_current_health
+    CMP.W player_max_health
+    BCS .at_max
+    INC.W player_current_health
+    BRK #$48
+    BRA .update_hud
 
-CODE_C38542:
-LDA.B #$04                           ;C38542|A904    |      ;
-TSB.W display_hud_bitfield                          ;C38544|0C3203  |810332;
+.at_max:
+    STZ.W player_health_restore
 
-CODE_C38547:
-RTL                                  ;C38547|6B      |      ;
+.update_hud:
+    LDA.B #!UpdateHud_Health
+    TSB.W display_hud_bitfield
+
+.ret:
+    RTL
 
 IncrementExpPerTick:
     LDA.W exp_to_give
     ORA.W exp_to_give+1
     BEQ .end
-    LDA.W $0312
+    LDA.W _0312
     AND.B #%111
     BNE .end
     REP #$20
@@ -767,26 +779,25 @@ ClearL3:
     PLX
     RTL
 
-LDA.W lair_reveal_in_progress                          ;C3863A|ADFD03  |8103FD;
-BEQ CODE_C38656                      ;C3863D|F017    |C38656;
-PHB                                  ;C3863F|8B      |      ;
-LDA.B #$7F                           ;C38640|A97F    |      ;
-PHA                                  ;C38642|48      |      ;
-PLB                                  ;C38643|AB      |      ;
-REP #$20                             ;C38644|C220    |      ;
-LDX.W #$0000                         ;C38646|A20000  |      ;
+CODE_C3863A:
+    LDA.W lair_reveal_in_progress
+    BEQ .ret
+    PHB
+    %SwitchToBank($7F)
+    REP #$20
+    LDX.W #$0000
+-:
+    STZ.W _7F0483, X
+    INX
+    INX
+    CPX.W #$0400
+    BNE -
+    SEP #$20
+    PLB
+.ret:
+    RTL
 
-CODE_C38649:
-STZ.W $0483,X                        ;C38649|9E8304  |7F0483;
-INX                                  ;C3864C|E8      |      ;
-INX                                  ;C3864D|E8      |      ;
-CPX.W #$0400                         ;C3864E|E00004  |      ;
-BNE CODE_C38649                      ;C38651|D0F6    |C38649;
-SEP #$20                             ;C38653|E220    |      ;
-PLB                                  ;C38655|AB      |      ;
-
-CODE_C38656:
-RTL                                  ;C38656|6B      |      ;
+CODE_C38657:
 LDA.B #$02                           ;C38657|A902    |      ;
 STA.B $2A                            ;C38659|852A    |00002A;
 LDA.W $0343                          ;C3865B|AD4303  |810343;
@@ -795,11 +806,11 @@ LDA.W $0345                          ;C3865F|AD4503  |810345;
 JSL.L multiply                    ;C38662|22D1B182|82B1D1;
 XBA                                  ;C38666|EB      |      ;
 TAY                                  ;C38667|A8      |      ;
-BEQ CODE_C38670                      ;C38668|F006    |C38670;
+BEQ .ret                      ;C38668|F006    |C38670;
 LDX.W #$8000                         ;C3866A|A20080  |      ;
 JSR.W CODE_C38671                    ;C3866D|207186  |C38671;
 
-CODE_C38670:
+.ret:
 RTL                                  ;C38670|6B      |      ;
 
 CODE_C38671:
@@ -851,25 +862,25 @@ BNE CODE_C386A4                      ;C386B2|D0F0    |C386A4;
 RTS                                  ;C386B4|60      |      ;
 
 check_map_change:
-LDA.W $0318                          ;C386B5|AD1803  |810318;
-BEQ CODE_C38708                      ;C386B8|F04E    |C38708;
-LDA.W $032E                          ;C386BA|AD2E03  |81032E;
-BEQ CODE_C386CC                      ;C386BD|F00D    |C386CC;
+    LDA.W sceneId
+    BEQ .end
+    LDA.W $032E                          ;C386BA|AD2E03  |81032E;
+BEQ .CODE_C386CC                      ;C386BD|F00D    |C386CC;
 LDA.B #$1E                           ;C386BF|A91E    |      ;
 STA.W $03E7                          ;C386C1|8DE703  |8103E7;
 LDA.B #$FF                           ;C386C4|A9FF    |      ;
 STA.W $03E9                          ;C386C6|8DE903  |8103E9;
 JSR.W CODE_C38709                    ;C386C9|200987  |C38709;
 
-CODE_C386CC:
+.CODE_C386CC:
 STZ.W $032E                          ;C386CC|9C2E03  |81032E;
 STZ.B $42                            ;C386CF|6442    |000042;
-JSL.L CODE_C2B18C                    ;C386D1|228CB182|82B18C;
-LDA.W $0318                          ;C386D5|AD1803  |810318;
+JSL.L disableNmiInterruptAndBlankScreen                    ;C386D1|228CB182|82B18C;
+LDA.W sceneId                          ;C386D5|AD1803  |810318;
 STA.W $0316                          ;C386D8|8D1603  |810316;
 LDA.W $0319                          ;C386DB|AD1903  |810319;
 STA.W $0314                          ;C386DE|8D1403  |810314;
-STZ.W $0318                          ;C386E1|9C1803  |810318;
+STZ.W sceneId                          ;C386E1|9C1803  |810318;
 JSL.L CODE_C388E9                    ;C386E4|22E98883|8388E9;
 JSL.L CODE_C0814E                    ;C386E8|224E8180|80814E;
 JSL.L enable_interrupts                    ;C386EC|22A2B182|82B1A2;
@@ -882,7 +893,7 @@ STZ.W $03E5                          ;C386FE|9CE503  |8103E5;
 STZ.W $046E                          ;C38701|9C6E04  |81046E;
 JSL.L CODE_C0814E                    ;C38704|224E8180|80814E;
 
-CODE_C38708:
+.end:
 RTL                                  ;C38708|6B      |      ;
 
 CODE_C38709:
@@ -1111,7 +1122,7 @@ LDA.W UNREACH_81BA0D,Y               ;C388CD|B90DBA  |81BA0D;
 CMP.B #$FF                           ;C388D0|C9FF    |      ;
 BEQ CODE_C388E8                      ;C388D2|F014    |C388E8;
 LDA.W UNREACH_81BA20,Y               ;C388D4|B920BA  |81BA20;
-STA.L $7F0203,X                      ;C388D7|9F03027F|7F0203;
+STA.L lair_spawn,X                      ;C388D7|9F03027F|7F0203;
 REP #$20                             ;C388DB|C220    |      ;
 INX                                  ;C388DD|E8      |      ;
 TYA                                  ;C388DE|98      |      ;
@@ -1123,6 +1134,8 @@ BRA CODE_C388CD                      ;C388E6|80E5    |C388CD;
 
 CODE_C388E8:
 RTL                                  ;C388E8|6B      |      ;
+
+CODE_C388E9:
 LDX.W #$0000                         ;C388E9|A20000  |      ;
 STX.W PlayerPosReal.x                          ;C388EC|8E7403  |810374;
 STX.W PlayerPosReal.y                          ;C388EF|8E7603  |810376;
@@ -1206,11 +1219,11 @@ LDA.B #$01                           ;C389D9|A901    |      ;
 TSB.W $03BA                          ;C389DB|0CBA03  |8103BA;
 STZ.W $031E                          ;C389DE|9C1E03  |81031E;
 STZ.W $03B6                          ;C389E1|9CB603  |8103B6;
-LDX.W $0312                          ;C389E4|AE1203  |810312;
-STX.W $0302                          ;C389E7|8E0203  |810302;
+LDX.W _0312                          ;C389E4|AE1203  |810312;
+STX.W _0302                          ;C389E7|8E0203  |810302;
 LDX.W #$FFFF                         ;C389EA|A2FFFF  |      ;
-STX.W $032A                          ;C389ED|8E2A03  |81032A;
-STX.W $0312                          ;C389F0|8E1203  |810312;
+STX.W _032A                          ;C389ED|8E2A03  |81032A;
+STX.W _0312                          ;C389F0|8E1203  |810312;
 LDA.B #$00                           ;C389F3|A900    |      ;
 STA.W WH0                          ;C389F5|8D2621  |812126;
 DEC A                                ;C389F8|3A      |      ;
@@ -1219,37 +1232,37 @@ JSL.L CODE_C38188                    ;C389FC|22888183|838188;
 LDA.W $1A7D                          ;C38A00|AD7D1A  |811A7D;
 BIT.B #$04                           ;C38A03|8904    |      ;
 BNE CODE_C38A0C                      ;C38A05|D005    |C38A0C;
-LDA.B #$1F                           ;C38A07|A91F    |      ;
+LDA.B #!UpdateHud_All                           ;C38A07|A91F    |      ;
 STA.W display_hud_bitfield                          ;C38A09|8D3203  |810332;
 
 CODE_C38A0C:
 RTL                                  ;C38A0C|6B      |      ;
 
-incsrc "a1/crabwalkguy.asm"
-incsrc "a1/chiefswife.asm"
-incsrc "a1/shopowner.asm"
-incsrc "a1/chiefs_house_tulip.asm"
-incsrc "a1/bridge_guard.asm"
-incsrc "a1/mill_keeper.asm"
-incsrc "a1/goat_with_fence.asm"
-incsrc "a1/lisa.asm"
-incsrc "a1/tulip_above_entrance.asm"
-incsrc "a1/architect.asm"
-incsrc "a1/son_shop_owner.asm"
-incsrc "a1/tulip_before_painter_house.asm"
-incsrc "a1/painter.asm"
-incsrc "a1/watermillwheels.asm"
-incsrc "a1/secret_shack_kid.asm"
-incsrc "a1/sleeping_tulip.asm"
-incsrc "a1/secret_cave_kid.asm"
-incsrc "a1/walking_goat.asm"
-incsrc "a1/gourmet_goat.asm"
-incsrc "a1/old_man_with_goat.asm"
-incsrc "a1/old_man_goat.asm"
-incsrc "a1/snitch_tulip.asm"
-incsrc "a1/chief.asm"
-incsrc "a1/chief_chair.asm"
-incsrc "a1/dreaming_tulip.asm"
+incsrc "scripts/a1/crabwalkguy.asm"
+incsrc "scripts/a1/chiefswife.asm"
+incsrc "scripts/a1/shopowner.asm"
+incsrc "scripts/a1/chiefs_house_tulip.asm"
+incsrc "scripts/a1/bridge_guard.asm"
+incsrc "scripts/a1/mill_keeper.asm"
+incsrc "scripts/a1/goat_with_fence.asm"
+incsrc "scripts/a1/lisa.asm"
+incsrc "scripts/a1/tulip_above_entrance.asm"
+incsrc "scripts/a1/architect.asm"
+incsrc "scripts/a1/son_shop_owner.asm"
+incsrc "scripts/a1/tulip_before_painter_house.asm"
+incsrc "scripts/a1/painter.asm"
+incsrc "scripts/a1/watermillwheels.asm"
+incsrc "scripts/a1/secret_shack_kid.asm"
+incsrc "scripts/a1/sleeping_tulip.asm"
+incsrc "scripts/a1/secret_cave_kid.asm"
+incsrc "scripts/a1/walking_goat.asm"
+incsrc "scripts/a1/gourmet_goat.asm"
+incsrc "scripts/a1/old_man_with_goat.asm"
+incsrc "scripts/a1/old_man_goat.asm"
+incsrc "scripts/a1/snitch_tulip.asm"
+incsrc "scripts/a1/chief.asm"
+incsrc "scripts/a1/chief_chair.asm"
+incsrc "scripts/a1/dreaming_tulip.asm"
 
 
 COP #$14                             ;C3B1BE|0214    |      ;
@@ -1629,7 +1642,7 @@ db $53,$65,$68,$72,$20,$67,$75,$74,$2E,$20,$4D,$61,$63,$68,$60,$0D
 db $77,$65,$69,$74,$65,$72,$20,$73,$6F,$2E,$20,$56,$69,$65,$6C,$20,$47,$6C,$5B,$63,$6B,$21,$13 : dw Default_Text_End
 ; @END@
 
-incsrc "a1/highground_jewel.asm"
+incsrc "scripts/a1/highground_jewel.asm"
 
 Jewel_Return_to_GrassValley:
     %CopShowText(Text_Return_To_GrassValley)
@@ -1842,7 +1855,7 @@ CLC                                  ;C3BEBF|18      |      ;
 ADC.W $0002,Y                        ;C3BEC0|790200  |810002;
 STA.W $0002,Y                        ;C3BEC3|990200  |810002;
 PLX                                  ;C3BEC6|FA      |      ;
-LDA.W $0312                          ;C3BEC7|AD1203  |810312;
+LDA.W _0312                          ;C3BEC7|AD1203  |810312;
 AND.W #$0003                         ;C3BECA|290300  |      ;
 BNE CODE_C3BED1                      ;C3BECD|D002    |C3BED1;
 BRK #$63                             ;C3BECF|0063    |      ;
@@ -1921,28 +1934,29 @@ db $3E,$00,$00,$FF,$FF,$FF,$03,$05   ;C3C021|        |000000;
 db $06,$0A,$00,$00,$FF,$FF,$0B,$0D   ;C3C029|        |00000A;
 db $06,$0A,$00,$00,$FF,$FF,$07,$09   ;C3C031|        |00000A;
 db $06,$0A,$00,$00,$01,$00,$FF       ;C3C039|        |00000A;
-COP #$A8                             ;C3C040|02A8    |      ;
-db $00,$80,$8E                       ;C3C042|        |      ;
-LDA.W #$0007                         ;C3C045|A90700  |      ;
+
+CODE_C3C040:
+    %CopA8($8E8000)
+    LDA.W #$0007                         ;C3C045|A90700  |      ;
 STA.W $001E,X                        ;C3C048|9D1E00  |81001E;
 STZ.W $0020,X                        ;C3C04B|9E2000  |810020;
 JSL.L CODE_C0891F                    ;C3C04E|221F8980|80891F;
 LDA.W $0372                          ;C3C052|AD7203  |810372;
 STA.W $001C,X                        ;C3C055|9D1C00  |81001C;
-COP #$15                             ;C3C058|0215    |      ;
+    %CopMakeNpcUnpassable()
 
 TEMP_LOCRET:
-RTL                                  ;C3C05A|6B      |      ;
+    RTL
 
 CODE_C3C05B:
-COP #$2E                             ;C3C05B|022E    |      ;
-db $00,$18,$00,$69,$C0               ;C3C05D|        |      ;
-COP #$80                             ;C3C062|0280    |      ;
-db $07                               ;C3C064|        |000002;
+    %Cop2E(!Entity_Player, $18)
+    ADC.W #$2C0
+    BRA CODE_C3C06C
 COP #$82                             ;C3C065|0282    |      ;
 BRA CODE_C3C05B                      ;C3C067|80F2    |C3C05B;
 COP #$80                             ;C3C069|0280    |      ;
 db $0C                               ;C3C06B|        |008202;
+CODE_C3C06C:
 COP #$82                             ;C3C06C|0282    |      ;
 BRA CODE_C3C05B                      ;C3C06E|80EB    |C3C05B;
 SomeTalk:
@@ -1998,11 +2012,12 @@ PHP                                  ;C3C124|08      |      ;
 SEP #$20                             ;C3C125|E220    |      ;
 LDA.B #$32                           ;C3C127|A932    |      ;
 XBA                                  ;C3C129|EB      |      ;
-LDA.B #$83                           ;C3C12A|A983    |      ;
-LDY.W #$C135                         ;C3C12C|A035C1  |      ;
+LDA.B #<:.data                           ;C3C12A|A983    |      ;
+LDY.W #.data                         ;C3C12C|A035C1  |      ;
 JSL.L CODE_C2988F                    ;C3C12F|228F9882|82988F;
 PLP                                  ;C3C133|28      |      ;
 RTL                                  ;C3C134|6B      |      ;
+.data:
 db $7F,$E0,$20,$E0,$04,$E1,$04,$E2   ;C3C135|        |E020E0;
 db $04,$E3,$04,$E4,$04,$E5,$04,$E6   ;C3C13D|        |0000E3;
 db $04,$E7,$04,$E8,$04,$E9,$04,$EA   ;C3C145|        |0000E7;
@@ -2014,11 +2029,12 @@ PHP                                  ;C3C15A|08      |      ;
 SEP #$20                             ;C3C15B|E220    |      ;
 LDA.B #$32                           ;C3C15D|A932    |      ;
 XBA                                  ;C3C15F|EB      |      ;
-LDA.B #$83                           ;C3C160|A983    |      ;
-LDY.W #$C16B                         ;C3C162|A06BC1  |      ;
+LDA.B #<:.data                           ;C3C160|A983    |      ;
+LDY.W #.data                         ;C3C162|A06BC1  |      ;
 JSL.L CODE_C2988F                    ;C3C165|228F9882|82988F;
 PLP                                  ;C3C169|28      |      ;
 RTL                                  ;C3C16A|6B      |      ;
+.data:
 db $07,$F2,$0C,$F1,$0C,$F0,$0C,$EF   ;C3C16B|        |0000F2;
 db $0C,$EE,$0C,$ED,$0C,$EC,$0C,$EB   ;C3C173|        |000CEE;
 db $0C,$EA,$0C,$E9,$0C,$E8,$0C,$E7   ;C3C17B|        |000CEA;
@@ -4076,7 +4092,7 @@ ADC.W $0384                          ;C3FD0B|6D8403  |810384;
 STA.W $0002,X                        ;C3FD0E|9D0200  |810002;
 STA.W $0340                          ;C3FD11|8D4003  |810340;
 PHX                                  ;C3FD14|DA      |      ;
-LDA.W $0312                          ;C3FD15|AD1203  |810312;
+LDA.W _0312                          ;C3FD15|AD1203  |810312;
 LSR A                                ;C3FD18|4A      |      ;
 LSR A                                ;C3FD19|4A      |      ;
 CLC                                  ;C3FD1A|18      |      ;
@@ -4093,11 +4109,11 @@ PLB                                  ;C3FD2C|AB      |      ;
 REP #$20                             ;C3FD2D|C220    |      ;
 
 CODE_C3FD2F:
-LDA.L UNREACH_83FD6D,X               ;C3FD2F|BF6DFD83|83FD6D;
+LDA.L .sine_table, X               ;C3FD2F|BF6DFD83|83FD6D;
 CLC                                  ;C3FD33|18      |      ;
 ADC.W $033E                          ;C3FD34|6D3E03  |7E033E;
 STA.W $7100,Y                        ;C3FD37|990071  |7E7100;
-LDA.L UNREACH_83FD6D,X               ;C3FD3A|BF6DFD83|83FD6D;
+LDA.L .sine_table, X               ;C3FD3A|BF6DFD83|83FD6D;
 CLC                                  ;C3FD3E|18      |      ;
 ADC.W $0340                          ;C3FD3F|6D4003  |7E0340;
 STA.W $7900,Y                        ;C3FD42|990079  |7E7900;
@@ -4113,6 +4129,7 @@ LDA.B #$0D                           ;C3FD51|A90D    |      ;
 XBA                                  ;C3FD53|EB      |      ;
 LDA.B #$7E                           ;C3FD54|A97E    |      ;
 LDY.W #$7000                         ;C3FD56|A00070  |      ;
+;; TODO is this bg1 and bg2?
 JSL.L CODE_C29873                    ;C3FD59|22739882|829873;
 LDA.B #$0E                           ;C3FD5D|A90E    |      ;
 XBA                                  ;C3FD5F|EB      |      ;
@@ -4122,22 +4139,14 @@ JSL.L CODE_C29873                    ;C3FD65|22739882|829873;
 REP #$20                             ;C3FD69|C220    |      ;
 PLX                                  ;C3FD6B|FA      |      ;
 RTL                                  ;C3FD6C|6B      |      ;
-db $00,$00,$01,$00,$02,$00,$02,$00   ;C3FD6D|        |      ;
-db $03,$00,$03,$00,$04,$00,$04,$00   ;C3FD75|        |000000;
-db $04,$00,$04,$00,$04,$00,$03,$00   ;C3FD7D|        |000000;
-db $03,$00,$02,$00,$02,$00,$01,$00   ;C3FD85|        |000000;
-db $00,$00,$FF,$FF,$FE,$FF,$FE,$FF   ;C3FD8D|        |      ;
-db $FD,$FF,$FD,$FF,$FC,$FF,$FC,$FF   ;C3FD95|        |00FDFF;
-db $FC,$FF,$FC,$FF,$FC,$FF,$FD,$FF   ;C3FD9D|        |C3FCFF;
-db $FD,$FF,$FE,$FF,$FE,$FF,$FF,$FF   ;C3FDA5|        |00FEFF;
-db $00,$00,$01,$00,$02,$00,$02,$00   ;C3FDAD|        |      ;
-db $03,$00,$03,$00,$04,$00,$04,$00   ;C3FDB5|        |000000;
-db $04,$00,$04,$00,$04,$00,$03,$00   ;C3FDBD|        |000000;
-db $03,$00,$02,$00,$02,$00,$01,$00   ;C3FDC5|        |000000;
-db $00,$00,$FF,$FF,$FE,$FF,$FE,$FF   ;C3FDCD|        |      ;
-db $FD,$FF,$FD,$FF,$FC,$FF,$FC,$FF   ;C3FDD5|        |00FDFF;
-db $FC,$FF,$FC,$FF,$FC,$FF,$FD,$FF   ;C3FDDD|        |C3FCFF;
-db $FD,$FF,$FE,$FF,$FE,$FF,$FF,$FF   ;C3FDE5|        |00FEFF;
+
+;; sin(pi/16 * x) * 4
+.sine_table:
+dw +0, +1, +2, +2, +3, +3, +4, +4, +4, +4, +4, +3, +3, +2, +2, +1
+dw +0, -1, -2, -2, -3, -3, -4, -4, -4, -4, -4, -3, -3, -2, -2, -1
+dw +0, +1, +2, +2, +3, +3, +4, +4, +4, +4, +4, +3, +3, +2, +2, +1
+dw +0, -1, -2, -2, -3, -3, -4, -4, -4, -4, -4, -3, -3, -2, -2, -1
+
 PHX                                  ;C3FDED|DA      |      ;
 LDX.W #$0000                         ;C3FDEE|A20000  |      ;
 
@@ -4160,7 +4169,7 @@ STA.L $7E7800,X                      ;C3FE19|9F00787E|7E7800;
 PLX                                  ;C3FE1D|FA      |      ;
 COP #$91                             ;C3FE1E|0291    |      ;
 PHX                                  ;C3FE20|DA      |      ;
-LDA.W $0312                          ;C3FE21|AD1203  |810312;
+LDA.W _0312                          ;C3FE21|AD1203  |810312;
 LSR A                                ;C3FE24|4A      |      ;
 CLC                                  ;C3FE25|18      |      ;
 ADC.W bg1_vofs                          ;C3FE26|6D3C03  |81033C;
@@ -4175,11 +4184,11 @@ PHA                                  ;C3FE36|48      |      ;
 PLB                                  ;C3FE37|AB      |      ;
 
 CODE_C3FE38:
-LDA.L UNREACH_83FE74,X               ;C3FE38|BF74FE83|83FE74;
+LDA.L .DATA_C3FE74,X               ;C3FE38|BF74FE83|83FE74;
 CLC                                  ;C3FE3C|18      |      ;
 ADC.W bg1_hofs                          ;C3FE3D|6D3A03  |7E033A;
 STA.W $7100,Y                        ;C3FE40|990071  |7E7100;
-LDA.L UNREACH_83FE74,X               ;C3FE43|BF74FE83|83FE74;
+LDA.L .DATA_C3FE74,X               ;C3FE43|BF74FE83|83FE74;
 CLC                                  ;C3FE47|18      |      ;
 ADC.W bg1_vofs                          ;C3FE48|6D3C03  |7E033C;
 STA.W $7900,Y                        ;C3FE4B|990079  |7E7900;
@@ -4203,32 +4212,58 @@ JSL.L CODE_C29873                    ;C3FE6C|22739882|829873;
 REP #$20                             ;C3FE70|C220    |      ;
 PLX                                  ;C3FE72|FA      |      ;
 RTL                                  ;C3FE73|6B      |      ;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C3FE74|        |      ;
-db $01,$00,$01,$00,$01,$00,$01,$00   ;C3FE7C|        |000000;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C3FE84|        |      ;
-db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF   ;C3FE8C|        |FFFFFF;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C3FE94|        |      ;
-db $01,$00,$01,$00,$01,$00,$01,$00   ;C3FE9C|        |000000;
-db $00,$00,$00,$00,$00,$00,$00,$00   ;C3FEA4|        |      ;
-db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF   ;C3FEAC|        |FFFFFF;
-db $10,$8F,$B3,$BC,$0D,$57,$65,$6C   ;C3FEB4|        |C3FE45;
-db $74,$2E,$20,$4E,$69,$6D,$6D,$60   ;C3FEBC|        |00002E;
-db $20,$B2,$0D,$64,$69,$65,$73,$2E   ;C3FEC4|        |C30DB2;
-db $11,$02,$02,$20,$C1,$45,$58,$50   ;C3FECC|        |000002;
-db $21,$13,$40,$FF,$10,$96,$83,$E3   ;C3FED4|        |000013;
-db $20,$0D,$47,$72,$65,$65,$6E,$20   ;C3FEDC|        |C3470D;
-db $57,$6F,$6F,$64,$20,$7A,$75,$72   ;C3FEE4|        |00006F;
-db $5B,$63,$6B,$3F,$0C,$4E,$75,$6E   ;C3FEEC|        |      ;
-db $20,$67,$75,$74,$2C,$20,$76,$69   ;C3FEF4|        |C37567;
-db $65,$6C,$20,$47,$6C,$5B,$63,$6B   ;C3FEFC|        |00006C;
-db $2E,$13,$40,$FF,$4B,$6F,$6D,$6D   ;C3FF04|        |004013;
-db $60,$20,$FD,$DB,$7A,$75,$72,$5B   ;C3FF0C|        |      ;
-db $63,$6B,$2C,$0D,$F3,$83,$E3,$47   ;C3FF14|        |00006B;
-db $72,$65,$65,$6E,$0D,$57,$6F,$6F   ;C3FF1C|        |000065;
-db $64,$20,$7A,$75,$72,$5B,$63,$6B   ;C3FF24|        |000020;
-db $6B,$65,$68,$72,$65,$6E,$20,$0D   ;C3FF2C|        |      ;
-db $6D,$2A,$63,$68,$74,$65,$73,$74   ;C3FF34|        |00632A;
-db $2E,$13,$40,$FF,$12,$08,$06,$04   ;C3FF3C|        |004013;
+
+.DATA_C3FE74:
+dw -0, -0, +0, +0, +1, +1, +1, +1
+dw +0, +0, -0, -0, -1, -1, -1, -1
+dw -0, -0, +0, +0, +1, +1, +1, +1
+dw +0, +0, -0, -0, -1, -1, -1, -1
+
+; @DEFAULT_TEXTBOX@
+; "Ich bewache diese "
+; "Welt. Nimm` bitte "
+; "dies." WFE
+; PLAYER_NAME " erhielt EXP!" -> CLEAR_GREENWOOD_BOX
+db $10
+db $8F,$B3,$BC,$0D
+db $57,$65,$6C,$74,$2E,$20,$4E,$69,$6D,$6D,$60,$20,$B2,$0D
+db $64,$69,$65,$73,$2E,$11
+db $02,$02,$20,$C1,$45,$58,$50,$21,$13 : dw CLEAR_GREENWOOD_BOX
+; @END@
+
+; @DEFAULT_TEXTBOX@
+; "Möchtest Du nach  "
+; "Green Wood zurück?" CONT
+db $10
+db $96,$83,$E3,$20,$0D
+db $47,$72,$65,$65,$6E,$20,$57,$6F,$6F,$64,$20,$7A,$75,$72,$5B,$63,$6B,$3F,$0C
+; @END@
+
+; @NEW_TEXT@
+; "Nun gut, viel Glück." -> CLEAR_GREENWOOD_BOX
+db $4E,$75,$6E,$20,$67,$75,$74,$2C,$20,$76,$69,$65,$6C,$20,$47,$6C,$5B,$63,$6B,$2E,$13 : dw CLEAR_GREENWOOD_BOX
+; @END@
+
+; @NEW_TEXT@
+; "Komm` zu mir zurück,"
+; "wenn Du nach Green"
+; "Wood zurückkehren "
+; "möchtest." -> CLEAR_GREENWOOD_BOX
+db $4B,$6F,$6D,$6D,$60,$20,$FD,$DB,$7A,$75,$72,$5B,$63,$6B,$2C,$0D
+db $F3,$83,$E3,$47,$72,$65,$65,$6E,$0D
+db $57,$6F,$6F,$64,$20,$7A,$75,$72,$5B,$63,$6B,$6B,$65,$68,$72,$65,$6E,$20,$0D
+db $6D,$2A,$63,$68,$74,$65,$73,$74,$2E,$13 : dw CLEAR_GREENWOOD_BOX
+; @END@
+
+CLEAR_GREENWOOD_BOX:
+; @NEW_TEXT@
+; WFAK
+; CLEARBOX 6 4
+; CONT
+db $12
+db $08,$06,$04
 db $0C
+; @END@
+
 
 padbyte $FF : pad $C40000

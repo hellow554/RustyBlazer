@@ -12,7 +12,7 @@ A1_script_secret_shack_kid:
 
     %CopJumpIfEntityHasReachedXY(!Entity_Player, $3C, $37, +) : RTL : +
 
-    %CopAssignTalkCallback(0)
+    %CopRemoveTalkCallback()
     %CopMakeNpcPassable()
     %CopPlayAnimation(!Anim_Village_Kid_Walking_Down)
     %Cop82()

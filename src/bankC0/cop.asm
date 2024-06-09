@@ -543,7 +543,7 @@ TYX
     CLC
 
 ..loop1:
-    LDA.W $302, X
+    LDA.W _0302, X
     ADC.W $301, X
     STA.W $301, X
     DEX
@@ -681,7 +681,7 @@ TYX
 
 .CODE_C0DC48:
     PHX
-    JSL.L CalcPassablemapOffset
+    JSL.L ConvPosToArrayIdx
     LDA.L passable_map, X
     PLX
     AND.W #$FF
@@ -703,14 +703,14 @@ TYX
     SBC.W #$10
     STA.B $18
     PHX
-    JSL.L CalcPassablemapOffset
+    JSL.L ConvPosToArrayIdx
     SEP #$20
 
     LDA.B [CopTemp]
     INC.B CopTemp
     BNE + : INC.B CopTemp+1 : +
 
-    CMP.L $7E8000, X
+    CMP.L tilemap, X
     REP #$20
     BNE ..dunno
     PLX
@@ -740,7 +740,7 @@ TYX
     SEC
     SBC.W #$10      ; subtract the usual 1 block
     STA.B $18
-    JSL.L CalcPassablemapOffset
+    JSL.L ConvPosToArrayIdx
     LDA.L passable_map, X
     ORA.W #$F0
     STA.L passable_map, X
@@ -764,7 +764,7 @@ TYX
     SEC
     SBC.W #$10      ; substract the usual 1 block
     STA.B $18
-    JSL.L CalcPassablemapOffset
+    JSL.L ConvPosToArrayIdx
     LDA.L passable_map, X
     AND.W #$FF00 ; clear byte, $FF00 because we are doing a 16-bit access
     STA.L passable_map, X
@@ -903,7 +903,7 @@ TYX
     INC.B CopTemp
     AND.W #$00FF
     STA.B $00
-    LDA.W $0302
+    LDA.W _0302
     AND.W #$00FF
 
 ..loop:
@@ -1024,7 +1024,7 @@ TYX
     STA.W $0034, X
     PHX
     TAX
-    LDA.L $7F0203,X
+    LDA.L lair_spawn,X
 
     PLX
     BIT.W #$0040
@@ -1762,7 +1762,7 @@ TYX
     SEC
     SBC.W #$10
     STA.B $18
-    JSL CalcPassablemapOffset
+    JSL ConvPosToArrayIdx
     LDA passable_map, X
     PLX
     AND.W #$0F

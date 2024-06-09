@@ -130,19 +130,6 @@ CODE_C08344:
 
 incsrc "bankC0/nmi_func.asm"
 
-CODE_C084F4:
-    LDX.W #$3000
-    STX.B $32
-    LDX.W #$3102
-    STX.B $35
-    JSL.L CODE_C2857D
-    LDX.W #$3204
-    STX.B $32
-    LDX.W #$3306
-    STX.B $35
-    JSL.L CODE_C2857D
-    RTS
-
 CODE_C08511:
     LDA.W $03B8
     BNE CODE_C08517
@@ -1300,7 +1287,7 @@ STA.W $0016,Y                        ;C08D48|991600  |8F0016;
 LDX.W $0038,Y                        ;C08D4B|BE3800  |8F0038;
 LDA.L Entity.bcd_exp,X               ;C08D4E|BF038081|818003;
 JSL.L AddExp                    ;C08D52|22BB8583|8385BB;
-LDA.W #$0002                         ;C08D56|A90200  |      ;
+LDA.W #!UpdateHud_Exp                         ;C08D56|A90200  |      ;
 TSB.W display_hud_bitfield                          ;C08D59|0C3203  |8F0332;
 BRK #$43                             ;C08D5C|0043    |      ;
 
@@ -1560,16 +1547,14 @@ CODE_C08F1F:
 STA.W player_current_health                          ;C08F1F|8D881B  |811B88;
 PLA                                  ;C08F22|68      |      ;
 REP #$20                             ;C08F23|C220    |      ;
-LDA.W #$0004                         ;C08F25|A90400  |      ;
+LDA.W #!UpdateHud_Health                         ;C08F25|A90400  |      ;
 TSB.W display_hud_bitfield                          ;C08F28|0C3203  |810332;
 LDX.W $039E                          ;C08F2B|AE9E03  |81039E;
 LDA.W Equipment.armor                          ;C08F2E|AD601B  |811B60;
-CMP.W #$000D                         ;C08F31|C90D00  |      ;
-BNE CODE_C08F3B                      ;C08F34|D005    |C08F3B;
-db $A9,$C0,$FF,$80,$03               ;C08F36|        |      ;
+CMP.W #!MysticArmor                         ;C08F31|C90D00  |      ;
+BNE + : LDA.W #-64 : BRA ++
+    + : LDA.W #-32 : ++
 
-CODE_C08F3B:
-LDA.W #$FFE0                         ;C08F3B|A9E0FF  |      ;
 STA.W $0026,X                        ;C08F3E|9D2600  |810026;
 BRK #$04                             ;C08F41|0004    |      ;
 LDA.W $0016,X                        ;C08F43|BD1600  |810016;
@@ -2118,39 +2103,36 @@ PLP                                  ;C09308|28      |      ;
 RTL                                  ;C09309|6B      |      ;
 
 CODE_C0930A:
-PHP                                  ;C0930A|08      |      ;
-REP #$20                             ;C0930B|C220    |      ;
-LDA.W $03BC                          ;C0930D|ADBC03  |8103BC;
-ASL A                                ;C09310|0A      |      ;
-TAX                                  ;C09311|AA      |      ;
-LDA.W Entity.offense,X               ;C09312|BD0080  |818000;
-SEC                                  ;C09315|38      |      ;
-SBC.W #$8000                         ;C09316|E90080  |      ;
-STA.W $03B2                          ;C09319|8DB203  |8103B2;
-SEP #$20                             ;C0931C|E220    |      ;
-LDX.W #$0000                         ;C0931E|A20000  |      ;
+    PHP                                  ;C0930A|08      |      ;
+    REP #$20                             ;C0930B|C220    |      ;
+    LDA.W _03BC                          ;C0930D|ADBC03  |8103BC;
+    ASL A                                ;C09310|0A      |      ;
+    TAX                                  ;C09311|AA      |      ;
+    LDA.W Entity.offense, X               ;C09312|BD0080  |818000;
+    SEC                                  ;C09315|38      |      ;
+    SBC.W #$8000                         ;C09316|E90080  |      ;
+    STA.W $03B2                          ;C09319|8DB203  |8103B2;
+    SEP #$20
+    LDX.W #0
 
-CODE_C09321:
-LDA.W UNREACH_8199B4,X               ;C09321|BDB499  |8199B4;
-BMI CODE_C0933E                      ;C09324|3018    |C0933E;
-CMP.W $0314                          ;C09326|CD1403  |810314;
-BNE CODE_C09338                      ;C09329|D00D    |C09338;
-LDA.W UNREACH_8199B5,X               ;C0932B|BDB599  |8199B5;
-CMP.W $0316                          ;C0932E|CD1603  |810316;
-BNE CODE_C09338                      ;C09331|D005    |C09338;
-JSR.W CODE_C09340                    ;C09333|204093  |C09340;
-BRA CODE_C0933E                      ;C09336|8006    |C0933E;
+.loop:
+    LDA.W UNREACH_8199B4,X               ;C09321|BDB499  |8199B4;
+    BMI .end                      ;C09324|3018    |C0933E;
+    CMP.W $0314                          ;C09326|CD1403  |810314;
+    BNE .next                      ;C09329|D00D    |C09338;
+    LDA.W UNREACH_8199B5,X               ;C0932B|BDB599  |8199B5;
+    CMP.W $0316                          ;C0932E|CD1603  |810316;
+    BNE .next                      ;C09331|D005    |C09338;
+    JSR.W CODE_C09340                    ;C09333|204093  |C09340;
+    BRA .end                      ;C09336|8006    |C0933E;
 
-CODE_C09338:
-INX                                  ;C09338|E8      |      ;
-INX                                  ;C09339|E8      |      ;
-INX                                  ;C0933A|E8      |      ;
-INX                                  ;C0933B|E8      |      ;
-BRA CODE_C09321                      ;C0933C|80E3    |C09321;
+.next:
+    INX #4
+    BRA .loop
 
-CODE_C0933E:
-PLP                                  ;C0933E|28      |      ;
-RTL                                  ;C0933F|6B      |      ;
+.end:
+    PLP                                  ;C0933E|28      |      ;
+    RTL                                  ;C0933F|6B      |      ;
 
 CODE_C09340:
 LDA.B #$81                           ;C09340|A981    |      ;
@@ -2303,7 +2285,7 @@ PHX                                  ;C0947C|DA      |      ;
 PHY                                  ;C0947D|5A      |      ;
 REP #$20                             ;C0947E|C220    |      ;
 PHX                                  ;C09480|DA      |      ;
-LDA.L $7F0203,X                      ;C09481|BF03027F|7F0203;
+LDA.L lair_spawn,X                      ;C09481|BF03027F|7F0203;
 STA.B $00                            ;C09485|8500    |000000;
 LDA.W UNREACH_81BA19,Y               ;C09487|B919BA  |81BA19;
 AND.W #$00FF                         ;C0948A|29FF00  |      ;
@@ -2687,7 +2669,7 @@ LDA.W $0002,X                        ;C09797|BD0200  |810002;
 SEC                                  ;C0979A|38      |      ;
 SBC.W #$0020                         ;C0979B|E92000  |      ;
 STA.B $18                            ;C0979E|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C097A0|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C097A0|22E08183|8381E0;
 LDA.L passable_map,X                      ;C097A4|BF00807F|7F8000;
 AND.W #$00FC                         ;C097A8|29FC00  |      ;
 BEQ CODE_C097BC                      ;C097AB|F00F    |C097BC;
@@ -2729,7 +2711,7 @@ LDA.W $0000,X                        ;C097DF|BD0000  |810000;
 STA.B $16                            ;C097E2|8516    |000016;
 LDA.W $0002,X                        ;C097E4|BD0200  |810002;
 STA.B $18                            ;C097E7|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C097E9|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C097E9|22E08183|8381E0;
 LDA.L passable_map,X                      ;C097ED|BF00807F|7F8000;
 AND.W #$00F3                         ;C097F1|29F300  |      ;
 BEQ CODE_C09805                      ;C097F4|F00F    |C09805;
@@ -2776,7 +2758,7 @@ AND.W #$FFF0                         ;C09834|29F0FF  |      ;
 SEC                                  ;C09837|38      |      ;
 SBC.W #$0010                         ;C09838|E91000  |      ;
 STA.B $18                            ;C0983B|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C0983D|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C0983D|22E08183|8381E0;
 LDA.L passable_map,X                      ;C09841|BF00807F|7F8000;
 AND.W #$00F5                         ;C09845|29F500  |      ;
 BEQ CODE_C09859                      ;C09848|F00F    |C09859;
@@ -2823,7 +2805,7 @@ AND.W #$FFF0                         ;C09888|29F0FF  |      ;
 SEC                                  ;C0988B|38      |      ;
 SBC.W #$0010                         ;C0988C|E91000  |      ;
 STA.B $18                            ;C0988F|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C09891|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C09891|22E08183|8381E0;
 LDA.L passable_map,X                      ;C09895|BF00807F|7F8000;
 AND.W #$00FA                         ;C09899|29FA00  |      ;
 BEQ CODE_C098AD                      ;C0989C|F00F    |C098AD;
@@ -3039,7 +3021,7 @@ PHX                                  ;C099D8|DA      |      ;
 LDA.W revealing_lair_id                          ;C099D9|AD0704  |810407;
 ASL A                                ;C099DC|0A      |      ;
 TAX                                  ;C099DD|AA      |      ;
-LDA.L $7F0483,X                      ;C099DE|BF83047F|7F0483;
+LDA.L _7F0483, X                      ;C099DE|BF83047F|7F0483;
 PLX                                  ;C099E2|FA      |      ;
 TAY                                  ;C099E3|A8      |      ;
 BNE CODE_C099E7                      ;C099E4|D001    |C099E7;
@@ -3555,9 +3537,9 @@ JSR.W CODE_C09FC9                    ;C09F15|20C99F  |C09FC9;
 COP #$80                             ;C09F18|0280    |      ;
 db $1C                               ;C09F1A|        |008202;
 COP #$82                             ;C09F1B|0282    |      ;
-LDA.W $03BC                          ;C09F1D|ADBC03  |8103BC;
+LDA.W _03BC                          ;C09F1D|ADBC03  |8103BC;
 INC A                                ;C09F20|1A      |      ;
-STA.W $0318                          ;C09F21|8D1803  |810318;
+STA.W sceneId                          ;C09F21|8D1803  |810318;
 COP #$91                             ;C09F24|0291    |      ;
 RTL                                  ;C09F26|6B      |      ;
 BRK #$01                             ;C09F27|0001    |      ;
@@ -3567,7 +3549,7 @@ db $02,$84,$A4,$A6,$80               ;C09F2E|        |      ;
 
 CODE_C09F33:
 LDA.W #$8000                         ;C09F33|A90080  |      ;
-TRB.W $032A                          ;C09F36|1C2A03  |81032A;
+TRB.W _032A                          ;C09F36|1C2A03  |81032A;
 LDA.W #$0021                         ;C09F39|A92100  |      ;
 JSR.W CODE_C09FC9                    ;C09F3C|20C99F  |C09FC9;
 COP #$80                             ;C09F3F|0280    |      ;
@@ -3581,7 +3563,7 @@ db $02,$84,$B9,$A6,$80               ;C09F4E|        |      ;
 
 CODE_C09F53:
 LDA.W #$8000                         ;C09F53|A90080  |      ;
-TRB.W $032A                          ;C09F56|1C2A03  |81032A;
+TRB.W _032A                          ;C09F56|1C2A03  |81032A;
 LDA.W #$0020                         ;C09F59|A92000  |      ;
 JSR.W CODE_C09FC9                    ;C09F5C|20C99F  |C09FC9;
 COP #$80                             ;C09F5F|0280    |      ;
@@ -3595,7 +3577,7 @@ db $02,$84,$D0,$A6,$80               ;C09F6E|        |      ;
 
 CODE_C09F73:
 LDA.W #$8000                         ;C09F73|A90080  |      ;
-TRB.W $032A                          ;C09F76|1C2A03  |81032A;
+TRB.W _032A                          ;C09F76|1C2A03  |81032A;
 LDA.W #$0022                         ;C09F79|A92200  |      ;
 JSR.W CODE_C09FC9                    ;C09F7C|20C99F  |C09FC9;
 COP #$80                             ;C09F7F|0280    |      ;
@@ -3609,7 +3591,7 @@ db $02,$84,$E5,$A6,$80               ;C09F8E|        |      ;
 
 CODE_C09F93:
 LDA.W #$8000                         ;C09F93|A90080  |      ;
-TRB.W $032A                          ;C09F96|1C2A03  |81032A;
+TRB.W _032A                          ;C09F96|1C2A03  |81032A;
 LDA.W #$0023                         ;C09F99|A92300  |      ;
 JSR.W CODE_C09FC9                    ;C09F9C|20C99F  |C09FC9;
 COP #$80                             ;C09F9F|0280    |      ;
@@ -3946,7 +3928,7 @@ STZ.W $0020,X                        ;C0A259|9E2000  |810020;
 LDA.W #$0008                         ;C0A25C|A90800  |      ;
 STA.W $002A,X                        ;C0A25F|9D2A00  |81002A;
 LDA.W #$4000                         ;C0A262|A90040  |      ;
-TRB.W $032A                          ;C0A265|1C2A03  |81032A;
+TRB.W _032A                          ;C0A265|1C2A03  |81032A;
 STZ.W $043F                          ;C0A268|9C3F04  |81043F;
 COP #$91                             ;C0A26B|0291    |      ;
 COP #$83                             ;C0A26D|0283    |      ;
@@ -4223,13 +4205,13 @@ LDA.W $0002,X                        ;C0A879|BD0200  |810002;
 SEC                                  ;C0A87C|38      |      ;
 SBC.W #$0010                         ;C0A87D|E91000  |      ;
 STA.B $18                            ;C0A880|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C0A882|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C0A882|22E08183|8381E0;
 TXA                                  ;C0A886|8A      |      ;
 STA.W $002C,Y                        ;C0A887|992C00  |81002C;
 
 CODE_C0A88A:
 LDX.W $002C,Y                        ;C0A88A|BE2C00  |81002C;
-LDA.L $7E8000,X                      ;C0A88D|BF00807E|7E8000;
+LDA.L tilemap,X                      ;C0A88D|BF00807E|7E8000;
 TYX                                  ;C0A891|BB      |      ;
 AND.W #$00FF                         ;C0A892|29FF00  |      ;
 CMP.W #$00FD                         ;C0A895|C9FD00  |      ;
@@ -4305,7 +4287,7 @@ STA.W $002F,Y                        ;C0A90A|992F00  |81002F;
 CLC                                  ;C0A90D|18      |      ;
 BNE CODE_C0A915                      ;C0A90E|D005    |C0A915;
 SEC                                  ;C0A910|38      |      ;
-STA.L $7F0203,X                      ;C0A911|9F03027F|7F0203;
+STA.L lair_spawn,X                      ;C0A911|9F03027F|7F0203;
 
 CODE_C0A915:
 REP #$20                             ;C0A915|C220    |      ;
@@ -4466,7 +4448,7 @@ INC A                                ;C0AA72|1A      |      ;
 CLC                                  ;C0AA73|18      |      ;
 ADC.W $0002,X                        ;C0AA74|7D0200  |810002;
 STA.W $0002,X                        ;C0AA77|9D0200  |810002;
-LDA.W $03BC                          ;C0AA7A|ADBC03  |8103BC;
+LDA.W _03BC                          ;C0AA7A|ADBC03  |8103BC;
 CMP.W #$0006                         ;C0AA7D|C90600  |      ;
 BNE CODE_C0AA85                      ;C0AA80|D003    |C0AA85;
 db $A9,$19,$00                       ;C0AA82|        |      ;
@@ -4687,7 +4669,7 @@ AND.W #$DFFF                         ;C0AC3A|29FFDF  |      ;
 STA.W $0016,X                        ;C0AC3D|9D1600  |810016;
 COP #$1F                             ;C0AC40|021F    |      ;
 SEP #$20                             ;C0AC42|E220    |      ;
-LDA.W $0302                          ;C0AC44|AD0203  |810302;
+LDA.W _0302                          ;C0AC44|AD0203  |810302;
 AND.B #$7F                           ;C0AC47|297F    |      ;
 
 CODE_C0AC49:
@@ -4703,7 +4685,7 @@ ADC.W $0431                          ;C0AC59|6D3104  |810431;
 STA.W $0000,X                        ;C0AC5C|9D0000  |810000;
 COP #$1F                             ;C0AC5F|021F    |      ;
 SEP #$20                             ;C0AC61|E220    |      ;
-LDA.W $0302                          ;C0AC63|AD0203  |810302;
+LDA.W _0302                          ;C0AC63|AD0203  |810302;
 AND.B #$7F                           ;C0AC66|297F    |      ;
 
 CODE_C0AC68:
@@ -5117,7 +5099,7 @@ LDA.W #$0001                         ;C0AF73|A90100  |      ;
 
 CODE_C0AF76:
 JSL.L CODE_C385D9                    ;C0AF76|22D98583|8385D9;
-LDA.W #$0010                         ;C0AF7A|A91000  |      ;
+LDA.W #!UpdateHud_Gold                         ;C0AF7A|A91000  |      ;
 TSB.W display_hud_bitfield                          ;C0AF7D|0C3203  |810332;
 LDA.W $0016,X                        ;C0AF80|BD1600  |810016;
 ORA.W #$2000                         ;C0AF83|090020  |      ;
@@ -5191,16 +5173,16 @@ Player_LevelUp:
 ; play sound and display message on screen three times
     %PlaySound(!Sound_NextLevel)
     %CopLoopStart(3)
-    PHX
-    LDY.W #txt_next_level
-    JSL.L printOsdStringFromBank2
-    PLX
-    %CopJumpAfterNoFramesPassed(+, 20) : +
-    PHX
-    LDY.W #txt_delete_next_level
-    JSL.L printOsdStringFromBank2
-    PLX
-    %CopJumpAfterNoFramesPassed(+, 10) : +
+        PHX
+        LDY.W #txt_next_level
+        JSL.L printOsdStringFromBank2
+        PLX
+        %CopJumpAfterNoFramesPassed(+, 20) : +
+        PHX
+        LDY.W #txt_delete_next_level
+        JSL.L printOsdStringFromBank2
+        PLX
+        %CopJumpAfterNoFramesPassed(+, 10) : +
     %CopLoopEnd()
 ; do loop to the start of the function to increase the level further if needed
     BRL Player_LevelUp
@@ -5246,10 +5228,11 @@ check_player_dead:
     STA.W $0016, X
     LDA.W #!Key16_A|!Key16_Select
     STA.W button_mask
-    INC.W player_died                          ;C0B092|EE4B04  |81044B;
+    INC.W player_died
 .end:
     PLP
-CODE_C0B096:
+
+Ax_Script_locret:
     RTL                                  ;C0B096|6B      |      ;
 
 CODE_C0B097:
@@ -6382,25 +6365,36 @@ db $02,$01,$78,$00,$C8,$00,$02,$91   ;C0CFDE|        |      ;
 db $6B,$02,$01,$FF,$CF,$02,$09,$00   ;C0CFE6|        |      ;
 db $80,$02,$86,$6B,$02,$A8,$00,$80   ;C0CFEE|        |C0CFF2;
 db $8D,$02,$92,$48,$02,$94,$02,$86   ;C0CFF6|        |009202;
-db $6B,$10,$8C,$CB,$4C,$65,$75,$74   ;C0CFFE|        |      ;
-db $65,$2C,$20,$B5,$0D,$67,$6C,$61   ;C0D006|        |00002C;
-db $75,$62,$65,$6E,$20,$2C,$20,$BA   ;C0D00E|        |000062;
-db $69,$6D,$6D,$65,$72,$2D,$0D,$77   ;C0D016|        |      ;
-db $7B,$68,$72,$65,$6E,$64,$65,$20   ;C0D01E|        |      ;
-db $52,$65,$69,$6E,$6B,$61,$72,$6E   ;C0D026|        |000065;
-db $61,$74,$69,$6F,$6E,$20,$0D,$65   ;C0D02E|        |000074;
-db $77,$69,$67,$65,$73,$20,$4C,$65   ;C0D036|        |000069;
-db $69,$64,$65,$6E,$20,$62,$65,$64   ;C0D03E|        |      ;
-db $65,$75,$74,$65,$74,$11,$4C,$65   ;C0D046|        |000075;
-db $62,$65,$6E,$20,$62,$65,$64,$65   ;C0D04E|        |C03EB6;
-db $75,$74,$65,$74,$20,$0D,$53,$63   ;C0D056|        |000074;
-db $68,$6D,$65,$72,$7A,$20,$C9,$65   ;C0D05E|        |      ;
-db $69,$6E,$69,$67,$65,$20,$0D,$4C   ;C0D066|        |      ;
-db $65,$62,$65,$77,$65,$73,$65,$6E   ;C0D06E|        |000062;
-db $2E,$11,$83,$FA,$E0,$73,$65,$68   ;C0D076|        |008311;
-db $65,$6E,$2C,$0D,$F9,$D1,$6D,$65   ;C0D07E|        |00006E;
-db $69,$6E,$65,$2E,$12,$08,$06,$04   ;C0D086|        |      ;
-db $0C,$8E,$9C,$03,$BD,$1A,$00,$09   ;C0D08E|        |009C8E;
+db $6B
+
+; @DEFAULT_TEXTBOX@
+; "Es gibt Leute, die "
+; "glauben , daß immer-"
+; "währende Reinkarnation "
+; "ewiges Leiden bedeutet" WFE
+; "Leben bedeutet "
+; "Schmerz für einige "
+; "Lebewesen." WFE
+; "Du wirst noch sehen,"
+; "was ich meine." WFAK
+; CLEARBOX 6 4
+; CONT
+db $10
+db $8C,$CB,$4C,$65,$75,$74,$65,$2C,$20,$B5,$0D
+db $67,$6C,$61,$75,$62,$65,$6E,$20,$2C,$20,$BA,$69,$6D,$6D,$65,$72,$2D,$0D
+db $77,$7B,$68,$72,$65,$6E,$64,$65,$20,$52,$65,$69,$6E,$6B,$61,$72,$6E,$61,$74,$69,$6F,$6E,$20,$0D
+db $65,$77,$69,$67,$65,$73,$20,$4C,$65,$69,$64,$65,$6E,$20,$62,$65,$64,$65,$75,$74,$65,$74,$11
+db $4C,$65,$62,$65,$6E,$20,$62,$65,$64,$65,$75,$74,$65,$74,$20,$0D
+db $53,$63,$68,$6D,$65,$72,$7A,$20,$C9,$65,$69,$6E,$69,$67,$65,$20,$0D
+db $4C,$65,$62,$65,$77,$65,$73,$65,$6E,$2E,$11
+db $83,$FA,$E0,$73,$65,$68,$65,$6E,$2C,$0D
+db $F9,$D1,$6D,$65,$69,$6E,$65,$2E,$12
+db $08,$06,$04
+db $0C
+; @END@
+
+CODE_C0D08F:
+db $8E,$9C,$03,$BD,$1A,$00,$09   ;C0D08E|        |009C8E;
 db $00,$02,$9D,$1A,$00,$9C,$72,$04   ;C0D096|        |      ;
 db $02,$85,$39,$D6,$80,$02,$AC,$90   ;C0D09E|        |      ;
 db $D3,$80,$38,$00,$70,$00,$00,$02   ;C0D0A6|        |000080;
@@ -6683,7 +6677,7 @@ make_npc_unpassable:
     SEC                                  ;C0E5C4|38      |      ;
     SBC.W #$0010                         ;C0E5C5|E91000  |      ;
     STA.B $18                            ;C0E5C8|8518    |000018;
-    JSL.L CalcPassablemapOffset                    ;C0E5CA|22E08183|8381E0;
+    JSL.L ConvPosToArrayIdx                    ;C0E5CA|22E08183|8381E0;
     LDA.L passable_map,X                      ;C0E5CE|BF00807F|7F8000;
     ORA.W #$00F0                         ;C0E5D2|09F000  |      ;
     STA.L passable_map,X                      ;C0E5D5|9F00807F|7F8000;
@@ -6706,7 +6700,7 @@ make_npc_unpassable:
 
 .outer_loop:
     STA.B $18                            ;C0E5F1|8518    |000018;
-    JSL.L CalcPassablemapOffset                    ;C0E5F3|22E08183|8381E0;
+    JSL.L ConvPosToArrayIdx                    ;C0E5F3|22E08183|8381E0;
     LDA.W $0010,Y                        ;C0E5F7|B91000  |810010;
     LSR A                                ;C0E5FA|4A      |      ;
     LSR A                                ;C0E5FB|4A      |      ;
@@ -6742,7 +6736,7 @@ LDA.W $0002,X                        ;C0E631|BD0200  |810002;
 SEC                                  ;C0E634|38      |      ;
 SBC.W #$0010                         ;C0E635|E91000  |      ;
 STA.B $18                            ;C0E638|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C0E63A|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C0E63A|22E08183|8381E0;
 LDA.L passable_map,X                      ;C0E63E|BF00807F|7F8000;
 AND.W #$FF00                         ;C0E642|2900FF  |      ;
 STA.L passable_map,X                      ;C0E645|9F00807F|7F8000;
@@ -6765,7 +6759,7 @@ SBC.W $0012,X                        ;C0E65E|FD1200  |810012;
 
 CODE_C0E661:
 STA.B $18                            ;C0E661|8518    |000018;
-JSL.L CalcPassablemapOffset                    ;C0E663|22E08183|8381E0;
+JSL.L ConvPosToArrayIdx                    ;C0E663|22E08183|8381E0;
 LDA.W $0010,Y                        ;C0E667|B91000  |810010;
 LSR A                                ;C0E66A|4A      |      ;
 LSR A                                ;C0E66B|4A      |      ;
@@ -6813,7 +6807,7 @@ PHX                                  ;C0E6A6|DA      |      ;
 ASL A                                ;C0E6A7|0A      |      ;
 TAX                                  ;C0E6A8|AA      |      ;
 LDA.B $01,S                          ;C0E6A9|A301    |000001;
-STA.L $7F0483,X                      ;C0E6AB|9F83047F|7F0483;
+STA.L _7F0483, X                      ;C0E6AB|9F83047F|7F0483;
 PLX                                  ;C0E6AF|FA      |      ;
 PLA                                  ;C0E6B0|68      |      ;
 RTS                                  ;C0E6B1|60      |      ;
@@ -6919,7 +6913,7 @@ BIT.B #$10                           ;C0E74C|8910    |      ;
 REP #$20                             ;C0E74E|C220    |      ;
 BEQ UNREACH_C0E761                   ;C0E750|F00F    |C0E761;
 PHX                                  ;C0E752|DA      |      ;
-LDY.W #$BBAB                         ;C0E753|A0ABBB  |      ;
+LDY.W #Txt_Ubisoft_Presents                         ;C0E753|A0ABBB  |      ;
 JSL.L printOsdStringFromBank2                    ;C0E756|2254A782|82A754;
 PLX                                  ;C0E75A|FA      |      ;
 COP #$1B                             ;C0E75B|021B    |      ;
@@ -6994,7 +6988,7 @@ COP #$03                             ;C0E801|0203    |      ;
 db $1F                               ;C0E803|        |DA0402;
 COP #$04                             ;C0E804|0204    |      ;
 PHX                                  ;C0E806|DA      |      ;
-LDY.W #$BBD6                         ;C0E807|A0D6BB  |      ;
+LDY.W #Txt_Rights_Reserved                         ;C0E807|A0D6BB  |      ;
 JSL.L printOsdStringFromBank2                    ;C0E80A|2254A782|82A754;
 PLX                                  ;C0E80E|FA      |      ;
 COP #$85                             ;C0E80F|0285    |      ;
@@ -7017,7 +7011,7 @@ COP #$03                             ;C0E83F|0203    |      ;
 db $F1                               ;C0E841|        |000002;
 COP #$04                             ;C0E842|0204    |      ;
 PHX                                  ;C0E844|DA      |      ;
-LDY.W #$BBC5                         ;C0E845|A0C5BB  |      ;
+LDY.W #Txt_Press_Start                         ;C0E845|A0C5BB  |      ;
 JSL.L printOsdStringFromBank2                    ;C0E848|2254A782|82A754;
 PLX                                  ;C0E84C|FA      |      ;
 LDA.W #$3000                         ;C0E84D|A90030  |      ;
@@ -7129,25 +7123,27 @@ db $00,$02,$04,$02,$86,$6B           ;C0EAEA|        |      ;
 SEP #$20                             ;C0EAF0|E220    |      ;
 LDA.B #$05                           ;C0EAF2|A905    |      ;
 XBA                                  ;C0EAF4|EB      |      ;
-LDA.B #$80                           ;C0EAF5|A980    |      ;
-LDY.W #$EB18                         ;C0EAF7|A018EB  |      ;
+LDA.B #<:.data1                           ;C0EAF5|A980    |      ;
+LDY.W #.data1                         ;C0EAF7|A018EB  |      ;
 JSL.L CODE_C2988F                    ;C0EAFA|228F9882|82988F;
 LDA.B #$2C                           ;C0EAFE|A92C    |      ;
 XBA                                  ;C0EB00|EB      |      ;
-LDA.B #$80                           ;C0EB01|A980    |      ;
-LDY.W #$EB1D                         ;C0EB03|A01DEB  |      ;
+LDA.B #<:.data2                           ;C0EB01|A980    |      ;
+LDY.W #.data2                         ;C0EB03|A01DEB  |      ;
 JSL.L CODE_C2988F                    ;C0EB06|228F9882|82988F;
 REP #$20                             ;C0EB0A|C220    |      ;
 LDA.W $048E                          ;C0EB0C|AD8E04  |81048E;
-BNE CODE_C0EB12                      ;C0EB0F|D001    |C0EB12;
+BNE .CODE_C0EB12                      ;C0EB0F|D001    |C0EB12;
 RTL                                  ;C0EB11|6B      |      ;
 
-CODE_C0EB12:
+.CODE_C0EB12:
 STZ.W $0042                          ;C0EB12|9C4200  |810042;
 COP #$86                             ;C0EB15|0286    |      ;
 RTL                                  ;C0EB17|6B      |      ;
-db $7F,$0F,$60,$09,$00,$7F,$11,$60   ;C0EB18|        |09600F;
-db $14,$00                           ;C0EB20|        |000000;
+.data1:
+db $7F,$0F,$60,$09,$00
+.data2:
+db $7F,$11,$60,$14,$00                           ;C0EB20|        |000000;
 COP #$03                             ;C0EB22|0203    |      ;
 db $80                               ;C0EB24|        |C0EAE2;
 LDY.W $003E,X                        ;C0EB25|BC3E00  |81003E;
@@ -7265,7 +7261,7 @@ RTL                                  ;C0EC10|6B      |      ;
 CODE_C0EC11:
 LDA.W current_map_number                          ;C0EC11|AD6A1C  |811C6A;
 CMP.B #$10                           ;C0EC14|C910    |      ;
-BNE CODE_C0EC36                      ;C0EC16|D01E    |C0EC36;
+BNE .CODE_C0EC36                      ;C0EC16|D01E    |C0EC36;
 JSR.W CODE_C0EC83                    ;C0EC18|2083EC  |C0EC83;
 JSR.W CODE_C0EC3A                    ;C0EC1B|203AEC  |C0EC3A;
 LDX.W $0482                          ;C0EC1E|AE8204  |810482;
@@ -7277,7 +7273,7 @@ STX.W $047E                          ;C0EC2D|8E7E04  |81047E;
 LDX.W $0488                          ;C0EC30|AE8804  |810488;
 STX.W $0480                          ;C0EC33|8E8004  |810480;
 
-CODE_C0EC36:
+.CODE_C0EC36:
 RTL                                  ;C0EC36|6B      |      ;
 db $20,$E2,$EC                       ;C0EC37|        |C0ECE2;
 
@@ -7431,7 +7427,7 @@ BCS CODE_C0EDC2                      ;C0EDBD|B003    |C0EDC2;
 LDA.W $1B90                          ;C0EDBF|AD901B  |811B90;
 
 CODE_C0EDC2:
-STA.W $0318                          ;C0EDC2|8D1803  |810318;
+STA.W sceneId                          ;C0EDC2|8D1803  |810318;
 LDA.W #$0001                         ;C0EDC5|A90100  |      ;
 STA.W TeleportPos.facing                          ;C0EDC8|8D8003  |810380;
 LDA.W #$0070                         ;C0EDCB|A97000  |      ;
@@ -7556,6 +7552,8 @@ STA.L $307FFE                        ;C0EEB5|8FFE7F30|307FFE;
 
 CODE_C0EEB9:
 RTS                                  ;C0EEB9|60      |      ;
+
+
 COP #$07                             ;C0EEBA|0207    |      ;
 db $05,$9F,$C6,$EE                   ;C0EEBC|        |00009F;
 COP #$07                             ;C0EEC0|0207    |      ;
@@ -7982,214 +7980,16 @@ db $02,$10,$00,$0D,$02,$00,$00,$00   ;C0F6E2|        |      ;
 db $00,$E2,$20,$9C,$82,$1B,$C2,$20   ;C0F6EA|        |      ;
 db $A9,$20,$00,$8D,$B6,$03,$EE,$60   ;C0F6F2|        |      ;
 db $04,$02,$91,$6B                   ;C0F6FA|        |000002;
-COP #$37                             ;C0F6FE|0237    |      ;
-COP #$91                             ;C0F700|0291    |      ;
-COP #$0D                             ;C0F702|020D    |      ;
-db $00,$07,$04,$11,$F7               ;C0F704|        |      ;
-COP #$0D                             ;C0F709|020D    |      ;
-db $00,$07,$06,$F7,$F7               ;C0F70B|        |      ;
-RTL                                  ;C0F710|6B      |      ;
-COP #$01                             ;C0F711|0201    |      ;
-db $42,$F8                           ;C0F713|        |      ;
-COP #$07                             ;C0F715|0207    |      ;
-db $00,$9B,$2E,$F7,$02,$1A,$03,$D1   ;C0F717|        |      ;
-db $02,$E6,$F7,$AF,$D2,$03,$00,$D0   ;C0F71F|        |      ;
-db $03,$82,$56,$00,$82,$B8,$00       ;C0F727|        |000082;
-COP #$1A                             ;C0F72E|021A    |      ;
-db $DC,$D0,$03,$E6,$F7               ;C0F730|        |0003D0;
-LDA.L $0003D2                        ;C0F735|AFD20300|0003D2;
-BNE CODE_C0F73E                      ;C0F739|D003    |C0F73E;
-BRL CODE_C0F781                      ;C0F73B|824300  |C0F781;
 
-CODE_C0F73E:
-DEC A                                ;C0F73E|3A      |      ;
-BEQ CODE_C0F744                      ;C0F73F|F003    |C0F744;
-db $82,$A2,$00                       ;C0F741|        |C0F7E6;
 
-CODE_C0F744:
-COP #$01                             ;C0F744|0201    |      ;
-db $0D,$F9                           ;C0F746|        |00DAF9;
-PHX                                  ;C0F748|DA      |      ;
-LDA.W #$0009                         ;C0F749|A90900  |      ;
-STA.W $0318                          ;C0F74C|8D1803  |810318;
-LDA.W $03BC                          ;C0F74F|ADBC03  |8103BC;
-ASL A                                ;C0F752|0A      |      ;
-ASL A                                ;C0F753|0A      |      ;
-TAX                                  ;C0F754|AA      |      ;
-LDA.L .data,X               ;C0F755|BF65F780|80F765;
-STA.W TeleportPos.x                          ;C0F759|8D7C03  |81037C;
-LDA.L .data+2,X               ;C0F75C|BF67F780|80F767;
-STA.W TeleportPos.y                          ;C0F760|8D7E03  |81037E;
-PLX                                  ;C0F763|FA      |      ;
-RTL                                  ;C0F764|6B      |      ;
+incsrc "scripts/sh/default_script.asm"
+incsrc "scripts/sh/starting_script.asm"
 
-.data:
-    dw $0070, $00A0, $0030, $0160
-    dw $00F0, $0160, $00F0, $0060
-    dw $01B0, $0140, $0170, $0060
-    dw $00F0, $0020
-
-CODE_C0F781:
-COP #$01                             ;C0F781|0201    |      ;
-db $6E,$F8                           ;C0F783|        |0002F8;
-COP #$1A                             ;C0F785|021A    |      ;
-db $BB,$D0,$02,$E6,$F7               ;C0F787|        |      ;
-LDA.L $0003D2                        ;C0F78C|AFD20300|0003D2;
-DEC A                                ;C0F790|3A      |      ;
-BEQ UNREACH_C0F7E6                   ;C0F791|F053    |C0F7E6;
-BRK #$66                             ;C0F793|0066    |      ;
-PHX                                  ;C0F795|DA      |      ;
-JSL.L CODE_C38000                    ;C0F796|22008083|838000;
-PLX                                  ;C0F79A|FA      |      ;
-LDA.W #$7FC0                         ;C0F79B|A9C07F  |      ;
-TSB.W button_mask                          ;C0F79E|0C2603  |810326;
-COP #$03                             ;C0F7A1|0203    |      ;
-db $3D                               ;C0F7A3|        |000402;
-COP #$04                             ;C0F7A4|0204    |      ;
-db $A9,$C0,$7F,$1C,$26,$03,$02,$01   ;C0F7A6|        |      ;
-db $9E,$F8,$02,$1A,$BB,$D0,$02,$E6   ;C0F7AE|        |0002F8;
-db $F7,$AF,$D2,$03,$00,$F0,$29,$02   ;C0F7B6|        |0000AF;
-db $01,$C7,$F8,$A9,$80,$7F,$0C,$26   ;C0F7BE|        |0000C7;
-db $03,$02,$03,$1F,$02,$04,$00,$8E   ;C0F7C6|        |000002;
-db $02,$AC,$2A,$F8,$80,$70,$00,$50   ;C0F7CE|        |      ;
-db $00,$50,$00,$02,$34,$02,$03,$3D   ;C0F7D6|        |      ;
-db $02,$04,$02,$31,$13,$02,$91,$6B   ;C0F7DE|        |      ;
-
-UNREACH_C0F7E6:
-db $02,$01,$E5,$F8,$02,$91,$02,$0D   ;C0F7E6|        |      ;
-db $00,$07,$04,$F6,$F7,$82,$0A,$FF   ;C0F7EE|        |      ;
-db $6B                               ;C0F7F6|        |      ;
-LDA.W player_died                          ;C0F7F7|AD4B04  |81044B;
-BEQ CODE_C0F80D                      ;C0F7FA|F011    |C0F80D;
-STZ.W player_died                          ;C0F7FC|9C4B04  |81044B;
-COP #$1B                             ;C0F7FF|021B    |      ;
-db $05,$F8,$02,$00                   ;C0F801|        |0000F8;
-COP #$01                             ;C0F805|0201    |      ;
-db $11,$F9                           ;C0F807|        |0000F9;
-COP #$27                             ;C0F809|0227    |      ;
-db $00,$F7                           ;C0F80B|        |      ;
-
-CODE_C0F80D:
-COP #$07                             ;C0F80D|0207    |      ;
-db $02,$86,$26,$F8                   ;C0F80F|        |      ;
-COP #$07                             ;C0F813|0207    |      ;
-db $00,$1B,$26,$F8                   ;C0F815|        |      ;
-COP #$03                             ;C0F819|0203    |      ;
-db $03                               ;C0F81B|        |000002;
-COP #$04                             ;C0F81C|0204    |      ;
-COP #$09                             ;C0F81E|0209    |      ;
-db $02,$86                           ;C0F820|        |      ;
-COP #$01                             ;C0F822|0201    |      ;
-db $69,$F9                           ;C0F824|        |      ;
-COP #$27                             ;C0F826|0227    |      ;
-db $00,$F7,$02,$A8,$00,$80,$8E,$AD   ;C0F828|        |      ;
-db $72,$03,$9D,$1C,$00,$02,$A3,$02   ;C0F830|        |000003;
-db $A2,$30,$02,$80,$02,$02,$82,$02   ;C0F838|        |      ;
-db $86,$6B,$10,$45,$69,$6E,$65,$20   ;C0F840|        |00006B;
-db $A0,$6B,$61,$6D,$20,$AD,$0D,$B7   ;C0F848|        |      ;
-db $57,$6F,$6C,$6B,$65,$6E,$2E,$11   ;C0F850|        |00006F;
-db $13,$5C,$F8,$10,$02,$02,$2C,$0D   ;C0F858|        |00005C;
-db $F6,$D7,$D1,$84,$0D,$68,$65,$6C   ;C0F860|        |0000D7;
-db $66,$65,$6E,$20,$3F,$0C,$8F,$F2   ;C0F868|        |000065;
-db $44,$65,$69,$6E,$65,$6E,$20,$46   ;C0F870|        |      ;
-db $6F,$72,$74,$2D,$0D,$73,$63,$68   ;C0F878|        |2D7472;
-db $72,$69,$74,$74,$20,$61,$75,$66   ;C0F880|        |000069;
-db $7A,$65,$69,$63,$68,$6E,$65,$6E   ;C0F888|        |      ;
-db $2E,$0D,$49,$73,$74,$20,$B9,$6F   ;C0F890|        |00490D;
-db $6B,$61,$79,$20,$3F,$0C,$41,$75   ;C0F898|        |      ;
-db $66,$7A,$65,$69,$63,$68,$6E,$75   ;C0F8A0|        |00007A;
-db $6E,$67,$20,$62,$65,$65,$6E,$64   ;C0F8A8|        |002067;
-db $65,$74,$2E,$11,$96,$83,$77,$65   ;C0F8B0|        |000074;
-db $69,$74,$65,$72,$2D,$0D,$6D,$61   ;C0F8B8|        |      ;
-db $63,$68,$65,$6E,$20,$3F,$0C,$45   ;C0F8C0|        |000068;
-db $72,$68,$6F,$6C,$65,$20,$85,$67   ;C0F8C8|        |000068;
-db $75,$74,$2E,$20,$8C,$0D,$CB,$E0   ;C0F8D0|        |000074;
-db $76,$69,$65,$6C,$20,$FD,$74,$75   ;C0F8D8|        |000069;
-db $6E,$2E,$13,$32,$FB,$02,$02,$0D   ;C0F8E0|        |00132E;
-db $83,$CD,$85,$77,$61,$63,$6B,$65   ;C0F8E8|        |0000CD;
-db $72,$20,$0D,$67,$65,$73,$63,$68   ;C0F8F0|        |000020;
-db $6C,$61,$67,$65,$6E,$2E,$20,$47   ;C0F8F8|        |006761;
-db $69,$62,$20,$D6,$0D,$DF,$61,$75   ;C0F900|        |      ;
-db $66,$2E,$13,$32,$FB,$08,$06,$04   ;C0F908|        |00002E;
-db $0C,$10,$45,$69,$6E,$65,$20,$A0   ;C0F910|        |004510;
-db $6B,$61,$6D,$20,$AD,$0D,$B7,$57   ;C0F918|        |      ;
-db $6F,$6C,$6B,$65,$6E,$2E,$11,$3C   ;C0F920|        |656B6C;
-db $42,$65,$65,$69,$6C,$65,$20,$85   ;C0F928|        |      ;
-db $DF,$FD,$0D,$73,$65,$68,$72,$2E   ;C0F930|        |730DFD;
-db $20,$28,$62,$65,$20,$85,$D3,$0D   ;C0F938|        |C06228;
-db $47,$65,$64,$75,$6C,$64,$2C,$20   ;C0F940|        |000065;
-db $EB,$65,$72,$72,$65,$69,$63,$68   ;C0F948|        |      ;
-db $65,$20,$0D,$73,$69,$63,$68,$65   ;C0F950|        |000020;
-db $72,$20,$44,$65,$69,$6E,$20,$5A   ;C0F958|        |000020;
-db $69,$65,$6C,$2E,$3E,$20,$13,$32   ;C0F960|        |      ;
-db $FB,$10,$45,$69,$6E,$65,$20,$A0   ;C0F968|        |      ;
-db $6B,$61,$6D,$20,$AD,$0D,$B7,$57   ;C0F970|        |      ;
-db $6F,$6C,$6B,$65,$6E,$2E,$11,$3C   ;C0F978|        |656B6C;
-db $88,$62,$72,$61,$75,$6E,$65,$20   ;C0F980|        |      ;
-db $53,$74,$65,$69,$6E,$2C,$20,$B7   ;C0F988|        |000074;
-db $0D,$83,$65,$72,$68,$61,$6C,$74   ;C0F990|        |006583;
-db $65,$6E,$20,$68,$61,$73,$74,$2C   ;C0F998|        |00006E;
-db $20,$D2,$0D,$C6,$EE,$36,$20,$53   ;C0F9A0|        |C00DD2;
-db $74,$65,$69,$6E,$65,$6E,$20,$D3   ;C0F9A8|        |000065;
-db $0D,$BD,$57,$65,$6C,$74,$2E,$11   ;C0F9B0|        |0057BD;
-db $A8,$AE,$36,$20,$53,$74,$65,$69   ;C0F9B8|        |      ;
-db $6E,$65,$20,$0D,$62,$65,$69,$73   ;C0F9C0|        |002065;
-db $61,$6D,$6D,$65,$6E,$20,$73,$69   ;C0F9C8|        |00006D;
-db $6E,$64,$2C,$11,$2A,$66,$66,$6E   ;C0F9D0|        |002C64;
-db $65,$74,$20,$E5,$B9,$0D,$54,$6F   ;C0F9D8|        |000074;
-db $72,$2C,$20,$77,$65,$6C,$63,$68   ;C0F9E0|        |00002C;
-db $65,$73,$20,$7A,$75,$72,$20,$A9   ;C0F9E8|        |000073;
-db $0D,$B8,$82,$66,$5B,$68,$72,$74   ;C0F9F0|        |0082B8;
-db $2E,$11,$42,$65,$67,$65,$62,$65   ;C0F9F8|        |004211;
-db $20,$85,$6E,$75,$6E,$20,$E3,$0D   ;C0FA00|        |C06E85;
-db $47,$72,$65,$65,$6E,$20,$57,$6F   ;C0FA08|        |000072;
-db $6F,$64,$2C,$20,$77,$6F,$20,$85   ;C0FA10|        |202C64;
-db $0D,$B6,$6E,$7B,$63,$68,$73,$74   ;C0FA18|        |006EB6;
-db $65,$20,$A2,$65,$72,$2D,$0D,$77   ;C0FA20|        |000020;
-db $61,$72,$74,$65,$74,$2E,$3E,$20   ;C0FA28|        |000072;
-db $13,$32,$FB                       ;C0FA30|        |000032;
-COP #$07                             ;C0FA33|0207    |      ;
-db $06,$9F,$4D,$FA                   ;C0FA35|        |00009F;
-COP #$09                             ;C0FA39|0209    |      ;
-db $06,$9F                           ;C0FA3B|        |00009F;
-COP #$1B                             ;C0FA3D|021B    |      ;
-db $43,$FA,$02,$00                   ;C0FA3F|        |0000FA;
-COP #$01                             ;C0FA43|0201    |      ;
-db $50,$FA                           ;C0FA45|        |C0FA41;
-COP #$3A                             ;C0FA47|023A    |      ;
-COP #$01                             ;C0FA49|0201    |      ;
-db $DC,$FA                           ;C0FA4B|        |0002FA;
-COP #$86                             ;C0FA4D|0286    |      ;
-RTL                                  ;C0FA4F|6B      |      ;
-db $10,$45,$69,$6E,$65,$20,$A0,$6B   ;C0FA50|        |C0FA97;
-db $61,$6D,$20,$AD,$0D,$B7,$57,$6F   ;C0FA58|        |00006D;
-db $6C,$6B,$65,$6E,$2E,$11,$3C,$98   ;C0FA60|        |00656B;
-db $53,$63,$68,$5B,$6C,$65,$72,$20   ;C0FA68|        |000063;
-db $21,$20,$83,$0D,$B4,$D3,$B6,$4C   ;C0FA70|        |000020;
-db $61,$67,$65,$20,$DA,$0D,$61,$6C   ;C0FA78|        |000067;
-db $6C,$65,$6E,$20,$4C,$65,$62,$65   ;C0FA80|        |006E65;
-db $77,$65,$73,$65,$6E,$20,$FD,$0D   ;C0FA88|        |000065;
-db $73,$70,$72,$65,$63,$68,$65,$6E   ;C0FA90|        |000070;
-db $2E,$11,$41,$75,$73,$20,$64,$69   ;C0FA98|        |004111;
-db $65,$73,$65,$6D,$20,$47,$72,$75   ;C0FAA0|        |000073;
-db $6E,$64,$20,$0D,$73,$6F,$6C,$6C   ;C0FAA8|        |002064;
-db $74,$65,$73,$74,$20,$83,$C0,$0D   ;C0FAB0|        |000065;
-db $4E,$61,$6D,$65,$6E,$20,$68,$61   ;C0FAB8|        |006D61;
-db $62,$65,$6E,$2E,$20,$53,$61,$67   ;C0FAC0|        |C06928;
-db $60,$20,$0D,$DB,$44,$65,$69,$6E   ;C0FAC8|        |      ;
-db $65,$6E,$20,$4E,$61,$6D,$65,$6E   ;C0FAD0|        |00006E;
-db $2E,$13,$32,$FB,$10,$02,$02,$2C   ;C0FAD8|        |003213;
-db $2E,$2E,$2E,$2E,$2E,$2E,$2E,$0D   ;C0FAE0|        |002E2E;
-db $57,$61,$73,$20,$C9,$BE,$69,$6E   ;C0FAE8|        |000061;
-db $74,$65,$72,$65,$73,$2D,$0D,$73   ;C0FAF0|        |000065;
-db $61,$6E,$74,$65,$72,$20,$4E,$61   ;C0FAF8|        |00006E;
-db $6D,$65,$2E,$11,$4E,$75,$6E,$20   ;C0FB00|        |002E65;
-db $67,$75,$74,$2E,$20,$87,$A9,$0D   ;C0FB08|        |000075;
-db $7A,$7B,$68,$6C,$74,$20,$AC,$44   ;C0FB10|        |      ;
-db $69,$63,$68,$2E,$20,$5A,$65,$72   ;C0FB18|        |      ;
-db $2D,$0D,$73,$74,$2A,$72,$65,$20   ;C0FB20|        |00730D;
-db $B9,$42,$2A,$73,$65,$20,$21,$13   ;C0FB28|        |002A42;
-db $32,$FB,$12,$08,$06,$04,$0C
+txt_shrine_clear_box:
+; @NEW_TEXT@
+; WFAK CLEARBOX $06 $04 CONT
+db $12,$08,$06,$04,$0C
+; @END@
 
 if defined("DEBUG")
 enable_debug:

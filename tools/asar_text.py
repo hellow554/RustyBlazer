@@ -163,6 +163,13 @@ class UnknownEscapeSequence(Exception):
         super().__init__(f"Unknown escape sequence \\`{what}`")
 
 
+class UnfinishedEscapeSequence(Exception):
+    def __init__(self) -> None:
+        super().__init__(
+            "Unfinished Escape sequence. If you happened to print a `\\`, use a double backslash `\\\\`"
+        )
+
+
 class UnknownKeyword(ParseException):
     def __init__(self, file: str, line: int, what: str):
         super().__init__(file, line, f"I don't know what `{what}` is")
@@ -217,12 +224,13 @@ class DataWidth(Enum):
 
 
 class TextMapper:
-    _regex = re.compile("( |,|\\.)")
+    _regex = re.compile("( |,|\\.|«|»)")
 
     @staticmethod
     def map(txt: str) -> list[int]:
         res = []
         needs_space = False
+        escape_start = None
         for word in TextMapper._regex.split(txt):
             if needs_space:
                 needs_space = False
@@ -242,17 +250,15 @@ class TextMapper:
                 it = iter(word)
                 for c in it:
                     if escape_start:
-                        if c == "\\":
-                            res.append(TextMapper._map_char("\\"))
-                        elif c == "x":
+                        if c == "x":
                             hi, lo = int(next(it), 16), int(next(it), 16)
                             res.append((hi << 4) | lo)
                         elif c == "n":
                             res.append(0x0D)
                         elif c == "0":
                             res.append(0x00)
-                        elif c == '"':
-                            res.append(ord('"'))
+                        elif c in ["\\", '"']:
+                            res.append(TextMapper._map_char(c))
                         else:
                             raise UnknownEscapeSequence(c)
                         escape_start = False
@@ -260,6 +266,9 @@ class TextMapper:
                         escape_start = True
                     else:
                         res.append(TextMapper._map_char(c))
+
+        if escape_start is True:
+            raise UnfinishedEscapeSequence()
 
         if needs_space:
             # we needed a space but we got none
@@ -293,15 +302,14 @@ class TextMapper:
 
     @staticmethod
     def _map_char(c: str) -> int:
-        if c.isascii() and c.isprintable():
-            return ord(c)
-
         r = {
             "ß": 0x25,
             "Ü": 0x28,
             "Ö": 0x29,
             "ö": 0x2A,
             "▶": 0x2B,
+            "«": 0x3C,
+            "»": 0x3E,
             "ü": 0x5B,
             "↑": 0x5C,
             "↗": 0x5D,
@@ -313,8 +321,12 @@ class TextMapper:
         }.get(c)
 
         if r is None:
-            raise TranslateException(c)
-        return r
+            if c.isascii() and c.isprintable():
+                return ord(c)
+            else:
+                raise TranslateException(c)
+        else:
+            return r
 
 
 Target = int | str
@@ -442,7 +454,7 @@ class Translator:
                         self._raise(UnclosedQuote)
                     elif text[next_pos - 1] == "\\":
                         # quote is escaped, search next one
-                        pos = next_pos
+                        pos = next_pos + 1
                     else:
                         pos = next_pos + 1
                         break
@@ -477,7 +489,10 @@ class Translator:
             new_line = False
             if arg.startswith('"'):
                 assert arg[-1] == '"'
-                self._append(TextMapper.map(arg[1:-1]))
+                try:
+                    self._append(TextMapper.map(arg[1:-1]))
+                except Exception as e:
+                    self._raise(ParseException, e)
                 new_line = True
             elif arg == "WFE":  # wait for enter
                 self._append(0x11)
@@ -543,7 +558,7 @@ class Translator:
                 label = next(iterator)
                 self._append(f"{label}:", None)
             elif arg == "*" or arg == "BOLD":  # toggle bold mode
-                peeked = iterator.peek(default="XYZ")
+                peeked = iterator.peek(default=None)
                 if peeked == "ON":
                     self._append([0x03, 0x24])
                     self._bold = True
@@ -562,6 +577,10 @@ class Translator:
                 self._append(0x09)
             elif arg == "CONT":  # continue with previous textbox settings
                 self._append(0x0C)
+            elif arg == "PLAYER":
+                self._append([2, 0])  # prints PLAYER
+            elif arg == "ENEMY":
+                self._append([2, 1])  # prints ENEMY
             elif arg == "PLAYER_NAME":  # player name lookup
                 self._append([2, 2])
             elif arg == "PLAYER_NAME8":  # player name lookup, but reduced to 8 chars
@@ -630,7 +649,8 @@ class Translator:
 
         append = self._to_append
         self._to_append = None
-        self._byte_list.append(append)
+        if append is not None:
+            self._byte_list.append(append)
 
     def _end_block(self, append_null=False):
         if self._byte_list is None:
@@ -655,7 +675,6 @@ class Translator:
 
     def _raise(self, type: type, *args) -> Never:
         assert self._cur_line is not None
-        from inspect import signature
 
         curried = partial(type, self._path, self._cur_line[0])
         raise curried(*args)
@@ -676,6 +695,6 @@ if __name__ == "__main__":
     main = sys.argv[1]
     try:
         crawl(Path(main))
-    except Exception as e:
+    except ParseException as e:
         print(f"\x1b[1;31mError:\x1b[0m {e}", file=sys.stderr)
         sys.exit(1)

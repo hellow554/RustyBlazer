@@ -11,7 +11,7 @@ MapChangePostHook:
     LDA $81BA0D, X
     CMP #$FF
     BEQ .out
-    LDA $81BA0D+$B, X
+    LDA $81BA0D + $B, X
     CMP $1C6A ; current map number
     BNE .next
     INC LairsTotal

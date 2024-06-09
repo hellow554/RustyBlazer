@@ -2059,6 +2059,7 @@ macro CreateLut(...)
 
     while !idx < sizeof(...)
         db "<...[!idx]>"
+        ; $C6C000 is the Words_LUT label
         pad $C6C000+(!idx+1)*!WORDLUT_ENTRY_SIZE
         !idx #= !idx+1
     endwhile

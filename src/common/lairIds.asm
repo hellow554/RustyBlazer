@@ -21,3 +21,6 @@
 !Lair_A1_Crabwalk_Guy           = $29
 !Lair_A1_SnitchTulip            = $2E
 !Lair_A1_OldManGoat             = $2F
+!Lair_A4_OldManTalking          = $C9
+!Lair_A4_HusbandOfWitch         = $D3
+!Lair_A4_Witch                  = $EA

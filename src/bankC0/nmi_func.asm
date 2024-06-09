@@ -14,14 +14,14 @@ NMI_Func:
     STZ.W HDMAEN
     JSR.W TransferOAM
     JSR.W TransferCgdata
-    JSR.W CODE_C0844D
+    JSR.W TransferL3ToVram
     JSR.W SetScrollRegister
-    JSR.W CODE_C084F4                    ;C08388|20F484  |C084F4;
-    JSR.W CODE_C08511                    ;C0838B|201185  |C08511;
-    JSR.W CODE_C0856F                    ;C0838E|206F85  |C0856F;
-    JSR.W CODE_C085B7                    ;C08391|20B785  |C085B7;
-    JSL.L CODE_C0EC11                    ;C08394|2211EC80|80EC11;
-    LDA.B HDMA_channel_enable_bits                            ;C08398|A542    |000042;
+    JSR.W CODE_C084F4
+    JSR.W CODE_C08511
+    JSR.W CODE_C0856F
+    JSR.W CODE_C085B7
+    JSL.L CODE_C0EC11
+    LDA.B HDMA_channel_enable_bits
     STA.W HDMAEN
 
     ; wait for the readout of the joypad to be completed
@@ -29,7 +29,7 @@ NMI_Func:
 
 
     REP #$30
-    INC.W $0312
+    INC.W _0312
     LDA.W inhibit_buttons_readout
     BNE .skip_readout
     LDA.W JOY1L
@@ -44,15 +44,15 @@ NMI_Func:
     STA.W buttons_pressed
     PLA
     EOR.W #$FFFF
-    ORA.W $032A
-    STA.W $032A
+    ORA.W _032A
+    STA.W _032A
     AND.W buttons_pressed
 
 .skip_readout:
     STA.W buttons_pressed
     LDA.W $039A
     BNE CODE_C083EB
-    LDA.W $0312
+    LDA.W _0312
     LSR A
     LDA.W #$0000
     BCS CODE_C083E8
@@ -71,43 +71,49 @@ CODE_C083EB:
     RTI
 
 TransferOAM:
-    LDX.W #0
+    ; DMA0 is used to transfer the data to OAMDATA
+
+    LDX.W #0 ; one register, write once
     STX.W OAMADDL
-    STZ.W DMAP0
-    LDA.B #OAMDATA
-    STA.W BBAD0
-    LDX.W #oam_data
+    STZ.W DMAP0 
+    LDA.B #OAMDATA ; set destination to OAMDATA register
+    STA.W BBAD0 
+    LDX.W #oam_data ; set source address
     STX.W A1T0L
-    LDA.B #0
+    ; for whatever reason they used 0 here, instead of 7F
+    ; let's make the intention clear, but use 0 as value
+    LDA.B #bank(oam_data) & 0
     STA.W A1B0
-    LDX.W #datasize(oam_data)
+    LDX.W #datasize(oam_data) ; set size to transfer
     STX.W DAS0L
-    LDA.B #$01
+    LDA.B #%1 ; enable dma0
     STA.W MDMAEN
     RTS
 
 TransferCgdata:
-    STZ.W CGADD
-    STZ.W DMAP1
-    LDA.B #CGDATA
+    ; we use DMA1 to transfer the data to the ColorPalette (CGRAM)
+    
+    STZ.W CGADD ; select the first index, so DMA transfer can be used
+    STZ.W DMAP1 ; one register, write once
+    LDA.B #CGDATA ; load destination `CGDATA` into DMA destination register
     STA.W BBAD1
-    LDX.W #0
+    LDX.W #CgData.data ; load source addr to dma
     STX.W A1T1L
-    LDA.B #bank(cg_data)
+    LDA.B #bank(CgData.data) ; load source bank to dma
     STA.W A1B1
-    LDX.W #cg_data
+    LDX.W #datasize(CgData.data) ; load size to transfer to dma
     STX.W DAS1L
-    LDA.B #2
+    LDA.B #%10 ; enable DMA1
     STA.W MDMAEN
-    LDA.L coldata_1
+    LDA.L CgData.blue
     STA.W COLDATA
-    LDA.L coldata_2
+    LDA.L CgData.green
     STA.W COLDATA
-    LDA.L coldata_3
+    LDA.L CgData.red
     STA.W COLDATA
     RTS
 
-CODE_C0844D:
+TransferL3ToVram:
     LDA.W $1C7C
     BEQ + : RTS : +
 
@@ -118,27 +124,27 @@ CODE_C0844D:
     BNE .CODE_C0846E
     LDX.W #$5800
     STX.W VMADDL
-    LDX.W #$7000
+    LDX.W #L3_Text
     STX.W A1T2L
     STZ.W $03BA
-    BRA .CODE_C0847F
+    BRA .beginTransfer
 
 .CODE_C0846E:
     LDX.W #$5C00
     STX.W VMADDL
-    LDX.W #$7800
+    LDX.W #SomeOtherTypeToTransferToVram
     STX.W A1T2L
     LDA.B #$02
     TRB.W $03BA
 
-.CODE_C0847F:
+.beginTransfer:
     LDA.B #$01
     STA.W DMAP2
     LDA.B #VMDATAL
     STA.W BBAD2
-    LDA.B #$7F
+    LDA.B #<:L3_Text
     STA.W A1B2
-    LDX.W #$0800
+    LDX.W #datasize(L3_Text)
     STX.W DAS2L
     LDA.B #$04
     STA.W MDMAEN
@@ -181,4 +187,17 @@ SetScrollRegister2:
     LDA.W bg1_vofs+1, X
     AND.B #$03
     STA.W BG1VOFS, Y
+    RTS
+
+CODE_C084F4:
+    LDX.W #$3000
+    STX.B $32
+    LDX.W #$3102
+    STX.B $35
+    JSL.L CODE_C2857D
+    LDX.W #$3204
+    STX.B $32
+    LDX.W #$3306
+    STX.B $35
+    JSL.L CODE_C2857D
     RTS
