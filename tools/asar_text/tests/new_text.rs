@@ -1,21 +1,5 @@
-use std::borrow::Cow;
-
-use asar_text::{Translator, TranspileResult};
-
-fn run_test(content: &str) -> TranspileResult {
-    Translator::transpile("a.asm", content).unwrap()
-}
-
-#[track_caller]
-fn assert_simple(content: &str, expected: &str) {
-    let res = run_test(content);
-    assert_eq!(res.inc_paths, Vec::<Cow<str>>::new());
-    if let Some(res) = res.transpiled {
-        assert_eq!(expected, res.join("\n"));
-    } else {
-        assert_eq!(content, expected);
-    }
-}
+mod common;
+use common::assert_simple;
 
 #[test]
 fn leave_others_alone() {
@@ -149,5 +133,31 @@ fn test_punctuation() {
 ; "Na siehst Du ! Ich wußte daß Du es \nkannst. !"
 db 'N','a',' ','s','i','e','h','s','t',' ',$83,'!',' ',$8F,'w','u','ß','t','e',' ',$BA,$83,$C3,$0D,'k','a','n','n','s','t','.',' ','!',$0D
 ; @END@"#,
+    )
+}
+
+#[test]
+fn with_previous_stuff() {
+    assert_simple(
+        r#"\
+LDA xxx
+; @NEW_TEXT@
+; "Ein magischer Tornado"
+db ABC
+DEF GHI #$82938 ; just a comment
+;; this must be preserved!
+ALKSDJLKASD
+;; this as well!
+; @END@
+Foo Bar"#,
+        r#"\
+LDA xxx
+; @NEW_TEXT@
+; "Ein magischer Tornado"
+;; this must be preserved!
+;; this as well!
+db 'E','i','n',' ','m','a','g','i','s','c','h','e','r',' ','T','o','r','n','a','d','o',$0D
+; @END@
+Foo Bar"#,
     )
 }
