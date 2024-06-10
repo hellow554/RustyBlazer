@@ -1,0 +1,9 @@
+[package]
+name = "asar_text"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+itertools = "0.13"
+regex = "1.10"
+snafu = "0.8"

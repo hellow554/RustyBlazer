@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["tools/asar_text"]
+
+[profile.release]
+debug = true

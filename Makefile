@@ -17,9 +17,13 @@ clean_german:
 	@echo "Removing german.sfc"
 	@$(RM) german.sfc
 
-german.sfc: $(shell find src -type f) Makefile tools/asar_text.py clean_german
+compile_asar_text:
+	@echo "Compiling Precompiler"
+	@cargo build -rq
+
+german.sfc: $(shell find src -type f) Makefile compile_asar_text clean_german
 	@echo "Precompile src/main.asm"
-	@tools/asar_text.py src/main.asm
+	@cargo run -rq -- src/main.asm
 	@echo "Compiling src/main.asm"
 	@tools/asar ${ASAR_FLAGS} --symbols=wla src/main.asm  $@
 
@@ -32,6 +36,10 @@ clean_rando:
 	@echo "Removing rando.sfc"
 	@$(RM) rando.sfc
 
-clean: clean_german clean_rando
+clean_asar_text:
+	@echo "Cleaning Cargo Workspace"
+	@cargo clean -q
 
-.PHONY: clean_german clean_rando
+clean: clean_german clean_rando clean_asar_text
+
+.PHONY: clean_german clean_rando clean_asar_text compile_asar
