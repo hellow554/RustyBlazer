@@ -59,24 +59,19 @@ impl<'a> CurrentBlock<'a> {
 
     fn merge_add(&mut self, val: Value<'a>) {
         let last_line = self.line_values.last_mut().unwrap();
-        let can_be_merged = !matches!(val, Value::Label(_, _));
-        if can_be_merged {
-            if let Some(last) = last_line.last_mut() {
-                if let Value::Multiple(multi) = last {
-                    assert!(!multi.is_empty(), "LOGIC ERROR! MULTI SHOULD NOT BE EMPTY!");
+        if let Some(last) = last_line.last_mut() {
+            if let Value::Multiple(multi) = last {
+                assert!(!multi.is_empty(), "LOGIC ERROR! MULTI SHOULD NOT BE EMPTY!");
 
-                    let last = multi.last_mut().unwrap();
-                    if last.prefix() == val.prefix() {
-                        multi.push(val);
-                    } else {
-                        last_line.push(val);
-                    }
-                } else if last.prefix() == val.prefix() {
-                    let l = last_line.pop().unwrap();
-                    last_line.push(Value::Multiple(vec![l, val]));
+                let last = multi.last_mut().unwrap();
+                if last.prefix() == val.prefix() {
+                    multi.push(val);
                 } else {
                     last_line.push(val);
                 }
+            } else if last.prefix() == val.prefix() {
+                let l = last_line.pop().unwrap();
+                last_line.push(Value::Multiple(vec![l, val]));
             } else {
                 last_line.push(val);
             }
