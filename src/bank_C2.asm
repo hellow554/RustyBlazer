@@ -7151,16 +7151,16 @@ db $01,$08,$04
 db 'A','b','w','e','h','r',$14,$03,':'
 db $01,$C8,$04
 db 'W','a','f','f','e',' ',':'
-db $05 : dw AllItemsTable : dw Equipment.sword
+db $05 : dw AllItemsTable,Equipment.sword
 db $01,$48,$05
 db 'S','c','h','u','t','z',':'
-db $05 : dw AllItemsTable : dw Equipment.armor
+db $05 : dw AllItemsTable,Equipment.armor
 db $01,$C8,$05
 db $9A,':'
-db $05 : dw AllItemsTable : dw Equipment.magic
+db $05 : dw AllItemsTable,Equipment.magic
 db $01,$48,$06
 db 'D','i','n','g','e',' ',':'
-db $05 : dw AllItemsTable : dw Equipment.item
+db $05 : dw AllItemsTable,Equipment.item
 db $00
 ; @ENDSTRING@
 
@@ -7265,13 +7265,13 @@ db $01,$08,$04
 db $07,$16,$08
 db $01,$8A,$04
 db ' ','W','a','f','.',':'
-db $05 : dw AllItemsTable : dw Equipment.sword
+db $05 : dw AllItemsTable,Equipment.sword
 db $0D,$0D,' ','S','c','h','.',':'
-db $05 : dw AllItemsTable : dw Equipment.armor
+db $05 : dw AllItemsTable,Equipment.armor
 db $0D,$0D,' ','M','a','g','.',':'
-db $05 : dw AllItemsTable : dw Equipment.magic
+db $05 : dw AllItemsTable,Equipment.magic
 db $0D,$0D,' ','D','i','n','g',':'
-db $05 : dw AllItemsTable : dw Equipment.item
+db $05 : dw AllItemsTable,Equipment.item
 db $00
 ; @ENDSTRING@
 
@@ -7391,7 +7391,7 @@ Txt_Soul_Still_Captured:
 ; "ist noch gefangen." -> Txt_Rcv_End
 db $10
 db $03,$24
-db $05 : dw CharacterNamesTable : dw text_lut_id
+db $05 : dw CharacterNamesTable,text_lut_id
 db $03,$20,$0D
 db $D2,$E0,'g','e','f','a','n','g','e','n','.',$13 : dw Txt_Rcv_End
 ; @END@
@@ -7405,7 +7405,7 @@ Txt_Soul_Release:
 db $10
 db $02,$02,' ','b','e','f','r','e','i','t','e',' ',$0D
 db $03,$24
-db $05 : dw CharacterNamesTable : dw text_lut_id
+db $05 : dw CharacterNamesTable,text_lut_id
 db $03,$20,'.',$13 : dw Txt_Rcv_End
 ; @END@
 
@@ -7418,7 +7418,7 @@ Txt_Item_Received:
 db $10
 db $02,$02,' ','e','r','h','i','e','l','t','.',$0D
 db $03,$24
-db $05 : dw AllItemsTable : dw text_lut_id
+db $05 : dw AllItemsTable,text_lut_id
 db $03,$20,'.',$13 : dw Txt_Rcv_End
 ; @END@
 
