@@ -14,7 +14,7 @@ pub enum Error {
         source: ParseError,
     },
     #[snafu(display("IO Error occured while processing `{path}`: {source}"))]
-    Io { source: io::Error, path: String },
+    Io { path: String, source: io::Error },
 }
 
 #[derive(Debug, Snafu)]

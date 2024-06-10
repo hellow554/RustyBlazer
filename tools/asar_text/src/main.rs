@@ -16,42 +16,36 @@ use snafu::{ErrorCompat, ResultExt};
 use translator::Translator;
 
 fn crawl(path: &Path) -> Result {
-    let mut todo = vec![path.to_owned()];
+    let mut next_paths = vec![path.to_owned()];
 
-    while let Some(path) = todo.pop() {
+    while let Some(path) = next_paths.pop() {
+        let snafu = IoSnafu {
+            path: path.to_string_lossy(),
+        };
+
         let mut file = File::options()
             .read(true)
             .write(true)
             .create(false)
             .open(&path)
-            .context(IoSnafu {
-                path: path.to_string_lossy(),
-            })?;
+            .context(snafu.clone())?;
 
-        let content = std::io::read_to_string(&file).context(IoSnafu {
-            path: path.to_str().unwrap(),
-        })?;
+        let content = std::io::read_to_string(&file).context(snafu.clone())?;
 
         let translator =
             Translator::transpile(path.file_name().unwrap().to_str().unwrap(), &content)?;
 
         if let Some(new_content) = translator.transpiled {
             // truncate the file and set the pointer to the start of the file
-            file.set_len(0).context(IoSnafu {
-                path: path.to_string_lossy(),
-            })?;
-            file.seek(std::io::SeekFrom::Start(0)).context(IoSnafu {
-                path: path.to_string_lossy(),
-            })?;
-            file.write_all(new_content.join("\n").as_bytes())
+            file.set_len(0)
+                .and_then(|_| file.seek(std::io::SeekFrom::Start(0)))
+                .and_then(|_| file.write_all(new_content.join("\n").as_bytes()))
                 .and_then(|_| file.write_all(b"\n"))
-                .context(IoSnafu {
-                    path: path.to_string_lossy(),
-                })?;
+                .context(snafu)?;
         }
 
         let parent_path = path.parent().unwrap();
-        todo.extend(
+        next_paths.extend(
             translator
                 .inc_paths
                 .into_iter()
