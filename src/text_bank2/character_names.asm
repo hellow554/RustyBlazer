@@ -14,108 +14,108 @@ CharacterNamesTable:
     dw .maid, .singer, .magridd, .leo, .queen2
 
 .old_man:
-db $C0,$61,$6C,$74,$65,$6E,$20,$4D,$61,$6E,$6E,$00 ; @STRING@ "einen alten Mann"
+db $C0,'a','l','t','e','n',' ','M','a','n','n',$00 ;"einen alten Mann"
 .old_woman:
-db $BF,$61,$6C,$74,$65,$20,$46,$72,$61,$75,$00 ; @STRING@ "eine alte Frau"
+db $BF,'a','l','t','e',' ','F','r','a','u',$00 ;"eine alte Frau"
 .a_boy:
-db $C0,$4A,$75,$6E,$67,$65,$6E,$00 ; @STRING@ "einen Jungen"
+db $C0,'J','u','n','g','e','n',$00 ;"einen Jungen"
 .lisa
-db $4C,$69,$73,$61,$00 ; @STRING@ "Lisa"
+db 'L','i','s','a',$00 ;"Lisa"
 .chief:
-db $B7,$42,$5B,$72,$67,$65,$72,$6D,$65,$69,$73,$74,$65,$72,$00 ; @STRING@ "den Bürgermeister"
+db $B7,'B','ü','r','g','e','r','m','e','i','s','t','e','r',$00 ;"den Bürgermeister"
 .bridge_guard:
-db $B7,$42,$72,$5B,$63,$6B,$65,$6E,$77,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "den Brückenwächter"
+db $B7,'B','r','ü','c','k','e','n','w','ä','c','h','t','e','r',$00 ;"den Brückenwächter"
 .architect:
-db $C0,$41,$72,$63,$68,$69,$74,$65,$6B,$74,$00 ; @STRING@ "einen Architekt"
+db $C0,'A','r','c','h','i','t','e','k','t',$00 ;"einen Architekt"
 .son_of_shop_owner:
-db $4B,$69,$6E,$64,$20,$B8,$42,$65,$73,$69,$74,$7A,$65,$72,$73,$00 ; @STRING@ "Kind des Besitzers"
+db 'K','i','n','d',' ',$B8,'B','e','s','i','t','z','e','r','s',$00 ;"Kind des Besitzers"
 .shop_owner:
-db $B5,$4C,$61,$64,$65,$6E,$62,$65,$73,$69,$74,$7A,$65,$72,$69,$6E,$00 ; @STRING@ "die Ladenbesitzerin"
+db $B5,'L','a','d','e','n','b','e','s','i','t','z','e','r','i','n',$00 ;"die Ladenbesitzerin"
 .goat:
-db $BF,$5A,$69,$65,$67,$65,$00 ; @STRING@ "eine Ziege"
+db $BF,'Z','i','e','g','e',$00 ;"eine Ziege"
 .lonely_goat:
-db $BF,$65,$69,$6E,$73,$61,$6D,$65,$20,$5A,$69,$65,$67,$65,$00 ; @STRING@ "eine einsame Ziege"
+db $BF,'e','i','n','s','a','m','e',' ','Z','i','e','g','e',$00 ;"eine einsame Ziege"
 .tulip:
-db $BF,$54,$75,$6C,$70,$65,$00 ; @STRING@ "eine Tulpe"
+db $BF,'T','u','l','p','e',$00 ;"eine Tulpe"
 .ivy:
-db $45,$66,$65,$75,$00 ; @STRING@ "Efeu"
+db 'E','f','e','u',$00 ;"Efeu"
 .water_mill_keeper:
-db $57,$61,$73,$73,$65,$72,$6D,$5B,$68,$6C,$65,$6E,$20,$57,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "Wassermühlen Wächter"
+db 'W','a','s','s','e','r','m','ü','h','l','e','n',' ','W','ä','c','h','t','e','r',$00 ;"Wassermühlen Wächter"
 .squirrel:
-db $BE,$45,$69,$63,$68,$68,$2A,$72,$6E,$63,$68,$65,$6E,$00 ; @STRING@ "ein Eichhörnchen"
+db $BE,'E','i','c','h','h','ö','r','n','c','h','e','n',$00 ;"ein Eichhörnchen"
 .deer:
-db $BE,$52,$65,$68,$00 ; @STRING@ "ein Reh"
+db $BE,'R','e','h',$00 ;"ein Reh"
 .crocodil:
-db $BE,$4B,$72,$6F,$6B,$6F,$64,$69,$6C,$00 ; @STRING@ "ein Krokodil"
+db $BE,'K','r','o','k','o','d','i','l',$00 ;"ein Krokodil"
 .turbo:
-db $20,$3C,$54,$75,$72,$62,$6F,$3E,$2C,$20,$B7,$48,$75,$6E,$64,$00 ; @STRING@ " <Turbo>, den Hund"
+db ' ','<','T','u','r','b','o','>',',',' ',$B7,'H','u','n','d',$00 ;" <Turbo>, den Hund"
 .guardian:
-db $57,$6F,$6F,$64,$60,$73,$20,$57,$7B,$63,$68,$74,$65,$72,$00 ; @STRING@ "Wood`s Wächter"
+db 'W','o','o','d','`','s',' ','W','ä','c','h','t','e','r',$00 ;"Wood`s Wächter"
 .mole:
-db $C0,$4D,$61,$75,$6C,$77,$75,$72,$66,$00 ; @STRING@ "einen Maulwurf"
+db $C0,'M','a','u','l','w','u','r','f',$00 ;"einen Maulwurf"
 .none:
-db $6B,$65,$69,$6E,$65,$00 ; @STRING@ "keine"
+db 'k','e','i','n','e',$00 ;"keine"
 .chief2:
-db $B7,$42,$5B,$72,$67,$65,$72,$6D,$65,$69,$73,$74,$65,$72,$00 ; @STRING@ "den Bürgermeister"
+db $B7,'B','ü','r','g','e','r','m','e','i','s','t','e','r',$00 ;"den Bürgermeister"
 .bird:
-db $C0,$56,$6F,$67,$65,$6C,$00 ; @STRING@ "einen Vogel"
+db $C0,'V','o','g','e','l',$00 ;"einen Vogel"
 .dog:
-db $C0,$48,$75,$6E,$64,$00 ; @STRING@ "einen Hund"
+db $C0,'H','u','n','d',$00 ;"einen Hund"
 .mermaid:
-db $BF,$4D,$65,$65,$72,$6A,$75,$6E,$67,$66,$72,$61,$75,$00 ; @STRING@ "eine Meerjungfrau"
+db $BF,'M','e','e','r','j','u','n','g','f','r','a','u',$00 ;"eine Meerjungfrau"
 .dolphin:
-db $C0,$44,$65,$6C,$70,$68,$69,$6E,$00 ; @STRING@ "einen Delphin"
+db $C0,'D','e','l','p','h','i','n',$00 ;"einen Delphin"
 .angelfish:
-db $C0,$45,$6E,$67,$65,$6C,$66,$69,$73,$63,$68,$00 ; @STRING@ "einen Engelfisch"
+db $C0,'E','n','g','e','l','f','i','s','c','h',$00 ;"einen Engelfisch"
 .queen:
-db $B5,$4B,$2A,$6E,$69,$67,$69,$6E,$00 ; @STRING@ "die Königin"
+db $B5,'K','ö','n','i','g','i','n',$00 ;"die Königin"
 .lue:
-db $3C,$4C,$75,$65,$3E,$2C,$20,$B7,$44,$65,$6C,$70,$68,$69,$6E,$00 ; @STRING@ "<Lue>, den Delphin"
+db '<','L','u','e','>',',',' ',$B7,'D','e','l','p','h','i','n',$00 ;"<Lue>, den Delphin"
 .mermaid_statue:
-db $4D,$65,$65,$72,$6A,$75,$6E,$67,$66,$72,$61,$75,$73,$74,$61,$74,$75,$65,$00 ; @STRING@ "Meerjungfraustatue"
+db 'M','e','e','r','j','u','n','g','f','r','a','u','s','t','a','t','u','e',$00 ;"Meerjungfraustatue"
 .boy:
-db $C0,$4A,$75,$6E,$67,$65,$6E,$00 ; @STRING@ "einen Jungen"
+db $C0,'J','u','n','g','e','n',$00 ;"einen Jungen"
 .girl:
-db $BE,$4D,$7B,$64,$63,$68,$65,$6E,$00 ; @STRING@ "ein Mädchen"
+db $BE,'M','ä','d','c','h','e','n',$00 ;"ein Mädchen"
 .grandfather:
-db $C0,$47,$72,$6F,$25,$76,$61,$74,$65,$72,$00 ; @STRING@ "einen Großvater"
+db $C0,'G','r','o','ß','v','a','t','e','r',$00 ;"einen Großvater"
 .grandmother:
-db $BF,$47,$72,$6F,$25,$6D,$75,$74,$74,$65,$72,$00 ; @STRING@ "eine Großmutter"
+db $BF,'G','r','o','ß','m','u','t','t','e','r',$00 ;"eine Großmutter"
 .snail:
-db $BF,$53,$63,$68,$6E,$65,$63,$6B,$65,$00 ; @STRING@ "eine Schnecke"
+db $BF,'S','c','h','n','e','c','k','e',$00 ;"eine Schnecke"
 .king:
-db $B7,$4B,$2A,$6E,$69,$67,$00 ; @STRING@ "den König"
+db $B7,'K','ö','n','i','g',$00 ;"den König"
 .mushroom:
-db $C0,$50,$69,$6C,$7A,$00 ; @STRING@ "einen Pilz"
+db $C0,'P','i','l','z',$00 ;"einen Pilz"
 .nome:
-db $3C,$4E,$6F,$6D,$65,$3E,$2C,$20,$B5,$53,$63,$68,$6E,$65,$63,$6B,$65,$00 ; @STRING@ "<Nome>, die Schnecke"
+db '<','N','o','m','e','>',',',' ',$B5,'S','c','h','n','e','c','k','e',$00 ;"<Nome>, die Schnecke"
 .stairs:
-db $BF,$54,$72,$65,$70,$70,$65,$00 ; @STRING@ "eine Treppe"
+db $BF,'T','r','e','p','p','e',$00 ;"eine Treppe"
 .great_door:
-db $BF,$67,$72,$6F,$25,$65,$20,$54,$5B,$72,$00 ; @STRING@ "eine große Tür"
+db $BF,'g','r','o','ß','e',' ','T','ü','r',$00 ;"eine große Tür"
 .cat:
-db $BF,$4B,$61,$74,$7A,$65,$00 ; @STRING@ "eine Katze"
+db $BF,'K','a','t','z','e',$00 ;"eine Katze"
 .plant:
-db $BF,$50,$66,$6C,$61,$6E,$7A,$65,$00 ; @STRING@ "eine Pflanze"
+db $BF,'P','f','l','a','n','z','e',$00 ;"eine Pflanze"
 .mouse:
-db $BF,$4D,$61,$75,$73,$00 ; @STRING@ "eine Maus"
+db $BF,'M','a','u','s',$00 ;"eine Maus"
 .drawers:
-db $4B,$69,$73,$74,$65,$20,$DA,$53,$63,$68,$75,$62,$6C,$61,$64,$65,$6E,$00 ; @STRING@ "Kiste mit Schubladen"
+db 'K','i','s','t','e',' ',$DA,'S','c','h','u','b','l','a','d','e','n',$00 ;"Kiste mit Schubladen"
 .doll:
-db $BF,$50,$75,$70,$70,$65,$00 ; @STRING@ "eine Puppe"
+db $BF,'P','u','p','p','e',$00 ;"eine Puppe"
 .marie:
-db $3C,$4D,$61,$72,$69,$65,$3E,$2C,$20,$B5,$50,$75,$70,$70,$65,$00 ; @STRING@ "<Marie>, die Puppe"
+db '<','M','a','r','i','e','>',',',' ',$B5,'P','u','p','p','e',$00 ;"<Marie>, die Puppe"
 .town_model:
-db $BE,$4D,$6F,$64,$65,$6C,$20,$B6,$53,$74,$61,$64,$74,$00 ; @STRING@ "ein Model der Stadt"
+db $BE,'M','o','d','e','l',' ',$B6,'S','t','a','d','t',$00 ;"ein Model der Stadt"
 .soldier:
-db $C0,$53,$6F,$6C,$64,$61,$74,$00 ; @STRING@ "einen Soldat"
+db $C0,'S','o','l','d','a','t',$00 ;"einen Soldat"
 .maid:
-db $BF,$4A,$75,$6E,$67,$66,$72,$61,$75,$00 ; @STRING@ "eine Jungfrau"
+db $BF,'J','u','n','g','f','r','a','u',$00 ;"eine Jungfrau"
 .singer:
-db $C0,$53,$7B,$6E,$67,$65,$72,$00 ; @STRING@ "einen Sänger"
+db $C0,'S','ä','n','g','e','r',$00 ;"einen Sänger"
 .magridd:
-db $91,$4D,$61,$67,$72,$69,$64,$64,$00 ; @STRING@ "König Magridd"
+db $91,'M','a','g','r','i','d','d',$00 ;"König Magridd"
 .leo:
-db $44,$72,$2E,$4C,$65,$6F,$00 ; @STRING@ "Dr.Leo"
+db 'D','r','.','L','e','o',$00 ;"Dr.Leo"
 .queen2:
-db $B5,$4B,$2A,$6E,$69,$67,$69,$6E,$00 ; @STRING@ "die Königin"
+db $B5,'K','ö','n','i','g','i','n',$00 ;"die Königin"

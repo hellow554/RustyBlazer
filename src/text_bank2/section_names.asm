@@ -54,35 +54,35 @@ SectionNamesTable:
 
 ; --- Act1 ---
 .gv_shrine
-db $20,$20,$54,$65,$6D,$70,$65,$6C,$20,$D3,$47,$72,$61,$73,$73,$20,$56,$61,$6C,$6C,$65,$79,$00 ; @STRING@ "  Tempel in Grass Valley"
+db ' ',' ','T','e','m','p','e','l',' ',$D3,'G','r','a','s','s',' ','V','a','l','l','e','y',$00 ;"  Tempel in Grass Valley"
 .gv_highlands:
-db $48,$6F,$63,$68,$6C,$61,$6E,$64,$20,$EE,$47,$72,$61,$73,$73,$20,$56,$61,$6C,$6C,$65,$79,$00 ; @STRING@ "Hochland von Grass Valley"
+db 'H','o','c','h','l','a','n','d',' ',$EE,'G','r','a','s','s',' ','V','a','l','l','e','y',$00 ;"Hochland von Grass Valley"
 .gv_secret_passage:
-db $20,$20,$47,$65,$68,$65,$69,$6D,$67,$61,$6E,$67,$20,$B6,$4B,$69,$6E,$64,$65,$72,$00 ; @STRING@ "  Geheimgang der Kinder"
+db ' ',' ','G','e','h','e','i','m','g','a','n','g',' ',$B6,'K','i','n','d','e','r',$00 ;"  Geheimgang der Kinder"
 .gv_treasure_room:
-db $14,$07,$53,$63,$68,$61,$74,$7A,$6B,$61,$6D,$6D,$65,$72,$00 ; @STRING@ "       Schatzkammer"
+db $14,$07,'S','c','h','a','t','z','k','a','m','m','e','r',$00 ;"       Schatzkammer"
 .gv_chief_room:
-db $20,$52,$61,$75,$6D,$20,$B8,$42,$5B,$72,$67,$65,$72,$6D,$65,$69,$73,$74,$65,$72,$73,$00 ; @STRING@ " Raum des Bürgermeisters"
+db ' ','R','a','u','m',' ',$B8,'B','ü','r','g','e','r','m','e','i','s','t','e','r','s',$00 ;" Raum des Bürgermeisters"
 .gv_ug_west:
-db $20,$20,$55,$6E,$74,$65,$72,$69,$72,$64,$69,$73,$63,$68,$65,$73,$20,$53,$63,$68,$6C,$6F,$25,$00 ; @STRING@ "  Unterirdisches Schloß"
+db ' ',' ','U','n','t','e','r','i','r','d','i','s','c','h','e','s',' ','S','c','h','l','o','ß',$00 ;"  Unterirdisches Schloß"
 .gv_ug_east:
-db $20,$20,$55,$6E,$74,$65,$72,$69,$72,$64,$69,$73,$63,$68,$65,$73,$20,$53,$63,$68,$6C,$6F,$25,$00 ; @STRING@ "  Unterirdisches Schloß"
+db ' ',' ','U','n','t','e','r','i','r','d','i','s','c','h','e','s',' ','S','c','h','l','o','ß',$00 ;"  Unterirdisches Schloß"
 .gv_leos_paintings1:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$42,$69,$6C,$64,$65,$72,$00 ; @STRING@ "       Leo`s Bilder"
+db $14,$07,'L','e','o','`','s',' ','B','i','l','d','e','r',$00 ;"       Leo`s Bilder"
 .gv_leos_paintings2:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$42,$69,$6C,$64,$65,$72,$00 ; @STRING@ "       Leo`s Bilder"
+db $14,$07,'L','e','o','`','s',' ','B','i','l','d','e','r',$00 ;"       Leo`s Bilder"
 .gv_leos_paintings3:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$42,$69,$6C,$64,$65,$72,$00 ; @STRING@ "       Leo`s Bilder"
+db $14,$07,'L','e','o','`','s',' ','B','i','l','d','e','r',$00 ;"       Leo`s Bilder"
 .gv_tulip_dream:
-db $14,$05,$A5,$B6,$54,$75,$6C,$70,$65,$00 ; @STRING@ "     Traum der Tulpe"
+db $14,$05,$A5,$B6,'T','u','l','p','e',$00 ;"     Traum der Tulpe"
 .gv_leos_paintings4:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$42,$69,$6C,$64,$65,$72,$00 ; @STRING@ "       Leo`s Bilder"
+db $14,$07,'L','e','o','`','s',' ','B','i','l','d','e','r',$00 ;"       Leo`s Bilder"
 .gv_boss_room:
-db $14,$04,$95,$B8,$42,$69,$6C,$64,$65,$73,$00 ; @STRING@ "    Monster des Bildes"
+db $14,$04,$95,$B8,'B','i','l','d','e','s',$00 ;"    Monster des Bildes"
 .gv_trial_room:
-db $14,$07,$47,$65,$72,$69,$63,$68,$74,$73,$73,$61,$61,$6C,$00 ; @STRING@ "       Gerichtssaal"
+db $14,$07,'G','e','r','i','c','h','t','s','s','a','a','l',$00 ;"       Gerichtssaal"
 .lisas_dream:
-db $14,$07,$4C,$69,$73,$61,$60,$73,$20,$54,$72,$61,$75,$6D,$00 ; @STRING@ "       Lisa`s Traum"
+db $14,$07,'L','i','s','a','`','s',' ','T','r','a','u','m',$00 ;"       Lisa`s Traum"
 .gv_zero0: db 0
 .gv_zero1: db 0
 .gv_zero2: db 0
@@ -91,70 +91,70 @@ db $14,$07,$4C,$69,$73,$61,$60,$73,$20,$54,$72,$61,$75,$6D,$00 ; @STRING@ "     
 
 ; --- Act2 ---
 .gw_shrine:
-db $20,$20,$54,$65,$6D,$70,$65,$6C,$20,$EE,$47,$72,$65,$65,$6E,$20,$57,$6F,$6F,$64,$00 ; @STRING@ "  Tempel von Green Wood"
+db ' ',' ','T','e','m','p','e','l',' ',$EE,'G','r','e','e','n',' ','W','o','o','d',$00 ;"  Tempel von Green Wood"
 .gw_woods:
-db $20,$20,$57,$7B,$6C,$64,$65,$72,$20,$EE,$47,$72,$65,$65,$6E,$20,$57,$6F,$6F,$64,$00 ; @STRING@ "  Wälder von Green Wood"
+db ' ',' ','W','ä','l','d','e','r',' ',$EE,'G','r','e','e','n',' ','W','o','o','d',$00 ;"  Wälder von Green Wood"
 .gw_mole_hole:
-db $20,$88,$42,$61,$75,$20,$C5,$4D,$61,$75,$6C,$77,$75,$72,$66,$73,$00 ; @STRING@ " Der Bau eines Maulwurfs"
+db ' ',$88,'B','a','u',' ',$C5,'M','a','u','l','w','u','r','f','s',$00 ;" Der Bau eines Maulwurfs"
 .gw_squirrel_house:
-db $20,$20,$48,$61,$75,$73,$20,$B8,$45,$69,$63,$68,$68,$2A,$72,$6E,$63,$68,$65,$6E,$73,$00 ; @STRING@ "  Haus des Eichhörnchens"
+db ' ',' ','H','a','u','s',' ',$B8,'E','i','c','h','h','ö','r','n','c','h','e','n','s',$00 ;"  Haus des Eichhörnchens"
 .gw_squirrel_exchange:
-db $14,$03,$45,$69,$63,$68,$68,$2A,$72,$6E,$63,$68,$65,$6E,$2D,$48,$7B,$6E,$64,$6C,$65,$72,$00 ; @STRING@ "   Eichhörnchen-Händler"
+db $14,$03,'E','i','c','h','h','ö','r','n','c','h','e','n','-','H','ä','n','d','l','e','r',$00 ;"   Eichhörnchen-Händler"
 .gw_lostside:
-db $14,$09,$4C,$6F,$73,$74,$73,$69,$64,$65,$00 ; @STRING@ "         Lostside"
+db $14,$09,'L','o','s','t','s','i','d','e',$00 ;"         Lostside"
 .gw_watershrine1:
-db $14,$06,$57,$61,$73,$73,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "      Wasser Tempel"
+db $14,$06,'W','a','s','s','e','r',' ','T','e','m','p','e','l',$00 ;"      Wasser Tempel"
 .gw_watershrine2:
-db $14,$06,$57,$61,$73,$73,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "      Wasser Tempel"
+db $14,$06,'W','a','s','s','e','r',' ','T','e','m','p','e','l',$00 ;"      Wasser Tempel"
 .gw_watershrine3:
-db $14,$06,$57,$61,$73,$73,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "      Wasser Tempel"
+db $14,$06,'W','a','s','s','e','r',' ','T','e','m','p','e','l',$00 ;"      Wasser Tempel"
 .gw_fireshrine1:
-db $14,$07,$46,$65,$75,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "       Feuer Tempel"
+db $14,$07,'F','e','u','e','r',' ','T','e','m','p','e','l',$00 ;"       Feuer Tempel"
 .gw_fireshrine2:
-db $14,$07,$46,$65,$75,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "       Feuer Tempel"
+db $14,$07,'F','e','u','e','r',' ','T','e','m','p','e','l',$00 ;"       Feuer Tempel"
 .gw_fireshrine3:
-db $14,$07,$46,$65,$75,$65,$72,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "       Feuer Tempel"
+db $14,$07,'F','e','u','e','r',' ','T','e','m','p','e','l',$00 ;"       Feuer Tempel"
 .gw_lightshrine1:
-db $14,$07,$4C,$69,$63,$68,$74,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "       Licht Tempel"
+db $14,$07,'L','i','c','h','t',' ','T','e','m','p','e','l',$00 ;"       Licht Tempel"
 .gw_lightshrine2:
-db $14,$07,$4C,$69,$63,$68,$74,$20,$54,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "       Licht Tempel"
+db $14,$07,'L','i','c','h','t',' ','T','e','m','p','e','l',$00 ;"       Licht Tempel"
 .gw_tomb:
-db $20,$47,$72,$61,$62,$73,$74,$7B,$74,$74,$65,$20,$C6,$53,$74,$61,$74,$75,$65,$00 ; @STRING@ " Grabstätte einer Statue"
+db ' ','G','r','a','b','s','t','ä','t','t','e',' ',$C6,'S','t','a','t','u','e',$00 ;" Grabstätte einer Statue"
 .gw_bird_dream:
-db $14,$03,$88,$A5,$B8,$56,$6F,$67,$65,$6C,$73,$00 ; @STRING@ "   Der Traum des Vogels"
+db $14,$03,$88,$A5,$B8,'V','o','g','e','l','s',$00 ;"   Der Traum des Vogels"
 .gw_stump_dream:
-db $14,$04,$A5,$B8,$53,$74,$75,$6D,$70,$66,$65,$73,$00 ; @STRING@ "    Traum des Stumpfes"
+db $14,$04,$A5,$B8,'S','t','u','m','p','f','e','s',$00 ;"    Traum des Stumpfes"
 .gw_zero0: db 0
 .gw_zero1: db 0
 .gw_zero2: db 0
 
 ; --- Act3 ---
 .se_shrine:
-db $20,$88,$54,$65,$6D,$70,$65,$6C,$20,$EE,$53,$74,$2E,$20,$45,$6C,$6C,$65,$73,$00 ; @STRING@  " Der Tempel von St. Elles"
+db ' ',$88,'T','e','m','p','e','l',' ',$EE,'S','t','.',' ','E','l','l','e','s',$00 ;" Der Tempel von St. Elles"
 .se_seabed_sanctuary:
-db $14,$03,$41,$75,$66,$20,$BB,$4D,$65,$65,$72,$65,$73,$62,$6F,$64,$65,$6E,$00 ; @STRING@ "   Auf dem Meeresboden"
+db $14,$03,'A','u','f',' ',$BB,'M','e','e','r','e','s','b','o','d','e','n',$00 ;"   Auf dem Meeresboden"
 .se_seabed_st_elles1:
-db $20,$4D,$65,$65,$72,$65,$73,$62,$6F,$64,$65,$6E,$20,$EE,$53,$74,$2E,$45,$6C,$6C,$65,$73,$00 ; @STRING@ " Meeresboden von St.Elles"
+db ' ','M','e','e','r','e','s','b','o','d','e','n',' ',$EE,'S','t','.','E','l','l','e','s',$00 ;" Meeresboden von St.Elles"
 .se_secret_cave1:
-db $14,$04,$87,$67,$65,$68,$65,$69,$6D,$65,$20,$48,$2A,$68,$6C,$65,$00 ; @STRING@ "    Die geheime Höhle"
+db $14,$04,$87,'g','e','h','e','i','m','e',' ','H','ö','h','l','e',$00 ;"    Die geheime Höhle"
 .se_secret_cave2:
-db $14,$04,$87,$67,$65,$68,$65,$69,$6D,$65,$20,$48,$2A,$68,$6C,$65,$00 ; @STRING@ "    Die geheime Höhle"
+db $14,$04,$87,'g','e','h','e','i','m','e',' ','H','ö','h','l','e',$00 ;"    Die geheime Höhle"
 .se_dolphin_dream:
-db $14,$03,$A5,$C5,$44,$65,$6C,$70,$68,$69,$6E,$73,$00 ; @STRING@ "   Traum eines Delphins"
+db $14,$03,$A5,$C5,'D','e','l','p','h','i','n','s',$00 ;"   Traum eines Delphins"
 .se_southerta:
-db $14,$08,$53,$6F,$75,$74,$68,$65,$72,$74,$61,$00 ; @STRING@ "        Southerta"
+db $14,$08,'S','o','u','t','h','e','r','t','a',$00 ;"        Southerta"
 .se_shore_reef:
-db $20,$20,$55,$66,$65,$72,$72,$69,$66,$66,$20,$EE,$52,$6F,$63,$6B,$62,$69,$72,$64,$00 ; @STRING@ "  Uferriff von Rockbird"
+db ' ',' ','U','f','e','r','r','i','f','f',' ',$EE,'R','o','c','k','b','i','r','d',$00 ;"  Uferriff von Rockbird"
 .se_durean:
-db $14,$0A,$44,$75,$72,$65,$61,$6E,$00 ; @STRING@ "          Durean"
+db $14,$0A,'D','u','r','e','a','n',$00 ;"          Durean"
 .se_blester:
-db $14,$09,$42,$6C,$65,$73,$74,$65,$72,$00 ; @STRING@ "         Blester"
+db $14,$09,'B','l','e','s','t','e','r',$00 ;"         Blester"
 .se_ghost_ship:
-db $14,$04,$45,$69,$6E,$20,$47,$65,$69,$73,$74,$65,$72,$73,$63,$68,$69,$66,$66,$00 ; @STRING@ "    Ein Geisterschiff"
+db $14,$04,'E','i','n',' ','G','e','i','s','t','e','r','s','c','h','i','f','f',$00 ;"    Ein Geisterschiff"
 .se_servas_dream:
-db $14,$06,$53,$65,$72,$76,$61,$73,$60,$20,$54,$72,$61,$75,$6D,$00 ; @STRING@ "      Servas` Traum"
+db $14,$06,'S','e','r','v','a','s','`',' ','T','r','a','u','m',$00 ;"      Servas` Traum"
 .se_seabed_st_elles2:
-db $20,$4D,$65,$65,$72,$65,$73,$62,$6F,$64,$65,$6E,$20,$EE,$53,$74,$2E,$45,$6C,$6C,$65,$73,$00 ; @STRING@ " Meeresboden von St.Elles"
+db ' ','M','e','e','r','e','s','b','o','d','e','n',' ',$EE,'S','t','.','E','l','l','e','s',$00 ;" Meeresboden von St.Elles"
 .se_zero0: db 0
 .se_zero1: db 0
 .se_zero2: db 0
@@ -165,29 +165,29 @@ db $20,$4D,$65,$65,$72,$65,$73,$62,$6F,$64,$65,$6E,$20,$EE,$53,$74,$2E,$45,$6C,$
 
 ; --- Act4 ---
 .ms_shrine:
-db $20,$20,$52,$75,$68,$65,$73,$74,$7B,$74,$74,$65,$20,$C9,$53,$65,$65,$6C,$65,$6E,$00 ; @STRING@ "  Ruhestätte für Seelen"
+db ' ',' ','R','u','h','e','s','t','ä','t','t','e',' ',$C9,'S','e','e','l','e','n',$00 ;"  Ruhestätte für Seelen"
 .ms_house:
-db $14,$03,$53,$65,$65,$6C,$65,$20,$B6,$42,$65,$72,$67,$68,$5B,$74,$74,$65,$00 ; @STRING@ "   Seele der Berghütte"
+db $14,$03,'S','e','e','l','e',' ',$B6,'B','e','r','g','h','ü','t','t','e',$00 ;"   Seele der Berghütte"
 .ms_north_slope:
-db $14,$04,$4E,$6F,$72,$64,$68,$61,$6E,$67,$20,$B8,$42,$65,$72,$67,$65,$73,$2C,$20,$00 ; @STRING@ "    Nordhang des Berges, "
+db $14,$04,'N','o','r','d','h','a','n','g',' ',$B8,'B','e','r','g','e','s',',',' ',$00 ;"    Nordhang des Berges, "
 .ms_aurora:
-db $14,$04,$41,$75,$72,$6F,$72,$61,$60,$73,$20,$56,$6F,$72,$73,$70,$72,$75,$6E,$67,$00 ; @STRING@ "    Aurora`s Vorsprung"
+db $14,$04,'A','u','r','o','r','a','`','s',' ','V','o','r','s','p','r','u','n','g',$00 ;"    Aurora`s Vorsprung"
 .ms_old_man_dream:
-db $20,$A5,$C5,$61,$6C,$74,$65,$6E,$20,$4D,$61,$6E,$6E,$65,$73,$00 ; @STRING@ " Traum eines alten Mannes"
+db ' ',$A5,$C5,'a','l','t','e','n',' ','M','a','n','n','e','s',$00 ;" Traum eines alten Mannes"
 .ms_passage:
-db $14,$04,$88,$57,$65,$67,$20,$E3,$4C,$75,$6E,$65,$00 ; @STRING@ "    Der Weg nach Lune"
+db $14,$04,$88,'W','e','g',' ',$E3,'L','u','n','e',$00 ;"    Der Weg nach Lune"
 .ms_underground_lake:
-db $14,$04,$55,$6E,$74,$65,$72,$69,$72,$64,$69,$73,$63,$68,$65,$72,$20,$53,$65,$65,$00 ; @STRING@ "    Unterirdischer See"
+db $14,$04,'U','n','t','e','r','i','r','d','i','s','c','h','e','r',' ','S','e','e',$00 ;"    Unterirdischer See"
 .ms_mushroom_dream:
-db $14,$04,$A5,$C5,$50,$69,$6C,$7A,$65,$73,$00 ; @STRING@ "    Traum eines Pilzes"
+db $14,$04,$A5,$C5,'P','i','l','z','e','s',$00 ;"    Traum eines Pilzes"
 .ms_poseidon:
-db $14,$09,$50,$6F,$73,$65,$69,$64,$6F,$6E,$00 ; @STRING@ "         Poseidon"
+db $14,$09,'P','o','s','e','i','d','o','n',$00 ;"         Poseidon"
 .ms_top_of_mountain:
-db $20,$53,$70,$69,$74,$7A,$65,$20,$B8,$53,$63,$68,$6E,$65,$65,$62,$65,$72,$67,$65,$73,$00 ; @STRING@ " Spitze des Schneeberges"
+db ' ','S','p','i','t','z','e',' ',$B8,'S','c','h','n','e','e','b','e','r','g','e','s',$00 ;" Spitze des Schneeberges"
 .ms_ice_hill:
-db $14,$07,$45,$69,$6E,$20,$45,$69,$73,$68,$5B,$67,$65,$6C,$00 ; @STRING@ "       Ein Eishügel"
+db $14,$07,'E','i','n',' ','E','i','s','h','ü','g','e','l',$00 ;"       Ein Eishügel"
 .ms_ice_field:
-db $14,$03,$45,$69,$73,$66,$65,$6C,$64,$20,$EE,$4C,$61,$79,$6E,$6F,$6C,$65,$00 ; @STRING@ "   Eisfeld von Laynole"
+db $14,$03,'E','i','s','f','e','l','d',' ',$EE,'L','a','y','n','o','l','e',$00 ;"   Eisfeld von Laynole"
 .ms_zero0: db 0
 .ms_zero1: db 0
 .ms_zero2: db 0
@@ -199,31 +199,31 @@ db $14,$03,$45,$69,$73,$66,$65,$6C,$64,$20,$EE,$4C,$61,$79,$6E,$6F,$6C,$65,$00 ;
 
 ; --- Act5 ---
 .lab_shrine:
-db $14,$05,$88,$4C,$61,$62,$6F,$72,$74,$65,$6D,$70,$65,$6C,$00 ; @STRING@ "     Der Labortempel"
+db $14,$05,$88,'L','a','b','o','r','t','e','m','p','e','l',$00 ;"     Der Labortempel"
 .lab_laboratory1:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$4C,$61,$62,$6F,$72,$00 ; @STRING@ "       Leo`s Labor"
+db $14,$07,'L','e','o','`','s',' ','L','a','b','o','r',$00 ;"       Leo`s Labor"
 .lab_laboratory2:
-db $14,$07,$4C,$65,$6F,$60,$73,$20,$4C,$61,$62,$6F,$72,$00 ; @STRING@ "       Leo`s Labor"
+db $14,$07,'L','e','o','`','s',' ','L','a','b','o','r',$00 ;"       Leo`s Labor"
 .lab_attic:
-db $14,$04,$41,$75,$66,$20,$BB,$44,$61,$63,$68,$62,$6F,$64,$65,$6E,$00 ; @STRING@ "    Auf dem Dachboden"
+db $14,$04,'A','u','f',' ',$BB,'D','a','c','h','b','o','d','e','n',$00 ;"    Auf dem Dachboden"
 .lab_mice_nest:
-db $14,$06,$45,$69,$6E,$20,$4D,$7B,$75,$73,$65,$6C,$6F,$63,$68,$00 ; @STRING@ "      Ein Mäuseloch"
+db $14,$06,'E','i','n',' ','M','ä','u','s','e','l','o','c','h',$00 ;"      Ein Mäuseloch"
 .lab_cat_dream:
-db $20,$20,$88,$A5,$C6,$4B,$61,$74,$7A,$65,$00 ; @STRING@ "  Der Traum einer Katze"
+db ' ',' ',$88,$A5,$C6,'K','a','t','z','e',$00 ;"  Der Traum einer Katze"
 .lab_basement1:
-db $14,$03,$49,$6D,$20,$4B,$65,$6C,$6C,$65,$72,$20,$B8,$4C,$61,$62,$6F,$72,$73,$00 ; @STRING@ "   Im Keller des Labors"
+db $14,$03,'I','m',' ','K','e','l','l','e','r',' ',$B8,'L','a','b','o','r','s',$00 ;"   Im Keller des Labors"
 .lab_basement2:
-db $14,$03,$49,$6D,$20,$4B,$65,$6C,$6C,$65,$72,$20,$B8,$4C,$61,$62,$6F,$72,$73,$00 ; @STRING@ "   Im Keller des Labors"
+db $14,$03,'I','m',' ','K','e','l','l','e','r',' ',$B8,'L','a','b','o','r','s',$00 ;"   Im Keller des Labors"
 .lab_powerplant:
-db $14,$08,$4B,$72,$61,$66,$74,$77,$65,$72,$6B,$00 ; @STRING@ "        Kraftwerk"
+db $14,$08,'K','r','a','f','t','w','e','r','k',$00 ;"        Kraftwerk"
 .lab_tin_doll:
-db $14,$08,$5A,$69,$6E,$6E,$70,$75,$70,$70,$65,$00 ; @STRING@ "        Zinnpuppe"
+db $14,$08,'Z','i','n','n','p','u','p','p','e',$00 ;"        Zinnpuppe"
 .lab_dream1:
-db $14,$07,$45,$69,$6E,$20,$A5,$31,$00 ; @STRING@ "       Ein Traum 1"
+db $14,$07,'E','i','n',' ',$A5,'1',$00 ;"       Ein Traum 1"
 .lab_modeltown1:
-db $14,$05,$4D,$6F,$64,$65,$6C,$6C,$20,$B6,$53,$74,$61,$64,$74,$00 ; @STRING@ "     Modell der Stadt"
+db $14,$05,'M','o','d','e','l','l',' ',$B6,'S','t','a','d','t',$00 ;"     Modell der Stadt"
 .lab_modeltown2:
-db $14,$05,$4D,$6F,$64,$65,$6C,$6C,$20,$B6,$53,$74,$61,$64,$74,$00 ; @STRING@ "     Modell der Stadt"
+db $14,$05,'M','o','d','e','l','l',' ',$B6,'S','t','a','d','t',$00 ;"     Modell der Stadt"
 .lab_zero0: db 0
 .lab_zero1: db 0
 .lab_zero2: db 0
@@ -234,37 +234,37 @@ db $14,$05,$4D,$6F,$64,$65,$6C,$6C,$20,$B6,$53,$74,$61,$64,$74,$00 ; @STRING@ " 
 
 ; --- Act6 ---
 .mc_shrine:
-db $14,$05,$4D,$61,$67,$72,$69,$64,$64,$60,$73,$20,$53,$63,$68,$6C,$6F,$25,$00 ; @STRING@ "     Magridd`s Schloß"
+db $14,$05,'M','a','g','r','i','d','d','`','s',' ','S','c','h','l','o','ß',$00 ;"     Magridd`s Schloß"
 .mc_castle:
-db $9E,$EE,$91,$4D,$61,$67,$72,$69,$64,$64,$00 ; @STRING@ "Schloß von König Magridd"
+db $9E,$EE,$91,'M','a','g','r','i','d','d',$00 ;"Schloß von König Magridd"
 .mc_torture_chamber:
-db $14,$05,$87,$46,$6F,$6C,$74,$65,$72,$6B,$61,$6D,$6D,$65,$72,$00 ; @STRING@ "     Die Folterkammer"
+db $14,$05,$87,'F','o','l','t','e','r','k','a','m','m','e','r',$00 ;"     Die Folterkammer"
 .mc_basement1:
-db $20,$20,$49,$6D,$20,$4B,$65,$6C,$6C,$65,$72,$20,$B8,$53,$63,$68,$6C,$6F,$25,$65,$73,$00 ; @STRING@ "  Im Keller des Schloßes"
+db ' ',' ','I','m',' ','K','e','l','l','e','r',' ',$B8,'S','c','h','l','o','ß','e','s',$00 ;"  Im Keller des Schloßes"
 .mc_basement2:
-db $20,$20,$49,$6D,$20,$4B,$65,$6C,$6C,$65,$72,$20,$B8,$53,$63,$68,$6C,$6F,$25,$65,$73,$00 ; @STRING@ "  Im Keller des Schloßes"
+db ' ',' ','I','m',' ','K','e','l','l','e','r',' ',$B8,'S','c','h','l','o','ß','e','s',$00 ;"  Im Keller des Schloßes"
 .mc_dream1:
-db $14,$07,$45,$69,$6E,$20,$A5,$31,$00 ; @STRING@ "       Ein Traum 1"
+db $14,$07,'E','i','n',' ',$A5,'1',$00 ;"       Ein Traum 1"
 .mc_left_tower1:
-db $14,$06,$88,$6C,$69,$6E,$6B,$65,$20,$54,$75,$72,$6D,$00 ; @STRING@ "      Der linke Turm"
+db $14,$06,$88,'l','i','n','k','e',' ','T','u','r','m',$00 ;"      Der linke Turm"
 .mc_left_tower2:
-db $14,$06,$88,$6C,$69,$6E,$6B,$65,$20,$54,$75,$72,$6D,$00 ; @STRING@ "      Der linke Turm"
+db $14,$06,$88,'l','i','n','k','e',' ','T','u','r','m',$00 ;"      Der linke Turm"
 .mc_prison:
-db $14,$06,$45,$69,$6E,$20,$47,$65,$66,$7B,$6E,$67,$6E,$69,$73,$00 ; @STRING@ "      Ein Gefängnis"
+db $14,$06,'E','i','n',' ','G','e','f','ä','n','g','n','i','s',$00 ;"      Ein Gefängnis"
 .mc_right_tower1:
-db $14,$05,$88,$72,$65,$63,$68,$74,$65,$20,$54,$75,$72,$6D,$00 ; @STRING@ "     Der rechte Turm"
+db $14,$05,$88,'r','e','c','h','t','e',' ','T','u','r','m',$00 ;"     Der rechte Turm"
 .mc_right_tower2:
-db $14,$05,$88,$72,$65,$63,$68,$74,$65,$20,$54,$75,$72,$6D,$00 ; @STRING@ "     Der rechte Turm"
+db $14,$05,$88,'r','e','c','h','t','e',' ','T','u','r','m',$00 ;"     Der rechte Turm"
 .mc_right_tower3:
-db $14,$05,$88,$72,$65,$63,$68,$74,$65,$20,$54,$75,$72,$6D,$00 ; @STRING@ "     Der rechte Turm"
+db $14,$05,$88,'r','e','c','h','t','e',' ','T','u','r','m',$00 ;"     Der rechte Turm"
 .mc_corridor_to_dock:
-db $20,$20,$45,$69,$6E,$20,$4B,$6F,$72,$72,$69,$64,$6F,$72,$20,$FE,$50,$69,$65,$72,$00 ; @STRING@ "  Ein Korridor zum Pier"
+db ' ',' ','E','i','n',' ','K','o','r','r','i','d','o','r',' ',$FE,'P','i','e','r',$00 ;"  Ein Korridor zum Pier"
 .mc_dock_ship:
-db $20,$20,$50,$69,$65,$72,$20,$B8,$4C,$75,$66,$74,$73,$63,$68,$69,$66,$66,$65,$73,$00 ; @STRING@ "  Pier des Luftschiffes"
+db ' ',' ','P','i','e','r',' ',$B8,'L','u','f','t','s','c','h','i','f','f','e','s',$00 ;"  Pier des Luftschiffes"
 .mc_airship:
-db $20,$20,$44,$65,$63,$6B,$20,$B8,$4C,$75,$66,$74,$73,$63,$68,$69,$66,$66,$65,$73,$00 ; @STRING@ "  Deck des Luftschiffes"
+db ' ',' ','D','e','c','k',' ',$B8,'L','u','f','t','s','c','h','i','f','f','e','s',$00 ;"  Deck des Luftschiffes"
 .mc_soldiers_dream:
-db $14,$03,$A5,$C5,$53,$6F,$6C,$64,$61,$74,$65,$6E,$00 ; @STRING@ "   Traum eines Soldaten"
+db $14,$03,$A5,$C5,'S','o','l','d','a','t','e','n',$00 ;"   Traum eines Soldaten"
 .mc_zero0: db 0
 .mc_zero1: db 0
 .mc_zero2: db 0
@@ -272,16 +272,16 @@ db $14,$03,$A5,$C5,$53,$6F,$6C,$64,$61,$74,$65,$6E,$00 ; @STRING@ "   Traum eine
 
 ; --- Act7 ---
 .woe_shrine:
-db $20,$20,$54,$65,$6D,$70,$65,$6C,$20,$B6,$62,$2A,$73,$65,$6E,$20,$57,$65,$6C,$74,$00 ; @STRING@ "  Tempel der bösen Welt"
+db ' ',' ','T','e','m','p','e','l',' ',$B6,'b','ö','s','e','n',' ','W','e','l','t',$00 ;"  Tempel der bösen Welt"
 .woe_world1:
-db $14,$06,$A9,$B8,$42,$2A,$73,$65,$6E,$00 ; @STRING@ "      Welt des Bösen"
+db $14,$06,$A9,$B8,'B','ö','s','e','n',$00 ;"      Welt des Bösen"
 .woe_world2:
-db $14,$06,$A9,$B8,$42,$2A,$73,$65,$6E,$00 ; @STRING@ "      Welt des Bösen"
+db $14,$06,$A9,$B8,'B','ö','s','e','n',$00 ;"      Welt des Bösen"
 .woe_space:
-db $20,$20,$56,$65,$72,$7A,$61,$75,$62,$65,$72,$74,$65,$72,$20,$57,$65,$6C,$74,$72,$61,$75,$6D,$00 ; @STRING@ "  Verzauberter Weltraum"
+db ' ',' ','V','e','r','z','a','u','b','e','r','t','e','r',' ','W','e','l','t','r','a','u','m',$00 ;"  Verzauberter Weltraum"
 .woe_deathtoll1:
-db $14,$03,$54,$65,$6D,$70,$65,$6C,$20,$EE,$44,$65,$61,$74,$68,$74,$6F,$6C,$6C,$00 ; @STRING@ "   Tempel von Deathtoll"
+db $14,$03,'T','e','m','p','e','l',' ',$EE,'D','e','a','t','h','t','o','l','l',$00 ;"   Tempel von Deathtoll"
 .woe_deathtoll2:
-db $20,$20,$53,$63,$68,$6C,$61,$63,$68,$74,$20,$DA,$44,$65,$61,$74,$68,$74,$6F,$6C,$6C,$00 ; @STRING@ "  Schlacht mit Deathtoll"
+db ' ',' ','S','c','h','l','a','c','h','t',' ',$DA,'D','e','a','t','h','t','o','l','l',$00 ;"  Schlacht mit Deathtoll"
 .woe_zero0: db 0
 .woe_zero1: db 0

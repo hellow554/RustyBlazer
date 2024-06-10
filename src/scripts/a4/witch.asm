@@ -43,15 +43,15 @@ A4_script_witch:
 ; "nutzen." WFE
 ; "Schau!" -> ACT4_CLEARBOX
 db $10
-db $4F,$68,$20,$53,$63,$68,$61,$74,$7A,$2C,$20,$D1,$D7,$0D
-db $D4,$E0,$9A,$62,$65,$2D,$0D
-db $6E,$75,$74,$7A,$65,$6E,$2E,$11
-db $53,$63,$68,$61,$75,$21,$13 : dw ACT4_CLEARBOX
+db 'O','h',' ','S','c','h','a','t','z',',',' ',$D1,$D7,$0D
+db $D4,$E0,$9A,'b','e','-',$0D
+db 'n','u','t','z','e','n','.',$11
+db 'S','c','h','a','u','!',$13 : dw ACT4_CLEARBOX
 ; @END@
 
 .txt_after_teleport:
 ; @DEFAULT_TEXTBOX@
 ; "Siehst Du?" -> ACT4_CLEARBOX
 db $10
-db $53,$69,$65,$68,$73,$74,$20,$44,$75,$3F,$13 : dw ACT4_CLEARBOX
+db 'S','i','e','h','s','t',' ','D','u','?',$13 : dw ACT4_CLEARBOX
 ; @END@

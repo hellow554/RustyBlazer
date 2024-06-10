@@ -76,8 +76,8 @@ A1_script_secret_shack_kid:
 ; "Oh, Du hast mich er-"
 ; "schreckt !" -> Default_Text_End
 db $10
-db $4F,$68,$2C,$20,$83,$CD,$D9,$65,$72,$2D,$0D
-db $73,$63,$68,$72,$65,$63,$6B,$74,$20,$21,$13 : dw Default_Text_End
+db 'O','h',',',' ',$83,$CD,$D9,'e','r','-',$0D
+db 's','c','h','r','e','c','k','t',' ','!',$13 : dw Default_Text_End
 ; @END@
 
 .text_hint:
@@ -87,10 +87,10 @@ db $73,$63,$68,$72,$65,$63,$6B,$74,$20,$21,$13 : dw Default_Text_End
 ; "unseren Schatz hier "
 ; "in der Nähe versteckt." -> Default_Text_End
 db $10
-db $89,$D2,$75,$6E,$73,$65,$72,$65,$20,$67,$65,$2D,$0D
-db $68,$65,$69,$6D,$65,$20,$48,$5B,$74,$74,$65,$2E,$20,$AA,$D0,$0D
-db $75,$6E,$73,$65,$72,$65,$6E,$20,$53,$63,$68,$61,$74,$7A,$20,$CE,$0D
-db $D3,$B6,$4E,$7B,$68,$65,$20,$76,$65,$72,$73,$74,$65,$63,$6B,$74,$2E,$13 : dw Default_Text_End
+db $89,$D2,'u','n','s','e','r','e',' ','g','e','-',$0D
+db 'h','e','i','m','e',' ','H','ü','t','t','e','.',' ',$AA,$D0,$0D
+db 'u','n','s','e','r','e','n',' ','S','c','h','a','t','z',' ',$CE,$0D
+db $D3,$B6,'N','ä','h','e',' ','v','e','r','s','t','e','c','k','t','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_followed:
@@ -100,10 +100,10 @@ db $D3,$B6,$4E,$7B,$68,$65,$20,$76,$65,$72,$73,$74,$65,$63,$6B,$74,$2E,$13 : dw 
 ; "sagen wo unser Schatz "
 ; "ist." -> Default_Text_End
 db $10
-db $42,$69,$73,$74,$20,$83,$DB,$67,$65,$66,$6F,$6C,$67,$74,$20,$3F,$0D
+db 'B','i','s','t',' ',$83,$DB,'g','e','f','o','l','g','t',' ','?',$0D
 db $8F,$F2,$84,$DF,$0D
-db $73,$61,$67,$65,$6E,$20,$77,$6F,$20,$75,$6E,$73,$65,$72,$20,$53,$63,$68,$61,$74,$7A,$20,$0D
-db $69,$73,$74,$2E,$13 : dw Default_Text_End
+db 's','a','g','e','n',' ','w','o',' ','u','n','s','e','r',' ','S','c','h','a','t','z',' ',$0D
+db 'i','s','t','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_found_pass:
@@ -112,9 +112,9 @@ db $69,$73,$74,$2E,$13 : dw Default_Text_End
 ; "Nun gut, ich werde ihn "
 ; "Dir geben." -> Default_Text_End
 db $10
-db $4F,$68,$21,$20,$8A,$D2,$6D,$65,$69,$6E,$20,$50,$61,$25,$21,$0D
-db $4E,$75,$6E,$20,$67,$75,$74,$2C,$20,$D1,$F2,$69,$68,$6E,$20,$0D
-db $84,$67,$65,$62,$65,$6E,$2E,$13 : dw Default_Text_End
+db 'O','h','!',' ',$8A,$D2,'m','e','i','n',' ','P','a','ß','!',$0D
+db 'N','u','n',' ','g','u','t',',',' ',$D1,$F2,'i','h','n',' ',$0D
+db $84,'g','e','b','e','n','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_presented_pass:
@@ -122,6 +122,6 @@ db $84,$67,$65,$62,$65,$6E,$2E,$13 : dw Default_Text_End
 ; "Hat Dir der Pass ge-"
 ; "holfen ?" -> Default_Text_End
 db $10
-db $48,$61,$74,$20,$84,$B6,$50,$61,$73,$73,$20,$67,$65,$2D,$0D
-db $68,$6F,$6C,$66,$65,$6E,$20,$3F,$13 : dw Default_Text_End
+db 'H','a','t',' ',$84,$B6,'P','a','s','s',' ','g','e','-',$0D
+db 'h','o','l','f','e','n',' ','?',$13 : dw Default_Text_End
 ; @END@

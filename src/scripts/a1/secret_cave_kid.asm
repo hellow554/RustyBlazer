@@ -67,10 +67,10 @@ A1_script_secret_cave_kid:
 ; "kann ich Dich hier "
 ; "nicht durchlassen." -> Default_Text_End
 db $10
-db $89,$D2,$75,$6E,$73,$65,$72,$20,$0D
-db $47,$65,$68,$65,$69,$6D,$67,$61,$6E,$67,$2E,$20,$4F,$68,$6E,$65,$20,$50,$61,$25,$20,$0D
+db $89,$D2,'u','n','s','e','r',' ',$0D
+db 'G','e','h','e','i','m','g','a','n','g','.',' ','O','h','n','e',' ','P','a','ß',' ',$0D
 db $D7,$D1,$85,$CE,$0D
-db $DF,$64,$75,$72,$63,$68,$6C,$61,$73,$73,$65,$6E,$2E,$13 : dw Default_Text_End
+db $DF,'d','u','r','c','h','l','a','s','s','e','n','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_show_pass:
@@ -79,9 +79,9 @@ db $DF,$64,$75,$72,$63,$68,$6C,$61,$73,$73,$65,$6E,$2E,$13 : dw Default_Text_End
 ; "Du ihn gefunden?"
 ; "Du kannst jetzt durch." -> Default_Text_End
 db $10
-db $4F,$68,$2C,$20,$B6,$50,$61,$25,$21,$20,$57,$6F,$20,$CD,$0D
-db $83,$69,$68,$6E,$20,$67,$65,$66,$75,$6E,$64,$65,$6E,$3F,$0D
-db $83,$6B,$61,$6E,$6E,$73,$74,$20,$D6,$64,$75,$72,$63,$68,$2E,$13 : dw Default_Text_End
+db 'O','h',',',' ',$B6,'P','a','ß','!',' ','W','o',' ',$CD,$0D
+db $83,'i','h','n',' ','g','e','f','u','n','d','e','n','?',$0D
+db $83,'k','a','n','n','s','t',' ',$D6,'d','u','r','c','h','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_wait_clearance:
@@ -91,10 +91,10 @@ db $83,$6B,$61,$6E,$6E,$73,$74,$20,$D6,$64,$75,$72,$63,$68,$2E,$13 : dw Default_
 ; "ich Dich durchlassen "
 ; "kann?" -> Default_Text_End
 db $10
-db $57,$5B,$72,$64,$65,$73,$74,$20,$83,$C2,$7A,$75,$72,$20,$0D
-db $53,$65,$69,$74,$65,$20,$67,$65,$68,$65,$6E,$2C,$20,$64,$61,$6D,$69,$74,$20,$0D
-db $D1,$85,$64,$75,$72,$63,$68,$6C,$61,$73,$73,$65,$6E,$20,$0D
-db $6B,$61,$6E,$6E,$3F,$13 : dw Default_Text_End
+db 'W','ü','r','d','e','s','t',' ',$83,$C2,'z','u','r',' ',$0D
+db 'S','e','i','t','e',' ','g','e','h','e','n',',',' ','d','a','m','i','t',' ',$0D
+db $D1,$85,'d','u','r','c','h','l','a','s','s','e','n',' ',$0D
+db 'k','a','n','n','?',$13 : dw Default_Text_End
 ; @END@
 
 .text_bottle:
@@ -102,8 +102,8 @@ db $6B,$61,$6E,$6E,$3F,$13 : dw Default_Text_End
 ; "Da ist " *"eine seltsame "
 ; "Flasche"* "." -> Default_Text_End
 db $10
-db $44,$61,$20,$D2,$03,$24,$BF,$73,$65,$6C,$74,$73,$61,$6D,$65,$20,$0D
-db $46,$6C,$61,$73,$63,$68,$65,$03,$20,$2E,$13 : dw Default_Text_End
+db 'D','a',' ',$D2,$03,$24,$BF,'s','e','l','t','s','a','m','e',' ',$0D
+db 'F','l','a','s','c','h','e',$03,$20,'.',$13 : dw Default_Text_End
 ; @END@
 
 .text_entry_cleared:
@@ -113,8 +113,8 @@ db $46,$6C,$61,$73,$63,$68,$65,$03,$20,$2E,$13 : dw Default_Text_End
 ; "len. Ich muß mal etwas "
 ; "anderes spielen." -> Default_Text_End
 db $10
-db $8F,$B1,$C3,$6C,$65,$69,$64,$2C,$20,$D4,$0D
-db $E1,$56,$65,$72,$73,$74,$65,$63,$6B,$20,$FD,$73,$70,$69,$65,$2D,$0D
-db $6C,$65,$6E,$2E,$20,$8F,$6D,$75,$25,$20,$6D,$61,$6C,$20,$C2,$0D
-db $61,$6E,$64,$65,$72,$65,$73,$20,$73,$70,$69,$65,$6C,$65,$6E,$2E,$13 : dw Default_Text_End
+db $8F,$B1,$C3,'l','e','i','d',',',' ',$D4,$0D
+db $E1,'V','e','r','s','t','e','c','k',' ',$FD,'s','p','i','e','-',$0D
+db 'l','e','n','.',' ',$8F,'m','u','ß',' ','m','a','l',' ',$C2,$0D
+db 'a','n','d','e','r','e','s',' ','s','p','i','e','l','e','n','.',$13 : dw Default_Text_End
 ; @END@

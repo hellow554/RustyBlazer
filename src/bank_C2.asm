@@ -6876,16 +6876,16 @@ txt_main_menu:
 ; " Spielstand löschen" NO_NEWLINE
 db $01,$88,$00
 db $07,$16,$16
-db $01,$4C,$01,$57,$65,$6C,$63,$68,$65,$72,$20,$53,$70,$69,$65,$6C,$73,$74,$61,$6E,$64,$20,$3F
-db $01,$18,$02,$4E,$61,$6D,$65
-db $01,$26,$02,$4C,$65,$76
-db $01,$2E,$02,$41,$72,$65,$61
+db $01,$4C,$01,'W','e','l','c','h','e','r',' ','S','p','i','e','l','s','t','a','n','d',' ','?'
+db $01,$18,$02,'N','a','m','e'
+db $01,$26,$02,'L','e','v'
+db $01,$2E,$02,'A','r','e','a'
 db $01,$CA,$02
-db $20,$4E,$72,$31,$3A,$0D,$0D,$0D
-db $20,$4E,$72,$32,$3A,$0D,$0D,$0D
-db $20,$4E,$72,$33,$3A,$0D,$0D,$0D
-db $20,$4E,$72,$34,$3A,$0D,$0D,$0D
-db $20,$53,$70,$69,$65,$6C,$73,$74,$61,$6E,$64,$20,$6C,$2A,$73,$63,$68,$65,$6E
+db ' ','N','r','1',':',$0D,$0D,$0D
+db ' ','N','r','2',':',$0D,$0D,$0D
+db ' ','N','r','3',':',$0D,$0D,$0D
+db ' ','N','r','4',':',$0D,$0D,$0D
+db ' ','S','p','i','e','l','s','t','a','n','d',' ','l','ö','s','c','h','e','n'
 db $00
 ; @ENDSTRING@
 
@@ -6971,12 +6971,12 @@ txt_enter_player_name:
 db $01,$84,$01
 db $07,$1A,$13
 db $01,$4A,$02
-db $20,$47,$69,$62,$20,$44,$65,$69,$6E,$65,$6E,$20,$4E,$61,$6D,$65,$6E,$20,$65,$69,$6E,$2E
+db ' ','G','i','b',' ','D','e','i','n','e','n',' ','N','a','m','e','n',' ','e','i','n','.'
 db $01,$18,$03
 db $02,$02
 db $09
 db $01,$58,$03
-db $2D,$2D,$2D,$2D,$2D,$2D,$2D,$2D
+db '-','-','-','-','-','-','-','-'
 db $00
 ; @ENDSTRING@
 
@@ -6989,11 +6989,11 @@ txt_enter_player_name_alphabet:
 ; " n o p q r s t u v w x y z\n\n"
 ; " 0 1 2 3 4 5 6 7 8 9 . \x24 \x23\n"
 db $01,$C6,$03
-db $20,$41,$20,$42,$20,$43,$20,$44,$20,$45,$20,$46,$20,$47,$20,$48,$20,$49,$20,$4A,$20,$4B,$20,$4C,$20,$4D,$0D,$0D
-db $20,$4E,$20,$4F,$20,$50,$20,$51,$20,$52,$20,$53,$20,$54,$20,$55,$20,$56,$20,$57,$20,$58,$20,$59,$20,$5A,$0D,$0D,$0D
-db $20,$61,$20,$62,$20,$63,$20,$64,$20,$65,$20,$66,$20,$67,$20,$68,$20,$69,$20,$6A,$20,$6B,$20,$6C,$20,$6D,$0D,$0D
-db $20,$6E,$20,$6F,$20,$70,$20,$71,$20,$72,$20,$73,$20,$74,$20,$75,$20,$76,$20,$77,$20,$78,$20,$79,$20,$7A,$0D,$0D,$0D
-db $20,$30,$20,$31,$20,$32,$20,$33,$20,$34,$20,$35,$20,$36,$20,$37,$20,$38,$20,$39,$20,$2E,$20,$24,$20,$23,$0D,$0D
+db ' ','A',' ','B',' ','C',' ','D',' ','E',' ','F',' ','G',' ','H',' ','I',' ','J',' ','K',' ','L',' ','M',$0D,$0D
+db ' ','N',' ','O',' ','P',' ','Q',' ','R',' ','S',' ','T',' ','U',' ','V',' ','W',' ','X',' ','Y',' ','Z',$0D,$0D,$0D
+db ' ','a',' ','b',' ','c',' ','d',' ','e',' ','f',' ','g',' ','h',' ','i',' ','j',' ','k',' ','l',' ','m',$0D,$0D
+db ' ','n',' ','o',' ','p',' ','q',' ','r',' ','s',' ','t',' ','u',' ','v',' ','w',' ','x',' ','y',' ','z',$0D,$0D,$0D
+db ' ','0',' ','1',' ','2',' ','3',' ','4',' ','5',' ','6',' ','7',' ','8',' ','9',' ','.',' ',$24,' ',$23,$0D,$0D
 db $00
 ; @ENDSTRING@
 
@@ -7011,7 +7011,7 @@ txt_next_level:
 ; "Höherer Level!" NO_NEWLINE
 db $09,$03,$24
 db $01,$12,$02
-db $48,$2A,$68,$65,$72,$65,$72,$20,$4C,$65,$76,$65,$6C,$21
+db 'H','ö','h','e','r','e','r',' ','L','e','v','e','l','!'
 db $00
 ; @ENDSTRING@
 
@@ -7022,7 +7022,7 @@ txt_delete_next_level:
 ; "@@@@@@@@@@@@@@" NO_NEWLINE
 db $09
 db $01,$12,$02
-db $40,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40
+db '@','@','@','@','@','@','@','@','@','@','@','@','@','@'
 db $00
 ; @ENDSTRING@
 
@@ -7050,8 +7050,8 @@ txt_lairs_remaining:
 ; DECVAL 2 lair_remaining_ascii
 db $01,$1E,$05
 db $07,$0D,$04
-db $4D,$6F,$6E,$73,$74,$65,$72,$68,$2A,$68,$6C,$65,$6E,$0D,$0D
-db $14,$05,$28,$62,$72,$69,$67,$20
+db 'M','o','n','s','t','e','r','h','ö','h','l','e','n',$0D,$0D
+db $14,$05,'Ü','b','r','i','g',' '
 db $06,$02 : dw lair_remaining_ascii
 db $00
 ; @ENDSTRING@
@@ -7127,14 +7127,14 @@ db $03,$20
 db $01,$0C,$02
 db $02,$02
 db $01,$22,$02
-db $48,$50
+db 'H','P'
 db $01,$28,$02
 db $06,$03 : dw player_current_health_ascii
-db $2F
+db '/'
 db $01,$30,$02
 db $06,$03 : dw player_max_health_ascii
 db $01,$88,$02
-db $46,$6F,$6C,$67,$2E,$20,$4C,$65,$76,$65,$6C,$20,$3A
+db 'F','o','l','g','.',' ','L','e','v','e','l',' ',':'
 db $01,$A6,$02
 db $06,$08 : dw ExpNeededForNextLevel
 db $01,$1E,$03
@@ -7142,25 +7142,25 @@ db $0B,$26 : dw player_strength_from_level
 db $01,$5E,$03
 db $0B,$26 : dw player_strength_from_item
 db $01,$48,$03
-db $53,$74,$7B,$72,$6B,$65,$14,$03,$3A
+db 'S','t','ä','r','k','e',$14,$03,':'
 db $01,$DE,$03
 db $0B,$27 : dw player_defense_from_level
 db $01,$1E,$04
 db $0B,$27 : dw player_defense_from_item
 db $01,$08,$04
-db $41,$62,$77,$65,$68,$72,$14,$03,$3A
+db 'A','b','w','e','h','r',$14,$03,':'
 db $01,$C8,$04
-db $57,$61,$66,$66,$65,$20,$3A
-db $05 : dw AllItemsTable,Equipment.sword
+db 'W','a','f','f','e',' ',':'
+db $05 : dw AllItemsTable : dw Equipment.sword
 db $01,$48,$05
-db $53,$63,$68,$75,$74,$7A,$3A
-db $05 : dw AllItemsTable,Equipment.armor
+db 'S','c','h','u','t','z',':'
+db $05 : dw AllItemsTable : dw Equipment.armor
 db $01,$C8,$05
-db $9A,$3A
-db $05 : dw AllItemsTable,Equipment.magic
+db $9A,':'
+db $05 : dw AllItemsTable : dw Equipment.magic
 db $01,$48,$06
-db $44,$69,$6E,$67,$65,$20,$3A
-db $05 : dw AllItemsTable,Equipment.item
+db 'D','i','n','g','e',' ',':'
+db $05 : dw AllItemsTable : dw Equipment.item
 db $00
 ; @ENDSTRING@
 
@@ -7175,7 +7175,7 @@ db $08,$86,$01
 db $01,$88,$01
 db $07,$16,$13
 db $01,$58,$02
-db $53,$65,$65,$6C,$65,$6E
+db 'S','e','e','l','e','n'
 db $00
 ; @ENDSTRING@
 
@@ -7185,7 +7185,7 @@ osd_soul_names:
 ; SETPOS $0C $03
 ; "Seele@der@Magie@@@@@@" NO_NEWLINE
 db $01,$0C,$03
-db $53,$65,$65,$6C,$65,$40,$64,$65,$72,$40,$4D,$61,$67,$69,$65,$40,$40,$40,$40,$40,$40
+db 'S','e','e','l','e','@','d','e','r','@','M','a','g','i','e','@','@','@','@','@','@'
 db $00
 ; @ENDSTRING@
 
@@ -7194,7 +7194,7 @@ db $00
 ; SETPOS $CC $03
 ; "Seele@des@Lichts@@@@@" NO_NEWLINE
 db $01,$CC,$03
-db $53,$65,$65,$6C,$65,$40,$64,$65,$73,$40,$4C,$69,$63,$68,$74,$73,$40,$40,$40,$40,$40
+db 'S','e','e','l','e','@','d','e','s','@','L','i','c','h','t','s','@','@','@','@','@'
 db $00
 ; @ENDSTRING@
 
@@ -7203,7 +7203,7 @@ db $00
 ; SETPOS $8C $04
 ; "Seele@des@Schildes@@@" NO_NEWLINE
 db $01,$8C,$04
-db $53,$65,$65,$6C,$65,$40,$64,$65,$73,$40,$53,$63,$68,$69,$6C,$64,$65,$73,$40,$40,$40
+db 'S','e','e','l','e','@','d','e','s','@','S','c','h','i','l','d','e','s','@','@','@'
 db $00
 ; @ENDSTRING@
 
@@ -7212,7 +7212,7 @@ db $00
 ; SETPOS $4C $05
 ; "Seele@der@Entdeckung@" NO_NEWLINE
 db $01,$4C,$05
-db $53,$65,$65,$6C,$65,$40,$64,$65,$72,$40,$45,$6E,$74,$64,$65,$63,$6B,$75,$6E,$67,$40
+db 'S','e','e','l','e','@','d','e','r','@','E','n','t','d','e','c','k','u','n','g','@'
 db $00
 ; @ENDSTRING@
 
@@ -7221,7 +7221,7 @@ db $00
 ; SETPOS $0C $06
 ; "Seele@der@Realität@@@" NO_NEWLINE
 db $01,$0C,$06
-db $53,$65,$65,$6C,$65,$40,$64,$65,$72,$40,$52,$65,$61,$6C,$69,$74,$7B,$74,$40,$40,$40
+db 'S','e','e','l','e','@','d','e','r','@','R','e','a','l','i','t','ä','t','@','@','@'
 db $00
 ; @ENDSTRING@
 osd_item_menu_end:
@@ -7253,25 +7253,25 @@ osd_item_menu:
 ; LOOKUP AllItemsTable Equipment.item
 db $01,$88,$00
 db $07,$06,$0C
-db $57,$61,$66,$66,$65,$6E
+db 'W','a','f','f','e','n'
 db $01,$98,$00
 db $07,$06,$0C
-db $53,$63,$68,$75,$74,$7A
+db 'S','c','h','u','t','z'
 db $01,$A8,$00
 db $07,$06,$0C
-db $4D,$61,$67,$69,$65
-osd_item_menu_lower_part:
+db 'M','a','g','i','e'
+ osd_item_menu_lower_part:
 db $01,$08,$04
 db $07,$16,$08
 db $01,$8A,$04
-db $20,$57,$61,$66,$2E,$3A
-db $05 : dw AllItemsTable,Equipment.sword
-db $0D,$0D,$20,$53,$63,$68,$2E,$3A
-db $05 : dw AllItemsTable,Equipment.armor
-db $0D,$0D,$20,$4D,$61,$67,$2E,$3A
-db $05 : dw AllItemsTable,Equipment.magic
-db $0D,$0D,$20,$44,$69,$6E,$67,$3A
-db $05 : dw AllItemsTable,Equipment.item
+db ' ','W','a','f','.',':'
+db $05 : dw AllItemsTable : dw Equipment.sword
+db $0D,$0D,' ','S','c','h','.',':'
+db $05 : dw AllItemsTable : dw Equipment.armor
+db $0D,$0D,' ','M','a','g','.',':'
+db $05 : dw AllItemsTable : dw Equipment.magic
+db $0D,$0D,' ','D','i','n','g',':'
+db $05 : dw AllItemsTable : dw Equipment.item
 db $00
 ; @ENDSTRING@
 
@@ -7284,7 +7284,7 @@ item_menu:
 db $01,$88,$00
 db $07,$16,$0C
 db $01,$1A,$01
-db $44,$69,$6E,$67,$65
+db 'D','i','n','g','e'
 db $00
 ; @ENDSTRING@
 
@@ -7314,11 +7314,11 @@ db $09,$03,$24
 db $01,$00,$07
 db $0B,$1A : dw .repeat_space
 db $01,$42,$00
-db $4C,$45,$56
+db 'L','E','V'
 db $01,$50,$00
-db $45,$58,$50
+db 'E','X','P'
 db $01,$6A,$00
-db $4A,$57,$4C
+db 'J','W','L'
 db $01,$C0,$00
 db $02,$00
 db $01,$CC,$00
@@ -7391,9 +7391,9 @@ Txt_Soul_Still_Captured:
 ; "ist noch gefangen." -> Txt_Rcv_End
 db $10
 db $03,$24
-db $05 : dw CharacterNamesTable,text_lut_id
+db $05 : dw CharacterNamesTable : dw text_lut_id
 db $03,$20,$0D
-db $D2,$E0,$67,$65,$66,$61,$6E,$67,$65,$6E,$2E,$13 : dw Txt_Rcv_End
+db $D2,$E0,'g','e','f','a','n','g','e','n','.',$13 : dw Txt_Rcv_End
 ; @END@
 
 Txt_Soul_Release:
@@ -7403,10 +7403,10 @@ Txt_Soul_Release:
 ; LOOKUP CharacterNamesTable text_lut_id
 ; BOLD "." -> Txt_Rcv_End
 db $10
-db $02,$02,$20,$62,$65,$66,$72,$65,$69,$74,$65,$20,$0D
+db $02,$02,' ','b','e','f','r','e','i','t','e',' ',$0D
 db $03,$24
-db $05 : dw CharacterNamesTable,text_lut_id
-db $03,$20,$2E,$13 : dw Txt_Rcv_End
+db $05 : dw CharacterNamesTable : dw text_lut_id
+db $03,$20,'.',$13 : dw Txt_Rcv_End
 ; @END@
 
 Txt_Item_Received:
@@ -7416,17 +7416,17 @@ Txt_Item_Received:
 ; LOOKUP AllItemsTable text_lut_id
 ; BOLD "." -> Txt_Rcv_End
 db $10
-db $02,$02,$20,$65,$72,$68,$69,$65,$6C,$74,$2E,$0D
+db $02,$02,' ','e','r','h','i','e','l','t','.',$0D
 db $03,$24
-db $05 : dw AllItemsTable,text_lut_id
-db $03,$20,$2E,$13 : dw Txt_Rcv_End
+db $05 : dw AllItemsTable : dw text_lut_id
+db $03,$20,'.',$13 : dw Txt_Rcv_End
 ; @END@
 
 Txt_Item_Empty:
 ; @DEFAULT_TEXTBOX@
 ; "Leer.\n" -> Txt_Rcv_End
 db $10
-db $4C,$65,$65,$72,$2E,$0D,$13 : dw Txt_Rcv_End
+db 'L','e','e','r','.',$0D,$13 : dw Txt_Rcv_End
 ; @END@
 
 Txt_Received_Jwl:
@@ -7435,8 +7435,8 @@ Txt_Received_Jwl:
 ; * DECVAL 3 text_lut_id " JUWELEN." *
 ;; we fallthrough to Txt_Rcv_End
 db $10
-db $02,$02,$20,$66,$61,$6E,$64,$0D
-db $03,$24,$06,$03 : dw text_lut_id : db $20,$4A,$55,$57,$45,$4C,$45,$4E,$2E,$03,$20
+db $02,$02,' ','f','a','n','d',$0D
+db $03,$24,$06,$03 : dw text_lut_id : db ' ','J','U','W','E','L','E','N','.',$03,$20
 ; @END@
 
 Txt_Rcv_End:

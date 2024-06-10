@@ -1623,14 +1623,14 @@ Text_Jewel_Give_Exp:
 ; "Bitte nimm` dies." WFE
 db $10
 db $8F,$B3,$BC,$0D
-db $57,$65,$6C,$74,$2E,$0D
-db $81,$6E,$69,$6D,$6D,$60,$20,$64,$69,$65,$73,$2E,$11
+db 'W','e','l','t','.',$0D
+db $81,'n','i','m','m','`',' ','d','i','e','s','.',$11
 ; @END@
 
 Text_Player_Gets_Exp:
 ; @NEW_TEXT@
 ; PLAYER_NAME " erhielt EXP!" -> Default_Text_End
-db $02,$02,$20,$C1,$45,$58,$50,$21,$13 : dw Default_Text_End
+db $02,$02,' ',$C1,'E','X','P','!',$13 : dw Default_Text_End
 ; @END@
 
 Text_Wish_Luck:
@@ -1638,8 +1638,8 @@ Text_Wish_Luck:
 ; "Sehr gut. Mach`"
 ; "weiter so. Viel Glück!" -> Default_Text_End
 db $10
-db $53,$65,$68,$72,$20,$67,$75,$74,$2E,$20,$4D,$61,$63,$68,$60,$0D
-db $77,$65,$69,$74,$65,$72,$20,$73,$6F,$2E,$20,$56,$69,$65,$6C,$20,$47,$6C,$5B,$63,$6B,$21,$13 : dw Default_Text_End
+db 'S','e','h','r',' ','g','u','t','.',' ','M','a','c','h','`',$0D
+db 'w','e','i','t','e','r',' ','s','o','.',' ','V','i','e','l',' ','G','l','ü','c','k','!',$13 : dw Default_Text_End
 ; @END@
 
 incsrc "scripts/a1/highground_jewel.asm"
@@ -4226,22 +4226,22 @@ dw +0, +0, -0, -0, -1, -1, -1, -1
 ; PLAYER_NAME " erhielt EXP!" -> CLEAR_GREENWOOD_BOX
 db $10
 db $8F,$B3,$BC,$0D
-db $57,$65,$6C,$74,$2E,$20,$4E,$69,$6D,$6D,$60,$20,$B2,$0D
-db $64,$69,$65,$73,$2E,$11
-db $02,$02,$20,$C1,$45,$58,$50,$21,$13 : dw CLEAR_GREENWOOD_BOX
+db 'W','e','l','t','.',' ','N','i','m','m','`',' ',$B2,$0D
+db 'd','i','e','s','.',$11
+db $02,$02,' ',$C1,'E','X','P','!',$13 : dw CLEAR_GREENWOOD_BOX
 ; @END@
 
 ; @DEFAULT_TEXTBOX@
 ; "Möchtest Du nach  "
 ; "Green Wood zurück?" CONT
 db $10
-db $96,$83,$E3,$20,$0D
-db $47,$72,$65,$65,$6E,$20,$57,$6F,$6F,$64,$20,$7A,$75,$72,$5B,$63,$6B,$3F,$0C
+db $96,$83,$E3,' ',$0D
+db 'G','r','e','e','n',' ','W','o','o','d',' ','z','u','r','ü','c','k','?',$0C
 ; @END@
 
 ; @NEW_TEXT@
 ; "Nun gut, viel Glück." -> CLEAR_GREENWOOD_BOX
-db $4E,$75,$6E,$20,$67,$75,$74,$2C,$20,$76,$69,$65,$6C,$20,$47,$6C,$5B,$63,$6B,$2E,$13 : dw CLEAR_GREENWOOD_BOX
+db 'N','u','n',' ','g','u','t',',',' ','v','i','e','l',' ','G','l','ü','c','k','.',$13 : dw CLEAR_GREENWOOD_BOX
 ; @END@
 
 ; @NEW_TEXT@
@@ -4249,10 +4249,10 @@ db $4E,$75,$6E,$20,$67,$75,$74,$2C,$20,$76,$69,$65,$6C,$20,$47,$6C,$5B,$63,$6B,$
 ; "wenn Du nach Green"
 ; "Wood zurückkehren "
 ; "möchtest." -> CLEAR_GREENWOOD_BOX
-db $4B,$6F,$6D,$6D,$60,$20,$FD,$DB,$7A,$75,$72,$5B,$63,$6B,$2C,$0D
-db $F3,$83,$E3,$47,$72,$65,$65,$6E,$0D
-db $57,$6F,$6F,$64,$20,$7A,$75,$72,$5B,$63,$6B,$6B,$65,$68,$72,$65,$6E,$20,$0D
-db $6D,$2A,$63,$68,$74,$65,$73,$74,$2E,$13 : dw CLEAR_GREENWOOD_BOX
+db 'K','o','m','m','`',' ',$FD,$DB,'z','u','r','ü','c','k',',',$0D
+db $F3,$83,$E3,'G','r','e','e','n',$0D
+db 'W','o','o','d',' ','z','u','r','ü','c','k','k','e','h','r','e','n',' ',$0D
+db 'm','ö','c','h','t','e','s','t','.',$13 : dw CLEAR_GREENWOOD_BOX
 ; @END@
 
 CLEAR_GREENWOOD_BOX:

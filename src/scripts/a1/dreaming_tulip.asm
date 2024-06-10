@@ -28,10 +28,10 @@ A1_script_dreaming_tulip:
 ; "will...." WFE
 ; "HA!" -> Default_Text_End
 db $10
-db $49,$6E,$20,$6D,$65,$69,$6E,$65,$6E,$20,$54,$72,$7B,$75,$6D,$65,$6E,$20,$D7,$0D
-db $D1,$61,$6C,$6C,$65,$73,$20,$74,$75,$6E,$20,$F9,$D1,$0D
-db $77,$69,$6C,$6C,$2E,$2E,$2E,$2E,$11
-db $48,$41,$21,$13 : dw Default_Text_End
+db 'I','n',' ','m','e','i','n','e','n',' ','T','r','ä','u','m','e','n',' ',$D7,$0D
+db $D1,'a','l','l','e','s',' ','t','u','n',' ',$F9,$D1,$0D
+db 'w','i','l','l','.','.','.','.',$11
+db 'H','A','!',$13 : dw Default_Text_End
 ; @END@
 
 .text_second:
@@ -40,7 +40,7 @@ db $48,$41,$21,$13 : dw Default_Text_End
 ; "nicht mal mit dem "
 ; "Juwel zu sprechen ?" -> Default_Text_End
 db $10
-db $57,$61,$72,$75,$6D,$20,$76,$65,$72,$73,$75,$63,$68,$73,$74,$20,$44,$75,$0D
-db $DF,$6D,$61,$6C,$20,$DA,$BB,$0D
-db $4A,$75,$77,$65,$6C,$20,$FD,$73,$70,$72,$65,$63,$68,$65,$6E,$20,$3F,$13 : dw Default_Text_End
+db 'W','a','r','u','m',' ','v','e','r','s','u','c','h','s','t',' ','D','u',$0D
+db $DF,'m','a','l',' ',$DA,$BB,$0D
+db 'J','u','w','e','l',' ',$FD,'s','p','r','e','c','h','e','n',' ','?',$13 : dw Default_Text_End
 ; @END@

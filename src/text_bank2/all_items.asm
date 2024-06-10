@@ -25,135 +25,135 @@ AllItemsTable:
     dw .magic_bell
 
 .not_equipped:
-db $DF,$62,$65,$6E,$75,$74,$7A,$74,$00 ; @STRING@ "nicht benutzt"
+db $DF,'b','e','n','u','t','z','t',$00 ;"nicht benutzt"
 .life_sword:
-db $4C,$65,$62,$65,$6E,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Lebens Schwert"
+db 'L','e','b','e','n','s',' ','S','c','h','w','e','r','t',$00 ;"Lebens Schwert"
 .psycho_sword:
-db $50,$73,$79,$63,$68,$6F,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Psycho Schwert"
+db 'P','s','y','c','h','o',' ','S','c','h','w','e','r','t',$00 ;"Psycho Schwert"
 .critical_sword:
-db $54,$6F,$64,$65,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Todes Schwert"
+db 'T','o','d','e','s',' ','S','c','h','w','e','r','t',$00 ;"Todes Schwert"
 .lucky_blade:
-db $47,$6C,$5B,$63,$6B,$73,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Glücks Klinge"
+db 'G','l','ü','c','k','s',' ','K','l','i','n','g','e',$00 ;"Glücks Klinge"
 .zantetsu_sword:
-db $5A,$61,$6E,$74,$65,$74,$73,$75,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Zantetsu Klinge"
+db 'Z','a','n','t','e','t','s','u',' ','K','l','i','n','g','e',$00 ;"Zantetsu Klinge"
 .spirit_sword:
-db $47,$65,$69,$73,$74,$65,$73,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Geistes Schwert"
+db 'G','e','i','s','t','e','s',' ','S','c','h','w','e','r','t',$00 ;"Geistes Schwert"
 .recovery_sword:
-db $48,$65,$69,$6C,$20,$53,$63,$68,$77,$65,$72,$74,$00 ; @STRING@ "Heil Schwert"
+db 'H','e','i','l',' ','S','c','h','w','e','r','t',$00 ;"Heil Schwert"
 .soul_blade:
-db $53,$65,$65,$6C,$65,$6E,$20,$4B,$6C,$69,$6E,$67,$65,$00 ; @STRING@ "Seelen Klinge"
+db 'S','e','e','l','e','n',' ','K','l','i','n','g','e',$00 ;"Seelen Klinge"
 
 .iron_armor:
-db $45,$69,$73,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Eisen Rüstung"
+db 'E','i','s','e','n',' ','R','ü','s','t','u','n','g',$00 ;"Eisen Rüstung"
 .ice_armor:
-db $45,$69,$73,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Eis Rüstung"
+db 'E','i','s',' ','R','ü','s','t','u','n','g',$00 ;"Eis Rüstung"
 .bubble_armor:
-db $42,$6C,$61,$73,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Blasen Rüstung"
+db 'B','l','a','s','e','n',' ','R','ü','s','t','u','n','g',$00 ;"Blasen Rüstung"
 .magic_armor:
-db $9A,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Magie Rüstung"
+db $9A,'R','ü','s','t','u','n','g',$00 ;"Magie Rüstung"
 .mystic_armor:
-db $4D,$79,$73,$74,$69,$6B,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Mystik Rüstung"
+db 'M','y','s','t','i','k',' ','R','ü','s','t','u','n','g',$00 ;"Mystik Rüstung"
 .light_armor:
-db $4C,$69,$63,$68,$74,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Licht Rüstung"
+db 'L','i','c','h','t',' ','R','ü','s','t','u','n','g',$00 ;"Licht Rüstung"
 .elemental_armor:
-db $45,$6C,$65,$6D,$65,$6E,$74,$61,$72,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "ElementarRüstung"
+db 'E','l','e','m','e','n','t','a','r','R','ü','s','t','u','n','g',$00 ;"ElementarRüstung"
 .soul_armor:
-db $53,$65,$65,$6C,$65,$6E,$20,$52,$5B,$73,$74,$75,$6E,$67,$00 ; @STRING@ "Seelen Rüstung"
+db 'S','e','e','l','e','n',' ','R','ü','s','t','u','n','g',$00 ;"Seelen Rüstung"
 
 .flame_ball:
-db $46,$6C,$61,$6D,$6D,$65,$6E,$20,$42,$61,$6C,$6C,$00 ; @STRING@ "Flammen Ball"
+db 'F','l','a','m','m','e','n',' ','B','a','l','l',$00 ;"Flammen Ball"
 .light_arrow:
-db $4C,$69,$63,$68,$74,$20,$50,$66,$65,$69,$6C,$00 ; @STRING@ "Licht Pfeil"
+db 'L','i','c','h','t',' ','P','f','e','i','l',$00 ;"Licht Pfeil"
 .magic_flair:
-db $4D,$61,$67,$69,$73,$63,$68,$65,$72,$20,$46,$6C,$61,$69,$72,$00 ; @STRING@ "Magischer Flair"
+db 'M','a','g','i','s','c','h','e','r',' ','F','l','a','i','r',$00 ;"Magischer Flair"
 .rotator:
-db $52,$6F,$74,$61,$74,$69,$6F,$6E,$00 ; @STRING@ "Rotation"
+db 'R','o','t','a','t','i','o','n',$00 ;"Rotation"
 .spark_bomb:
-db $46,$75,$6E,$6B,$65,$6E,$20,$42,$6F,$6D,$62,$65,$00 ; @STRING@ "Funken Bombe"
+db 'F','u','n','k','e','n',' ','B','o','m','b','e',$00 ;"Funken Bombe"
 .flame_pillar:
-db $46,$6C,$61,$6D,$6D,$65,$6E,$20,$53,$7B,$75,$6C,$65,$00 ; @STRING@ "Flammen Säule"
+db 'F','l','a','m','m','e','n',' ','S','ä','u','l','e',$00 ;"Flammen Säule"
 .tornado:
-db $54,$6F,$72,$6E,$61,$64,$6F,$00 ; @STRING@ "Tornado"
+db 'T','o','r','n','a','d','o',$00 ;"Tornado"
 .phoenix:
-db $46,$65,$75,$65,$72,$20,$50,$68,$2A,$6E,$69,$78,$00 ; @STRING@ "Feuer Phönix"
+db 'F','e','u','e','r',' ','P','h','ö','n','i','x',$00 ;"Feuer Phönix"
 
 .goats_food:
-db $5A,$69,$65,$67,$65,$6E,$66,$75,$74,$74,$65,$72,$00 ; @STRING@ "Ziegenfutter"
+db 'Z','i','e','g','e','n','f','u','t','t','e','r',$00 ;"Ziegenfutter"
 .harp_string:
-db $48,$61,$72,$66,$65,$6E,$20,$53,$61,$69,$74,$65,$00 ; @STRING@ "Harfen Saite"
+db 'H','a','r','f','e','n',' ','S','a','i','t','e',$00 ;"Harfen Saite"
 .pass:
-db $C0,$50,$61,$25,$00 ; @STRING@ "einen Paß"
+db $C0,'P','a','ß',$00 ;"einen Paß"
 .dream_rod:
-db $54,$72,$61,$75,$6D,$73,$74,$61,$62,$00 ; @STRING@ "Traumstab"
+db 'T','r','a','u','m','s','t','a','b',$00 ;"Traumstab"
 .leos_brush:
-db $4C,$65,$6F,$60,$73,$20,$50,$69,$6E,$73,$65,$6C,$00 ; @STRING@ "Leo`s Pinsel"
+db 'L','e','o','`','s',' ','P','i','n','s','e','l',$00 ;"Leo`s Pinsel"
 .greenwood_leaves:
-db $42,$6C,$7B,$74,$74,$65,$72,$00 ; @STRING@ "Blätter"
+db 'B','l','ä','t','t','e','r',$00 ;"Blätter"
 .moles_ribbon:
-db $4D,$61,$75,$6C,$77,$75,$72,$66,$73,$62,$61,$6E,$64,$00 ; @STRING@ "Maulwurfsband"
+db 'M','a','u','l','w','u','r','f','s','b','a','n','d',$00 ;"Maulwurfsband"
 .big_pearl:
-db $B5,$67,$72,$6F,$25,$65,$20,$50,$65,$72,$6C,$65,$00 ; @STRING@ "die große Perle"
+db $B5,'g','r','o','ß','e',' ','P','e','r','l','e',$00 ;"die große Perle"
 .mermaids_tears:
-db $4A,$75,$6E,$67,$66,$72,$61,$75,$74,$72,$7B,$6E,$65,$00 ; @STRING@ "Jungfrauträne"
+db 'J','u','n','g','f','r','a','u','t','r','ä','n','e',$00 ;"Jungfrauträne"
 .mushroom_shoes:
-db $50,$69,$6C,$7A,$73,$63,$68,$75,$68,$65,$00 ; @STRING@ "Pilzschuhe"
+db 'P','i','l','z','s','c','h','u','h','e',$00 ;"Pilzschuhe"
 .door_key:
-db $C0,$53,$63,$68,$6C,$5B,$73,$73,$65,$6C,$00 ; @STRING@ "einen Schlüssel"
+db $C0,'S','c','h','l','ü','s','s','e','l',$00 ;"einen Schlüssel"
 .thunder_ring:
-db $44,$6F,$6E,$6E,$65,$72,$20,$52,$69,$6E,$67,$00 ; @STRING@ "Donner Ring"
+db 'D','o','n','n','e','r',' ','R','i','n','g',$00 ;"Donner Ring"
 .delicious_seeds:
-db $4C,$65,$63,$6B,$65,$72,$65,$20,$53,$61,$6D,$65,$6E,$00 ; @STRING@ "Leckere Samen"
+db 'L','e','c','k','e','r','e',' ','S','a','m','e','n',$00 ;"Leckere Samen"
 .plant_leaves:
-db $42,$6C,$7B,$74,$74,$65,$72,$00 ; @STRING@ "Blätter"
+db 'B','l','ä','t','t','e','r',$00 ;"Blätter"
 .mobile_key:
-db $65,$69,$6E,$65,$6E,$54,$5B,$72,$73,$63,$68,$6C,$5B,$25,$65,$6C,$00 ; @STRING@ "einenTürschlüßel"
+db 'e','i','n','e','n','T','ü','r','s','c','h','l','ü','ß','e','l',$00 ;"einenTürschlüßel"
 .platinum_card:
-db $4B,$61,$72,$74,$65,$20,$AD,$50,$6C,$61,$74,$69,$6E,$00 ; @STRING@ "Karte aus Platin"
+db 'K','a','r','t','e',' ',$AD,'P','l','a','t','i','n',$00 ;"Karte aus Platin"
 .vip_card:
-db $56,$49,$50,$20,$4B,$61,$72,$74,$65,$00 ; @STRING@ "VIP Karte"
+db 'V','I','P',' ','K','a','r','t','e',$00 ;"VIP Karte"
 .emblem_a:
-db $45,$6D,$62,$6C,$65,$6D,$20,$41,$00 ; @STRING@ "Emblem A"
+db 'E','m','b','l','e','m',' ','A',$00 ;"Emblem A"
 .emblem_b:
-db $45,$6D,$62,$6C,$65,$6D,$20,$42,$00 ; @STRING@ "Emblem B"
+db 'E','m','b','l','e','m',' ','B',$00 ;"Emblem B"
 .emblem_c:
-db $45,$6D,$62,$6C,$65,$6D,$20,$43,$00 ; @STRING@ "Emblem C"
+db 'E','m','b','l','e','m',' ','C',$00 ;"Emblem C"
 .emblem_d:
-db $45,$6D,$62,$6C,$65,$6D,$20,$44,$00 ; @STRING@ "Emblem D"
+db 'E','m','b','l','e','m',' ','D',$00 ;"Emblem D"
 .emblem_e:
-db $45,$6D,$62,$6C,$65,$6D,$20,$45,$00 ; @STRING@ "Emblem E"
+db 'E','m','b','l','e','m',' ','E',$00 ;"Emblem E"
 .emblem_f:
-db $45,$6D,$62,$6C,$65,$6D,$20,$46,$00 ; @STRING@ "Emblem F"
+db 'E','m','b','l','e','m',' ','F',$00 ;"Emblem F"
 .emblem_g:
-db $45,$6D,$62,$6C,$65,$6D,$20,$47,$00 ; @STRING@ "Emblem G"
+db 'E','m','b','l','e','m',' ','G',$00 ;"Emblem G"
 .emblem_h:
-db $45,$6D,$62,$6C,$65,$6D,$20,$48,$00 ; @STRING@ "Emblem H"
+db 'E','m','b','l','e','m',' ','H',$00 ;"Emblem H"
 .hot_mirror:
-db $68,$65,$69,$25,$65,$6E,$20,$53,$70,$69,$65,$67,$65,$6C,$00 ; @STRING@ "heißen Spiegel"
+db 'h','e','i','ß','e','n',' ','S','p','i','e','g','e','l',$00 ;"heißen Spiegel"
 .hot_ball:
-db $68,$65,$69,$25,$65,$6E,$20,$42,$61,$6C,$6C,$00 ; @STRING@ "heißen Ball"
+db 'h','e','i','ß','e','n',' ','B','a','l','l',$00 ;"heißen Ball"
 .hot_stick:
-db $68,$65,$69,$25,$65,$6E,$20,$53,$74,$6F,$63,$6B,$00 ; @STRING@ "heißen Stock"
+db 'h','e','i','ß','e','n',' ','S','t','o','c','k',$00 ;"heißen Stock"
 .power_bracelet:
-db $4B,$72,$61,$66,$74,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Kraft Armband"
+db 'K','r','a','f','t',' ','A','r','m','b','a','n','d',$00 ;"Kraft Armband"
 .shield_bracelet:
-db $53,$63,$68,$69,$6C,$64,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Schild Armband"
+db 'S','c','h','i','l','d',' ','A','r','m','b','a','n','d',$00 ;"Schild Armband"
 .super_bracelet:
-db $53,$75,$70,$65,$72,$20,$41,$72,$6D,$62,$61,$6E,$64,$00 ; @STRING@ "Super Armband"
+db 'S','u','p','e','r',' ','A','r','m','b','a','n','d',$00 ;"Super Armband"
 .medical_herb:
-db $48,$65,$69,$6C,$6B,$72,$7B,$75,$74,$65,$72,$00 ; @STRING@ "Heilkräuter"
+db 'H','e','i','l','k','r','ä','u','t','e','r',$00 ;"Heilkräuter"
 .strange_bottle:
-db $73,$65,$6C,$74,$73,$61,$6D,$65,$20,$46,$6C,$61,$73,$63,$68,$65,$00 ; @STRING@ "seltsame Flasche"
+db 's','e','l','t','s','a','m','e',' ','F','l','a','s','c','h','e',$00 ;"seltsame Flasche"
 .brown_stone:
-db $62,$72,$61,$75,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "braunen Stein"
+db 'b','r','a','u','n','e','n',' ','S','t','e','i','n',$00 ;"braunen Stein"
 .green_stone:
-db $67,$72,$5B,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "grünen Stein"
+db 'g','r','ü','n','e','n',' ','S','t','e','i','n',$00 ;"grünen Stein"
 .blue_stone:
-db $62,$6C,$61,$75,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "blauen Stein"
+db 'b','l','a','u','e','n',' ','S','t','e','i','n',$00 ;"blauen Stein"
 .silver_stone:
-db $73,$69,$6C,$62,$65,$72,$6E,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "silbernen Stein"
+db 's','i','l','b','e','r','n','e','n',' ','S','t','e','i','n',$00 ;"silbernen Stein"
 .purple_stone:
-db $6C,$69,$6C,$61,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "lila Stein"
+db 'l','i','l','a',' ','S','t','e','i','n',$00 ;"lila Stein"
 .black_stone:
-db $73,$63,$68,$77,$61,$72,$7A,$65,$6E,$20,$53,$74,$65,$69,$6E,$00 ; @STRING@ "schwarzen Stein"
+db 's','c','h','w','a','r','z','e','n',' ','S','t','e','i','n',$00 ;"schwarzen Stein"
 .magic_bell:
-db $6D,$61,$67,$69,$73,$63,$68,$65,$20,$47,$6C,$6F,$63,$6B,$65,$00 ; @STRING@ "magische Glocke"
+db 'm','a','g','i','s','c','h','e',' ','G','l','o','c','k','e',$00 ;"magische Glocke"

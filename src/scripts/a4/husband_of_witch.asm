@@ -18,7 +18,6 @@ A4_script_husband_of_witch:
 ; "Meine Frau konnte "
 ; "früher Magie benutzen." -> ACT4_CLEARBOX
 db $10
-db $4D,$65,$69,$6E,$65,$20,$46,$72,$61,$75,$20,$6B,$6F,$6E,$6E,$74,$65,$20,$0D
-db $66,$72,$5B,$68,$65,$72,$20,$9A,$62,$65,$6E,$75,$74,$7A,$65,$6E,$2E,$13 : dw ACT4_CLEARBOX
+db 'M','e','i','n','e',' ','F','r','a','u',' ','k','o','n','n','t','e',' ',$0D
+db 'f','r','ü','h','e','r',' ',$9A,'b','e','n','u','t','z','e','n','.',$13 : dw ACT4_CLEARBOX
 ; @END@
-

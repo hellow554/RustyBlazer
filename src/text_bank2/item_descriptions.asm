@@ -47,14 +47,14 @@ db $00
 ; "Ein Schwert vom\n\n" NO_NEWLINE
 ; "Meister." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+0
+db $05 : dw AllItemsTable : dw .SequenceTable+0
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+0
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+0
 db $01,$8A,$05
-db $45,$69,$6E,$20,$A3,$76,$6F,$6D,$0D,$0D
-db $4D,$65,$69,$73,$74,$65,$72,$2E
+db 'E','i','n',' ',$A3,'v','o','m',$0D,$0D
+db 'M','e','i','s','t','e','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -70,14 +70,14 @@ db $00
 ; "Lähmung für\n\n" NO_NEWLINE
 ; "starke Monster." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+2
+db $05 : dw AllItemsTable : dw .SequenceTable+2
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+2
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+1
 db $01,$8A,$05
-db $4C,$7B,$68,$6D,$75,$6E,$67,$20,$66,$5B,$72,$0D,$0D
-db $73,$74,$61,$72,$6B,$65,$20,$4D,$6F,$6E,$73,$74,$65,$72,$2E
+db 'L','ä','h','m','u','n','g',' ','f','ü','r',$0D,$0D
+db 's','t','a','r','k','e',' ','M','o','n','s','t','e','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -93,14 +93,14 @@ db $00
 ; "Besiegt die Monster\n\n" NO_NEWLINE
 ; "mit einem Schlag." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+4
+db $05 : dw AllItemsTable : dw .SequenceTable+4
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+4
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+2
 db $01,$8A,$05
-db $42,$65,$73,$69,$65,$67,$74,$20,$B5,$4D,$6F,$6E,$73,$74,$65,$72,$0D,$0D
-db $DA,$C7,$53,$63,$68,$6C,$61,$67,$2E
+db 'B','e','s','i','e','g','t',' ',$B5,'M','o','n','s','t','e','r',$0D,$0D
+db $DA,$C7,'S','c','h','l','a','g','.'
 db $00
 ; @ENDSTRING@
 
@@ -117,14 +117,14 @@ db $00
 ; "Größere Chancen\n\n" NO_NEWLINE
 ; "JWL zu finden" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+6
+db $05 : dw AllItemsTable : dw .SequenceTable+6
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+6
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+3
 db $01,$8A,$05
-db $47,$72,$2A,$25,$65,$72,$65,$20,$43,$68,$61,$6E,$63,$65,$6E,$0D,$0D
-db $4A,$57,$4C,$20,$FD,$66,$69,$6E,$64,$65,$6E
+db 'G','r','ö','ß','e','r','e',' ','C','h','a','n','c','e','n',$0D,$0D
+db 'J','W','L',' ',$FD,'f','i','n','d','e','n'
 db $00
 ; @ENDSTRING@
 
@@ -140,14 +140,14 @@ db $00
 ; "Schlägt die Monster \n\n" NO_NEWLINE
 ; "mit spezieller Rüstung" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+8
+db $05 : dw AllItemsTable : dw .SequenceTable+8
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+8
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+4
 db $01,$8A,$05
-db $53,$63,$68,$6C,$7B,$67,$74,$20,$B5,$95,$0D,$0D
-db $DA,$73,$70,$65,$7A,$69,$65,$6C,$6C,$65,$72,$20,$52,$5B,$73,$74,$75,$6E,$67
+db 'S','c','h','l','ä','g','t',' ',$B5,$95,$0D,$0D
+db $DA,'s','p','e','z','i','e','l','l','e','r',' ','R','ü','s','t','u','n','g'
 db $00
 ; @ENDSTRING@
 
@@ -163,14 +163,14 @@ db $00
 ; "Schlägt die <Geister>\n\n" NO_NEWLINE
 ; "Monster." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+10
+db $05 : dw AllItemsTable : dw .SequenceTable+10
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+10
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+5
 db $01,$8A,$05
-db $53,$63,$68,$6C,$7B,$67,$74,$20,$B5,$3C,$47,$65,$69,$73,$74,$65,$72,$3E,$0D,$0D
-db $4D,$6F,$6E,$73,$74,$65,$72,$2E
+db 'S','c','h','l','ä','g','t',' ',$B5,'<','G','e','i','s','t','e','r','>',$0D,$0D
+db 'M','o','n','s','t','e','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -186,14 +186,14 @@ db $00
 ; "Die HP werden nach dem\n\n" NO_NEWLINE
 ; "Sieg wieder aufgefüllt" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+12
+db $05 : dw AllItemsTable : dw .SequenceTable+12
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+12
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+6
 db $01,$8A,$05
-db $87,$48,$50,$20,$F5,$E3,$64,$65,$6D,$0D,$0D
-db $53,$69,$65,$67,$20,$F4,$61,$75,$66,$67,$65,$66,$5B,$6C,$6C,$74
+db $87,'H','P',' ',$F5,$E3,'d','e','m',$0D,$0D
+db 'S','i','e','g',' ',$F4,'a','u','f','g','e','f','ü','l','l','t'
 db $00
 ; @ENDSTRING@
 
@@ -209,14 +209,14 @@ db $00
 ; "Das stärkste Schwert,\n\n" NO_NEWLINE
 ; "das Du benutzen kannst" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+14
+db $05 : dw AllItemsTable : dw .SequenceTable+14
 db $01,$B2,$04
 db $06,$02 : dw WeaponLevelRequirement+14
 db $01,$1E,$05
 db $0B,$26 : dw ItemStrenghTable+7
 db $01,$8A,$05
-db $8A,$73,$74,$7B,$72,$6B,$73,$74,$65,$20,$53,$63,$68,$77,$65,$72,$74,$2C,$0D,$0D
-db $B9,$83,$62,$65,$6E,$75,$74,$7A,$65,$6E,$20,$6B,$61,$6E,$6E,$73,$74
+db $8A,'s','t','ä','r','k','s','t','e',' ','S','c','h','w','e','r','t',',',$0D,$0D
+db $B9,$83,'b','e','n','u','t','z','e','n',' ','k','a','n','n','s','t'
 db $00
 ; @ENDSTRING@
 
@@ -230,12 +230,12 @@ db $00
 ; "Deine Abwehrkräfte\n\n" NO_NEWLINE
 ; "werden stärker." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+16
+db $05 : dw AllItemsTable : dw .SequenceTable+16
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+0
 db $01,$8A,$05
-db $44,$65,$69,$6E,$65,$20,$41,$62,$77,$65,$68,$72,$6B,$72,$7B,$66,$74,$65,$0D,$0D
-db $F5,$73,$74,$7B,$72,$6B,$65,$72,$2E
+db 'D','e','i','n','e',' ','A','b','w','e','h','r','k','r','ä','f','t','e',$0D,$0D
+db $F5,'s','t','ä','r','k','e','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -249,12 +249,12 @@ db $00
 ; "Du kannst ohne Gefahr\n\n" NO_NEWLINE
 ; "Feuer überqueren." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+18
+db $05 : dw AllItemsTable : dw .SequenceTable+18
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+1
 db $01,$8A,$05
-db $83,$6B,$61,$6E,$6E,$73,$74,$20,$6F,$68,$6E,$65,$20,$47,$65,$66,$61,$68,$72,$0D,$0D
-db $46,$65,$75,$65,$72,$20,$5B,$62,$65,$72,$71,$75,$65,$72,$65,$6E,$2E
+db $83,'k','a','n','n','s','t',' ','o','h','n','e',' ','G','e','f','a','h','r',$0D,$0D
+db 'F','e','u','e','r',' ','ü','b','e','r','q','u','e','r','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -268,12 +268,12 @@ db $00
 ; "Ermöglicht es Dir,\n\n" NO_NEWLINE
 ; "unter Wasser zu laufen" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+20
+db $05 : dw AllItemsTable : dw .SequenceTable+20
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+2
 db $01,$8A,$05
-db $45,$72,$6D,$2A,$67,$6C,$69,$63,$68,$74,$20,$C3,$44,$69,$72,$2C,$0D,$0D
-db $75,$6E,$74,$65,$72,$20,$57,$61,$73,$73,$65,$72,$20,$FD,$6C,$61,$75,$66,$65,$6E
+db 'E','r','m','ö','g','l','i','c','h','t',' ',$C3,'D','i','r',',',$0D,$0D
+db 'u','n','t','e','r',' ','W','a','s','s','e','r',' ',$FD,'l','a','u','f','e','n'
 db $00
 ; @ENDSTRING@
 
@@ -287,12 +287,12 @@ db $00
 ; "Verringert die notwen-\n\n" NO_NEWLINE
 ; "digen Juwelen um 1/2." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+22
+db $05 : dw AllItemsTable : dw .SequenceTable+22
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+3
 db $01,$8A,$05
-db $56,$65,$72,$72,$69,$6E,$67,$65,$72,$74,$20,$B5,$6E,$6F,$74,$77,$65,$6E,$2D,$0D,$0D
-db $64,$69,$67,$65,$6E,$20,$90,$EC,$31,$2F,$32,$2E
+db 'V','e','r','r','i','n','g','e','r','t',' ',$B5,'n','o','t','w','e','n','-',$0D,$0D
+db 'd','i','g','e','n',' ',$90,$EC,'1','/','2','.'
 db $00
 ; @ENDSTRING@
 
@@ -306,12 +306,12 @@ db $00
 ; "Unbesiegbar für einen\n\n" NO_NEWLINE
 ; "längeren Zeitabstand." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+24
+db $05 : dw AllItemsTable : dw .SequenceTable+24
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+4
 db $01,$8A,$05
-db $55,$6E,$62,$65,$73,$69,$65,$67,$62,$61,$72,$20,$C9,$65,$69,$6E,$65,$6E,$0D,$0D
-db $6C,$7B,$6E,$67,$65,$72,$65,$6E,$20,$5A,$65,$69,$74,$61,$62,$73,$74,$61,$6E,$64,$2E
+db 'U','n','b','e','s','i','e','g','b','a','r',' ',$C9,'e','i','n','e','n',$0D,$0D
+db 'l','ä','n','g','e','r','e','n',' ','Z','e','i','t','a','b','s','t','a','n','d','.'
 db $00
 ; @ENDSTRING@
 
@@ -325,12 +325,12 @@ db $00
 ; "Schwache Monster sind\n\n" NO_NEWLINE
 ; "keine Gefahr mehr." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+26
+db $05 : dw AllItemsTable : dw .SequenceTable+26
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+5
 db $01,$8A,$05
-db $53,$63,$68,$77,$61,$63,$68,$65,$20,$95,$73,$69,$6E,$64,$0D,$0D
-db $D8,$47,$65,$66,$61,$68,$72,$20,$6D,$65,$68,$72,$2E
+db 'S','c','h','w','a','c','h','e',' ',$95,'s','i','n','d',$0D,$0D
+db $D8,'G','e','f','a','h','r',' ','m','e','h','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -344,12 +344,12 @@ db $00
 ; "Beschützt Dich vor den\n\n" NO_NEWLINE
 ; "Gefahren zonen" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+28
+db $05 : dw AllItemsTable : dw .SequenceTable+28
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+6
 db $01,$8A,$05
-db $42,$65,$73,$63,$68,$5B,$74,$7A,$74,$20,$85,$76,$6F,$72,$20,$64,$65,$6E,$0D,$0D
-db $47,$65,$66,$61,$68,$72,$65,$6E,$20,$7A,$6F,$6E,$65,$6E
+db 'B','e','s','c','h','ü','t','z','t',' ',$85,'v','o','r',' ','d','e','n',$0D,$0D
+db 'G','e','f','a','h','r','e','n',' ','z','o','n','e','n'
 db $00
 ; @ENDSTRING@
 
@@ -363,12 +363,12 @@ db $00
 ; "Ermöglicht es Dir,Dich\n\n" NO_NEWLINE
 ; "im Weltall zu bewegen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+30
+db $05 : dw AllItemsTable : dw .SequenceTable+30
 db $01,$1E,$05
 db $0B,$27 : dw ItemDefenseTable+7
 db $01,$8A,$05
-db $45,$72,$6D,$2A,$67,$6C,$69,$63,$68,$74,$20,$C3,$44,$69,$72,$2C,$44,$69,$63,$68,$0D,$0D
-db $D5,$57,$65,$6C,$74,$61,$6C,$6C,$20,$FD,$62,$65,$77,$65,$67,$65,$6E,$2E
+db 'E','r','m','ö','g','l','i','c','h','t',' ',$C3,'D','i','r',',','D','i','c','h',$0D,$0D
+db $D5,'W','e','l','t','a','l','l',' ',$FD,'b','e','w','e','g','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -381,11 +381,11 @@ db $00
 ; "Schießt einen Feuer-\n\n" NO_NEWLINE
 ; "ball in eine Richtung." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+32
+db $05 : dw AllItemsTable : dw .SequenceTable+32
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$34,$0D,$0D
-db $53,$63,$68,$69,$65,$25,$74,$20,$C0,$46,$65,$75,$65,$72,$2D,$0D,$0D
-db $62,$61,$6C,$6C,$20,$D3,$BF,$52,$69,$63,$68,$74,$75,$6E,$67,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','4',$0D,$0D
+db 'S','c','h','i','e','ß','t',' ',$C0,'F','e','u','e','r','-',$0D,$0D
+db 'b','a','l','l',' ',$D3,$BF,'R','i','c','h','t','u','n','g','.'
 db $00
 ; @ENDSTRING@
 
@@ -398,11 +398,11 @@ db $00
 ; "Schießt einen Licht \n\n" NO_NEWLINE
 ; "Pfeil in eine Richtung" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+34
+db $05 : dw AllItemsTable : dw .SequenceTable+34
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$38,$0D,$0D
-db $53,$63,$68,$69,$65,$25,$74,$20,$C0,$4C,$69,$63,$68,$74,$20,$0D,$0D
-db $50,$66,$65,$69,$6C,$20,$D3,$BF,$52,$69,$63,$68,$74,$75,$6E,$67
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','8',$0D,$0D
+db 'S','c','h','i','e','ß','t',' ',$C0,'L','i','c','h','t',' ',$0D,$0D
+db 'P','f','e','i','l',' ',$D3,$BF,'R','i','c','h','t','u','n','g'
 db $00
 ; @ENDSTRING@
 
@@ -415,11 +415,11 @@ db $00
 ; "Die Kraft wird durch \n\n" NO_NEWLINE
 ; "Knopfdruck gesammelt." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+36
+db $05 : dw AllItemsTable : dw .SequenceTable+36
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$38,$0D,$0D
-db $87,$4B,$72,$61,$66,$74,$20,$F7,$64,$75,$72,$63,$68,$20,$0D,$0D
-db $4B,$6E,$6F,$70,$66,$64,$72,$75,$63,$6B,$20,$67,$65,$73,$61,$6D,$6D,$65,$6C,$74,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','8',$0D,$0D
+db $87,'K','r','a','f','t',' ',$F7,'d','u','r','c','h',' ',$0D,$0D
+db 'K','n','o','p','f','d','r','u','c','k',' ','g','e','s','a','m','m','e','l','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -432,11 +432,11 @@ db $00
 ; "Ein Ring aus Licht \n\n" NO_NEWLINE
 ; "wird Dich umkreisen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+38
+db $05 : dw AllItemsTable : dw .SequenceTable+38
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$31,$0D,$0D
-db $45,$69,$6E,$20,$52,$69,$6E,$67,$20,$AD,$4C,$69,$63,$68,$74,$20,$0D,$0D
-db $F7,$85,$75,$6D,$6B,$72,$65,$69,$73,$65,$6E,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','1',$0D,$0D
+db 'E','i','n',' ','R','i','n','g',' ',$AD,'L','i','c','h','t',' ',$0D,$0D
+db $F7,$85,'u','m','k','r','e','i','s','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -449,11 +449,11 @@ db $00
 ; "Abgelegte Minen werden\n\n" NO_NEWLINE
 ; "explodieren." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+40
+db $05 : dw AllItemsTable : dw .SequenceTable+40
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$38,$0D,$0D
-db $41,$62,$67,$65,$6C,$65,$67,$74,$65,$20,$4D,$69,$6E,$65,$6E,$20,$77,$65,$72,$64,$65,$6E,$0D,$0D
-db $65,$78,$70,$6C,$6F,$64,$69,$65,$72,$65,$6E,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','8',$0D,$0D
+db 'A','b','g','e','l','e','g','t','e',' ','M','i','n','e','n',' ','w','e','r','d','e','n',$0D,$0D
+db 'e','x','p','l','o','d','i','e','r','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -466,11 +466,11 @@ db $00
 ; "Säulen aus Feuer\n\n" NO_NEWLINE
 ; "erheben sich um Dich." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+42
+db $05 : dw AllItemsTable : dw .SequenceTable+42
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$32,$30,$0D,$0D
-db $53,$7B,$75,$6C,$65,$6E,$20,$AD,$46,$65,$75,$65,$72,$0D,$0D
-db $65,$72,$68,$65,$62,$65,$6E,$20,$E5,$EC,$44,$69,$63,$68,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':','2','0',$0D,$0D
+db 'S','ä','u','l','e','n',' ',$AD,'F','e','u','e','r',$0D,$0D
+db 'e','r','h','e','b','e','n',' ',$E5,$EC,'D','i','c','h','.'
 db $00
 ; @ENDSTRING@
 
@@ -483,11 +483,11 @@ db $00
 ; "Ein magischer Tornado \n\n" NO_NEWLINE
 ; "wird erscheinen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+44
+db $05 : dw AllItemsTable : dw .SequenceTable+44
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$38,$0D,$0D
-db $45,$69,$6E,$20,$6D,$61,$67,$69,$73,$63,$68,$65,$72,$20,$54,$6F,$72,$6E,$61,$64,$6F,$20,$0D,$0D
-db $F7,$65,$72,$73,$63,$68,$65,$69,$6E,$65,$6E,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','8',$0D,$0D
+db 'E','i','n',' ','m','a','g','i','s','c','h','e','r',' ','T','o','r','n','a','d','o',' ',$0D,$0D
+db $F7,'e','r','s','c','h','e','i','n','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -500,11 +500,11 @@ db $00
 ; "Der Phönix wird Dich \n\n" NO_NEWLINE
 ; "begleiten." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+46
+db $05 : dw AllItemsTable : dw .SequenceTable+46
 db $01,$0A,$05
-db $9B,$4A,$55,$57,$45,$4C,$45,$4E,$20,$3A,$20,$32,$0D,$0D
-db $88,$50,$68,$2A,$6E,$69,$78,$20,$F7,$85,$0D,$0D
-db $62,$65,$67,$6C,$65,$69,$74,$65,$6E,$2E
+db $9B,'J','U','W','E','L','E','N',' ',':',' ','2',$0D,$0D
+db $88,'P','h','ö','n','i','x',' ',$F7,$85,$0D,$0D
+db 'b','e','g','l','e','i','t','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -516,10 +516,10 @@ db $00
 ; "Ziegenfutter vom Zube-\n\n" NO_NEWLINE
 ; "hörladen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+48
+db $05 : dw AllItemsTable : dw .SequenceTable+48
 db $01,$0A,$05
-db $5A,$69,$65,$67,$65,$6E,$66,$75,$74,$74,$65,$72,$20,$F1,$5A,$75,$62,$65,$2D,$0D,$0D
-db $68,$2A,$72,$6C,$61,$64,$65,$6E,$2E
+db 'Z','i','e','g','e','n','f','u','t','t','e','r',' ',$F1,'Z','u','b','e','-',$0D,$0D
+db 'h','ö','r','l','a','d','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -531,10 +531,10 @@ db $00
 ; "Saite einer Harfe vom\n\n" NO_NEWLINE
 ; "Sänger." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+50
+db $05 : dw AllItemsTable : dw .SequenceTable+50
 db $01,$0A,$05
-db $53,$61,$69,$74,$65,$20,$C6,$48,$61,$72,$66,$65,$20,$76,$6F,$6D,$0D,$0D
-db $53,$7B,$6E,$67,$65,$72,$2E
+db 'S','a','i','t','e',' ',$C6,'H','a','r','f','e',' ','v','o','m',$0D,$0D
+db 'S','ä','n','g','e','r','.'
 db $00
 ; @ENDSTRING@
 
@@ -547,11 +547,11 @@ db $00
 ; "Kindern aus Grass\n\n" NO_NEWLINE
 ; "Valley." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+52
+db $05 : dw AllItemsTable : dw .SequenceTable+52
 db $01,$0A,$05
-db $45,$69,$6E,$20,$50,$61,$73,$73,$20,$EE,$B7,$0D,$0D
-db $4B,$69,$6E,$64,$65,$72,$6E,$20,$AD,$47,$72,$61,$73,$73,$0D,$0D
-db $56,$61,$6C,$6C,$65,$79,$2E
+db 'E','i','n',' ','P','a','s','s',' ',$EE,$B7,$0D,$0D
+db 'K','i','n','d','e','r','n',' ',$AD,'G','r','a','s','s',$0D,$0D
+db 'V','a','l','l','e','y','.'
 db $00
 ; @ENDSTRING@
 
@@ -564,11 +564,11 @@ db $00
 ; "er Stab, mit dem Du in\n\n" NO_NEWLINE
 ; "Träume schauen kannst." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+54
+db $05 : dw AllItemsTable : dw .SequenceTable+54
 db $01,$0A,$05
-db $45,$69,$6E,$20,$73,$65,$6C,$74,$73,$61,$6D,$20,$61,$75,$73,$73,$65,$68,$65,$6E,$64,$2D,$0D,$0D
-db $C8,$53,$74,$61,$62,$2C,$20,$DA,$BB,$83,$69,$6E,$0D,$0D
-db $54,$72,$7B,$75,$6D,$65,$20,$73,$63,$68,$61,$75,$65,$6E,$20,$6B,$61,$6E,$6E,$73,$74,$2E
+db 'E','i','n',' ','s','e','l','t','s','a','m',' ','a','u','s','s','e','h','e','n','d','-',$0D,$0D
+db $C8,'S','t','a','b',',',' ',$DA,$BB,$83,'i','n',$0D,$0D
+db 'T','r','ä','u','m','e',' ','s','c','h','a','u','e','n',' ','k','a','n','n','s','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -581,11 +581,11 @@ db $00
 ; "Malen von \x3c\xa9\xb8\n\n" NO_NEWLINE
 ; "Bösen\x3e verwendet wurde" NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+56
+db $05 : dw AllItemsTable : dw .SequenceTable+56
 db $01,$0A,$05
-db $88,$50,$69,$6E,$73,$65,$6C,$20,$B6,$FE,$0D,$0D
-db $4D,$61,$6C,$65,$6E,$20,$EE,$3C,$A9,$B8,$0D,$0D
-db $42,$2A,$73,$65,$6E,$3E,$20,$76,$65,$72,$77,$65,$6E,$64,$65,$74,$20,$77,$75,$72,$64,$65
+db $88,'P','i','n','s','e','l',' ',$B6,$FE,$0D,$0D
+db 'M','a','l','e','n',' ',$EE,$3C,$A9,$B8,$0D,$0D
+db 'B','ö','s','e','n',$3E,' ','v','e','r','w','e','n','d','e','t',' ','w','u','r','d','e'
 db $00
 ; @ENDSTRING@
 
@@ -598,11 +598,11 @@ db $00
 ; "mit diesem Symbol gilt\n\n" NO_NEWLINE
 ; "als Bote Turbo`s." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+58
+db $05 : dw AllItemsTable : dw .SequenceTable+58
 db $01,$0A,$05
-db $53,$79,$6D,$62,$6F,$6C,$20,$EE,$54,$75,$72,$62,$6F,$2E,$4A,$65,$64,$65,$72,$0D,$0D
-db $DA,$64,$69,$65,$73,$65,$6D,$20,$53,$79,$6D,$62,$6F,$6C,$20,$67,$69,$6C,$74,$0D,$0D
-db $AF,$42,$6F,$74,$65,$20,$54,$75,$72,$62,$6F,$60,$73,$2E
+db 'S','y','m','b','o','l',' ',$EE,'T','u','r','b','o','.','J','e','d','e','r',$0D,$0D
+db $DA,'d','i','e','s','e','m',' ','S','y','m','b','o','l',' ','g','i','l','t',$0D,$0D
+db $AF,'B','o','t','e',' ','T','u','r','b','o','`','s','.'
 db $00
 ; @ENDSTRING@
 
@@ -615,11 +615,11 @@ db $00
 ; "Monmo,dem Maulwurf,ge-\n\n" NO_NEWLINE
 ; "fiel,als sie lebte." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+60
+db $05 : dw AllItemsTable : dw .SequenceTable+60
 db $01,$0A,$05
-db $45,$69,$6E,$20,$42,$61,$6E,$64,$2C,$B9,$62,$65,$73,$6F,$6E,$64,$65,$72,$73,$0D,$0D
-db $4D,$6F,$6E,$6D,$6F,$2C,$BB,$4D,$61,$75,$6C,$77,$75,$72,$66,$2C,$67,$65,$2D,$0D,$0D
-db $66,$69,$65,$6C,$2C,$AF,$E6,$6C,$65,$62,$74,$65,$2E
+db 'E','i','n',' ','B','a','n','d',',',$B9,'b','e','s','o','n','d','e','r','s',$0D,$0D
+db 'M','o','n','m','o',',',$BB,'M','a','u','l','w','u','r','f',',','g','e','-',$0D,$0D
+db 'f','i','e','l',',',$AF,$E6,'l','e','b','t','e','.'
 db $00
 ; @ENDSTRING@
 
@@ -632,11 +632,11 @@ db $00
 ; "Perle, die am Korallen\n\n" NO_NEWLINE
 ; "Riff gefunden wird." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+62
+db $05 : dw AllItemsTable : dw .SequenceTable+62
 db $01,$0A,$05
-db $45,$69,$6E,$65,$20,$77,$75,$6E,$64,$65,$72,$73,$63,$68,$2A,$6E,$65,$20,$0D,$0D
-db $50,$65,$72,$6C,$65,$2C,$20,$B5,$61,$6D,$20,$4B,$6F,$72,$61,$6C,$6C,$65,$6E,$0D,$0D
-db $52,$69,$66,$66,$20,$67,$65,$66,$75,$6E,$64,$65,$6E,$20,$77,$69,$72,$64,$2E
+db 'E','i','n','e',' ','w','u','n','d','e','r','s','c','h','ö','n','e',' ',$0D,$0D
+db 'P','e','r','l','e',',',' ',$B5,'a','m',' ','K','o','r','a','l','l','e','n',$0D,$0D
+db 'R','i','f','f',' ','g','e','f','u','n','d','e','n',' ','w','i','r','d','.'
 db $00
 ; @ENDSTRING@
 
@@ -648,10 +648,10 @@ db $00
 ; "Verwandelt Lava in \n\n" NO_NEWLINE
 ; "Stein." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+64
+db $05 : dw AllItemsTable : dw .SequenceTable+64
 db $01,$0A,$05
-db $56,$65,$72,$77,$61,$6E,$64,$65,$6C,$74,$20,$4C,$61,$76,$61,$20,$D3,$0D,$0D
-db $53,$74,$65,$69,$6E,$2E
+db 'V','e','r','w','a','n','d','e','l','t',' ','L','a','v','a',' ',$D3,$0D,$0D
+db 'S','t','e','i','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -664,11 +664,11 @@ db $00
 ; "ermöglicht es Dir, auf\n\n" NO_NEWLINE
 ; "Eis zu laufen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+66
+db $05 : dw AllItemsTable : dw .SequenceTable+66
 db $01,$0A,$05
-db $88,$53,$63,$68,$6E,$65,$63,$6B,$65,$6E,$73,$63,$68,$6C,$65,$69,$6D,$0D,$0D
-db $65,$72,$6D,$2A,$67,$6C,$69,$63,$68,$74,$20,$C3,$44,$69,$72,$2C,$20,$61,$75,$66,$0D,$0D
-db $45,$69,$73,$20,$FD,$6C,$61,$75,$66,$65,$6E,$2E
+db $88,'S','c','h','n','e','c','k','e','n','s','c','h','l','e','i','m',$0D,$0D
+db 'e','r','m','ö','g','l','i','c','h','t',' ',$C3,'D','i','r',',',' ','a','u','f',$0D,$0D
+db 'E','i','s',' ',$FD,'l','a','u','f','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -681,11 +681,11 @@ db $00
 ; "schiff. Das Zünd-\n\n" NO_NEWLINE
 ; "schloß ist am Schiff." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+68
+db $05 : dw AllItemsTable : dw .SequenceTable+68
 db $01,$0A,$05
-db $A1,$FE,$4C,$75,$66,$74,$2D,$0D,$0D
-db $73,$63,$68,$69,$66,$66,$2E,$20,$8A,$5A,$5B,$6E,$64,$2D,$0D,$0D
-db $73,$63,$68,$6C,$6F,$25,$20,$D2,$61,$6D,$20,$53,$63,$68,$69,$66,$66,$2E
+db $A1,$FE,'L','u','f','t','-',$0D,$0D
+db 's','c','h','i','f','f','.',' ',$8A,'Z','ü','n','d','-',$0D,$0D
+db 's','c','h','l','o','ß',' ',$D2,'a','m',' ','S','c','h','i','f','f','.'
 db $00
 ; @ENDSTRING@
 
@@ -698,11 +698,11 @@ db $00
 ; "Blitzsäule berührst, \n\n" NO_NEWLINE
 ; "wird es blitzen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+70
+db $05 : dw AllItemsTable : dw .SequenceTable+70
 db $01,$0A,$05
 db $A8,$83,$BF,$0D,$0D
-db $42,$6C,$69,$74,$7A,$73,$7B,$75,$6C,$65,$20,$62,$65,$72,$5B,$68,$72,$73,$74,$2C,$20,$0D,$0D
-db $F7,$C3,$62,$6C,$69,$74,$7A,$65,$6E,$2E
+db 'B','l','i','t','z','s','ä','u','l','e',' ','b','e','r','ü','h','r','s','t',',',' ',$0D,$0D
+db $F7,$C3,'b','l','i','t','z','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -715,11 +715,11 @@ db $00
 ; "Tausche Sie am\n\n" NO_NEWLINE
 ; "Besten ein." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+72
+db $05 : dw AllItemsTable : dw .SequenceTable+72
 db $01,$0A,$05
-db $4C,$65,$63,$6B,$65,$72,$65,$20,$53,$61,$6D,$65,$6E,$2E,$0D,$0D
-db $54,$61,$75,$73,$63,$68,$65,$20,$9F,$61,$6D,$0D,$0D
-db $42,$65,$73,$74,$65,$6E,$20,$65,$69,$6E,$2E
+db 'L','e','c','k','e','r','e',' ','S','a','m','e','n','.',$0D,$0D
+db 'T','a','u','s','c','h','e',' ',$9F,'a','m',$0D,$0D
+db 'B','e','s','t','e','n',' ','e','i','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -732,11 +732,11 @@ db $00
 ; "frei, welcher Katzen\n\n" NO_NEWLINE
 ; "anzieht." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+74
+db $05 : dw AllItemsTable : dw .SequenceTable+74
 db $01,$0A,$05
-db $53,$65,$74,$7A,$74,$20,$C0,$47,$65,$72,$75,$63,$68,$0D,$0D
-db $66,$72,$65,$69,$2C,$20,$77,$65,$6C,$63,$68,$65,$72,$20,$4B,$61,$74,$7A,$65,$6E,$0D,$0D
-db $61,$6E,$7A,$69,$65,$68,$74,$2E
+db 'S','e','t','z','t',' ',$C0,'G','e','r','u','c','h',$0D,$0D
+db 'f','r','e','i',',',' ','w','e','l','c','h','e','r',' ','K','a','t','z','e','n',$0D,$0D
+db 'a','n','z','i','e','h','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -749,11 +749,11 @@ db $00
 ; "die Tür zum Labor\n\n" NO_NEWLINE
 ; "öffnen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+76
+db $05 : dw AllItemsTable : dw .SequenceTable+76
 db $01,$0A,$05
-db $44,$69,$65,$73,$65,$72,$20,$A1,$77,$69,$72,$64,$0D,$0D
-db $B5,$54,$5B,$72,$20,$FE,$4C,$61,$62,$6F,$72,$0D,$0D
-db $2A,$66,$66,$6E,$65,$6E,$2E
+db 'D','i','e','s','e','r',' ',$A1,'w','i','r','d',$0D,$0D
+db $B5,'T','ü','r',' ',$FE,'L','a','b','o','r',$0D,$0D
+db 'ö','f','f','n','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -766,11 +766,11 @@ db $00
 ; "Turm des Magridd \n\n" NO_NEWLINE
 ; "Schloßes betreten." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+78
+db $05 : dw AllItemsTable : dw .SequenceTable+78
 db $01,$0A,$05
-db $83,$6B,$61,$6E,$6E,$73,$74,$20,$B7,$6C,$69,$6E,$6B,$65,$6E,$0D,$0D
-db $54,$75,$72,$6D,$20,$B8,$99,$0D,$0D
-db $53,$63,$68,$6C,$6F,$25,$65,$73,$20,$62,$65,$74,$72,$65,$74,$65,$6E,$2E
+db $83,'k','a','n','n','s','t',' ',$B7,'l','i','n','k','e','n',$0D,$0D
+db 'T','u','r','m',' ',$B8,$99,$0D,$0D
+db 'S','c','h','l','o','ß','e','s',' ','b','e','t','r','e','t','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -782,10 +782,10 @@ db $00
 ; "Du kannst überall hin\n\n" NO_NEWLINE
 ; "im Schloße Magridds`." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+80
+db $05 : dw AllItemsTable : dw .SequenceTable+80
 db $01,$0A,$05
-db $83,$6B,$61,$6E,$6E,$73,$74,$20,$5B,$62,$65,$72,$61,$6C,$6C,$20,$68,$69,$6E,$0D,$0D
-db $D5,$53,$63,$68,$6C,$6F,$25,$65,$20,$4D,$61,$67,$72,$69,$64,$64,$73,$60,$2E
+db $83,'k','a','n','n','s','t',' ','ü','b','e','r','a','l','l',' ','h','i','n',$0D,$0D
+db $D5,'S','c','h','l','o','ß','e',' ','M','a','g','r','i','d','d','s','`','.'
 db $00
 ; @ENDSTRING@
 
@@ -799,12 +799,12 @@ db $00
 ; "sammelt hast, bist Du\n\n" NO_NEWLINE
 ; "ein Meister der Magie." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+82
-.emblem_txt:
+db $05 : dw AllItemsTable : dw .SequenceTable+82
+ .emblem_txt:
 db $01,$0A,$05
-db $A8,$83,$38,$20,$68,$69,$65,$72,$76,$6F,$6E,$20,$67,$65,$2D,$0D,$0D
-db $73,$61,$6D,$6D,$65,$6C,$74,$20,$68,$61,$73,$74,$2C,$20,$B4,$44,$75,$0D,$0D
-db $BE,$4D,$65,$69,$73,$74,$65,$72,$20,$B6,$4D,$61,$67,$69,$65,$2E
+db $A8,$83,'8',' ','h','i','e','r','v','o','n',' ','g','e','-',$0D,$0D
+db 's','a','m','m','e','l','t',' ','h','a','s','t',',',' ',$B4,'D','u',$0D,$0D
+db $BE,'M','e','i','s','t','e','r',' ',$B6,'M','a','g','i','e','.'
 db $00
 ; @ENDSTRING@
 
@@ -814,7 +814,7 @@ db $00
 ; LOOKUP AllItemsTable .SequenceTable+84
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+84
+db $05 : dw AllItemsTable : dw .SequenceTable+84
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -824,7 +824,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+86
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+86
+db $05 : dw AllItemsTable : dw .SequenceTable+86
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -834,7 +834,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+88
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+88
+db $05 : dw AllItemsTable : dw .SequenceTable+88
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -844,7 +844,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+90
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+90
+db $05 : dw AllItemsTable : dw .SequenceTable+90
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -854,7 +854,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+92
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+92
+db $05 : dw AllItemsTable : dw .SequenceTable+92
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -864,7 +864,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+94
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+94
+db $05 : dw AllItemsTable : dw .SequenceTable+94
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -874,7 +874,7 @@ db $13 : dw .emblem_txt
 ; LOOKUP AllItemsTable .SequenceTable+96
 ; -> .emblem_txt
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+96
+db $05 : dw AllItemsTable : dw .SequenceTable+96
 db $13 : dw .emblem_txt
 ; @END@
 
@@ -888,12 +888,12 @@ db $13 : dw .emblem_txt
 ; "erhalten hast, wird\n\n" NO_NEWLINE
 ; "der Phönix kommen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+98
-.hot_text:
+db $05 : dw AllItemsTable : dw .SequenceTable+98
+ .hot_text:
 db $01,$0A,$05
-db $A8,$83,$AE,$33,$20,$53,$79,$6D,$62,$6F,$6C,$65,$0D,$0D
-db $65,$72,$68,$61,$6C,$74,$65,$6E,$20,$68,$61,$73,$74,$2C,$20,$77,$69,$72,$64,$0D,$0D
-db $B6,$50,$68,$2A,$6E,$69,$78,$20,$6B,$6F,$6D,$6D,$65,$6E,$2E
+db $A8,$83,$AE,'3',' ','S','y','m','b','o','l','e',$0D,$0D
+db 'e','r','h','a','l','t','e','n',' ','h','a','s','t',',',' ','w','i','r','d',$0D,$0D
+db $B6,'P','h','ö','n','i','x',' ','k','o','m','m','e','n','.'
 db $00
 ; @ENDSTRING@
 
@@ -903,7 +903,7 @@ db $00
 ; LOOKUP AllItemsTable .SequenceTable+100
 ; -> .hot_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+100
+db $05 : dw AllItemsTable : dw .SequenceTable+100
 db $13 : dw .hot_text
 ; @END@
 
@@ -913,7 +913,7 @@ db $13 : dw .hot_text
 ; LOOKUP AllItemsTable .SequenceTable+102
 ; -> .hot_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+102
+db $05 : dw AllItemsTable : dw .SequenceTable+102
 db $13 : dw .hot_text
 ; @END@
 
@@ -926,11 +926,11 @@ db $13 : dw .hot_text
 ; "Gegenstands verdoppelt\n\n" NO_NEWLINE
 ; "Deine Angriffskraft." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+104
+db $05 : dw AllItemsTable : dw .SequenceTable+104
 db $01,$0A,$05
-db $8A,$42,$65,$6E,$75,$74,$7A,$65,$6E,$20,$64,$69,$65,$73,$65,$73,$0D,$0D
-db $47,$65,$67,$65,$6E,$73,$74,$61,$6E,$64,$73,$20,$76,$65,$72,$64,$6F,$70,$70,$65,$6C,$74,$0D,$0D
-db $44,$65,$69,$6E,$65,$20,$41,$6E,$67,$72,$69,$66,$66,$73,$6B,$72,$61,$66,$74,$2E
+db $8A,'B','e','n','u','t','z','e','n',' ','d','i','e','s','e','s',$0D,$0D
+db 'G','e','g','e','n','s','t','a','n','d','s',' ','v','e','r','d','o','p','p','e','l','t',$0D,$0D
+db 'D','e','i','n','e',' ','A','n','g','r','i','f','f','s','k','r','a','f','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -943,11 +943,11 @@ db $00
 ; "der Monster um die\n\n" NO_NEWLINE
 ; "Hälfte." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+106
+db $05 : dw AllItemsTable : dw .SequenceTable+106
 db $01,$0A,$05
-db $56,$65,$72,$72,$69,$6E,$67,$65,$72,$74,$20,$B7,$53,$63,$68,$61,$64,$65,$6E,$0D,$0D
-db $B6,$95,$EC,$64,$69,$65,$0D,$0D
-db $48,$7B,$6C,$66,$74,$65,$2E
+db 'V','e','r','r','i','n','g','e','r','t',' ',$B7,'S','c','h','a','d','e','n',$0D,$0D
+db $B6,$95,$EC,'d','i','e',$0D,$0D
+db 'H','ä','l','f','t','e','.'
 db $00
 ; @ENDSTRING@
 
@@ -960,11 +960,11 @@ db $00
 ; "Rüstung halten doppelt\n\n" NO_NEWLINE
 ; "so viel aus." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+108
+db $05 : dw AllItemsTable : dw .SequenceTable+108
 db $01,$0A,$05
-db $44,$65,$69,$6E,$20,$A3,$EB,$44,$65,$69,$6E,$65,$0D,$0D
-db $9D,$68,$61,$6C,$74,$65,$6E,$20,$64,$6F,$70,$70,$65,$6C,$74,$0D,$0D
-db $E9,$76,$69,$65,$6C,$20,$61,$75,$73,$2E
+db 'D','e','i','n',' ',$A3,$EB,'D','e','i','n','e',$0D,$0D
+db $9D,'h','a','l','t','e','n',' ','d','o','p','p','e','l','t',$0D,$0D
+db $E9,'v','i','e','l',' ','a','u','s','.'
 db $00
 ; @ENDSTRING@
 
@@ -977,11 +977,11 @@ db $00
 ; "aufgefüllt, wenn Deine\n\n" NO_NEWLINE
 ; "Lebensanzeige 0 zeigt." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+110
+db $05 : dw AllItemsTable : dw .SequenceTable+110
 db $01,$0A,$05
-db $44,$65,$69,$6E,$65,$20,$48,$50,$20,$F5,$77,$69,$65,$64,$65,$72,$0D,$0D
-db $61,$75,$66,$67,$65,$66,$5B,$6C,$6C,$74,$2C,$20,$F3,$44,$65,$69,$6E,$65,$0D,$0D
-db $4C,$65,$62,$65,$6E,$73,$61,$6E,$7A,$65,$69,$67,$65,$20,$30,$20,$7A,$65,$69,$67,$74,$2E
+db 'D','e','i','n','e',' ','H','P',' ',$F5,'w','i','e','d','e','r',$0D,$0D
+db 'a','u','f','g','e','f','ü','l','l','t',',',' ',$F3,'D','e','i','n','e',$0D,$0D
+db 'L','e','b','e','n','s','a','n','z','e','i','g','e',' ','0',' ','z','e','i','g','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -994,11 +994,11 @@ db $00
 ; "verlieren, wenn Deine\n\n" NO_NEWLINE
 ; "Lebensanzeige 0 zeigt." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+112
+db $05 : dw AllItemsTable : dw .SequenceTable+112
 db $01,$0A,$05
-db $83,$FA,$D8,$4A,$75,$77,$65,$6C,$65,$6E,$0D,$0D
-db $76,$65,$72,$6C,$69,$65,$72,$65,$6E,$2C,$20,$F3,$44,$65,$69,$6E,$65,$0D,$0D
-db $4C,$65,$62,$65,$6E,$73,$61,$6E,$7A,$65,$69,$67,$65,$20,$30,$20,$7A,$65,$69,$67,$74,$2E
+db $83,$FA,$D8,'J','u','w','e','l','e','n',$0D,$0D
+db 'v','e','r','l','i','e','r','e','n',',',' ',$F3,'D','e','i','n','e',$0D,$0D
+db 'L','e','b','e','n','s','a','n','z','e','i','g','e',' ','0',' ','z','e','i','g','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -1012,12 +1012,12 @@ db $00
 ; "wird erscheinen, wenn\n\n" NO_NEWLINE
 ; "Du 6 hiervon sammelst." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+114
-.stone_text:
+db $05 : dw AllItemsTable : dw .SequenceTable+114
+ .stone_text:
 db $01,$0A,$05
 db $87,$A9,$B8,$82,$0D,$0D
-db $F7,$65,$72,$73,$63,$68,$65,$69,$6E,$65,$6E,$2C,$20,$77,$65,$6E,$6E,$0D,$0D
-db $83,$36,$20,$68,$69,$65,$72,$76,$6F,$6E,$20,$73,$61,$6D,$6D,$65,$6C,$73,$74,$2E
+db $F7,'e','r','s','c','h','e','i','n','e','n',',',' ','w','e','n','n',$0D,$0D
+db $83,'6',' ','h','i','e','r','v','o','n',' ','s','a','m','m','e','l','s','t','.'
 db $00
 ; @ENDSTRING@
 
@@ -1027,7 +1027,7 @@ db $00
 ; LOOKUP AllItemsTable .SequenceTable+116
 ; -> .stone_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+116
+db $05 : dw AllItemsTable : dw .SequenceTable+116
 db $13 : dw .stone_text
 ; @END@
 
@@ -1037,7 +1037,7 @@ db $13 : dw .stone_text
 ; LOOKUP AllItemsTable .SequenceTable+118
 ; -> .stone_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+118
+db $05 : dw AllItemsTable : dw .SequenceTable+118
 db $13 : dw .stone_text
 ; @END@
 
@@ -1047,7 +1047,7 @@ db $13 : dw .stone_text
 ; LOOKUP AllItemsTable .SequenceTable+120
 ; -> .stone_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+120
+db $05 : dw AllItemsTable : dw .SequenceTable+120
 db $13 : dw .stone_text
 ; @END@
 
@@ -1057,7 +1057,7 @@ db $13 : dw .stone_text
 ; LOOKUP AllItemsTable .SequenceTable+122
 ; -> .stone_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+122
+db $05 : dw AllItemsTable : dw .SequenceTable+122
 db $13 : dw .stone_text
 ; @END@
 
@@ -1067,7 +1067,7 @@ db $13 : dw .stone_text
 ; LOOKUP AllItemsTable .SequenceTable+124
 ; -> .stone_text
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+124
+db $05 : dw AllItemsTable : dw .SequenceTable+124
 db $13 : dw .stone_text
 ; @END@
 
@@ -1080,11 +1080,11 @@ db $13 : dw .stone_text
 ; "benutzen, ohne Deine\n\n" NO_NEWLINE
 ; "Juwelen aufzubrauchen." NO_NEWLINE
 db $01,$8A,$04
-db $05 : dw AllItemsTable,.SequenceTable+126
+db $05 : dw AllItemsTable : dw .SequenceTable+126
 db $01,$0A,$05
-db $83,$6B,$61,$6E,$6E,$73,$74,$20,$6E,$75,$6E,$20,$4D,$61,$67,$69,$65,$0D,$0D
-db $62,$65,$6E,$75,$74,$7A,$65,$6E,$2C,$20,$6F,$68,$6E,$65,$20,$44,$65,$69,$6E,$65,$0D,$0D
-db $90,$61,$75,$66,$7A,$75,$62,$72,$61,$75,$63,$68,$65,$6E,$2E
+db $83,'k','a','n','n','s','t',' ','n','u','n',' ','M','a','g','i','e',$0D,$0D
+db 'b','e','n','u','t','z','e','n',',',' ','o','h','n','e',' ','D','e','i','n','e',$0D,$0D
+db $90,'a','u','f','z','u','b','r','a','u','c','h','e','n','.'
 db $00
 ; @ENDSTRING@
 

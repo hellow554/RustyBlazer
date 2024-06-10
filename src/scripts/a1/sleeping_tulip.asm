@@ -57,14 +57,14 @@ A1_script_sleeping_tulip:
 ; @DEFAULT_TEXTBOX@
 ; "Zzzz...." -> Default_Text_End
 db $10
-db $5A,$7A,$7A,$7A,$2E,$2E,$2E,$2E,$13 : dw Default_Text_End
+db 'Z','z','z','z','.','.','.','.',$13 : dw Default_Text_End
 ; @END@
 
 .text_find_pass:
 ; @DEFAULT_TEXTBOX@
 ; "Dort ist " * "ein Paß" * "." -> Default_Text_End
 db $10
-db $44,$6F,$72,$74,$20,$D2,$03,$24,$BE,$50,$61,$25,$03,$20,$2E,$13 : dw Default_Text_End
+db 'D','o','r','t',' ',$D2,$03,$24,$BE,'P','a','ß',$03,$20,'.',$13 : dw Default_Text_End
 ; @END@
 
 .text_dreamrod:
@@ -73,7 +73,7 @@ db $44,$6F,$72,$74,$20,$D2,$03,$24,$BE,$50,$61,$25,$03,$20,$2E,$13 : dw Default_
 ; "den Traumstab auf die "
 ; "Blüten der Tulpe." -> Default_Text_End
 db $10
-db $02,$02,$20,$6C,$65,$67,$74,$20,$0D
+db $02,$02,' ','l','e','g','t',' ',$0D
 db $B7,$A4,$AC,$B5,$0D
-db $42,$6C,$5B,$74,$65,$6E,$20,$B6,$54,$75,$6C,$70,$65,$2E,$13 : dw Default_Text_End
+db 'B','l','ü','t','e','n',' ',$B6,'T','u','l','p','e','.',$13 : dw Default_Text_End
 ; @END@
