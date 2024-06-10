@@ -44,6 +44,7 @@ fn crawl(path: &Path) -> Result {
                 path: path.to_string_lossy(),
             })?;
             file.write_all(new_content.join("\n").as_bytes())
+                .and_then(|_| file.write_all(b"\n"))
                 .context(IoSnafu {
                     path: path.to_string_lossy(),
                 })?;
