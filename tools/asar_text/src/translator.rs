@@ -2,7 +2,7 @@ mod block_parser;
 
 use block_parser::CurrentBlock;
 use itertools::Itertools;
-use regex::Regex;
+use regex::{Match, Regex};
 use snafu::{ensure, ResultExt};
 
 use std::{borrow::Cow, fmt, sync::LazyLock};
@@ -165,7 +165,7 @@ impl<'a> Translator<'a> {
         } else if let Some(mat) = SINGLE_STRING.find(line) {
             ensure!(self.current_block.is_none(), MultipleBeginsSnafu);
             self.current_block = Some(CurrentBlock::new());
-            return self.single_string(line[mat.end()..].trim());
+            return self.single_string(line, mat);
         } else if let Some(cb) = self.current_block.as_mut() {
             if line.starts_with(";;") {
                 // this is a comment inside a comment, let's ignore, but not delete it
@@ -198,17 +198,19 @@ impl<'a> Translator<'a> {
         ))))
     }
 
-    fn single_string(&mut self, line: &str) -> Result<StringOutput<'a>> {
+    fn single_string(&mut self, line: &str, mat: Match) -> Result<StringOutput<'a>> {
         ensure!(self.current_block.is_some(), EndWithoutBeginSnafu);
         let mut cb = self.current_block.take().unwrap();
 
-        cb.parse_comment(line)?;
+        let comment = &line[mat.end()..];
+
+        cb.parse_comment(comment.trim())?;
         cb.add_to_current_line(Value::Byte(0));
 
         Ok(StringOutput::New(Cow::Owned(format!(
-            "{} ;{}",
+            "{} {}",
             cb.to_asar_text(),
-            line
+            &line[mat.start()..]
         ))))
     }
 }
