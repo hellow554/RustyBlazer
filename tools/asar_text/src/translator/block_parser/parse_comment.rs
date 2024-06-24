@@ -3,15 +3,15 @@ use std::{borrow::Cow, iter::Peekable};
 use snafu::OptionExt;
 
 use crate::{
+    error::{ArgsNumberDifferSnafu, UnclosedQuoteSnafu, UnknownKeywordSnafu},
     translator::{DataWidth, Value},
-    ArgsNumberDifferSnafu, UnclosedQuoteSnafu, UnknownKeywordSnafu,
 };
 
 use super::{text_mapper::TextTranslator, Result};
 
 fn find_matching_close(mut s: &str) -> Option<usize> {
     while let Some(pos) = s.find('"') {
-        if let Some("\\") = s.get(pos - 1..pos) {
+        if Some("\\") == s.get(pos - 1..pos) {
             // quote is escaped, search the next one
             s = &s[pos..];
         } else {
@@ -28,7 +28,7 @@ enum PossibleArgs<'a> {
 }
 
 impl<'a> PossibleArgs<'a> {
-    fn to_str(&self) -> &'a str {
+    const fn to_str(&self) -> &'a str {
         match self {
             PossibleArgs::Quote(a) | PossibleArgs::Command(a) => a,
         }
@@ -57,13 +57,13 @@ impl<'a> Iterator for ArgIterator<'a> {
                 let Some(end) = find_matching_close(wo_quote) else {
                     return Some(Err(UnclosedQuoteSnafu.build()));
                 };
-                let (ret, rest) = wo_quote.split_at(end);
+                let (result, rest) = wo_quote.split_at(end);
                 self.line = &rest[1..]; // don't include the trailing "
-                PossibleArgs::Quote(ret)
+                PossibleArgs::Quote(result)
             } else if let Some(space_pos) = self.line.find(' ') {
-                let (ret, rest) = self.line.split_at(space_pos);
+                let (result, rest) = self.line.split_at(space_pos);
                 self.line = &rest[1..]; // don't include the space
-                PossibleArgs::Command(ret)
+                PossibleArgs::Command(result)
             } else {
                 PossibleArgs::Command(std::mem::take(&mut self.line))
             }))

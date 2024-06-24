@@ -16,7 +16,7 @@ pub(super) struct CurrentBlock<'a> {
 }
 
 impl<'a> CurrentBlock<'a> {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {
             line: "",
             bold_status: false,
@@ -30,7 +30,7 @@ impl<'a> CurrentBlock<'a> {
         self
     }
 
-    pub fn enable_autonewline(mut self) -> Self {
+    pub const fn enable_autonewline(mut self) -> Self {
         self.auto_newline = true;
         self
     }

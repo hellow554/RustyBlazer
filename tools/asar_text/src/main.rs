@@ -11,7 +11,7 @@ use std::{
     process::ExitCode,
 };
 
-use error::*;
+use error::{IoSnafu, Result};
 use snafu::{ErrorCompat, ResultExt};
 use translator::Translator;
 

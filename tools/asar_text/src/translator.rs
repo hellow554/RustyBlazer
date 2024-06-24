@@ -7,9 +7,9 @@ use snafu::{ensure, ResultExt};
 
 use std::{borrow::Cow, fmt, sync::LazyLock};
 
-use crate::error::*;
+use crate::error::{EndWithoutBeginSnafu, Error, MultipleBeginsSnafu, ParseSnafu, Parsing};
 
-type Result<T = (), E = ParseError> = ::std::result::Result<T, E>;
+type Result<T = (), E = Parsing> = ::std::result::Result<T, E>;
 
 macro_rules! new_regex {
     ($($name: ident => $regex: expr),+ $(,)?) => {
@@ -43,12 +43,12 @@ pub enum DataWidth {
 }
 
 impl DataWidth {
-    fn prefix(&self) -> &'static str {
+    const fn prefix(&self) -> &'static str {
         match self {
-            DataWidth::Byte => "db",
-            DataWidth::Word => "dw",
-            DataWidth::Long => "dl",
-            DataWidth::DWord => "dd",
+            Self::Byte => "db",
+            Self::Word => "dw",
+            Self::Long => "dl",
+            Self::DWord => "dd",
         }
     }
 }

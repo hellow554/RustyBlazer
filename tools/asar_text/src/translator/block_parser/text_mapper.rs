@@ -6,7 +6,10 @@ use regex::Regex;
 use snafu::{ensure, OptionExt};
 
 use super::{lut::LUT, Result, Value};
-use crate::error::*;
+use crate::error::{
+    InvalidHexDigitSnafu, UnexpectedEofSnafu, UnfinishedEscapeSequenceSnafu,
+    UnknownEscapeSequenceSnafu,
+};
 
 static SPLIT_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new("( |,|\\.|«|»)").unwrap());
 
@@ -15,7 +18,7 @@ struct SpaceCounter {
 }
 
 impl SpaceCounter {
-    fn new() -> Self {
+    const fn new() -> Self {
         Self { space_counter: 0 }
     }
 
@@ -29,7 +32,7 @@ impl SpaceCounter {
         }
     }
 
-    fn need_repeat(&self) -> bool {
+    const fn need_repeat(&self) -> bool {
         self.space_counter > 2
     }
 }
@@ -42,7 +45,7 @@ pub(super) struct TextTranslator<'a> {
 }
 
 impl<'v> TextTranslator<'v> {
-    fn new() -> Self {
+    const fn new() -> Self {
         Self {
             values: vec![],
             needs_space: false,
@@ -61,14 +64,14 @@ impl<'v> TextTranslator<'v> {
         if std::mem::take(&mut self.needs_space) {
             if word == " " {
                 return Ok(());
-            } else {
-                // we needed a space, but we got none
-                let Some(Value::Byte(lut_idx)) = self.values.pop() else {
-                    unreachable!("This would be a logic error");
-                };
-                self.values
-                    .extend(LUT[usize::from(lut_idx - 0x80)].chars().map(Value::Char));
             }
+
+            // we needed a space, but we got none
+            let Some(Value::Byte(lut_idx)) = self.values.pop() else {
+                unreachable!("This would be a logic error");
+            };
+            self.values
+                .extend(LUT[usize::from(lut_idx - 0x80)].chars().map(Value::Char));
         }
 
         if let Some(pos) = LUT.iter().position(|x| x == &word) {
@@ -85,6 +88,8 @@ impl<'v> TextTranslator<'v> {
                         let lo = chars.next().context(UnexpectedEofSnafu)?;
                         let lo = lo.to_digit(16).context(InvalidHexDigitSnafu { what: lo })?;
 
+                        // it's not possible that this overflows, because we have two nibbles that get's converted into a byte
+                        #[allow(clippy::cast_possible_truncation)]
                         self.values.push(Value::Byte(((hi << 4) | lo) as u8));
                     } else if c == 'n' {
                         self.values.push(Value::Byte(0x0D));

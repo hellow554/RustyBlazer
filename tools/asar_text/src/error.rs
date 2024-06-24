@@ -5,21 +5,21 @@ use snafu::prelude::*;
 pub type Result<T = (), E = Error> = ::std::result::Result<T, E>;
 
 #[derive(Debug, Snafu)]
-#[snafu(visibility(pub(crate)))]
+#[snafu(visibility(pub))]
 pub enum Error {
     #[snafu(display("{file}:{line} : {source}"))]
     Parse {
         file: String,
         line: usize,
-        source: ParseError,
+        source: Parsing,
     },
     #[snafu(display("IO Error occured while processing `{path}`: {source}"))]
     Io { path: String, source: io::Error },
 }
 
 #[derive(Debug, Snafu)]
-#[snafu(visibility(pub(crate)))]
-pub enum ParseError {
+#[snafu(visibility(pub))]
+pub enum Parsing {
     #[snafu(display("@END@ without begin"))]
     EndWithoutBegin,
     #[snafu(display("Multiple begins detected"))]
