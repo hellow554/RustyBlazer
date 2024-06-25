@@ -137,9 +137,9 @@ CODE_C08511:
 
 .CODE_C08517:
 LDA.B #VMDATAL                           ;C08517|A918    |      ;
-STA.W BBAD2                          ;C08519|8D2143  |814321;
+STA.W DMA_Regs[2].destination                          ;C08519|8D2143  |814321;
 LDA.B #$01                           ;C0851C|A901    |      ;
-STA.W DMAP2                          ;C0851E|8D2043  |814320;
+STA.W DMA_Regs[2].control                          ;C0851E|8D2043  |814320;
 LDY.W #$0000                         ;C08521|A00000  |      ;
 LDX.W #$2000                         ;C08524|A20020  |      ;
 STX.W VMADDL                          ;C08527|8E1621  |812116;
@@ -167,11 +167,11 @@ RTS                                  ;C0854F|60      |      ;
 .CODE_C08550:
 LDX.W $1A06,Y                        ;C08550|BE061A  |811A06;
 BEQ .ret                      ;C08553|F019    |C0856E;
-STX.W A1T2L                          ;C08555|8E2243  |814322;
+STX.W DMA_Regs[2].source_address_word                          ;C08555|8E2243  |814322;
 LDA.W $1A08,Y                        ;C08558|B9081A  |811A08;
-STA.W A1B2                          ;C0855B|8D2443  |814324;
+STA.W DMA_Regs[2].source_address_bank                          ;C0855B|8D2443  |814324;
 LDX.W #$0040                         ;C0855E|A24000  |      ;
-STX.W DAS2L                          ;C08561|8E2543  |814325;
+STX.W DMA_Regs[2].size_word                          ;C08561|8E2543  |814325;
 LDA.B #$04                           ;C08564|A904    |      ;
 STA.W MDMAEN                          ;C08566|8D0B42  |81420B;
 INY                                  ;C08569|C8      |      ;
@@ -189,21 +189,21 @@ RTS                                  ;C08574|60      |      ;
 
 CODE_C08575:
 LDA.B #$01                           ;C08575|A901    |      ;
-STA.W DMAP2                          ;C08577|8D2043  |814320;
+STA.W DMA_Regs[2].control                          ;C08577|8D2043  |814320;
 LDA.B #$18                           ;C0857A|A918    |      ;
-STA.W BBAD2                          ;C0857C|8D2143  |814321;
+STA.W DMA_Regs[2].destination                          ;C0857C|8D2143  |814321;
 LDX.W $03DF                          ;C0857F|AEDF03  |8103DF;
-STX.W A1T2L                          ;C08582|8E2243  |814322;
+STX.W DMA_Regs[2].source_address_word                          ;C08582|8E2243  |814322;
 LDA.B #$7F                           ;C08585|A97F    |      ;
-STA.W A1B2                          ;C08587|8D2443  |814324;
+STA.W DMA_Regs[2].source_address_bank                          ;C08587|8D2443  |814324;
 LDX.W #$0040                         ;C0858A|A24000  |      ;
-STX.W DAS2L                          ;C0858D|8E2543  |814325;
+STX.W DMA_Regs[2].size_word                          ;C0858D|8E2543  |814325;
 LDX.W $03E1                          ;C08590|AEE103  |8103E1;
 STX.W VMADDL                          ;C08593|8E1621  |812116;
 LDA.B #$04                           ;C08596|A904    |      ;
 STA.W MDMAEN                          ;C08598|8D0B42  |81420B;
 LDX.W #$0040                         ;C0859B|A24000  |      ;
-STX.W DAS2L                          ;C0859E|8E2543  |814325;
+STX.W DMA_Regs[2].size_word                          ;C0859E|8E2543  |814325;
 LDA.W $03E1                          ;C085A1|ADE103  |8103E1;
 STA.W VMADDL                          ;C085A4|8D1621  |812116;
 LDA.W $03E2                          ;C085A7|ADE203  |8103E2;

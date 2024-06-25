@@ -106,122 +106,35 @@ JOY4H = $00421F
 struct DMA_Regs $4300
     .control: skip 1                        ; $43x0
     .destination: skip 1                    ; $43x1
-    .source_address:                        ; $43x2 - 4
+    .source_address:                        ; $43x2-4
         .source_address_word:
             .source_address_low: skip 1
             .source_address_high: skip 1
         .source_address_bank: skip 1
-    .size:                                  ; $43x5 - 7
+    .size:                                  ; $43x5-6
         .size_word:
             .size_low: skip 1
             .size_high: skip 1
-        skip 1                              ; $43x7 - used by HDMA only
 endstruct align $10
 
-DMAP0 = $004300
-BBAD0 = $004301
-A1T0L = $004302
-A1T0H = $004303
-A1B0 = $004304
-DAS0L = $004305
-DAS0H = $004306
-DAS00 = $004307
-A2A0L = $004308
-A2A0H = $004309
-NTRL0 = $00430A
-UNUSED0 = $00430B
-MIRR0 = $00430F
-DMAP1 = $004310
-BBAD1 = $004311
-A1T1L = $004312
-A1T1H = $004313
-A1B1 = $004314
-DAS1L = $004315
-DAS1H = $004316
-DAS10 = $004317
-A2A1L = $004318
-A2A1H = $004319
-NTRL1 = $00431A
-UNUSED1 = $00431B
-MIRR1 = $00431F
-DMAP2 = $004320
-BBAD2 = $004321
-A1T2L = $004322
-A1T2H = $004323
-A1B2 = $004324
-DAS2L = $004325
-DAS2H = $004326
-DAS20 = $004327
-A2A2L = $004328
-A2A2H = $004329
-NTRL2 = $00432A
-UNUSED2 = $00432B
-MIRR2 = $00432F
-DMAP3 = $004330
-BBAD3 = $004331
-A1T3L = $004332
-A1T3H = $004333
-A1B3 = $004334
-DAS3L = $004335
-DAS3H = $004336
-DAS30 = $004337
-A2A3L = $004338
-A2A3H = $004339
-NTRL3 = $00433A
-UNUSED3 = $00433B
-MIRR3 = $00433F
-DMAP4 = $004340
-BBAD4 = $004341
-A1T4L = $004342
-A1T4H = $004343
-A1B4 = $004344
-DAS4L = $004345
-DAS4H = $004346
-DAS40 = $004347
-A2A4L = $004348
-A2A4H = $004349
-NTRL4 = $00434A
-UNUSED4 = $00434B
-MIRR4 = $00434F
-DMAP5 = $004350
-BBAD5 = $004351
-A1T5L = $004352
-A1T5H = $004353
-A1B5 = $004354
-DAS5L = $004355
-DAS5H = $004356
-DAS50 = $004357
-A2A5L = $004358
-A2A5H = $004359
-NTRL5 = $00435A
-UNUSED5 = $00435B
-MIRR5 = $00435F
-DMAP6 = $004360
-BBAD6 = $004361
-A1T6L = $004362
-A1T6H = $004363
-A1B6 = $004364
-DAS6L = $004365
-DAS6H = $004366
-DAS60 = $004367
-A2A6L = $004368
-A2A6H = $004369
-NTRL6 = $00436A
-UNUSED6 = $00436B
-MIRR6 = $00436F
-DMAP7 = $004370
-BBAD7 = $004371
-A1T7L = $004372
-A1T7H = $004373
-A1B7 = $004374
-DAS7L = $004375
-DAS7H = $004376
-DAS70 = $004377
-A2A7L = $004378
-A2A7H = $004379
-NTRL7 = $00437A
-UNUSED7 = $00437B
-MIRR7 = $00437F
+struct HDMA_Regs $4300
+    .control: skip 1                        ; $43x0
+    .destination: skip 1                    ; $43x1
+    .source_address:                        ; $43x2-4
+        .source_address_word:
+            .source_address_low: skip 1
+            .source_address_high: skip 1
+        .source_address_bank: skip 1
+    .size:                                  ; $43x5-6
+        .size_word:
+            .size_low: skip 1
+            .size_high: skip 1
+    .indirect_bank: skip 1                  ; $43x7
+    .table_address_word:                    ; $43x8-9
+        .table_address_low: skip 1
+        .table_address_high: skip 1
+    .line_counter : skip 1                  ; $43xA
+endstruct align $10
 
 ; please add new labels below this line, not above
 
@@ -238,7 +151,7 @@ HDMA_channel_enable_bits = $7E0042
 ;; the next free DMA channel in one-hot encoding (e.g. always only 1 bit is set, all others are 0)
 HDMA_channel_next_free_slot = $7E0044
 ;; the offset of the next free DMA channel, so it can be used to access various DMA registers, because they are all $10*channel apart
-;; so you can write something like `LDX HDMA_channel_offset : STA DMAP0, X` to access the correct DMAP0 register for the active DMA channel
+;; so you can write something like `LDX HDMA_channel_offset : STA DMA_Regs[0].control, X` to access the correct DMA_Regs[0].control register for the active DMA channel
 HDMA_channel_offset = $7E0046
 
 _0301 = $7E0301

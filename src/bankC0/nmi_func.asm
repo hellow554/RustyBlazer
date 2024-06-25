@@ -75,17 +75,17 @@ TransferOAM:
 
     LDX.W #0 ; one register, write once
     STX.W OAMADDL
-    STZ.W DMAP0 
+    STZ.W DMA_Regs[0].control
     LDA.B #OAMDATA ; set destination to OAMDATA register
-    STA.W BBAD0 
+    STA.W DMA_Regs[0].destination
     LDX.W #oam_data ; set source address
-    STX.W A1T0L
+    STX.W DMA_Regs[0].source_address_word
     ; for whatever reason they used 0 here, instead of 7F
     ; let's make the intention clear, but use 0 as value
     LDA.B #bank(oam_data) & 0
-    STA.W A1B0
+    STA.W DMA_Regs[0].source_address_bank
     LDX.W #datasize(oam_data) ; set size to transfer
-    STX.W DAS0L
+    STX.W DMA_Regs[0].size_word
     LDA.B #%1 ; enable dma0
     STA.W MDMAEN
     RTS
@@ -94,15 +94,15 @@ TransferCgdata:
     ; we use DMA1 to transfer the data to the ColorPalette (CGRAM)
     
     STZ.W CGADD ; select the first index, so DMA transfer can be used
-    STZ.W DMAP1 ; one register, write once
+    STZ.W DMA_Regs[1].control ; one register, write once
     LDA.B #CGDATA ; load destination `CGDATA` into DMA destination register
-    STA.W BBAD1
+    STA.W DMA_Regs[1].destination
     LDX.W #CgData.data ; load source addr to dma
-    STX.W A1T1L
+    STX.W DMA_Regs[1].source_address_word
     LDA.B #bank(CgData.data) ; load source bank to dma
-    STA.W A1B1
+    STA.W DMA_Regs[1].source_address_bank
     LDX.W #datasize(CgData.data) ; load size to transfer to dma
-    STX.W DAS1L
+    STX.W DMA_Regs[1].size_word
     LDA.B #%10 ; enable DMA1
     STA.W MDMAEN
     LDA.L CgData.blue
@@ -125,7 +125,7 @@ TransferL3ToVram:
     LDX.W #$5800
     STX.W VMADDL
     LDX.W #L3_Text
-    STX.W A1T2L
+    STX.W DMA_Regs[2].source_address_word
     STZ.W $03BA
     BRA .beginTransfer
 
@@ -133,19 +133,19 @@ TransferL3ToVram:
     LDX.W #$5C00
     STX.W VMADDL
     LDX.W #SomeOtherTypeToTransferToVram
-    STX.W A1T2L
+    STX.W DMA_Regs[2].source_address_word
     LDA.B #$02
     TRB.W $03BA
 
 .beginTransfer:
     LDA.B #$01
-    STA.W DMAP2
+    STA.W DMA_Regs[2].control
     LDA.B #VMDATAL
-    STA.W BBAD2
+    STA.W DMA_Regs[2].destination
     LDA.B #<:L3_Text
-    STA.W A1B2
+    STA.W DMA_Regs[2].source_address_bank
     LDX.W #datasize(L3_Text)
-    STX.W DAS2L
+    STX.W DMA_Regs[2].size_word
     LDA.B #$04
     STA.W MDMAEN
     RTS

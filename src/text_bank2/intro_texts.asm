@@ -27,7 +27,7 @@ db $00
 
 Txt_Press_Start:
 ; @NEW_TEXT@
-; CURSIVE 
+; CURSIVE
 ; SETPOS $94 4
 ; "drücke start" NO_NEWLINE
 db $09

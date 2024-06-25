@@ -93,7 +93,7 @@ SH_script_shrine:
     LDA.W player_died
     BEQ ..not_dead
     ; player was dead, let's show the text
-    STZ.W player_died                          
+    STZ.W player_died
     %CopJumpAfterNoFramesPassed(+, 2) : +
     %CopShowText(.txt_revive)
     %Cop27(.after_restore_health)

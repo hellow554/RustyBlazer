@@ -841,7 +841,7 @@ STA.W VMADDL                          ;C2858D|8D1621  |812116;
 LDA.B $32                            ;C28590|A532    |000032;
 CLC                                  ;C28592|18      |      ;
 ADC.W #$0002                         ;C28593|690200  |      ;
-STA.W A1T2L                          ;C28596|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C28596|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28599|204086  |C28640;
 LDA.B [$32]                          ;C2859C|A732    |000032;
 CLC                                  ;C2859E|18      |      ;
@@ -850,7 +850,7 @@ STA.W VMADDL                          ;C285A2|8D1621  |812116;
 LDA.B $32                            ;C285A5|A532    |000032;
 CLC                                  ;C285A7|18      |      ;
 ADC.W #$0042                         ;C285A8|694200  |      ;
-STA.W A1T2L                          ;C285AB|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C285AB|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285AE|204086  |C28640;
 LDA.B [$32]                          ;C285B1|A732    |000032;
 CLC                                  ;C285B3|18      |      ;
@@ -859,7 +859,7 @@ STA.W VMADDL                          ;C285B7|8D1621  |812116;
 LDA.B $32                            ;C285BA|A532    |000032;
 CLC                                  ;C285BC|18      |      ;
 ADC.W #$0082                         ;C285BD|698200  |      ;
-STA.W A1T2L                          ;C285C0|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C285C0|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285C3|204086  |C28640;
 LDA.B [$32]                          ;C285C6|A732    |000032;
 CLC                                  ;C285C8|18      |      ;
@@ -868,7 +868,7 @@ STA.W VMADDL                          ;C285CC|8D1621  |812116;
 LDA.B $32                            ;C285CF|A532    |000032;
 CLC                                  ;C285D1|18      |      ;
 ADC.W #$00C2                         ;C285D2|69C200  |      ;
-STA.W A1T2L                          ;C285D5|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C285D5|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285D8|204086  |C28640;
 LDA.W #$0000                         ;C285DB|A90000  |      ;
 STA.B [$32]                          ;C285DE|8732    |000032;
@@ -883,7 +883,7 @@ STA.W VMADDL                          ;C285EB|8D1621  |812116;
 LDA.B $35                            ;C285EE|A535    |000035;
 CLC                                  ;C285F0|18      |      ;
 ADC.W #$0002                         ;C285F1|690200  |      ;
-STA.W A1T2L                          ;C285F4|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C285F4|8D2243  |814322;
 JSR.W CODE_C28640                    ;C285F7|204086  |C28640;
 LDA.B [$35]                          ;C285FA|A735    |000035;
 CLC                                  ;C285FC|18      |      ;
@@ -892,7 +892,7 @@ STA.W VMADDL                          ;C28600|8D1621  |812116;
 LDA.B $35                            ;C28603|A535    |000035;
 CLC                                  ;C28605|18      |      ;
 ADC.W #$0042                         ;C28606|694200  |      ;
-STA.W A1T2L                          ;C28609|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C28609|8D2243  |814322;
 JSR.W CODE_C28640                    ;C2860C|204086  |C28640;
 LDA.B [$35]                          ;C2860F|A735    |000035;
 CLC                                  ;C28611|18      |      ;
@@ -901,7 +901,7 @@ STA.W VMADDL                          ;C28615|8D1621  |812116;
 LDA.B $35                            ;C28618|A535    |000035;
 CLC                                  ;C2861A|18      |      ;
 ADC.W #$0082                         ;C2861B|698200  |      ;
-STA.W A1T2L                          ;C2861E|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C2861E|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28621|204086  |C28640;
 LDA.B [$35]                          ;C28624|A735    |000035;
 CLC                                  ;C28626|18      |      ;
@@ -910,7 +910,7 @@ STA.W VMADDL                          ;C2862A|8D1621  |812116;
 LDA.B $35                            ;C2862D|A535    |000035;
 CLC                                  ;C2862F|18      |      ;
 ADC.W #$00C2                         ;C28630|69C200  |      ;
-STA.W A1T2L                          ;C28633|8D2243  |814322;
+STA.W DMA_Regs[2].source_address_word                          ;C28633|8D2243  |814322;
 JSR.W CODE_C28640                    ;C28636|204086  |C28640;
 LDA.W #$0000                         ;C28639|A90000  |      ;
 STA.B [$35]                          ;C2863C|8735    |000035;
@@ -921,13 +921,13 @@ RTL                                  ;C2863F|6B      |      ;
 
 CODE_C28640:
 LDX.B #$01                           ;C28640|A201    |      ;
-STX.W DMAP2                          ;C28642|8E2043  |814320;
+STX.W DMA_Regs[2].control                          ;C28642|8E2043  |814320;
 LDX.B #$18                           ;C28645|A218    |      ;
-STX.W BBAD2                          ;C28647|8E2143  |814321;
+STX.W DMA_Regs[2].destination                          ;C28647|8E2143  |814321;
 LDX.B #$7E                           ;C2864A|A27E    |      ;
-STX.W A1B2                          ;C2864C|8E2443  |814324;
+STX.W DMA_Regs[2].source_address_bank                          ;C2864C|8E2443  |814324;
 LDA.W #$0040                         ;C2864F|A94000  |      ;
-STA.W DAS2L                          ;C28652|8D2543  |814325;
+STA.W DMA_Regs[2].size_word                          ;C28652|8D2543  |814325;
 LDX.B #$04                           ;C28655|A204    |      ;
 STX.W MDMAEN                          ;C28657|8E0B42  |81420B;
 RTS                                  ;C2865A|60      |      ;
@@ -3008,9 +3008,9 @@ CODE_C29873:
     LDA.L CODE_C2988F_dma_control_data, X
     LDX.B HDMA_channel_offset
     ORA.B #$40 ; enables pointer-pointer transfer (`a` bit of DMAPx register)
-    STA.W DMAP0, X
+    STA.W HDMA_Regs[0].control, X
     LDA.B $02,S ; loads the provided bank from the stack
-    STA.W DAS00, X ; store the length for HDMA transfer
+    STA.W HDMA_Regs[0].indirect_bank, X ; store the length for HDMA transfer
     BRA CODE_C2988F_common
 
 ;; `A` contains the bank
@@ -3028,18 +3028,18 @@ CODE_C2988F:
     ; we use X as an index to the array below
     LDA.L .dma_control_data, X
     LDX.B HDMA_channel_offset
-    STA.W DMAP0, X
+    STA.W DMA_Regs[0].control, X
 
 .common:
     ; X now contains an offset for the correct DMA channel
     PLA ; still the target for $21xx
-    STA.W BBAD0, X
+    STA.W DMA_Regs[0].destination, X
     REP #$20
     TYA
-    STA.W A1T0L, X ; stores the source address into the correct DMA channel
+    STA.W DMA_Regs[0].source_address_word, X ; stores the source address into the correct DMA channel
     SEP #$20
     PLA
-    STA.W A1B0, X ; stores tha bank
+    STA.W DMA_Regs[0].source_address_bank, X ; stores tha bank
     LDA.B HDMA_channel_next_free_slot
     TSB.B HDMA_channel_enable_bits
     ASL.B HDMA_channel_next_free_slot
@@ -3050,7 +3050,7 @@ CODE_C2988F:
     PLP
     RTL
 
-;; dma control data contains the data for the DMAPx register
+;; dma control data contains the data for the DMA_Regs[x].control register
 ;; depending on which register you want to access, here are some
 ;; predefined uses for those, e.g. which direction, transfer mode, ...
 .dma_control_data:
@@ -4638,13 +4638,13 @@ STX.W VMADDL                          ;C2A41E|8E1621  |812116;
 LDA.B #$01                           ;C2A421|A901    |      ;
 STA.W DMA_Regs.control                          ;C2A423|8D0043  |814300;
 LDA.B #$18                           ;C2A426|A918    |      ;
-STA.W BBAD0                          ;C2A428|8D0143  |814301;
+STA.W DMA_Regs[0].destination                          ;C2A428|8D0143  |814301;
 LDX.W #$B000                         ;C2A42B|A200B0  |      ;
-STX.W A1T0L                          ;C2A42E|8E0243  |814302;
+STX.W DMA_Regs[0].source_address_word                          ;C2A42E|8E0243  |814302;
 LDA.B #$89                           ;C2A431|A989    |      ;
-STA.W A1B0                          ;C2A433|8D0443  |814304;
+STA.W DMA_Regs[0].source_address_bank                          ;C2A433|8D0443  |814304;
 LDX.W #$2000                         ;C2A436|A20020  |      ;
-STX.W DAS0L                          ;C2A439|8E0543  |814305;
+STX.W DMA_Regs[0].size_word                          ;C2A439|8E0543  |814305;
 LDA.B #$01                           ;C2A43C|A901    |      ;
 STA.W MDMAEN                          ;C2A43E|8D0B42  |81420B;
 RTS                                  ;C2A441|60      |      ;
@@ -4675,15 +4675,15 @@ CODE_C2A468:
 LDX.W #$2000                         ;C2A468|A20020  |      ;
 STX.W VMADDL                          ;C2A46B|8E1621  |812116;
 LDA.B #$01                           ;C2A46E|A901    |      ;
-STA.W DMAP0                          ;C2A470|8D0043  |814300;
+STA.W DMA_Regs[0].control                          ;C2A470|8D0043  |814300;
 LDA.B #$18                           ;C2A473|A918    |      ;
-STA.W BBAD0                          ;C2A475|8D0143  |814301;
+STA.W DMA_Regs[0].destination                          ;C2A475|8D0143  |814301;
 LDX.W #$C000                         ;C2A478|A200C0  |      ;
-STX.W A1T0L                          ;C2A47B|8E0243  |814302;
+STX.W DMA_Regs[0].source_address_word                          ;C2A47B|8E0243  |814302;
 LDA.B #$7F                           ;C2A47E|A97F    |      ;
-STA.W A1B0                          ;C2A480|8D0443  |814304;
+STA.W DMA_Regs[0].source_address_bank                          ;C2A480|8D0443  |814304;
 LDX.W #$2000                         ;C2A483|A20020  |      ;
-STX.W DAS0L                          ;C2A486|8E0543  |814305;
+STX.W DMA_Regs[0].size_word                          ;C2A486|8E0543  |814305;
 LDA.B #$01                           ;C2A489|A901    |      ;
 STA.W MDMAEN                          ;C2A48B|8D0B42  |81420B;
 PHB                                  ;C2A48E|8B      |      ;
@@ -4714,15 +4714,15 @@ SEP #$20                             ;C2A4B7|E220    |      ;
 LDY.W #$2600                         ;C2A4B9|A00026  |      ;
 STY.W VMADDL                          ;C2A4BC|8C1621  |812116;
 LDA.B #$01                           ;C2A4BF|A901    |      ;
-STA.W DMAP0                          ;C2A4C1|8D0043  |814300;
+STA.W DMA_Regs[0].control                          ;C2A4C1|8D0043  |814300;
 LDA.B #$18                           ;C2A4C4|A918    |      ;
-STA.W BBAD0                          ;C2A4C6|8D0143  |814301;
+STA.W DMA_Regs[0].destination                          ;C2A4C6|8D0143  |814301;
 LDY.W UNREACH_81FB88,X               ;C2A4C9|BC88FB  |81FB88;
-STY.W A1T0L                          ;C2A4CC|8C0243  |814302;
+STY.W DMA_Regs[0].source_address_word                          ;C2A4CC|8C0243  |814302;
 LDA.W UNREACH_81FB8A,X               ;C2A4CF|BD8AFB  |81FB8A;
-STA.W A1B0                          ;C2A4D2|8D0443  |814304;
+STA.W DMA_Regs[0].source_address_bank                          ;C2A4D2|8D0443  |814304;
 LDY.W #$0800                         ;C2A4D5|A00008  |      ;
-STY.W DAS0L                          ;C2A4D8|8C0543  |814305;
+STY.W DMA_Regs[0].size_word                          ;C2A4D8|8C0543  |814305;
 LDA.B #$01                           ;C2A4DB|A901    |      ;
 STA.W MDMAEN                          ;C2A4DD|8D0B42  |81420B;
 REP #$20                             ;C2A4E0|C220    |      ;
