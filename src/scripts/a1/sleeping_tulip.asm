@@ -10,7 +10,7 @@ A1_script_sleeping_tulip:
 .pushing_tulip:
     %CopLoopStart(40)
     LDA.W buttons_pressed
-    AND.W #!Key16_Left
+    AND.W #Key16.Left
     BEQ .stopped_pushing
     %CopJumpIfEntityHasReachedXY(!Entity_Player, $2F, $36, .still_pushing)
     BRL .stopped_pushing
@@ -18,11 +18,11 @@ A1_script_sleeping_tulip:
 .still_pushing:
     %CopLoopEnd()
     %CopMakeNpcPassable()
-    LDA.W #!Key16_All_Directions|!Key16_A|!Key16_Select
+    LDA.W #!Key16_All_Directions|Key16.A|Key16.Select
     TSB.W button_mask
     %Cop81($20, $10)
     %Cop83()
-    LDA.W #!Key16_All_Directions|!Key16_A|!Key16_Select
+    LDA.W #!Key16_All_Directions|Key16.A|Key16.Select
     TRB.W button_mask
     %CopMakeNpcUnpassable()
     %CopJumpIfEventFlagIsSet(!EV_A1_Found_APass, .already_found_pass)
@@ -33,7 +33,7 @@ A1_script_sleeping_tulip:
 .find_pass:
     %CopShowText(.text_find_pass)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!APass)
+    %CopGiveItem(Items.APass)
     %CopSetEventFlag(!EV_A1_Found_APass)
 .already_found_pass:
     %CopSetScriptAddrToNextInstruction()
@@ -43,10 +43,10 @@ A1_script_sleeping_tulip:
     %Cop27(.pushing_tulip)
 
 .default_talk:
-    %CopJumpIfItemIsNotEquipped(!DreamRod, ..sleeping)
+    %CopJumpIfItemIsNotEquipped(Items.DreamRod, ..sleeping)
     %CopShowText(.text_dreamrod)
     %Cop3C(4)
-    %CopTeleportPlayerToMap($403, !Facing_Down, $78, $70)
+    %CopTeleportPlayerToMap($403, Facing.Down, $78, $70)
     RTL
 
 ..sleeping:

@@ -3,7 +3,7 @@ A1_script_chief_chair:
     %CopAssignTalkCallback(.talk)
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfSealed(!Lair_A1_Chief, .chief_released)
-    %CopPlayAnimation(!Anim_Village_Chief_Chair)
+    %CopPlayAnimation(Animation.VillageChiefsChair)
     %Cop82()
     RTL
 

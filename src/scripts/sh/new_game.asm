@@ -1,4 +1,4 @@
-SH_script_starting:
+SH_new_game:
     %CopJumpIfEventFlagIsSet(!EV_SH_NameChoosen, .end)
     %CopSetEventFlag(!EV_SH_NameChoosen)
     %CopJumpAfterNoFramesPassed(+, 2) : +

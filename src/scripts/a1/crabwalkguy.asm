@@ -11,7 +11,7 @@ A1_script_crabwalkguy:
     ; --
 
     LDA.W buttons_pressed
-    AND.W #!Key16_R|!Key16_L
+    AND.W #Key16.R|Key16.L
     BNE .player_pressed_button
     RTL
 

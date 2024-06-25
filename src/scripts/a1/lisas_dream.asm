@@ -8,13 +8,13 @@ A1_script_lisas_dream:
     %CopJumpIfSealed(!Lair_A1_LisasDreamLair, +) : RTL : +
     ; the lair has been sealed by stepping on it, show the message box now
     %CopShowText(.txt_leos_talk)
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_Select
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.Select
     TSB.W button_mask
     %Cop81($21, 2)
     %Cop83()
     %CopPlayAnimation($22)
     %Cop82()
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_Select
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.Select
     TRB.W button_mask
     %CopShowText(.txt_lisa_answers_daddy)
     %CopAssignTalkCallback(.talk_callback_after_seal)
@@ -28,17 +28,17 @@ A1_script_lisas_dream:
     RTL
 
 .game_done_lisa_asks:
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_X | !Key16_Start | !Key16_Select | !Key16_B
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.X | Key16.Start | Key16.Select | Key16.B
     TSB.W button_mask
     %CopAdjustNpcXPosition($18)
     %CopLoopStart($29) : %CopLoopEnd()
     %CopShowText(.txt_lisa_asks_for_promise)
 
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_X | !Key16_Start | !Key16_Select | !Key16_B
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.X | Key16.Start | Key16.Select | Key16.B
     TRB.W button_mask
     %CopShowMenu(choice_yes, 1, +) : +
 
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_X | !Key16_Start | !Key16_Select | !Key16_B
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.X | Key16.Start | Key16.Select | Key16.B
     TSB.W button_mask
     %CopShowText(.txt_danke)
     %CopLoopStart($B5) : %CopLoopEnd()
@@ -47,8 +47,8 @@ A1_script_lisas_dream:
     LDA.W #3
     STA.W _031E
     %Cop3C(4)
-    %CopTeleportPlayerToMap($101, !Facing_Up, $3B0, $1D8)
-    LDA.W #!Key16_All_Directions | !Key16_A | !Key16_X | !Key16_Start | !Key16_Select | !Key16_B
+    %CopTeleportPlayerToMap($101, Facing.Up, $3B0, $1D8)
+    LDA.W #!Key16_All_Directions | Key16.A | Key16.X | Key16.Start | Key16.Select | Key16.B
     TRB.W button_mask
     %CopSetScriptAddrToNextInstruction()
     ;
@@ -62,7 +62,7 @@ A1_script_lisas_dream:
     %CopShowText(.txt_who_are_u)
     %CopSetEventFlag(!EV_A1_TulipBeforeHouseSecondTalk)
     %Cop3C(4)
-    %CopTeleportPlayerToMap($101, !Facing_Right, $3B0, $1E0)
+    %CopTeleportPlayerToMap($101, Facing.Right, $3B0, $1E0)
     RTL
 
 .txt_xxx:

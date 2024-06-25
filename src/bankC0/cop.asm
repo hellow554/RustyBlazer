@@ -203,7 +203,7 @@ COP_Func:
     LDA.B [CopTemp]
     INC.B CopTemp
     AND.W #$FF
-    CMP.W #!MedicalHerb
+    CMP.W #Items.MedicalHerb
     BEQ ..give_item ; the reason for this, is that we heal the player fully, if it is already equipped, but that's not check here, but in `giveItem`
     JSR.W CheckIfItemIsObtained
     BCC ..ret
@@ -625,7 +625,7 @@ TYX
     INC.B CopTemp
     INC.B CopTemp
     JSL.L AddGold
-    LDA.W #!UpdateHud_Gold
+    LDA.W #UpdateHud.Gold
     TSB.W display_hud_bitfield
     BRL .ret_in_tmp
 
@@ -635,14 +635,14 @@ TYX
     INC.B CopTemp
     INC.B CopTemp
     LDY.W Equipment.item
-    CPY.W #!MagicBell ; if we have the magic bell, this doesn't cost anything
+    CPY.W #Items.MagicBell ; if we have the magic bell, this doesn't cost anything
     BNE ..check_armor
     LDA.W #0 ; doesn't cost any gold
     BRA ..cast_it
 
 ..check_armor:
     LDY.W Equipment.armor
-    CPY.W #!MagicArmor
+    CPY.W #Items.MagicArmor
     BNE ..cast_it
     LSR ; half the amount of gold if the magic armor is equipped
     BNE ..cast_it
@@ -651,7 +651,7 @@ TYX
 ..cast_it:
     JSL.L SubtractGold
     BCS ..not_enough_gold
-    LDA.W #!UpdateHud_Gold
+    LDA.W #UpdateHud.Gold
     TSB.W display_hud_bitfield
     BRL .skip_2_args
 
@@ -963,7 +963,7 @@ TYX
     STA.W player_current_health
     PLA
     REP #$20
-    LDA.W #!UpdateHud_Health
+    LDA.W #UpdateHud.Health
     TSB.W display_hud_bitfield
 
     LDX.W $039E

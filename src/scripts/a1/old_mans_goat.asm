@@ -4,7 +4,7 @@ A1_script_old_mans_goat:
     %CopAssignTalkCallback(.talk)
     %CopMakeNpcUnpassable()
     %CopSetScriptAddrToNextInstruction()
-    %CopPlayAnimation(!Anim_Village_Goat_Eating_And_Blinking)
+    %CopPlayAnimation(Animation.VillageGoatEatingAndBlinking)
     %Cop82()
     RTL
 

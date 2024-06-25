@@ -20,12 +20,12 @@ A1_script_secret_cave_kid:
 
 .moving_out_of_way:
     %CopMakeNpcPassable()
-    %CopPlayAnimation(!Anim_Village_Kid_Walking_Down)
+    %CopPlayAnimation(Animation.VillageKidWalkingDown)
     %Cop82()
-    %CopPlayAnimation(!Anim_Village_Kid_Walking_Left)
+    %CopPlayAnimation(Animation.VillageKidWalkingLeft)
     %Cop82()
     %Cop87()
-    %CopPlayAnimation(!Anim_Village_Kid_Facing_Left)
+    %CopPlayAnimation(Animation.VillageKidFacingLeft)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopSetEventFlag(!EV_A1_SecretCaveKidTalk)
@@ -38,15 +38,15 @@ A1_script_secret_cave_kid:
     %CopJumpIfEventFlagIsUnset(!EV_A1_SecretPassageBottlePickedUp, +) : RTL : +
     %CopShowText(.text_bottle)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!StrangeBottle)
+    %CopGiveItem(Items.StrangeBottle)
     %CopSetEventFlag(!EV_A1_SecretPassageBottlePickedUp)
     RTL
 
 .talk_in_entry:
-    %CopJumpIfItemIsNotEquipped(!APass, ..no_pass)
+    %CopJumpIfItemIsNotEquipped(Items.APass, ..no_pass)
     %CopSetEventFlag(!EV_A1_SecretCaveKid_ShowedPass)
     %CopShowText(.text_show_pass)
-    %CopRemoveItem(!APass)
+    %CopRemoveItem(Items.APass)
     RTL
 ..no_pass:
     %CopShowText(.text_no_pass)

@@ -14,7 +14,7 @@ A1_script_ShopOwner:
     %Cop9E(.left_jump)
 
 .left_jump:
-    %CopPlayAnimation(!Anim_Village_Woman_Facing_Down)
+    %CopPlayAnimation(Animation.VillageWomanFacingDown)
     %Cop82()
     BRL .inside
 
@@ -24,20 +24,20 @@ A1_script_ShopOwner:
     %Cop9D($0B)
     %Cop9E(.right_jump)
 .right_jump:
-    %CopPlayAnimation(!Anim_Village_Woman_Facing_Down)
+    %CopPlayAnimation(Animation.VillageWomanFacingDown)
     %Cop82()
 
 .inside:
     %Cop27(.move_loop)
 
 .talk:
-    %CopJumpIfItemNotObtained(!MedicalHerb, .no_herbs)
+    %CopJumpIfItemNotObtained(Items.MedicalHerb, .no_herbs)
     %CopShowText(.text_has_herbs)
     RTL
 .no_herbs:
     %CopShowText(.text_no_herbs)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!MedicalHerb)
+    %CopGiveItem(Items.MedicalHerb)
     RTL
 
 .text_no_herbs:
@@ -84,6 +84,6 @@ db $D1,$84,'n','e','u','e',' ','g','e','b','e','n','.',$13 : dw Default_Text_End
 
 ShopOwnerTurnRight:
     %CopFlipSpriteVertically()
-    %CopPlayAnimation(!Anim_Village_Woman_Facing_Left)
+    %CopPlayAnimation(Animation.VillageWomanFacingLeft)
     %Cop82()
     BRL ShopOwnerTurnRight

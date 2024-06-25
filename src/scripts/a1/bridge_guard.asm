@@ -21,7 +21,7 @@ A1_script_bridge_guard:
 .too_right:
     %CopFlipSpriteVertically()
 +
-    %CopPlayAnimation(!Anim_Village_Man_Facing_Left)
+    %CopPlayAnimation(Animation.VillageManFacingLeft)
     %Cop82()
     BRL .todo3
 
@@ -40,14 +40,14 @@ A1_script_bridge_guard:
     %Cop9D($03)
     %Cop9E(+)
 +
-    %CopPlayAnimation(!Anim_Village_Man_Facing_Up)
+    %CopPlayAnimation(Animation.VillageManFacingUp)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopSetEventFlag(!EV_A1_BridgeGuard_GotOutOfWay)
     BRL .todo3
 
 .todo4:
-    %CopPlayAnimation(!Anim_Village_Man_Facing_Up)
+    %CopPlayAnimation(Animation.VillageManFacingUp)
     %Cop82()
 
 .todo3:

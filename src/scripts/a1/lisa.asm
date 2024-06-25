@@ -2,7 +2,7 @@ A1_script_Lisa:
     %CopJumpIfSealed(!Lair_A1_Lisa, +) : RTL : +
     %CopJumpIfRevealing(!Lair_A1_Lisa, .revealing)
     %CopJumpIfEventFlagIsSet(!EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE, .todo)
-    %CopJumpIfItemNotObtained(!VipCard, .lisa_still_here)
+    %CopJumpIfItemNotObtained(Items.VipCard, .lisa_still_here)
     ; lisa was kidnapped
     %Cop86()
     RTL
@@ -100,19 +100,19 @@ TSB.W button_mask
 %CopShowText(.txt_ending_lisa_sleeping)
 %CopLoopStart(121) : %CopLoopEnd()
 %Cop3C(4)
-%CopTeleportPlayerToMap(_0302, !Facing_Up, $108, $348)
+%CopTeleportPlayerToMap(_0302, Facing.Up, $108, $348)
 LDA.W #$BFC0
 TRB.W button_mask
 %CopSetScriptAddrToNextInstruction()
 RTL
 .loc_9647:
 COP #$34
-%CopPlayAnimation(!Anim_Village_Lisa_Waking_up)
+%CopPlayAnimation(Animation.VillageLisaWakingUp)
 %Cop82()
 %CopLoopStart(91) : %CopLoopEnd()
 %CopShowText(.txt_ending_ask_for_promise)
 %CopLoopStart(241) : %CopLoopEnd()
-%CopTeleportPlayerToMap($B00, !Facing_Up, 0, 0)
+%CopTeleportPlayerToMap($B00, Facing.Up, 0, 0)
 %CopSetScriptAddrToNextInstruction()
 RTL
 

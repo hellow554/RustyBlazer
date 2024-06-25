@@ -9,7 +9,7 @@ A1_script_mill_keeper:
 ; -- wait for him to be talked too
 ; -- this is the walking sequence --
     %CopMakeNpcPassable()
-    LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
+    LDA.W #Key16.A|Key16.Select|!Key16_All_Directions
     TSB.W button_mask
     %CopFlipSpriteVertically()
     %Cop9D($05)
@@ -19,9 +19,9 @@ A1_script_mill_keeper:
     %Cop9D($04)
     %Cop9E(+)
 +
-    %CopPlayAnimation(!Anim_Village_Man_Facing_Down)
+    %CopPlayAnimation(Animation.VillageManFacingDown)
     %Cop82()
-    LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
+    LDA.W #Key16.A|Key16.Select|!Key16_All_Directions
     TRB.W button_mask
     %CopMakeNpcUnpassable()
 
@@ -31,13 +31,13 @@ A1_script_mill_keeper:
     RTL
 
 .player_in_front_of_wheel:
-    LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
+    LDA.W #Key16.A|Key16.Select|!Key16_All_Directions
     TSB.W button_mask
     LDY $039E
     LDA.W #$1
     STA.W $1E, Y
     %CopLoopStart(3) : %CopLoopEnd()
-    LDA.W #!Key16_A|!Key16_Select|!Key16_All_Directions
+    LDA.W #Key16.A|Key16.Select|!Key16_All_Directions
     TRB.W button_mask
     %CopShowText(.text_ask_to_turn)
     %CopShowMenu(choice_yes_no, 2, .said_no)
@@ -64,7 +64,7 @@ A1_script_mill_keeper:
 .already_turned:
     %CopTeleportEntityTo(!Entity_MillKeeper, $27, $17)
     %CopMakeNpcUnpassable()
-    %CopPlayAnimation(!Anim_Village_Man_Facing_Down)
+    %CopPlayAnimation(Animation.VillageManFacingDown)
     %Cop82()
     BRA .after_turn
 
@@ -72,7 +72,7 @@ A1_script_mill_keeper:
     %CopJumpIfEventFlagIsSet(!EV_A1_PickedEmblemAUp, .already_picked_up)
     %CopShowText(.text_emblem_a)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!EmblemA)
+    %CopGiveItem(Items.EmblemA)
     %CopSetEventFlag(!EV_A1_PickedEmblemAUp)
 
 .already_picked_up:

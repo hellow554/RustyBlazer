@@ -1,13 +1,13 @@
 DebugMenu:
     LDA JOY2H
-    BIT.B #!Key8_Select
+    BIT.B #Key8.Select
     BEQ +
     JSR DEBUG_SELECT
     RTS ; early out
 
 +
     LDA JOY2H
-    BIT #!Key8_B
+    BIT.B #Key8.B
     BEQ +
     LDA #$1E
 
@@ -20,7 +20,7 @@ DebugMenu:
     RTS
 
 +
-    BIT #!Key8_Y
+    BIT.B #Key8.Y
     BEQ +
     JSR CODE_C08298
 +

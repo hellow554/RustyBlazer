@@ -648,7 +648,7 @@ RestoreHealth:
     STZ.W player_health_restore
 
 .update_hud:
-    LDA.B #!UpdateHud_Health
+    LDA.B #UpdateHud.Health
     TSB.W display_hud_bitfield
 
 .ret:
@@ -699,7 +699,7 @@ IncrementExpPerTick:
     CLD
     JSL.L AddExp
     SEP #$20
-    LDA.B #!UpdateHud_Exp
+    LDA.B #UpdateHud.Exp
     TSB.W display_hud_bitfield
 
 .end:
@@ -1380,7 +1380,7 @@ Jewel_Return_to_GrassValley:
     BEQ .abort
     %CopShowText(Text_Ok_Continue)
     INC.W $0439
-    %CopTeleportPlayerToMap($101, !Facing_Down, $138, $3A0)
+    %CopTeleportPlayerToMap($101, Facing.Down, $138, $3A0)
     RTL
 
 .abort:

@@ -45,7 +45,7 @@ A1_script_chiefs_wife:
     RTL
 
 .lisa_revealed_talk:
-    %CopJumpIfItemNotObtained(!VipCard, .lisa_here)
+    %CopJumpIfItemNotObtained(Items.VipCard, .lisa_here)
     %CopShowText(.text_lisa_hijacked)
     RTL
 .lisa_here

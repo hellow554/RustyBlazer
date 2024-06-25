@@ -14,12 +14,12 @@ A1_script_secret_shack_kid:
 
     %CopRemoveTalkCallback()
     %CopMakeNpcPassable()
-    %CopPlayAnimation(!Anim_Village_Kid_Walking_Down)
+    %CopPlayAnimation(Animation.VillageKidWalkingDown)
     %Cop82()
     %Cop9D($0F)
     %Cop9E(+) : +
 
-    %CopPlayAnimation(!Anim_Village_Kid_Walking_Left)
+    %CopPlayAnimation(Animation.VillageKidWalkingLeft)
     %Cop82()
     %Cop9D($11)
     %Cop9E(+) : +
@@ -35,7 +35,7 @@ A1_script_secret_shack_kid:
     %Cop9E(+) : +
 
     %CopResetSpriteVertically()
-    %CopPlayAnimation(!Anim_Village_Kid_Facing_Left)
+    %CopPlayAnimation(Animation.VillageKidFacingLeft)
     %Cop82()
     %CopMakeNpcUnpassable()
     %CopAssignTalkCallback(.talk_out_of_way)
@@ -43,7 +43,7 @@ A1_script_secret_shack_kid:
     %Cop0C(!Entity_Player, $02, +) : RTL : +
 
     %CopFlipSpriteVertically()
-    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
+    %CopPlayAnimation(Animation.VillageKidFacingDown)
     %Cop82()
     %CopShowText(.text_followed)
     %CopSetScriptAddrToNextInstruction()
@@ -64,7 +64,7 @@ A1_script_secret_shack_kid:
     RTL
 
 .talk_need_pass:
-    %CopJumpIfItemNotObtained(!APass, ..no_pass)
+    %CopJumpIfItemNotObtained(Items.APass, ..no_pass)
     %CopShowText(.text_found_pass)
     RTL
 ..no_pass:

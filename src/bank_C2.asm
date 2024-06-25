@@ -1295,7 +1295,7 @@ check_current_tile_for_action:
     ; check if the current tile is a cleared lair
     SEP #$20
     LDA.L tilemap, X
-    CMP.B #!TM_ClearedLair
+    CMP.B #Tile.ClearedLair
     BNE .check_for_door
 LDA.W $0464                          ;C289FE|AD6404  |810464;
 BNE .ret                      ;C28A01|D025    |C28A28;
@@ -1411,7 +1411,7 @@ REP #$20                             ;C28AD3|C220    |      ;
 LDA.W UNREACH_81A9E2,X               ;C28AD5|BDE2A9  |81A9E2;
 STA.W $03CA                          ;C28AD8|8DCA03  |8103CA;
 JSL.L AddGold                    ;C28ADB|22D98583|8385D9;
-LDA.W #!UpdateHud_Gold                         ;C28ADF|A91000  |      ;
+LDA.W #UpdateHud.Gold                         ;C28ADF|A91000  |      ;
 TSB.W display_hud_bitfield                          ;C28AE2|0C3203  |810332;
 SEP #$20                             ;C28AE5|E220    |      ;
 LDY.W #Txt_Received_Jwl                         ;C28AE7|A007E5  |      ;
@@ -1638,7 +1638,7 @@ seal_lair_at_player_pos:
     ; load previous X, which contains the index into an array (in this case `tilemap`)
     LDX.B $00
     ; seal the lair and store that into the tilemap
-    LDA.B #!TM_SealedLair
+    LDA.B #Tile.SealedLair
     STA.L tilemap, X
     PLP ; pull `field_08` equal flag
     BEQ + : STA DATA_7EC000, X : +
@@ -2799,7 +2799,7 @@ CODE_C2957E:
     LDA.B #$FE
     PLP
     BPL + ; highest bit is not set, so it's open
-    LDA.B #!TM_SealedLair
+    LDA.B #Tile.SealedLair
     DEC.W remaining_lair
 
 +:
@@ -3065,14 +3065,14 @@ db $82,$81,$81,$82,$82,$82,$80,$80   ;C298F9|        |C21A7D;
 
 check_buttons:
     LDA.W buttons_pressed8
-    BIT.B #!Key8_Select
+    BIT.B #Key8.Select
     BEQ + : BRL open_equipment_menu : +
-    BIT.B #!Key8_B
+    BIT.B #Key8.B
     BEQ + : BRL button_b_pressed : +
     BIT.B #!Key8_All_Directions
     BNE +
     LDA.W buttons_pressed
-    BIT.B #!Key16_A
+    BIT.B #Key16.A
     BNE open_stats_menu
 +:
     RTL
@@ -3112,7 +3112,7 @@ open_stats_menu:
 ; wait for key release
 -:
     JSR.W vblank_readButtons_and_count_frames
-    BIT.B #!Key16_A
+    BIT.B #Key16.A
     BNE -
     REP #$20
 
@@ -3140,7 +3140,7 @@ open_stats_menu:
     BIT.W #!Key16_Menu_Keys
     BEQ -
 
-    LDA.W #!Key16_A | !Key16_B | !Key16_X | !Key16_Y
+    LDA.W #Key16.A | Key16.B | Key16.X | Key16.Y
     TRB.W _032A
     STZ.W buttons_pressed
     SEP #$20
@@ -4151,7 +4151,7 @@ BRL CODE_C2A01A                      ;C2A0FB|821CFF  |C2A01A;
 giveItem:
     PHP
     SEP #$20
-    CMP.B #!GoatsFood
+    CMP.B #Items.GoatsFood
     BCS .is_item
     ; this codepath is taken for weapons, armor and magic
     XBA                                  ;C2A105|EB      |      ;
@@ -4182,7 +4182,7 @@ giveItem:
 .already_equipped:
     PLA                                  ;C2A129|68      |      ;
     AND.B #$7F                           ;C2A12A|297F    |      ;
-    CMP.B #!MedicalHerb                           ;C2A12C|C938    |      ;
+    CMP.B #Items.MedicalHerb                           ;C2A12C|C938    |      ;
     BNE .end                      ;C2A12E|D00A    |C2A13A;
     LDA.W player_max_health                          ;C2A130|AD8A1B  |811B8A;
     SEC                                  ;C2A133|38      |      ;
@@ -4202,7 +4202,7 @@ STZ.W cursor_counter                          ;C2A142|9CC803  |8103C8;
 
 CODE_C2A145:
 LDA.B #$2B                           ;C2A145|A92B    |      ;
-STA.L L3_Text-!Row_Width,X                      ;C2A147|9FC06F7F|7F6FC0;
+STA.L L3_Text - !Row_Width, X                      ;C2A147|9FC06F7F|7F6FC0;
 STA.L L3_Text,X                      ;C2A14B|9F00707F|7F7000;
 LDA.B #$01                           ;C2A14F|A901    |      ;
 TSB.W $03BA                          ;C2A151|0CBA03  |8103BA;
@@ -4326,10 +4326,10 @@ CODE_C2A1ED:
 
 .key_pressed:
     JSR.W advance_frame_and_read_lower_buttons
-    BIT.B #!Key8_Up   : BNE .pressed_up
-    BIT.B #!Key8_Down : BNE .pressed_down
-    BIT.B #!Key8_Y    : BNE .pressed_y
-    BIT.B #!Key8_B    : BNE .pressed_b
+    BIT.B #Key8.Up   : BNE .pressed_up
+    BIT.B #Key8.Down : BNE .pressed_down
+    BIT.B #Key8.Y    : BNE .pressed_y
+    BIT.B #Key8.B    : BNE .pressed_b
     JSR.W alternateCursor
     BRA .key_pressed
 
@@ -4406,13 +4406,13 @@ printAndRunChoiceBox:
 
 .wait_for_button_press:
     JSR.W advance_frame_and_read_lower_buttons
-    BIT.B #!Key8_Up
+    BIT.B #Key8.Up
     BNE .pressed_up
-    BIT.B #!Key8_Down
+    BIT.B #Key8.Down
     BNE .pressed_down
-    BIT.B #!Key8_Y
+    BIT.B #Key8.Y
     BNE .pressed_y
-    BIT.B #!Key8_B
+    BIT.B #Key8.B
     BNE .pressed_b
     JSR.W alternateCursor
     BRA .wait_for_button_press

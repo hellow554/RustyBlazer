@@ -21,7 +21,7 @@ A1_script_GoatWithFence:
 .find_herbs:
     %CopShowText(.text_hk)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!MedicalHerb)
+    %CopGiveItem(Items.MedicalHerb)
     %CopSetEventFlag(!EV_A1_FoundHerbsOnTheGround)
 .herbs_found:
     COP #$86

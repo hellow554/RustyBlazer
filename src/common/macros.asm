@@ -464,14 +464,13 @@ endif
     dw <addr>
 endmacro
 
-
 macro PlaySound(id)
     BRK #<id>
 endmacro
 
 macro SwitchToBankWithSRep(id)
     SEP #$20
-    %SwitchToBank($7E)
+    %SwitchToBank(<id>)
     REP #$20
 endmacro
 
@@ -479,4 +478,84 @@ macro SwitchToBank(id)
     LDA.B #<id>
     PHA
     PLB
+endmacro
+
+; A macro that abuses structs to define enums.
+macro define_enum(name, ...)
+	if sizeof(...) > 0
+		!enum_<name>_first = <name>.<...[0]>
+		!enum_<name>_last = <name>.<...[sizeof(...)-1]>
+	
+		struct <name> $000000
+			.First:
+			
+			!temp_i #= 0
+			while !temp_i < sizeof(...)
+				if !temp_i == sizeof(...)-1
+					.Last:
+				endif
+				
+				.<...[!temp_i]>: skip 1
+				
+				!temp_i #= !temp_i+1
+			endwhile
+			undef "temp_i"
+			
+			.Count:
+		endstruct
+	else
+		error "Enums must have at least a single value."
+	endif
+endmacro
+
+; Same as above, but every second argument is a value to map to the previous enum key.
+; Example: %define_enum_with_values(Number, One, 1, Two, 2, Three, 3)
+macro define_enum_with_values(name, ...)
+	if sizeof(...) > 0 && sizeof(...) & 1 == 0
+		!enum_<name>_first = <name>.<...[0]>
+		!enum_<name>_last = <name>.<...[sizeof(...) - 2]>
+	
+		struct <name> $000000
+			.First:
+			
+			!temp_i #= 0
+			!temp_prev #= 0
+			while !temp_i < sizeof(...)
+				if <...[!temp_i + 1]> < 0
+					error "Enums currently don't support negative values."
+				endif
+			
+				; This code here mainly serves the purpose of avoiding negative or zero skips.
+				; Although they might not be a problem per se, but I don't want to rely on
+				; Asar always supporting them.
+				if <...[!temp_i + 1]> < !temp_prev
+					error "Enum values must be ordered sequentially.".
+				endif
+				
+				if <...[!temp_i + 1]> != !temp_prev
+					skip <...[!temp_i + 1]>-!temp_prev
+					!temp_prev #= <...[!temp_i + 1]>
+				endif
+				
+				if !temp_i == sizeof(...) - 2
+					.Last:
+				endif
+				
+				.<...[!temp_i]>:
+				
+				!temp_i #= !temp_i+2
+			endwhile
+			undef "temp_i"
+			undef "temp_prev"
+			
+			.Count:
+		endstruct
+	else
+		; Once again, nested if, because elseif is broken.
+		if sizeof(...) & 1 != 0
+			error "Number of variadic arguments must be divisble by 2."
+		else
+			error "Enums must have at least a single value."
+		endif
+	endif
 endmacro

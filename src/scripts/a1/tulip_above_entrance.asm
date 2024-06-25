@@ -9,7 +9,7 @@ A1_script_Tulip_Above_Entrance:
     COP #$82
     BRA .loop
 .talk:
-    %CopJumpIfItemNotObtained(!DreamRod, .talk_no_dreamrod)
+    %CopJumpIfItemNotObtained(Items.DreamRod, .talk_no_dreamrod)
     %CopShowText(.text_has_dreamrod)
     RTL
 .talk_no_dreamrod:

@@ -3,7 +3,7 @@ A7_script_WalkThroughSpace:
     %Cop94()
     %CopLoopStart($60) : {
         %CopJumpIfEventFlagIsSet(!EV_A7_SomethingWithSpaceAndSoulArmor, .no_harm)
-        %CopJumpIfItemIsNotEquipped(!SoulArmor, .harm_player)
+        %CopJumpIfItemIsNotEquipped(Items.SoulArmor, .harm_player)
         BRA .no_harm
     .harm_player:
         LDA.W _0312

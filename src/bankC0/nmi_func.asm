@@ -35,7 +35,7 @@ NMI_Func:
     LDA.W JOY1L
     XBA
     LSR A
-    AND.W #!Key16_Select
+    AND.W #Key16.Select
     ORA.W JOY1L
     PHA
     LDA.W button_mask

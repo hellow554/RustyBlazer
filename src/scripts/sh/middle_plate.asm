@@ -69,7 +69,7 @@ SH_script_shrine:
     LDA.L choice_idx
     BEQ ..quit_talking
     %CopShowText(.txt_end_game)
-    LDA.W #!Key16_All_ActionButtons ^ !Key16_X ; Seems like a bug to me :)
+    LDA.W #!Key16_All_ActionButtons ^ Key16.X ; Seems like a bug to me :)
     TSB.W button_mask
     %CopLoopStart(31) : %CopLoopEnd()
 

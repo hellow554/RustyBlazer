@@ -7,12 +7,12 @@ A1_script_painter:
 
 
 .walking_loop:
-    %CopPlayAnimation(!Anim_Village_Man_Walking_Down)
+    %CopPlayAnimation(Animation.VillageManWalkingDown)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)
     %Cop83()
-    %CopPlayAnimation(!Anim_Village_Man_Walking_Up)
+    %CopPlayAnimation(Animation.VillageManWalkingUp)
     %Cop82()
     %Cop87()
     %Cop81(5, 2)
@@ -32,9 +32,9 @@ A1_script_painter:
     %CopClearEventFlag(!EV_A1_Saw_Chief_In_Picture)
     RTL
 ..reached_pos:
-    %CopJumpIfItemIsNotEquipped(!LeosBrush, ..no_brush)
+    %CopJumpIfItemIsNotEquipped(Items.LeosBrush, ..no_brush)
     %CopShowText(.txt_sucked_in)
-    %CopTeleportPlayerToMap($103, !Facing_Up, $78, $3E0)
+    %CopTeleportPlayerToMap($103, Facing.Up, $78, $3E0)
     RTL
 ..no_brush:
     %CopJumpIfEventFlagIsSet(!EV_A1_Saw_Chief_In_Picture, ..ret)

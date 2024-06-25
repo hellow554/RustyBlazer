@@ -17,7 +17,7 @@ A1_script_magician:
 .talkback:
     %CopShowText(.txt1)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!FlameBall)
+    %CopGiveItem(Items.FlameBall)
     %CopShowText(.txt2)
     SEP #$20
     LDA.B #1

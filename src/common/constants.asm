@@ -1,46 +1,22 @@
-!SoulMagican    = %1
-!SoulLight      = %10
-!SoulShield     = %100
-!SoulDetection  = %1000
-!SouldReality   = %10000
+%define_enum_with_values(Souls, Magician, %1, Light, %10, Shield, %100, Detection, %1000, Reality, %10000)
 
-!Key16_R        = $0010
-!Key16_L        = $0020
-!Key16_X        = $0040
-!Key16_A        = $0080
-!Key16_Right    = $0100
-!Key16_Left     = $0200
-!Key16_Down     = $0400
-!Key16_Up       = $0800
-!Key16_Start    = $1000
-!Key16_Select   = $2000
-!Key16_Y        = $4000
-!Key16_B        = $8000
-!Key16_All_Directions = !Key16_Right|!Key16_Left|!Key16_Down|!Key16_Up
-!Key16_All_ActionButtons = !Key16_All_Directions|!Key16_A|!Key16_X|!Key16_Y|!Key16_Start|!Key16_Select
-!Key16_Menu_Keys    = !Key16_All_Directions|!Key16_A|!Key16_B|!Key16_Y
+%define_enum_with_values(Key16,
+    R, $10, L, $20, X, $40, A, $80, Right, $100, Left, $200, Down, $400, Up, $800,
+    Start, $1000, Select, $2000, Y, $4000, B, $8000)
 
-!Key8_Right     = $1
-!Key8_Left      = $2
-!Key8_Down      = $4
-!Key8_Up        = $8
-!Key8_Start     = $10
-!Key8_Select    = $20
-!Key8_Y         = $40
-!Key8_B         = $80
-!Key8_All_Directions = !Key8_Right|!Key8_Left|!Key8_Down|!Key8_Up
+!Key16_All_Directions    = Key16.Right|Key16.Left|Key16.Down|Key16.Up
+!Key16_All_ActionButtons = !Key16_All_Directions|Key16.A|Key16.X|Key16.Y|Key16.Start|Key16.Select
+!Key16_Menu_Keys         = !Key16_All_Directions|Key16.A|Key16.B|Key16.Y
 
-!UpdateHud_Text     = %1
-!UpdateHud_Exp      = %10
-!UpdateHud_Health   = %100
-!UpdateHud_Level    = %1000
-!UpdateHud_Gold     = %10000
-!UpdateHud_All      = !UpdateHud_Text|!UpdateHud_Exp|!UpdateHud_Health|!UpdateHud_Level|!UpdateHud_Gold
+%define_enum_with_values(Key8,
+    Right, $1, Left, $2, Down, $4, Up, $8,
+    Start, $10, Select, $20, Y, $40, B, $80)
 
+!Key8_All_Directions = Key8.Right|Key8.Left|Key8.Down|Key8.Up
 
-!FullBlockSize  = $10
+%define_enum_with_values(UpdateHud, Text, %1, Exp, %10, Health, %100, Level, %1000, Gold, %10000)
+!UpdateHud_All = UpdateHud.Text|UpdateHud.Exp|UpdateHud.Health|UpdateHud.Level|UpdateHud.Gold
 
-!MN_Misc        = $00
 
 !Entity_Player     = $00
 !Entity_ChiefsWife = $04
@@ -49,10 +25,7 @@
 
 !Row_Width = $40
 
-!Facing_Down    = $00
-!Facing_Up      = $01
-!Facing_Left    = $02
-!Facing_Right   = $03
+%define_enum(Facing, Down, Up, Left, Right)
 
 !WORDLUT_ENTRY_SIZE = 12
 

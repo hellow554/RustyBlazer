@@ -4,7 +4,7 @@ A1_script_snitch_tulip:
     %CopAssignTalkCallback(.talk)
     %CopMakeNpcUnpassable()
 .anim_loop:
-    %CopPlayAnimation(!Anim_Village_Tulip_Left_Right)
+    %CopPlayAnimation(Animation.VillageTulipLeftRight)
     %Cop82()
     BRA .anim_loop
 

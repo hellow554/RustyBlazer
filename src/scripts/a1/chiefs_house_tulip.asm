@@ -6,7 +6,7 @@ A1_script_chiefs_house_tulip:
     %CopMakeNpcUnpassable()
 
 .loop:
-    %CopPlayAnimation(!Anim_Village_Tulip_Left_Right)
+    %CopPlayAnimation(Animation.VillageTulipLeftRight)
     %Cop82()
     BRA .loop
 

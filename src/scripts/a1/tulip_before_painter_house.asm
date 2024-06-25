@@ -6,7 +6,7 @@ A1_script_Tulip_Before_Painter_House:
 
 
 .moving_loop:
-    %CopPlayAnimation(!Anim_Village_Tulip_Left_Right)
+    %CopPlayAnimation(Animation.VillageTulipLeftRight)
     %Cop82()
     BRA .moving_loop
 

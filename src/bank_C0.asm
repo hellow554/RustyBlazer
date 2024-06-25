@@ -1175,17 +1175,17 @@ STA.W $0016,Y                        ;C08C41|991600  |8C0016;
 LDX.W $0038,Y                        ;C08C44|BE3800  |8C0038;
     LDA.L Entity.bcd_exp, X
     JSL.L AddExp
-    LDA.W #!UpdateHud_Exp
+    LDA.W #UpdateHud.Exp
     TSB.W display_hud_bitfield
     LDA.W Equipment.sword
-    CMP.W #!RecoverySword
+    CMP.W #Items.RecoverySword
     BNE .no_recovery_sword
 
     LDA.W player_current_health
     CMP.W player_max_health
     BEQ .no_recovery_sword ; we are at max health, skip this
     INC.W player_current_health
-    LDA.W #!UpdateHud_Health
+    LDA.W #UpdateHud.Health
     TSB.W display_hud_bitfield
 
 .no_recovery_sword:
@@ -1287,7 +1287,7 @@ STA.W $0016,Y                        ;C08D48|991600  |8F0016;
 LDX.W $0038,Y                        ;C08D4B|BE3800  |8F0038;
 LDA.L Entity.bcd_exp,X               ;C08D4E|BF038081|818003;
 JSL.L AddExp                    ;C08D52|22BB8583|8385BB;
-LDA.W #!UpdateHud_Exp                         ;C08D56|A90200  |      ;
+LDA.W #UpdateHud.Exp                         ;C08D56|A90200  |      ;
 TSB.W display_hud_bitfield                          ;C08D59|0C3203  |8F0332;
 BRK #$43                             ;C08D5C|0043    |      ;
 
@@ -1547,11 +1547,11 @@ CODE_C08F1F:
 STA.W player_current_health                          ;C08F1F|8D881B  |811B88;
 PLA                                  ;C08F22|68      |      ;
 REP #$20                             ;C08F23|C220    |      ;
-LDA.W #!UpdateHud_Health                         ;C08F25|A90400  |      ;
+LDA.W #UpdateHud.Health                         ;C08F25|A90400  |      ;
 TSB.W display_hud_bitfield                          ;C08F28|0C3203  |810332;
 LDX.W $039E                          ;C08F2B|AE9E03  |81039E;
 LDA.W Equipment.armor                          ;C08F2E|AD601B  |811B60;
-CMP.W #!MysticArmor                         ;C08F31|C90D00  |      ;
+CMP.W #Items.MysticArmor                         ;C08F31|C90D00  |      ;
 BNE + : LDA.W #-64 : BRA ++
     + : LDA.W #-32 : ++
 
@@ -5100,7 +5100,7 @@ LDA.W #$0001                         ;C0AF73|A90100  |      ;
 
 CODE_C0AF76:
 JSL.L AddGold                    ;C0AF76|22D98583|8385D9;
-LDA.W #!UpdateHud_Gold                         ;C0AF7A|A91000  |      ;
+LDA.W #UpdateHud.Gold                         ;C0AF7A|A91000  |      ;
 TSB.W display_hud_bitfield                          ;C0AF7D|0C3203  |810332;
 LDA.W $0016,X                        ;C0AF80|BD1600  |810016;
 ORA.W #$2000                         ;C0AF83|090020  |      ;
@@ -5203,18 +5203,18 @@ check_player_dead:
     LDA.W player_current_health
     ORA.W player_health_restore
     BNE .end
-    %CopJumpIfItemIsNotEquipped(!MedicalHerb, .no_herbs)
+    %CopJumpIfItemIsNotEquipped(Items.MedicalHerb, .no_herbs)
     ; revive player if herbs are equipped
     LDA.W player_max_health
     STA.W player_health_restore
-    %CopRemoveItem(!MedicalHerb)
+    %CopRemoveItem(Items.MedicalHerb)
     BRA .end
 .no_herbs:
-    %CopJumpIfItemIsNotEquipped(!StrangeBottle, .no_bottle)
-    %CopRemoveItem(!StrangeBottle)
+    %CopJumpIfItemIsNotEquipped(Items.StrangeBottle, .no_bottle)
+    %CopRemoveItem(Items.StrangeBottle)
     BRA .kill_player
 .no_bottle:
-    %CopJumpIfItemIsNotEquipped(!MagicBell, +)
+    %CopJumpIfItemIsNotEquipped(Items.MagicBell, +)
     BRA .kill_player
 +
 ; if neither herbs, bottle nor bell is equipped, remove all gold and kill the player
@@ -5227,7 +5227,7 @@ check_player_dead:
     LDA.W $0016, X
     ORA.W #$0400
     STA.W $0016, X
-    LDA.W #!Key16_A|!Key16_Select
+    LDA.W #Key16.A|Key16.Select
     STA.W button_mask
     INC.W player_died
 .end:
@@ -7801,8 +7801,8 @@ db $A9,$20,$00,$8D,$B6,$03,$EE,$60   ;C0F6F2|        |      ;
 db $04,$02,$91,$6B                   ;C0F6FA|        |000002;
 
 
-incsrc "scripts/sh/default_script.asm"
-incsrc "scripts/sh/starting_script.asm"
+incsrc "scripts/sh/middle_plate.asm"
+incsrc "scripts/sh/new_game.asm"
 
 txt_shrine_clear_box:
 ; @NEW_TEXT@

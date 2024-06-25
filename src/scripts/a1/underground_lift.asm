@@ -28,7 +28,7 @@ A1_script_UndergroundLift:
 .start_moving_upwards:
     ; don't move the elevator if we want to get out of it after it has been moved
     LDA.W buttons_pressed
-    AND.W #!Key16_Up
+    AND.W #Key16.Up
     BNE + : RTL : +
     %Cop81($2A, $14)
     %Cop83()
@@ -42,7 +42,7 @@ A1_script_UndergroundLift:
 
 .start_moving_downwards:
     LDA.W buttons_pressed
-    AND.W #!Key16_Down
+    AND.W #Key16.Down
     BNE + : RTL : +
 
     %Cop81($2C, $14)

@@ -23,7 +23,7 @@ A1_script_son_shop_owner:
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
+    %CopPlayAnimation(Animation.VillageKidFacingDown)
     %Cop82()
     BRL .stand_inside
 
@@ -33,14 +33,14 @@ A1_script_son_shop_owner:
     %Cop9D($11)
     %Cop9E(..xxx)
 ..xxx:
-    %CopPlayAnimation(!Anim_Village_Kid_Facing_Down)
+    %CopPlayAnimation(Animation.VillageKidFacingDown)
     %Cop82()
 
 .stand_inside:
     %Cop27(.walk_loop)
 
 .default_talk:
-    %CopJumpIfItemNotObtained(!GoatsFood, .has_not_food)
+    %CopJumpIfItemNotObtained(Items.GoatsFood, .has_not_food)
     %CopShowText(.txt_has_food)
     RTL
 
@@ -51,7 +51,7 @@ A1_script_son_shop_owner:
     %CopShowText(.txt_scream)
     %CopSetEntityScriptAddr(!Entity_ShopOwner, A1_script_ShopOwner)
     %PlaySound(!Sound_ReceiveItem)
-    %CopGiveItem(!GoatsFood)
+    %CopGiveItem(Items.GoatsFood)
     RTL
 
 .txt_no_food:

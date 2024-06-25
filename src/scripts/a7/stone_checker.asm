@@ -10,12 +10,12 @@ A7_Script_stone_checker:
     %CopLoopStart(3) : %CopLoopEnd()
     %CopShowText(.txt_stones_glow)
 
-    %CopRemoveItem(!BrownStone)
-    %CopRemoveItem(!GreenStone)
-    %CopRemoveItem(!BlueStone)
-    %CopRemoveItem(!SilverStone)
-    %CopRemoveItem(!PurpleStone)
-    %CopRemoveItem(!BlackStone)
+    %CopRemoveItem(Items.BrownStone)
+    %CopRemoveItem(Items.GreenStone)
+    %CopRemoveItem(Items.BlueStone)
+    %CopRemoveItem(Items.SilverStone)
+    %CopRemoveItem(Items.PurpleStone)
+    %CopRemoveItem(Items.BlackStone)
 
     LDA.W #$20
     STA.W _03B6
@@ -24,7 +24,7 @@ A7_Script_stone_checker:
     %CopSetScriptAddr(.name_todo4)
     %Cop31(0)
     %CopLoopStart(241) : %CopLoopEnd()
-    %CopTeleportPlayerToMap($900, !Facing_Down, $D0, $50)
+    %CopTeleportPlayerToMap($900, Facing.Down, $D0, $50)
     RTL
 
 .name_todo2:
@@ -56,15 +56,15 @@ A7_Script_stone_checker:
     RTL
 
 .name_todo:
-    LDA.W #!Key16_All_ActionButtons|!Key16_B&~!Key16_Y
+    LDA.W #!Key16_All_ActionButtons|Key16.B&~Key16.Y
     TSB.W button_mask
     %CopLoopStart(41) : %CopLoopEnd()
     %CopShowText(.txt_game_done)
     %CopLoopStart(61) : %CopLoopEnd()
     LDA.W #$20
     STA.W _03B6
-    %CopTeleportPlayerToMap($110, !Facing_Up, $1F0, $50)
-    LDA.W #!Key16_All_ActionButtons|!Key16_B&~!Key16_Y
+    %CopTeleportPlayerToMap($110, Facing.Up, $1F0, $50)
+    LDA.W #!Key16_All_ActionButtons|Key16.B&~Key16.Y
     TRB.W button_mask
     %CopSetScriptAddrToNextInstruction()
     RTL

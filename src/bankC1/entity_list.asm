@@ -35,45 +35,45 @@ entities_GrassValley:
 
     ; --- NPCs ---
     %create_entity(entity_act1_crabwalk_guy,
-        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, UNKN_7E3800, A1_script_crabwalkguy)
+        0, 0, 0, 0, Animation.VillageManFacingLeft, $48, $30, UNKN_7E3800, A1_script_crabwalkguy)
     %create_entity(entity_act1_chiefs_wife,
-        0, 0, 0, 0, !Anim_Village_Woman_Facing_Down, $48, $30, UNKN_7E3800, A1_script_chiefs_wife)
+        0, 0, 0, 0, Animation.VillageWomanFacingDown, $48, $30, UNKN_7E3800, A1_script_chiefs_wife)
     %create_entity(entity_act1_shop_owner,
-        0, 0, 0, 0, !Anim_Village_Woman_Facing_Down, $58, $30, UNKN_7E3800, A1_script_ShopOwner)
+        0, 0, 0, 0, Animation.VillageWomanFacingDown, $58, $30, UNKN_7E3800, A1_script_ShopOwner)
     %create_entity(entity_act1_chiefs_house_tulip,
-        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, UNKN_7E3800, A1_script_chiefs_house_tulip)
+        0, 0, 0, 0, Animation.VillageTulipLeftRight, $50, $30, UNKN_7E3800, A1_script_chiefs_house_tulip)
     %create_entity(entity_act1_bridge_guard,
-        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, UNKN_7E3800, A1_script_bridge_guard)
+        0, 0, 0, 0, Animation.VillageManFacingLeft, $48, $30, UNKN_7E3800, A1_script_bridge_guard)
     %create_entity(entity_act1_mill_keeper,
-        0, 0, 0, 0, !Anim_Village_Man_Facing_Up, $48, $30, UNKN_7E3800, A1_script_mill_keeper)
+        0, 0, 0, 0, Animation.VillageManFacingUp, $48, $30, UNKN_7E3800, A1_script_mill_keeper)
     %create_entity(entity_act1_goat_with_fence,
-        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $30, UNKN_7E3800, A1_script_GoatWithFence)
+        0, 0, 0, 0, Animation.VillageGoatFacingLeft, $40, $30, UNKN_7E3800, A1_script_GoatWithFence)
     %create_entity(entity_act1_lisa,
-        0, 0, 0, 0, !Anim_Village_Lisa_Snoring, $40, $30, UNKN_7E3800, A1_script_Lisa)
+        0, 0, 0, 0, Animation.VillageLisaSnoring, $40, $30, UNKN_7E3800, A1_script_Lisa)
     %create_entity(entity_act1_tulip_above_entrace,
-        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, UNKN_7E3800, A1_script_Tulip_Above_Entrance)
+        0, 0, 0, 0, Animation.VillageTulipLeftRight, $50, $30, UNKN_7E3800, A1_script_Tulip_Above_Entrance)
     %create_entity(entity_act1_architect,
-        0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, UNKN_7E3800, A1_script_Architect)
+        0, 0, 0, 0, Animation.VillageManFacingLeft, $48, $30, UNKN_7E3800, A1_script_Architect)
     %create_entity(entity_act1_son_shop_owner,
-        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $48, $30, UNKN_7E3800, A1_script_son_shop_owner)
+        0, 0, 0, 0, Animation.VillageKidFacingDown, $48, $30, UNKN_7E3800, A1_script_son_shop_owner)
     %create_entity(entity_act1_tulip_before_painter_house,
-        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $50, $30, UNKN_7E3800, A1_script_Tulip_Before_Painter_House)
+        0, 0, 0, 0, Animation.VillageTulipLeftRight, $50, $30, UNKN_7E3800, A1_script_Tulip_Before_Painter_House)
     %create_entity(entity_act1_painter,
-        0, 0, 0, 0, !Anim_Village_Man_Facing_Down, $48, $20, UNKN_7E3800, A1_script_painter)
+        0, 0, 0, 0, Animation.VillageManFacingDown, $48, $20, UNKN_7E3800, A1_script_painter)
     %create_entity(_,
-        0, 0, 0, 0, !Anim_Village_Watermillwheel_outside, $50, $30, UNKN_7E3800, A1_script_spinning_watermillwheel_inside)
+        0, 0, 0, 0, Animation.VillageWatermillwheelOutside, $50, $30, UNKN_7E3800, A1_script_spinning_watermillwheel_inside)
     %create_entity(_,
-        0, 0, 0, 0, !Anim_Village_Watermillwheel_inside, $50, $30, UNKN_7E3800, A1_script_spinning_watermillwheel_outside)
+        0, 0, 0, 0, Animation.VillageWatermillwheelInside, $50, $30, UNKN_7E3800, A1_script_spinning_watermillwheel_outside)
     %create_entity(entity_act1_secret_shack_kid,
-        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $40, $30, UNKN_7E3800, A1_script_secret_shack_kid)
+        0, 0, 0, 0, Animation.VillageKidFacingDown, $40, $30, UNKN_7E3800, A1_script_secret_shack_kid)
     %create_entity(entity_act1_sleeping_tulip,
-        0, 0, 0, 0, !Anim_Village_Tulip_Left_Right, $40, $30, UNKN_7E3800, A1_script_sleeping_tulip)
+        0, 0, 0, 0, Animation.VillageTulipLeftRight, $40, $30, UNKN_7E3800, A1_script_sleeping_tulip)
     %create_entity(entity_act1_secret_cave_kid,
-        0, 0, 0, 0, !Anim_Village_Kid_Facing_Down, $48, $30, UNKN_7E3800, A1_script_secret_cave_kid)
+        0, 0, 0, 0, Animation.VillageKidFacingDown, $48, $30, UNKN_7E3800, A1_script_secret_cave_kid)
     %create_entity(entity_act1_walking_goat,
-        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $30, UNKN_7E3800, A1_script_walking_goat)
+        0, 0, 0, 0, Animation.VillageGoatFacingLeft, $40, $30, UNKN_7E3800, A1_script_walking_goat)
     %create_entity(entity_act1_gourmet_goat,
-        0, 0, 0, 0, !Anim_Village_Goat_Facing_Left, $40, $20, UNKN_7E3800, A1_script_gourmet_goat)
+        0, 0, 0, 0, Animation.VillageGoatFacingLeft, $40, $20, UNKN_7E3800, A1_script_gourmet_goat)
     ; --- ENEMIES ---
     %create_entity(entity_act1_metal_mantis,
         $06, $02, $32, $50, 0, 0, $10, UNKN_7E3800, CODE_C0B1E5)
@@ -178,7 +178,7 @@ db $00,$00,$00,$00,$00,$10,$80,$03   ;C18498|        |      ;
 db $00,$38,$7E,$BA,$EE,$80
 
     %create_entity(entity_act1_shrine_starting_script,
-        0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_starting)
+        0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_new_game)
     %create_entity(entity_act1_shrine_script,
         0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_shrine)
     %create_entity(_,
