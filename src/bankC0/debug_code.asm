@@ -88,10 +88,7 @@ db $1A,$1F,$A0,$02,$1F,$22,$54,$A7   ;C08314|        |      ;
 db $82,$A9,$01,$8D,$BA,$03,$60
 
 upper_nibble_to_ascii_hex:
-    LSR
-    LSR
-    LSR
-    LSR
+    LSR #4
     ; fallthrough
 lower_nibble_to_ascii_hex:
     REP #$20

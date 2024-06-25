@@ -27,7 +27,6 @@ NMI_Func:
     ; wait for the readout of the joypad to be completed
     - : LDA.W HVBJOY : ROR A : BCS -
 
-
     REP #$30
     INC.W _0312
     LDA.W inhibit_buttons_readout
