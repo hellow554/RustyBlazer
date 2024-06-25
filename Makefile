@@ -7,6 +7,8 @@ randomizer.sfc: $(shell find randomizer -type f) german.sfc
 
 german: german.sfc verify_german
 
+ASAR ?= tools/asar
+
 ifdef DEBUG
 ASAR_FLAGS = -DDEBUG=1
 else
@@ -21,11 +23,11 @@ compile_asar_text:
 	@echo "Compiling Precompiler"
 	@cargo build -rq
 
-german.sfc: $(shell find src -type f) Makefile compile_asar_text clean_german
-	@echo "Precompile src/main.asm"
-	@cargo run -rq -- src/main.asm
-	@echo "Compiling src/main.asm"
-	@tools/asar ${ASAR_FLAGS} --symbols=wla src/main.asm  $@
+german.sfc: src/main.asm $(shell find src/ -type f) Makefile compile_asar_text clean_german
+	@echo "Precompile $<"
+	@cargo run -rq -- $<
+	@echo "Compiling $<"
+	@$(ASAR) ${ASAR_FLAGS} --symbols=wla $< $@
 
 verify_german: german.sfc
 	@echo "8763b634c427419dae84cc743b04f61841c1659a15a6f20d9ad2aec9a16755a8 german.sfc" | sha256sum --check --status \
