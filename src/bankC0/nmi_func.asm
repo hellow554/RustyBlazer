@@ -35,7 +35,7 @@ NMI_Func:
     LDA.W JOY1L
     XBA
     LSR A
-    AND.W #$2000
+    AND.W #!Key16_Select
     ORA.W JOY1L
     PHA
     LDA.W button_mask
@@ -51,18 +51,18 @@ NMI_Func:
 .skip_readout:
     STA.W buttons_pressed
     LDA.W $039A
-    BNE CODE_C083EB
+    BNE .CODE_C083EB
     LDA.W _0312
     LSR A
     LDA.W #$0000
-    BCS CODE_C083E8
+    BCS .CODE_C083E8
     LDA.W $0398
     STZ.W $0398
 
-CODE_C083E8:
+.CODE_C083E8:
     STA.W APUI02
 
-CODE_C083EB:
+.CODE_C083EB:
     PLY
     PLX
     PLA

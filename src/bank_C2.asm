@@ -827,6 +827,8 @@ PLA                                  ;C28579|68      |      ;
 PLY                                  ;C2857A|7A      |      ;
 PLP                                  ;C2857B|28      |      ;
 RTS                                  ;C2857C|60      |      ;
+
+CODE_C2857D:
 PHP                                  ;C2857D|08      |      ;
 REP #$20                             ;C2857E|C220    |      ;
 SEP #$10                             ;C28580|E210    |      ;
@@ -929,6 +931,8 @@ STA.W DAS2L                          ;C28652|8D2543  |814325;
 LDX.B #$04                           ;C28655|A204    |      ;
 STX.W MDMAEN                          ;C28657|8E0B42  |81420B;
 RTS                                  ;C2865A|60      |      ;
+
+CODE_C2865B:
 PHP                                  ;C2865B|08      |      ;
 PHB                                  ;C2865C|8B      |      ;
 SEP #$20                             ;C2865D|E220    |      ;
@@ -939,7 +943,7 @@ REP #$20                             ;C28664|C220    |      ;
 LDA.W $001E,X                        ;C28666|BD1E00  |8D001E;
 ASL A                                ;C28669|0A      |      ;
 TAY                                  ;C2866A|A8      |      ;
-LDA.W UNREACH_8D8000,Y               ;C2866B|B90080  |8D8000;
+LDA.W UNKN_8D8000,Y               ;C2866B|B90080  |8D8000;
 PHA                                  ;C2866E|48      |      ;
 LDA.W $0020,X                        ;C2866F|BD2000  |8D0020;
 ASL A                                ;C28672|0A      |      ;
@@ -990,6 +994,8 @@ PLB                                  ;C286C9|AB      |      ;
 PLP                                  ;C286CA|28      |      ;
 SEC                                  ;C286CB|38      |      ;
 RTL                                  ;C286CC|6B      |      ;
+
+CODE_C286CD:
 PHB                                  ;C286CD|8B      |      ;
 PHX                                  ;C286CE|DA      |      ;
 LDA.W $0023,X                        ;C286CF|BD2300  |810023;
@@ -1008,6 +1014,8 @@ PLX                                  ;C286EB|FA      |      ;
 STA.W $0008,X                        ;C286EC|9D0800  |810008;
 PLB                                  ;C286EF|AB      |      ;
 RTL                                  ;C286F0|6B      |      ;
+
+CODE_C286F1:
 PHP                                  ;C286F1|08      |      ;
 PHX                                  ;C286F2|DA      |      ;
 PHA                                  ;C286F3|48      |      ;
@@ -1129,6 +1137,8 @@ db $E9,$00,$60,$18,$69,$00,$70,$8D   ;C2889C|        |      ;
 db $8B,$1C,$1A,$8D,$8F,$1C,$18,$69   ;C288A4|        |      ;
 db $1F,$00,$8D,$93,$1C,$1A,$8D,$97   ;C288AC|        |938D00;
 db $1C,$9C,$9B,$1C,$FA,$28,$6B       ;C288B4|        |009B9C;
+
+CODE_C288BB:
 PHX                                  ;C288BB|DA      |      ;
 ASL A                                ;C288BC|0A      |      ;
 ASL A                                ;C288BD|0A      |      ;
@@ -1400,7 +1410,7 @@ CODE_C28AD3:
 REP #$20                             ;C28AD3|C220    |      ;
 LDA.W UNREACH_81A9E2,X               ;C28AD5|BDE2A9  |81A9E2;
 STA.W $03CA                          ;C28AD8|8DCA03  |8103CA;
-JSL.L CODE_C385D9                    ;C28ADB|22D98583|8385D9;
+JSL.L AddGold                    ;C28ADB|22D98583|8385D9;
 LDA.W #!UpdateHud_Gold                         ;C28ADF|A91000  |      ;
 TSB.W display_hud_bitfield                          ;C28AE2|0C3203  |810332;
 SEP #$20                             ;C28AE5|E220    |      ;
@@ -3401,7 +3411,7 @@ PHP                                  ;C29B61|08      |      ;
 SEP #$20                             ;C29B62|E220    |      ;
 LDY.W $001E,X                        ;C29B64|BC1E00  |81001E;
 LDA.B #$06                           ;C29B67|A906    |      ;
-JSL.L CODE_C2B1E8                    ;C29B69|22E8B182|82B1E8;
+JSL.L divide                    ;C29B69|22E8B182|82B1E8;
 XBA                                  ;C29B6D|EB      |      ;
 LDA.B #$06                           ;C29B6E|A906    |      ;
 JSL.L multiply                    ;C29B70|22D1B182|82B1D1;
@@ -4480,6 +4490,7 @@ alternateCursor:
     TSB.W $03BA
     RTS
 
+CODE_C2A330:
 PHP                                  ;C2A330|08      |      ;
 SEP #$20                             ;C2A331|E220    |      ;
 LDA.B #$5C                           ;C2A333|A95C    |      ;
@@ -4625,7 +4636,7 @@ CODE_C2A41B:
 LDX.W #$2000                         ;C2A41B|A20020  |      ;
 STX.W VMADDL                          ;C2A41E|8E1621  |812116;
 LDA.B #$01                           ;C2A421|A901    |      ;
-STA.W DMAP0                          ;C2A423|8D0043  |814300;
+STA.W DMA_Regs.control                          ;C2A423|8D0043  |814300;
 LDA.B #$18                           ;C2A426|A918    |      ;
 STA.W BBAD0                          ;C2A428|8D0143  |814301;
 LDX.W #$B000                         ;C2A42B|A200B0  |      ;
@@ -4659,6 +4670,8 @@ MVN $7F,$89                          ;C2A461|547F89  |      ;
 SEP #$20                             ;C2A464|E220    |      ;
 PLB                                  ;C2A466|AB      |      ;
 RTS                                  ;C2A467|60      |      ;
+
+CODE_C2A468:
 LDX.W #$2000                         ;C2A468|A20020  |      ;
 STX.W VMADDL                          ;C2A46B|8E1621  |812116;
 LDA.B #$01                           ;C2A46E|A901    |      ;
@@ -5042,7 +5055,7 @@ CODE_C2AF59:
     PHB
     PHY
     REP #$20
-    AND.W #datasize(Words_LUT)/!WORDLUT_ENTRY_SIZE-1
+    AND.W #datasize(Words_LUT) / !WORDLUT_ENTRY_SIZE - 1
     PHA
     ASL A
     CLC

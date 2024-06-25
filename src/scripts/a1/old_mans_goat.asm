@@ -1,4 +1,4 @@
-A1_script_old_man_goat:
+A1_script_old_mans_goat:
     %CopJumpIfSealed(!Lair_A1_OldManGoat, +) : RTL : +
     %CopSetScriptAddr(CODE_C0A9C9)
     %CopAssignTalkCallback(.talk)

@@ -22,18 +22,18 @@ assert objectsize(Entity) == 14
 
 entities_GrassValley:
     %create_entity(entity_sh_act1_center_tile, 1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 1, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 2, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 3, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 4, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 5, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C0DE)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C101)
-    %create_entity(_, 0, 0, 0, 0, 6, $10, $20, UNREACH_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,              CODE_C3C15A)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 1, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 2, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(entity_sh_act1_something_something, 0, 0, 0, 0, 3, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 4, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 5, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C0DE)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C101)
+    %create_entity(_, 0, 0, 0, 0, 6, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C15A)
 
-    ; npcs in town
+    ; --- NPCs ---
     %create_entity(entity_act1_crabwalk_guy,
         0, 0, 0, 0, !Anim_Village_Man_Facing_Left, $48, $30, UNKN_7E3800, A1_script_crabwalkguy)
     %create_entity(entity_act1_chiefs_wife,
@@ -93,38 +93,38 @@ entities_GrassValley:
         $03, $00, $09, $05, $12, $00, $10, UNKN_7E3800, CODE_C582E1)
     %create_entity(entity_act1_metagrinner,
         $04, $08, $18, $250,$1E, $00, $00, UNKN_7E3800, CODE_C5849C)
-    
-
-db $03,$00   ;C18238|        |      ;
-db $04,$03,$00,$18,$00,$00,$00,$38   ;C18240|        |000003;
-db $7E,$FB,$84,$85,$03,$00,$09,$04   ;C18248|        |0084FB;
-db $00,$22,$00,$00,$00,$38,$7E,$64   ;C18250|        |      ;
-db $85,$85,$00,$00,$00,$00,$00,$1E   ;C18258|        |000085;
-db $40,$30,$00,$38,$7E,$26,$B1,$83   ;C18260|        |      ;
-db $00,$00,$00,$00,$00,$1F,$40,$30   ;C18268|        |      ;
-db $00,$38,$7E,$BE,$B1,$83,$00,$00   ;C18270|        |      ;
-db $00,$00,$00,$00,$00,$20,$00,$00   ;C18278|        |      ;
-db $00,$DC,$BE,$83,$00,$00,$00,$00   ;C18280|        |      ;
-db $00,$00,$10,$20,$00,$00,$00,$24   ;C18288|        |      ;
-db $C1,$83,$03,$02,$04,$03,$00,$00   ;C18290|        |000083;
-db $00,$00,$00,$38,$7E,$06,$86,$85   ;C18298|        |      ;
-db $03,$00,$01,$00,$00,$22,$02,$00   ;C182A0|        |000000;
-db $00,$38,$7E,$8D,$86,$85,$00,$00   ;C182A8|        |      ;
-db $00,$00,$00,$28,$40,$00,$00,$38   ;C182B0|        |      ;
-db $7E,$6B,$BD,$83,$00,$00,$00,$00   ;C182B8|        |00BD6B;
-db $00,$29,$40,$00,$00,$38,$7E,$3B   ;C182C0|        |      ;
-db $BE,$83,$00,$00,$00,$00,$00,$38   ;C182C8|        |000083;
-db $40,$20,$00,$38,$7E,$AD,$B5,$83   ;C182D0|        |      ;
-db $00,$00,$00,$00,$00,$00,$48,$30   ;C182D8|        |      ;
-db $00,$38,$7E,$BF,$AB,$83,$00,$00   ;C182E0|        |      ;
-db $00,$00,$00,$18,$40,$30,$00,$38   ;C182E8|        |      ;
-db $7E,$63,$AC,$83,$00,$00,$00,$00   ;C182F0|        |00AC63;
-db $00,$1E,$50,$20,$00,$38,$7E,$EB   ;C182F8|        |      ;
-db $AC,$83,$00,$00,$00,$00,$00,$15   ;C18300|        |000083;
-db $40,$20,$00,$38,$7E,$B3,$AD,$83   ;C18308|        |      ;
-db $00,$00,$00,$00,$00,$07,$50,$20   ;C18310|        |      ;
-db $00,$38,$7E,$B4,$B9,$83
-
+    %create_entity(_,
+        $03, $00, $04, $03, $18, $0, $0, UNKN_7E3800, CODE_C584FB)
+    %create_entity(_,
+        $03, $00, $09, $04, $22, $0, $0, UNKN_7E3800, CODE_C58564)
+    %create_entity(entity_act1_dreaming_tulip_in_dream,
+        $00, $00, $00, $00, $1E, $40, $30, UNKN_7E3800, A1_script_dreaming_tulip)
+    %create_entity(entity_act1_dreaming_lisa_in_dream,
+        $00, $00, $00, $00, $1F, $40, $30, UNKN_7E3800, A1_script_lisas_dream)
+    %create_entity(_,
+        $00, $00, $00, $00, $00, $00, $20, $0, CODE_C3BEDC)
+    %create_entity(_,
+        $00, $00, $00, $00, $00, $10, $20, $0, CODE_C3C124)
+    %create_entity(_,
+        $03, $02, $04, $03, $00, $00, $00, UNKN_7E3800, CODE_C58606)
+    %create_entity(_,
+        $03, $00, $01, $00, $22, $02, $00, UNKN_7E3800, CODE_C5868D)
+    %create_entity(entity_act1_underground_lift,
+        $00, $00, $00, $00, $28, $40, $00, UNKN_7E3800, A1_script_UndergroundLift)
+    %create_entity(_,
+        $00, $00, $00, $00, $29, $40, $00, UNKN_7E3800, CODE_C3BE3B)
+    %create_entity(entity_act1_magician,
+        $00, $00, $00, $00, $38, $40, $20, UNKN_7E3800, A1_script_magician)
+    %create_entity(entity_act1_old_man_with_goat,
+        $00, $00, $00, $00, $00, $48, $30, UNKN_7E3800, A1_script_old_man_with_goat)
+    %create_entity(entity_act1_old_mans_goat,
+        $00, $00, $00, $00, $18, $40, $30, UNKN_7E3800, A1_script_old_mans_goat)
+    %create_entity(entity_act1_snitch_tulip,
+        $00, $00, $00, $00, $1E, $50, $20, UNKN_7E3800, A1_script_snitch_tulip)
+    %create_entity(entity_act1_chief,
+        $00, $00, $00, $00, $15, $40, $20, UNKN_7E3800, A1_script_chief)
+    %create_entity(_,
+        $00, $00, $00, $00, $07, $50, $20, UNKN_7E3800, CODE_C3B9B4)
     %create_entity(entity_act1_highground_jewel,
         0, 0, 0, 0, $07, $50, $00, UNKN_7E3800, A1_script_highground_jewel)
 
@@ -181,9 +181,9 @@ db $00,$38,$7E,$BA,$EE,$80
         0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_starting)
     %create_entity(entity_act1_shrine_script,
         0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_shrine)
+    %create_entity(_,
+        0, 0, 0, 0, 0, $80, $03, UNKN_7E3800, CODE_C0E78E)
 
-db $00,$00,$00,$00,$00,$00   ;C184C0|        |000080;
-db $80,$03,$00,$38,$7E,$8E,$E7,$80   ;C184C8|        |C184CD;
 db $00,$00,$00,$00,$00,$00,$80,$03   ;C184D0|        |      ;
 db $00,$38,$7E,$2F,$F3,$80,$00,$00   ;C184D8|        |      ;
 db $00,$00,$00,$23,$40,$00,$00,$38   ;C184E0|        |      ;
@@ -855,43 +855,45 @@ db $00,$00,$00,$00,$00,$13,$40,$00   ;C19880|        |      ;
 db $00,$38,$7E,$FD,$F3,$84
 
 entities_WorldOfEvil:
-    %create_entity(entity_sh_act7_center_tile, 1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
-db $00,$00,$00,$00   ;C19898|        |      ;
-db $00,$03,$10,$20,$00,$80,$8D,$14   ;C198A0|        |      ;
-db $AA,$80,$00,$00,$00,$00,$00,$34   ;C198A8|        |      ;
-db $10,$20,$00,$80,$8D,$14,$AA,$80   ;C198B0|        |C198D2;
-db $00,$00,$00,$00,$00,$35,$10,$20   ;C198B8|        |      ;
-db $00,$80,$8D,$14,$AA,$80,$00,$00   ;C198C0|        |      ;
-db $00,$00,$00,$37,$10,$20,$00,$80   ;C198C8|        |      ;
-db $8D,$43,$FA,$84,$00,$00,$00,$00   ;C198D0|        |00FA43;
-db $00,$38,$10,$20,$00,$80,$8D,$14   ;C198D8|        |      ;
-db $AA,$80,$00,$00,$00,$00,$00,$00   ;C198E0|        |      ;
-db $10,$20,$00,$00,$00,$6C,$FA,$84   ;C198E8|        |C1990A;
-db $00,$00,$00,$00,$00,$00,$10,$20   ;C198F0|        |      ;
-db $00,$00,$00,$DC,$FB,$84,$00,$00   ;C198F8|        |      ;
-db $00,$00,$00,$00,$10,$20,$00,$00   ;C19900|        |      ;
-db $00,$C8,$FC,$84,$1A,$15,$63,$00   ;C19908|        |      ;
-db $00,$00,$00,$02,$00,$38,$7E,$C3   ;C19910|        |      ;
-db $CD,$80,$19,$0C,$2D,$00,$27,$00   ;C19918|        |001980;
-db $00,$10,$00,$38,$7E,$D4,$BF,$85   ;C19920|        |      ;
-db $18,$0C,$17,$00,$30,$15,$00,$00   ;C19928|        |      ;
-db $00,$38,$7E,$4C,$C1,$85,$1D,$01   ;C19930|        |      ;
-db $0A,$00,$40,$2A,$00,$00,$00,$38   ;C19938|        |      ;
-db $7E,$90,$C2,$85,$19,$00,$01,$00   ;C19940|        |00C290;
-db $00,$2C,$00,$23,$00,$38,$7E,$C0   ;C19948|        |      ;
-db $C2,$85,$19,$00,$01,$00,$00,$29   ;C19950|        |      ;
-db $00,$20,$00,$38,$7E,$46,$C3,$85   ;C19958|        |      ;
-db $19,$00,$01,$00,$00,$29,$00,$20   ;C19960|        |000100;
-db $00,$38,$7E,$5C,$C4,$85
-
-%create_entity(entity_act7_shrine_script,
-    0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_shrine)
-%create_entity(entity_act7_deathtoll,
-    $1C, $FF, 100, 0, $F, 1, 2, UNKN_7E3800, CODE_C0D08F)
-%create_entity(entity_act7_stone_checker,
-    0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, A7_Script_stone_checker)
-
-db $00,$00,$00,$00,$00,$20,$50,$20   ;C19998|        |      ;
-db $00,$38,$7E,$96,$CF,$80,$00,$00   ;C199A0|        |      ;
-db $00,$00,$00,$00,$40,$20,$00,$38   ;C199A8|g        |      ;
-db $7E,$E6,$F9,$84
+    %create_entity(entity_sh_act7_center_tile,
+        1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
+    %create_entity(_,
+        0, 0, 0, 0, $03, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_,
+        0, 0, 0, 0, $34, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_,
+        0, 0, 0, 0, $35, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(entity_act7_space_walk_check,
+        0, 0, 0, 0, $37, $10, $20, UNKN_8D8000, A7_script_WalkThroughSpace)
+    %create_entity(_,
+        0, 0, 0, 0, $38, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(entity_sh_act7_distort_space_background,
+        0, 0, 0, 0, 0, $10, $20, $0, Script_A7_DistortSpaceBackground)
+    %create_entity(entity_sh_act7_distort_faces_background,
+        0, 0, 0, 0, 0, $10, $20, $0, Script_A7_DistortFacesBackground)
+    %create_entity(entity_sh_act7_deathtoll_background,
+        0, 0, 0, 0, 0, $10, $20, $0, Script_A7_DeathtollBackground)
+    %create_entity(entityt_sh_act7_first_deathtoll,
+        $1A, $15, 99, 0, 0, 0, 2, UNKN_7E3800, Script_A7_FirstDeathtollPhase)
+    %create_entity(entity_act7_purple_demon,
+        $19, $0C, 45, $2700, 0, 0, $10, UNKN_7E3800, CODE_C5BFD4)
+    %create_entity(entity_act7_metal_fire_fly,
+        $18, $0C, 23, $3000, $15, 0, 0, UNKN_7E3800, CODE_C5C14C)
+    %create_entity(entity_act7_rotating_wall,
+        $1D, $01, 10, $4000, $2A, 0, 0, UNKN_7E3800, CODE_C5C290)
+    %create_entity(_,
+        $19, $00, $1, $0, $2C, $0, $23, UNKN_7E3800, CODE_C5C2C0)
+    %create_entity(_,
+        $19, $00, $1, $0, $29, $0, $20, UNKN_7E3800, CODE_C5C346)
+    %create_entity(_,
+        $19, $00, $1, $0, $29, $0, $20, UNKN_7E3800, CODE_C5C45C)
+    %create_entity(entity_act7_shrine_script,
+        0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, SH_script_shrine)
+    %create_entity(entity_act7_deathtoll,
+        $1C, $FF, 100, 0, $F, 1, 2, UNKN_7E3800, A7_Script_FinalDeahtollBattle)
+    %create_entity(entity_act7_stone_checker,
+        0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, A7_Script_stone_checker)
+    %create_entity(entity_act7_Deathtoll_first_phase_dead,
+        0, 0, 0, 0, $20, $50, $20, UNKN_7E3800, Script_A7_FirstDeathtollPhaseDead)
+    %create_entity(_,
+        0, 0, 0, 0, 0, $40, $20, UNKN_7E3800, CODE_C4F9E6)

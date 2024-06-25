@@ -304,7 +304,7 @@ macro CopGiveNormalExp(bcd_exp)
     dw <bcd_exp>
 endmacro
 
-macro HarmPlayer(amount)
+macro CopHarmPlayer(amount)
     COP #$39
     db <amount>
 endmacro
@@ -431,6 +431,14 @@ macro CopAC(target_24, a, b, c)
     dw <a>, <b>, <c>
 endmacro
 
+macro CopB0(target_16, b, w)
+    COP #$B0
+    dw <target_16>
+    db <b>
+    dw <w>
+endmacro
+
+; something with spawn entities
 macro CopB2(target_24, x, y, _z)
     COP #$B2
     dl <target_24>
@@ -459,6 +467,12 @@ endmacro
 
 macro PlaySound(id)
     BRK #<id>
+endmacro
+
+macro SwitchToBankWithSRep(id)
+    SEP #$20
+    %SwitchToBank($7E)
+    REP #$20
 endmacro
 
 macro SwitchToBank(id)

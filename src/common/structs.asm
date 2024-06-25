@@ -27,7 +27,7 @@ macro PositionFacing(name, ptr)
     endstruct
 endmacro
 
-struct LiveEntities $7E0800
+struct LiveEntities 0
     .pos_x: skip 2                      ; 00
     .pos_y: skip 2                      ; 02
     ._04 : skip 2                       ; 04

@@ -102,6 +102,22 @@ JOY3L = $00421C
 JOY3H = $00421D
 JOY4L = $00421E
 JOY4H = $00421F
+
+struct DMA_Regs $4300
+    .control: skip 1                        ; $43x0
+    .destination: skip 1                    ; $43x1
+    .source_address:                        ; $43x2 - 4
+        .source_address_word:
+            .source_address_low: skip 1
+            .source_address_high: skip 1
+        .source_address_bank: skip 1
+    .size:                                  ; $43x5 - 7
+        .size_word:
+            .size_low: skip 1
+            .size_high: skip 1
+        skip 1                              ; $43x7 - used by HDMA only
+endstruct align $10
+
 DMAP0 = $004300
 BBAD0 = $004301
 A1T0L = $004302
@@ -231,6 +247,7 @@ _0312 = $7E0312
 map_number = $7E0314
 map_sub_number = $7E0316
 sceneId = $7E0318
+_031E = $7E031E
 buttons_pressed = $7E0322
 buttons_pressed8 = $7E0323
 button_mask = $7E0326
@@ -251,6 +268,10 @@ _0372     = $7E0372
 %PositionFacing(TeleportPos, $7E037C) ; the X, Y and facing after the next teleportation event
 bg3_horizontal_scroll = $7E0386
 bg3_vertical_scroll = $7E0388
+_038A = $7E038A
+_038C = $7E038C
+_039C = $7E039C
+_039E = $7E039E
 _03B6 = $7E03B6
 _03BA = $7E03BA
 _03BC = $7E03BC
@@ -263,6 +284,7 @@ cursor_counter = $7E03C8 ; the counter used for the blinking cursor animation
 text_lut_id = $7E03CA
 choice_idx = $3D2 ; the choice in a choicebox that has been selected
 vblank_interrupt_enabled = $7E03D4 ; if 0 the nmi interrupt is disabled, if 1 not
+%LongPtr(_03DA_ptr, $7E03DA) ; not sure what it does yet
 text_modifier = $7E03EB
 textbox_tlc = $7E03F9 ; top left corner of a default textbox
 lair_reveal_in_progress = $7E03FD ; 0 if no revealing is in progress, elsewise != 0 (mostly 1)
@@ -277,6 +299,7 @@ player_name_dialog_y = $7E044F
 
 player_name8 = $7E0453
 remaining_lair = $7E0462
+_0472 = $7E0472
 inhibit_buttons_readout = $7E0474
 
 oam_data = $7E0492 ; 544 bytes in size including $6B1
@@ -302,6 +325,7 @@ struct Equipment $7E1B5E
     .magic: skip 2
     .item: skip 2
 endstruct
+
 %BigDecimal(PlayerGold, $7E1B66)
 player_level_ascii = $7E1B6A
 player_current_health_ascii = $7E1B6C
@@ -332,7 +356,12 @@ _1C71 = $7E1C71
 _1C72 = $7E1C72
 _1C73 = $7E1C73
 _1C74 = $7E1C74
+
+StackBegin = $7E1FFF
+
 UNKN_7E3800 = $7E3800
+DATA_7E7800 = $7E7800
+DATA_7E7900 = $7E7900
 tilemap = $7E8000
 DATA_7EC000 = $7EC000
 struct CgData $7F0000
@@ -349,11 +378,8 @@ endstruct
 ;; Any other value indicates the amount of monsters to spawn
 lair_spawn = $7F0203
 
-
-
-StackBegin = $7E1FFF
-
 _7F0483 = $7F0483
+
 ;; Each two bytes in this array corresponds to the following tilemap defintion
 ;; vhopppcc cccccccc
 ;; v/h        = Vertical/Horizontal flip this tile.
@@ -372,7 +398,6 @@ SomeOtherTypeToTransferToVram = $7F7800
 ;; Not sure if other values are possible
 passable_map = $7F8000
 
-CODE_C2857D = $82857D
 UNREACH_8199B4 = $8199B4
 UNREACH_8199B5 = $8199B5
 UNREACH_8199B6 = $8199B6
@@ -391,28 +416,11 @@ UNREACH_81FCC4 = $81FCC4
 UNREACH_81FA7F = $81FA7F
 UNREACH_81EE8E = $81EE8E
 UNREACH_81BA15 = $81BA15
-CODE_C286F1 = $8286F1
 UNREACH_81FB49 = $81FB49
 UNREACH_81FB4B = $81FB4B
-CODE_C5C5AC = $85C5AC
-CODE_C2B1E8 = $82B1E8
-CODE_C385D9 = $8385D9
-CODE_C288BB = $8288BB
 UNREACH_81BA2B = $81BA2B
-CODE_C2865B = $82865B
-CODE_C286CD = $8286CD
-CODE_C5C573 = $85C573
-CODE_C2A468 = $82A468
-CODE_C380C7 = $8380C7
-CODE_C2A330 = $82A330
-CODE_C38052 = $838052
-CODE_C38092 = $838092
-CODE_00800F = $00800F
-CODE_008013 = $008013
-CODE_008007 = $008007
-UNREACH_00800B = $00800B
 UNREACH_8B8000 = $8B8000
-UNREACH_8D8000 = $8D8000
+UNKN_8D8000 = $8D8000
 
 UNREACH_82FB15 = $82FB15
 UNREACH_82FB17 = $82FB17

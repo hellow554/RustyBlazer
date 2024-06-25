@@ -95,7 +95,7 @@ RTL                                  ;C39613|6B      |      ;
 LDA.W #$BFC0
 TSB.W button_mask
 %CopAdjustNpcYPosition(-8)
-%CopJumpIfEventFlagIsSet(!EV_A1_Another_thing_with_lisa, .loc_9647)
+%CopJumpIfEventFlagIsSet(!EV_A1_MadePromiseToLIsa, .loc_9647)
 %CopLoopStart(41) : %CopLoopEnd()
 %CopShowText(.txt_ending_lisa_sleeping)
 %CopLoopStart(121) : %CopLoopEnd()

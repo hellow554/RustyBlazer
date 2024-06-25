@@ -15,11 +15,12 @@
 !EV_A1_JewelSomething                   = $0505
 !EV_SH_BrownStoneTalkWithGod            = $0602
 !EV_A1_SecretPassageBottlePickedUp      = $0904
+!EV_A7_SomethingWithSpaceAndSoulArmor   = $0A01
 !EV_A1_PickedEmblemAUp                  = $1A00
 !EV_A1_TalkedWithVillageChief           = $1B00
 !EV_A1_HighgroundJewelTalked            = $1C01
 !EV_A1_HighGroundJewelAppeared          = $1C02
-!EV_A1_Another_thing_with_lisa          = $1F01
+!EV_A1_MadePromiseToLIsa                = $1F01
 !EV_A1_SOMETHING_WITH_LISA_AND_CHIEFS_WIFE = $1F02
 !EV_SH_CanEnterAct7                     = $1F03
 !EV_SH_Stones_Removed                   = $1F04
