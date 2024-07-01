@@ -920,15 +920,15 @@ PLP                                  ;C2863E|28      |      ;
 RTL                                  ;C2863F|6B      |      ;
 
 CODE_C28640:
-LDX.B #$01                           ;C28640|A201    |      ;
+LDX.B #$01 ; 1 register, write once
 STX.W DMA_Regs[2].control                          ;C28642|8E2043  |814320;
-LDX.B #$18                           ;C28645|A218    |      ;
+LDX.B #VMDATAL                           ;C28645|A218    |      ;
 STX.W DMA_Regs[2].destination                          ;C28647|8E2143  |814321;
 LDX.B #$7E                           ;C2864A|A27E    |      ;
 STX.W DMA_Regs[2].source_address_bank                          ;C2864C|8E2443  |814324;
 LDA.W #$0040                         ;C2864F|A94000  |      ;
 STA.W DMA_Regs[2].size_word                          ;C28652|8D2543  |814325;
-LDX.B #$04                           ;C28655|A204    |      ;
+LDX.B #%100                           ;C28655|A204    |      ;
 STX.W MDMAEN                          ;C28657|8E0B42  |81420B;
 RTS                                  ;C2865A|60      |      ;
 
@@ -1748,7 +1748,7 @@ ORA.B #$C0                           ;C28D1C|09C0    |      ;
 TYX                                  ;C28D1E|BB      |      ;
 STA.L lair_spawn,X                      ;C28D1F|9F03027F|7F0203;
 PLX                                  ;C28D23|FA      |      ;
-LDA.W UNREACH_81BA0D,X               ;C28D24|BD0DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,X               ;C28D24|BD0DBA  |81BA0D;
 CMP.W current_map_number                          ;C28D27|CD6A1C  |811C6A;
 BNE CODE_C28D54                      ;C28D2A|D028    |C28D54;
 db $C2,$20,$BD,$0F,$BA,$29,$FF,$00   ;C28D2C|        |      ;
@@ -1786,7 +1786,7 @@ ASL A                                ;C28D8E|0A      |      ;
 ASL A                                ;C28D8F|0A      |      ;
 ASL A                                ;C28D90|0A      |      ;
 STA.W TeleportPos.y                          ;C28D91|8D7E03  |81037E;
-LDA.W UNREACH_81BA0D,X               ;C28D94|BD0DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,X               ;C28D94|BD0DBA  |81BA0D;
 AND.W #$00FF                         ;C28D97|29FF00  |      ;
 ASL A                                ;C28D9A|0A      |      ;
 TAX                                  ;C28D9B|AA      |      ;
@@ -1808,7 +1808,7 @@ LDX.W #$0000                         ;C28DBD|A20000  |      ;
 TXY                                  ;C28DC0|9B      |      ;
 
 CODE_C28DC1:
-LDA.W UNREACH_81BA0D,X               ;C28DC1|BD0DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,X               ;C28DC1|BD0DBA  |81BA0D;
 BMI UNREACH_C28DE8                   ;C28DC4|3022    |C28DE8;
 CMP.W current_map_number                          ;C28DC6|CD6A1C  |811C6A;
 BNE CODE_C28DDB                      ;C28DC9|D010    |C28DDB;
@@ -2377,7 +2377,7 @@ LDA.B #$08                           ;C292FF|A908    |      ;
 STA.B $0C                            ;C29301|850C    |00000C;
 
 CODE_C29303:
-LDA.W UNREACH_81BA0D,X               ;C29303|BD0DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,X               ;C29303|BD0DBA  |81BA0D;
 BPL CODE_C2930B                      ;C29306|1003    |C2930B;
 BRL CODE_C29394                      ;C29308|828900  |C29394;
 
@@ -2489,7 +2489,7 @@ ASL A                                ;C293AD|0A      |      ;
 TAX                                  ;C293AE|AA      |      ;
 TAY                                  ;C293AF|A8      |      ;
 SEP #$20                             ;C293B0|E220    |      ;
-LDA.W UNREACH_81BA0D,X               ;C293B2|BD0DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,X               ;C293B2|BD0DBA  |81BA0D;
 CMP.W current_map_number                          ;C293B5|CD6A1C  |811C6A;
 BEQ CODE_C293BD                      ;C293B8|F003    |C293BD;
 db $82,$84,$00                       ;C293BA|        |C29441;
@@ -3482,7 +3482,7 @@ JSR.W CODE_C2A442                    ;C29BF2|2042A4  |C2A442;
 JSR.W CODE_C2A395                    ;C29BF5|2095A3  |C2A395;
 JSL.L wait_vblank                    ;C29BF8|22B7B182|82B1B7;
 BRK #$07                             ;C29BFC|0007    |      ;
-JSR.W CODE_C29C80                    ;C29BFE|20809C  |C29C80;
+JSR.W print_item_equipment_menu                    ;C29BFE|20809C  |C29C80;
 LDA.B #$C0                           ;C29C01|A9C0    |      ;
 TRB.W $032B                          ;C29C03|1C2B03  |81032B;
 STZ.W $0323                          ;C29C06|9C2303  |810323;
@@ -3508,15 +3508,15 @@ LDA.W $03C5                          ;C29C3F|ADC503  |8103C5;
 STA.W W12SEL                          ;C29C42|8D2321  |812123;
 JSL.L CODE_C2A468                    ;C29C45|2268A482|82A468;
 JSR.W CODE_C2A405                    ;C29C49|2005A4  |C2A405;
-JSL.L CODE_C2A4A1                    ;C29C4C|22A1A482|82A4A1;
+JSL.L TransferMagicSprite                    ;C29C4C|22A1A482|82A4A1;
 LDA.W Equipment.magic                          ;C29C50|AD621B  |811B62;
 CMP.W $0441                          ;C29C53|CD4104  |810441;
-BEQ CODE_C29C62                      ;C29C56|F00A    |C29C62;
+BEQ .no_new_magic                      ;C29C56|F00A    |C29C62;
 JSL.L CODE_C0ACA9                    ;C29C58|22A9AC80|80ACA9;
 STZ.W $043F                          ;C29C5C|9C3F04  |81043F;
 STZ.W $0440                          ;C29C5F|9C4004  |810440;
 
-CODE_C29C62:
+.no_new_magic:
 JSL.L CODE_C38321                    ;C29C62|22218383|838321;
 JSR.W clearOsd                    ;C29C66|2055A3  |C2A355;
 LDA.B #!UpdateHud_All                           ;C29C69|A91F    |      ;
@@ -3528,10 +3528,10 @@ LDA.B #$0F                           ;C29C7A|A90F    |      ;
 STA.W INIDISP                          ;C29C7C|8D0021  |812100;
 RTL                                  ;C29C7F|6B      |      ;
 
-CODE_C29C80:
-JSR.W clearOsd                    ;C29C80|2055A3  |C2A355;
-LDY.W #osd_item_menu                         ;C29C83|A070C8  |      ;
-JSL.L printOsdStringFromBank2                    ;C29C86|2254A782|82A754;
+print_item_equipment_menu:
+    JSR.W clearOsd
+    LDY.W #osd_item_menu
+    JSL.L printOsdStringFromBank2
 LDA.B #$01                           ;C29C8A|A901    |      ;
 STA.W $03BA                          ;C29C8C|8DBA03  |8103BA;
 JSL.L enable_interrupts                    ;C29C8F|22A2B182|82B1A2;
@@ -4637,7 +4637,7 @@ LDX.W #$2000                         ;C2A41B|A20020  |      ;
 STX.W VMADDL                          ;C2A41E|8E1621  |812116;
 LDA.B #$01                           ;C2A421|A901    |      ;
 STA.W DMA_Regs.control                          ;C2A423|8D0043  |814300;
-LDA.B #$18                           ;C2A426|A918    |      ;
+LDA.B #VMDATAL                           ;C2A426|A918    |      ;
 STA.W DMA_Regs[0].destination                          ;C2A428|8D0143  |814301;
 LDX.W #$B000                         ;C2A42B|A200B0  |      ;
 STX.W DMA_Regs[0].source_address_word                          ;C2A42E|8E0243  |814302;
@@ -4676,7 +4676,7 @@ LDX.W #$2000                         ;C2A468|A20020  |      ;
 STX.W VMADDL                          ;C2A46B|8E1621  |812116;
 LDA.B #$01                           ;C2A46E|A901    |      ;
 STA.W DMA_Regs[0].control                          ;C2A470|8D0043  |814300;
-LDA.B #$18                           ;C2A473|A918    |      ;
+LDA.B #VMDATAL                            ;C2A473|A918    |      ;
 STA.W DMA_Regs[0].destination                          ;C2A475|8D0143  |814301;
 LDX.W #$C000                         ;C2A478|A200C0  |      ;
 STX.W DMA_Regs[0].source_address_word                          ;C2A47B|8E0243  |814302;
@@ -4696,47 +4696,50 @@ SEP #$20                             ;C2A49D|E220    |      ;
 PLB                                  ;C2A49F|AB      |      ;
 RTL                                  ;C2A4A0|6B      |      ;
 
-CODE_C2A4A1:
-PHP                                  ;C2A4A1|08      |      ;
-REP #$20                             ;C2A4A2|C220    |      ;
-LDA.W Equipment.magic                          ;C2A4A4|AD621B  |811B62;
-SEC                                  ;C2A4A7|38      |      ;
-SBC.W #$0011                         ;C2A4A8|E91100  |      ;
-CMP.W #$0008                         ;C2A4AB|C90800  |      ;
-BCS CODE_C2A4F1                      ;C2A4AE|B041    |C2A4F1;
-PHA                                  ;C2A4B0|48      |      ;
-ASL A                                ;C2A4B1|0A      |      ;
-CLC                                  ;C2A4B2|18      |      ;
-ADC.B $01,S                          ;C2A4B3|6301    |000001;
-PLX                                  ;C2A4B5|FA      |      ;
-TAX                                  ;C2A4B6|AA      |      ;
-SEP #$20                             ;C2A4B7|E220    |      ;
-LDY.W #$2600                         ;C2A4B9|A00026  |      ;
-STY.W VMADDL                          ;C2A4BC|8C1621  |812116;
-LDA.B #$01                           ;C2A4BF|A901    |      ;
-STA.W DMA_Regs[0].control                          ;C2A4C1|8D0043  |814300;
-LDA.B #$18                           ;C2A4C4|A918    |      ;
-STA.W DMA_Regs[0].destination                          ;C2A4C6|8D0143  |814301;
-LDY.W UNREACH_81FB88,X               ;C2A4C9|BC88FB  |81FB88;
-STY.W DMA_Regs[0].source_address_word                          ;C2A4CC|8C0243  |814302;
-LDA.W UNREACH_81FB8A,X               ;C2A4CF|BD8AFB  |81FB8A;
-STA.W DMA_Regs[0].source_address_bank                          ;C2A4D2|8D0443  |814304;
-LDY.W #$0800                         ;C2A4D5|A00008  |      ;
-STY.W DMA_Regs[0].size_word                          ;C2A4D8|8C0543  |814305;
-LDA.B #$01                           ;C2A4DB|A901    |      ;
-STA.W MDMAEN                          ;C2A4DD|8D0B42  |81420B;
-REP #$20                             ;C2A4E0|C220    |      ;
-PHB                                  ;C2A4E2|8B      |      ;
-LDA.W UNREACH_81FBA0,X               ;C2A4E3|BDA0FB  |81FBA0;
-TAX                                  ;C2A4E6|AA      |      ;
-LDY.W #$0160                         ;C2A4E7|A06001  |      ;
-LDA.W #$001F                         ;C2A4EA|A91F00  |      ;
-MVN $7F,$8F                          ;C2A4ED|547F8F  |      ;
-PLB                                  ;C2A4F0|AB      |      ;
+TransferMagicSprite:
+    PHP
+    REP #$20
+    LDA.W Equipment.magic
+    SEC
+    SBC.W #Items.FlameBall
+    CMP.W #Items.Phoenix - Items.FlameBall + 1
+    BCS .ret ; check that we have an equipped magic and it's really magic
+    PHA ; A contains the magic ID between 0 - flameball and 7 - phoenix
+    ASL A
+    CLC
+    ADC.B $01, S
+    PLX
+    TAX ; X is now an index into a long array
+    ; transfer the sprite into VRAM
+    SEP #$20
+    LDY.W #$2600
+    STY.W VMADDL
+    LDA.B #$01
+    STA.W DMA_Regs[0].control
+    LDA.B #VMDATAL
+    STA.W DMA_Regs[0].destination
+    LDY.W MagicSpriteTable.address_word, X
+    STY.W DMA_Regs[0].source_address_word
+    LDA.W MagicSpriteTable.address_bank, X
+    STA.W DMA_Regs[0].source_address_bank
+    LDY.W #$800 ; all sprites are identical in size
+    STY.W DMA_Regs[0].size_word
+    LDA.B #%1
+    STA.W MDMAEN
 
-CODE_C2A4F1:
-PLP                                  ;C2A4F1|28      |      ;
-RTL                                  ;C2A4F2|6B      |      ;
+    ; transfer the color palette into VRAM
+    REP #$20
+    PHB
+    LDA.W MagicSpritePalette, X
+    TAX
+    LDY.W #CgData4bpp[11] ; magic uses palette #11
+    LDA.W #objectsize(CgData4bpp) - 1 ; MVN needs the size -1
+    MVN bank(CgData4bpp), bank(Palette.FlameBall)
+    PLB
+
+.ret:
+    PLP
+    RTL
 
 incsrc "bankC2/enter_player_name.asm"
 
@@ -6353,22 +6356,22 @@ RTS                                  ;C2B8F3|60      |      ;
 
 CODE_C2B8F4:
 LDA.B #$F0                           ;C2B8F4|A9F0    |      ;
-STA.W APUI00                          ;C2B8F6|8D4021  |812140;
+STA.W APUIO0                          ;C2B8F6|8D4021  |812140;
 
 CODE_C2B8F9:
-LDA.W APUI00                          ;C2B8F9|AD4021  |812140;
+LDA.W APUIO0                          ;C2B8F9|AD4021  |812140;
 BNE CODE_C2B8F9                      ;C2B8FC|D0FB    |C2B8F9;
 LDA.B #$02                           ;C2B8FE|A902    |      ;
 JSL.L wait_for_n_vblanks                    ;C2B900|22C9B182|82B1C9;
 LDA.B #$FF                           ;C2B904|A9FF    |      ;
-STA.W APUI00                          ;C2B906|8D4021  |812140;
+STA.W APUIO0                          ;C2B906|8D4021  |812140;
 LDA.B #$02                           ;C2B909|A902    |      ;
 JSL.L wait_for_n_vblanks                    ;C2B90B|22C9B182|82B1C9;
 JSL.L CODE_C5C5AC                    ;C2B90F|22ACC585|85C5AC;
 LDA.B #$03                           ;C2B913|A903    |      ;
 JSL.L wait_for_n_vblanks                    ;C2B915|22C9B182|82B1C9;
 LDA.W $031A                          ;C2B919|AD1A03  |81031A;
-STA.W APUI00                          ;C2B91C|8D4021  |812140;
+STA.W APUIO0                          ;C2B91C|8D4021  |812140;
 RTS                                  ;C2B91F|60      |      ;
 
 CODE_C2B920:

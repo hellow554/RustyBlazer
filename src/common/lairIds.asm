@@ -1,3 +1,7 @@
+%define_enum_with_values(LairIds,
+    A1_Magician, $00,
+    A1_ChiefsWife, $02,
+    A1_HighgroundJewel, $04)
 !Lair_A1_Magician               = $00
 !Lair_A1_Chiefs_Wife            = $02
 !Lair_A1_Highground_Jewel       = $04

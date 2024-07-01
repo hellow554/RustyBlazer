@@ -190,7 +190,7 @@ RTS                                  ;C08574|60      |      ;
 CODE_C08575:
 LDA.B #$01                           ;C08575|A901    |      ;
 STA.W DMA_Regs[2].control                          ;C08577|8D2043  |814320;
-LDA.B #$18                           ;C0857A|A918    |      ;
+LDA.B #VMDATAL                           ;C0857A|A918    |      ;
 STA.W DMA_Regs[2].destination                          ;C0857C|8D2143  |814321;
 LDX.W $03DF                          ;C0857F|AEDF03  |8103DF;
 STX.W DMA_Regs[2].source_address_word                          ;C08582|8E2243  |814322;
@@ -2280,12 +2280,12 @@ STZ.W $0006,X                        ;C09477|9E0600  |810006;
 RTL                                  ;C0947A|6B      |      ;
 
 CODE_C0947B:
-PHP                                  ;C0947B|08      |      ;
-PHX                                  ;C0947C|DA      |      ;
-PHY                                  ;C0947D|5A      |      ;
-REP #$20                             ;C0947E|C220    |      ;
-PHX                                  ;C09480|DA      |      ;
-LDA.L lair_spawn,X                      ;C09481|BF03027F|7F0203;
+    PHP                                  ;C0947B|08      |      ;
+    PHX                                  ;C0947C|DA      |      ;
+    PHY                                  ;C0947D|5A      |      ;
+    REP #$20                             ;C0947E|C220    |      ;
+    PHX                                  ;C09480|DA      |      ;
+    LDA.L lair_spawn, X                      ;C09481|BF03027F|7F0203;
 STA.B $00                            ;C09485|8500    |000000;
 LDA.W UNREACH_81BA19,Y               ;C09487|B919BA  |81BA19;
 AND.W #$00FF                         ;C0948A|29FF00  |      ;
@@ -2365,9 +2365,11 @@ PLY                                  ;C0953A|7A      |      ;
 PLX                                  ;C0953B|FA      |      ;
 PLP                                  ;C0953C|28      |      ;
 RTL                                  ;C0953D|6B      |      ;
+
+
 LDA.W $0470                          ;C0953E|AD7004  |810470;
 BEQ CODE_C09546                      ;C09541|F003    |C09546;
-db $9C,$22,$03                       ;C09543|        |000322;
+STZ.W buttons_pressed
 
 CODE_C09546:
 LDA.W $0445                          ;C09546|AD4504  |810445;
@@ -2387,11 +2389,12 @@ PHX                                  ;C0955E|DA      |      ;
 DEC A                                ;C0955F|3A      |      ;
 ASL A                                ;C09560|0A      |      ;
 TAX                                  ;C09561|AA      |      ;
-LDA.L UNREACH_82E49F,X               ;C09562|BF9FE482|82E49F;
+LDA.L WeaponLevelRequirement, X               ;C09562|BF9FE482|82E49F;
 CMP.W player_level_ascii                          ;C09566|CD6A1B  |811B6A;
 BEQ CODE_C09573                      ;C09569|F008    |C09573;
 BCC CODE_C09573                      ;C0956B|9006    |C09573;
-db $A9,$00,$80,$1C,$22,$03           ;C0956D|        |      ;
+LDA.W #$8000
+TRB.W $0322
 
 CODE_C09573:
 PLX                                  ;C09573|FA      |      ;
@@ -3771,7 +3774,7 @@ TAX                                  ;C0A0F9|AA      |      ;
 SEP #$20                             ;C0A0FA|E220    |      ;
 LDA.B #$00                           ;C0A0FC|A900    |      ;
 XBA                                  ;C0A0FE|EB      |      ;
-LDA.W UNREACH_81FC84,X               ;C0A0FF|BD84FC  |81FC84;
+LDA.W SineWave, X               ;C0A0FF|BD84FC  |81FC84;
 BPL CODE_C0A10D                      ;C0A102|1009    |C0A10D;
 XBA                                  ;C0A104|EB      |      ;
 DEC A                                ;C0A105|3A      |      ;
@@ -4760,11 +4763,11 @@ CODE_C0ACC7:
 INC.W $039A                          ;C0ACC7|EE9A03  |81039A;
 SEP #$20                             ;C0ACCA|E220    |      ;
 LDA.B #$F1                           ;C0ACCC|A9F1    |      ;
-STA.W APUI00                          ;C0ACCE|8D4021  |812140;
+STA.W APUIO0                          ;C0ACCE|8D4021  |812140;
 REP #$20                             ;C0ACD1|C220    |      ;
 COP #$27                             ;C0ACD3|0227    |      ;
 db $D7,$AC                           ;C0ACD5|        |0000AC;
-LDA.W APUI00                          ;C0ACD7|AD4021  |812140;
+LDA.W APUIO0                          ;C0ACD7|AD4021  |812140;
 AND.W #$00FF                         ;C0ACDA|29FF00  |      ;
 CMP.W #$00F1                         ;C0ACDD|C9F100  |      ;
 BEQ CODE_C0ACE3                      ;C0ACE0|F001    |C0ACE3;
@@ -4773,12 +4776,12 @@ RTL                                  ;C0ACE2|6B      |      ;
 CODE_C0ACE3:
 SEP #$20                             ;C0ACE3|E220    |      ;
 LDA.B #$01                           ;C0ACE5|A901    |      ;
-STA.W APUI00                          ;C0ACE7|8D4021  |812140;
+STA.W APUIO0                          ;C0ACE7|8D4021  |812140;
 REP #$20                             ;C0ACEA|C220    |      ;
 COP #$27                             ;C0ACEC|0227    |      ;
 db $F0,$AC                           ;C0ACEE|        |C0AC9C;
 SEP #$20                             ;C0ACF0|E220    |      ;
-LDA.W APUI00                          ;C0ACF2|AD4021  |812140;
+LDA.W APUIO0                          ;C0ACF2|AD4021  |812140;
 REP #$20                             ;C0ACF5|C220    |      ;
 BEQ CODE_C0ACFA                      ;C0ACF7|F001    |C0ACFA;
 RTL                                  ;C0ACF9|6B      |      ;
@@ -4787,12 +4790,12 @@ CODE_C0ACFA:
 INC.W $039A                          ;C0ACFA|EE9A03  |81039A;
 SEP #$20                             ;C0ACFD|E220    |      ;
 LDA.B #$F0                           ;C0ACFF|A9F0    |      ;
-STA.W APUI00                          ;C0AD01|8D4021  |812140;
+STA.W APUIO0                          ;C0AD01|8D4021  |812140;
 REP #$20                             ;C0AD04|C220    |      ;
 COP #$27                             ;C0AD06|0227    |      ;
 db $0A,$AD                           ;C0AD08|        |      ;
 SEP #$20                             ;C0AD0A|E220    |      ;
-LDA.W APUI00                          ;C0AD0C|AD4021  |812140;
+LDA.W APUIO0                          ;C0AD0C|AD4021  |812140;
 REP #$20                             ;C0AD0F|C220    |      ;
 BEQ CODE_C0AD14                      ;C0AD11|F001    |C0AD14;
 RTL                                  ;C0AD13|6B      |      ;
@@ -4802,7 +4805,7 @@ COP #$1B                             ;C0AD14|021B    |      ;
 db $1A,$AD,$02,$00                   ;C0AD16|        |      ;
 SEP #$20                             ;C0AD1A|E220    |      ;
 LDA.B #$FF                           ;C0AD1C|A9FF    |      ;
-STA.W APUI00                          ;C0AD1E|8D4021  |812140;
+STA.W APUIO0                          ;C0AD1E|8D4021  |812140;
 REP #$20                             ;C0AD21|C220    |      ;
 LDA.W $0030,X                        ;C0AD23|BD3000  |810030;
 ASL A                                ;C0AD26|0A      |      ;
@@ -4831,7 +4834,7 @@ COP #$1B                             ;C0AD5D|021B    |      ;
 db $63,$AD,$02,$00                   ;C0AD5F|        |0000AD;
 SEP #$20                             ;C0AD63|E220    |      ;
 LDA.B #$01                           ;C0AD65|A901    |      ;
-STA.W APUI00                          ;C0AD67|8D4021  |812140;
+STA.W APUIO0                          ;C0AD67|8D4021  |812140;
 REP #$20                             ;C0AD6A|C220    |      ;
 STZ.W $039A                          ;C0AD6C|9C9A03  |81039A;
 STZ.W $0398                          ;C0AD6F|9C9803  |810398;
@@ -5117,9 +5120,9 @@ Player_LevelUp:
 
     ASL #2
     TAY
-    LDA.W ExpTable, Y
+    LDA.W ExpTable.lower10k, Y
     STA.W ExpNeededForNextLevel.upper10k
-    LDA.W ExpTable+2, Y
+    LDA.W ExpTable.upper10k, Y
     STA.W ExpNeededForNextLevel.lower10k
     %CopSetScriptAddrToNextInstruction()
     LDA.W PlayerExp.lower10k
@@ -5167,9 +5170,9 @@ Player_LevelUp:
     LDA.W player_level
     ASL #2
     TAY
-    LDA.W ExpTable, Y
+    LDA.W ExpTable.lower10k, Y
     STA.W ExpNeededForNextLevel.upper10k
-    LDA.W ExpTable+2, Y
+    LDA.W ExpTable.upper10k, Y
     STA.W ExpNeededForNextLevel.lower10k
 ; play sound and display message on screen three times
     %PlaySound(!Sound_NextLevel)
@@ -6752,7 +6755,7 @@ db $00,$0A,$01,$00,$00,$00,$00       ;C0E784|        |      ;
 COP #$91                             ;C0E78B|0291    |      ;
 RTL                                  ;C0E78D|6B      |      ;
 CODE_C0E78E:
-LDA.W #$3000                         ;C0E78E|A90030  |      ;
+LDA.W #Key16.Start | Key16.Select                         ;C0E78E|A90030  |      ;
 TSB.W button_mask                          ;C0E791|0C2603  |810326;
 STZ.W buttons_pressed                          ;C0E794|9C2203  |810322;
 STX.W $039E                          ;C0E797|8E9E03  |81039E;
@@ -7138,7 +7141,7 @@ STY.W $0482                          ;C0EC9C|8C8204  |810482;
 LDY.W $048C                          ;C0EC9F|AC8C04  |81048C;
 STY.B $00                            ;C0ECA2|8400    |000000;
 XBA                                  ;C0ECA4|EB      |      ;
-LDA.L UNREACH_81FC84,X               ;C0ECA5|BF84FC81|81FC84;
+LDA.L SineWave, X               ;C0ECA5|BF84FC81|81FC84;
 STA.B $02                            ;C0ECA9|8502    |000002;
 JSR.W CODE_C0ED32                    ;C0ECAB|2032ED  |C0ED32;
 LDY.W MPYM                          ;C0ECAE|AC3521  |812135;
@@ -7146,7 +7149,7 @@ STY.W $0484                          ;C0ECB1|8C8404  |810484;
 LDY.W $048C                          ;C0ECB4|AC8C04  |81048C;
 STY.B $00                            ;C0ECB7|8400    |000000;
 XBA                                  ;C0ECB9|EB      |      ;
-LDA.L UNREACH_81FC84,X               ;C0ECBA|BF84FC81|81FC84;
+LDA.L SineWave, X               ;C0ECBA|BF84FC81|81FC84;
 EOR.B #$FF                           ;C0ECBE|49FF    |      ;
 INC A                                ;C0ECC0|1A      |      ;
 STA.B $02                            ;C0ECC1|8502    |000002;

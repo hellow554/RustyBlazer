@@ -3,13 +3,13 @@ COP_Func:
     SEP #$20
     TXY
     LDA.B $04, S        ; read bank from irq source
-    STA.B CopTemp.bank  ; store it into CopTemp+2, so other direct address reads (`LDA [CopTemp]` would also give us the correct bank)
+    STA.B CopTemp.address_bank  ; store it into CopTemp+2, so other direct address reads (`LDA [CopTemp.address]` would also give us the correct bank)
     REP #$20
     LDA.B $02, S        ; read addr from irq source
     DEC A               ; decrement, because else it would point to the location after the COP immediate
-    STA.B CopTemp.addr
-    LDA.B [CopTemp]     ; read COP Number (e.g. COP #01 would give us $xx01 in `A`) via direct read
-    INC.B CopTemp.addr  ; increment CopTemp so it points to the first argument or return address, depends on the COP itself later
+    STA.B CopTemp.address_word
+    LDA.B [CopTemp.address]     ; read COP Number (e.g. COP #01 would give us $xx01 in `A`) via direct read
+    INC.B CopTemp.address_word  ; increment CopTemp so it points to the first argument or return address, depends on the COP itself later
     AND.W #$00FF        ; because we are in A16, we need to zero out the upper part of `AB`
     ASL A               ; times two, because our index table is 2 bytes per id
     TAX                 ; use `X` as jumper
@@ -68,14 +68,14 @@ COP_Func:
 
 .cop_01:
     TYX
-    LDA.B [CopTemp] ; loads 24-bit textpointer
+    LDA.B [CopTemp.address] ; loads 24-bit textpointer
     INC.B CopTemp
     INC.B CopTemp
     TAY             ; print expects the textpointer in Y
     SEP #$20
     PHX
     PHB
-    LDA.B CopTemp.bank
+    LDA.B CopTemp.address_bank
     PHA
     PLB
     JSL.L printOsdStringFromBankX
@@ -107,14 +107,14 @@ COP_Func:
     BNE ..aborted
     BRL .skip_2_args
 ..aborted:
-    LDA [CopTemp]
+    LDA [CopTemp.address]
     INC CopTemp
     INC CopTemp
     BRL .ret_in_a
 
 .cop_03:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $2E, X ; store the loop counter in the entity struct
@@ -136,7 +136,7 @@ COP_Func:
 
 .cop_05:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     BMI ..wait_for_unset
     JSR.W CheckGameStateBit
     BCC ..loop_again
@@ -156,17 +156,17 @@ COP_Func:
 
 .cop_06:
     TYX
-    LDA [CopTemp]
+    LDA [CopTemp.address]
     BRL .ret_in_a
 
 .cop_07:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     BRA .check_jump
 
 .cop_08:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     EOR.W #$8000 ; do the same as cop07, but negate it
 
 .check_jump:
@@ -185,14 +185,14 @@ COP_Func:
 ..do_jump:
     INC.B CopTemp
     INC.B CopTemp
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_09:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     JSR.W SetResetGameStateBit
@@ -200,7 +200,7 @@ COP_Func:
 
 .cop_0A:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     CMP.W #Items.MedicalHerb
@@ -215,7 +215,7 @@ COP_Func:
 
 .cop_0B:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W CheckIfItemIsObtained
@@ -235,11 +235,11 @@ COP_Func:
 
 .cop_0C:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
@@ -284,25 +284,25 @@ BCC .CODE_C0D97C                      ;C0D977|9003    |C0D97C;
 BRL .skip_2_args                      ;C0D979|82B70B  |C0E533;
 
 .CODE_C0D97C:
-LDA.B [CopTemp]                          ;C0D97C|A738    |000038;
+LDA.B [CopTemp.address]                          ;C0D97C|A738    |000038;
 INC.B CopTemp                            ;C0D97E|E638    |000038;
 INC.B CopTemp                            ;C0D980|E638    |000038;
 BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_0D:
     TYX
-    LDA.B [CopTemp] ; entity id
+    LDA.B [CopTemp.address] ; entity id
     INC.B CopTemp
     AND.W #$00FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp] ; x position
+    LDA.B [CopTemp.address] ; x position
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
     CMP.W 0, Y          ; compare it against the x position of the entity
     BEQ + : BRL .skip_3_args : +
 
-    LDA.B [CopTemp] ; y position
+    LDA.B [CopTemp.address] ; y position
     INC.B CopTemp
     AND.W #$FF
     INC A
@@ -310,27 +310,27 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     CMP.W $2, Y ; compare it against the y position of the entity
     BEQ + : BRL .skip_2_args : +
 
-    LDA.B [CopTemp] ; condition is met, jump to target
+    LDA.B [CopTemp.address] ; condition is met, jump to target
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_10:
     TYX
-    LDA.B [CopTemp] ; load the scene id
+    LDA.B [CopTemp.address] ; load the scene id
     INC.B CopTemp
     INC.B CopTemp
     XBA
     STA.W sceneId
-    LDA.B [CopTemp] ; load facing
+    LDA.B [CopTemp.address] ; load facing
     INC.B CopTemp
     AND.W #$FF
     STA.W TeleportPos.facing
-    LDA.B [CopTemp] ; load X
+    LDA.B [CopTemp.address] ; load X
     INC.B CopTemp
     INC.B CopTemp
     STA.W TeleportPos.x
-    LDA.B [CopTemp] ; load Y
+    LDA.B [CopTemp.address] ; load Y
     INC.B CopTemp
     INC.B CopTemp
     STA.W TeleportPos.y
@@ -338,16 +338,16 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_11:
     TYX
-    LDA.B [CopTemp] ; load entity id
+    LDA.B [CopTemp.address] ; load entity id
     INC.B CopTemp
     AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp]  ; load x
+    LDA.B [CopTemp.address]  ; load x
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
     STA.W $0000, Y   ; store x in entity table
-    LDA.B [CopTemp]  ; load y
+    LDA.B [CopTemp.address]  ; load y
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
@@ -360,11 +360,11 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_12
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $0018, Y ; store it as the script ret addr
@@ -372,11 +372,11 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_13:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $30, Y ; store xxx
@@ -384,7 +384,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_14:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     JSR.W CODE_C0E6A5
@@ -394,7 +394,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDA.W $0016, X ; that's the entity id?
     AND.W #$DFFF
     STA.W $0016, X
-    LDA.B [CopTemp] ; load the addr to jump to
+    LDA.B [CopTemp.address] ; load the addr to jump to
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -414,7 +414,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_17:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $30, X ; assign the loaded pointer to the talkback pointer in the X entity
@@ -422,7 +422,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_18:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W CheckIfItemIsObtained
@@ -430,14 +430,14 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     BRL .skip_2_args
 
 ..is_obtained:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_19:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W CheckIfItemIsObtained
@@ -446,7 +446,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     BRL .skip_2_args
 
 ..not_obtained:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -454,7 +454,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 .cop_1A:
     TYX
     PHX
-    LDA.B [CopTemp] ; load txt pointer
+    LDA.B [CopTemp.address] ; load txt pointer
     INC.B CopTemp
     INC.B CopTemp
     TAY
@@ -462,7 +462,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     SEP #$20
     LDA.B #$00
     XBA
-    LDA.B [CopTemp] ; load number of choices
+    LDA.B [CopTemp.address] ; load number of choices
     INC.B CopTemp
     ; failsafe for when it's zero make it one
     BNE + : INC.B CopTemp+1 : +
@@ -484,18 +484,18 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     BRL .skip_2_args
 
 ..aborted_textbox:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_1B:
     TYX
-    LDA.B [CopTemp] ; load target
+    LDA.B [CopTemp.address] ; load target
     INC.B CopTemp
     INC.B CopTemp
     STA.W $0018, X ; set script ret addr
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $0014, X ; store amount of frames to wait for
@@ -503,7 +503,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
 
 .cop_1C:
 TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     AND.W $0016, X ; compare it with the entity_id
@@ -511,14 +511,14 @@ TYX
     BRL .skip_2_args
 
 ..correct_entity:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_1D:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     ORA.W $16, X ; or it with entity id
@@ -527,7 +527,7 @@ TYX
 
 .cop_1E:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     AND.W $16, X ; and it with entity id
@@ -567,7 +567,7 @@ TYX
     ORA.W PlayerPosReal.y
     AND.W #$F
     BEQ ..ret
-    LDA.B [CopTemp] ; load destination
+    LDA.B [CopTemp.address] ; load destination
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -621,7 +621,7 @@ TYX
 
 .cop_25:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     JSL.L AddGold
@@ -631,7 +631,7 @@ TYX
 
 .cop_26
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     LDY.W Equipment.item
@@ -656,14 +656,14 @@ TYX
     BRL .skip_2_args
 
 ..not_enough_gold:
-    LDA.B [CopTemp] ; load not enough gold callback
+    LDA.B [CopTemp.address] ; load not enough gold callback
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_27:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, X
@@ -689,7 +689,7 @@ TYX
     BRL .skip_2_args
 
 ..not_passable:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -706,7 +706,7 @@ TYX
     JSL.L ConvPosToArrayIdx
     SEP #$20
 
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     BNE + : INC.B CopTemp+1 : +
 
@@ -718,7 +718,7 @@ TYX
 
 ..dunno:
     PLX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -726,13 +726,13 @@ TYX
 .cop_2A:
     TYX
     PHX
-    LDA.B [CopTemp] ; load relative x position
+    LDA.B [CopTemp.address] ; load relative x position
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X      ; add to entity x position
     STA.B $16
-    LDA.B [CopTemp] ; load relative y position
+    LDA.B [CopTemp.address] ; load relative y position
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -750,13 +750,13 @@ TYX
 .cop_2B:
     TYX
     PHX
-    LDA.B [CopTemp] ; load relative x position
+    LDA.B [CopTemp.address] ; load relative x position
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X      ; add to entity x position
     STA.B $16
-    LDA.B [CopTemp] ; load relative y position
+    LDA.B [CopTemp.address] ; load relative y position
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -773,11 +773,11 @@ TYX
 
 .cop_2E:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.B $00
@@ -785,11 +785,11 @@ TYX
 
 .cop_2F:
     TYX
-    LDA.B [CopTemp] ; load an x offset?
+    LDA.B [CopTemp.address] ; load an x offset?
     INC.B CopTemp
     INC.B CopTemp
     STA.B $16
-    LDA.B [CopTemp] ; load an y offset?
+    LDA.B [CopTemp.address] ; load an y offset?
     INC.B CopTemp
     INC.B CopTemp
     STA.B $18
@@ -826,7 +826,7 @@ TYX
     LDA.W lair_reveal_in_progress
     BNE + : BRL .skip_5_args : +
 
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.W revealing_lair_id
@@ -842,7 +842,7 @@ TYX
     LDA.B #$80
     STA.W $36, Y ; set script ret addr bank
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $0030, Y
@@ -857,7 +857,7 @@ TYX
     LDA.B #$80
     STA.W $36,Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$00FF
     STA.W $0030,Y
@@ -899,7 +899,7 @@ TYX
 
 .cop_35:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$00FF
     STA.B $00
@@ -917,7 +917,7 @@ TYX
 
 .cop_36:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     SED
@@ -941,7 +941,7 @@ TYX
 
 .cop_38:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W exp_to_give
@@ -950,7 +950,7 @@ TYX
 .cop_39:
     TYX
     PHX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
@@ -983,7 +983,7 @@ TYX
 
 .cop_3B:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     JSR.W CODE_C0E6A5
     ASL A
     ASL A
@@ -998,7 +998,7 @@ TYX
     BCC ..not_sealed ; if the lair is not sealed, jump
 
 ..no_dependency:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     LDY.W #lair_sealed_table
@@ -1008,7 +1008,7 @@ TYX
     LDA.W $0016, X ; load entity id
     AND.W #$DFFF
     STA.W $0016, X
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1017,7 +1017,7 @@ TYX
     BRL .ret_out_of_script
 
 ..not_sealed:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
 
@@ -1036,7 +1036,7 @@ TYX
 
 .cop_3C:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $03E5
@@ -1044,7 +1044,7 @@ TYX
 
 .cop_80:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $001E, X ; store facing direction
@@ -1055,12 +1055,12 @@ TYX
 
 .cop_81:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$00FF
     STA.W $001E, X ; store facing direction
     STZ.W $0020, X
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$00FF
     STA.W $002A,X
@@ -1093,12 +1093,12 @@ TYX
 .cop_84:
     TYX
     JSR.W CODE_C0E6B2
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y ; script ret addr
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
@@ -1109,12 +1109,12 @@ TYX
 .cop_85:
     TYX
     JSR.W CODE_C0E6DA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y ; script ret addr
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
@@ -1178,13 +1178,13 @@ TYX
     ; if that number is negative, do a twos complement
     BPL + : EOR.W #$FFFF : INC : +
     STA.B $0
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
     BCS + : BRL .skip_2_args : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1199,13 +1199,13 @@ TYX
     ; if that number is negative, do a twos complement
     BPL + : EOR.W #$FFFF : INC : +
     STA.B $0
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
     BCS + : BRL .skip_2_args : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1220,13 +1220,13 @@ TYX
     ; if that number is negative, do a twos complement
     BPL + : EOR.W #$FFFF : INC : +
     STA.B $0
-    LDA [CopTemp]
+    LDA [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if the player is outside
     BCC + : BRL .skip_2_args : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1241,13 +1241,13 @@ TYX
     ; if that number is negative, do a twos complement
     BPL + : EOR.W #$FFFF : INC : +
     STA.B $0
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
     BCC + : BRL .skip_2_args : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1257,7 +1257,7 @@ TYX
     LDA.W $16, X
     BIT.W #$8000
     BEQ + : BRL .ret_in_tmp : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1267,7 +1267,7 @@ TYX
     LDA.W $16, X
     BIT.W #$8000
     BNE + : BRL .ret_in_tmp : +
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1310,7 +1310,7 @@ TYX
 .cop_91:
     TYX
     SEP #$20
-    LDA.B CopTemp.bank
+    LDA.B CopTemp.address_bank
     STA.W $36, X ; store bank
     REP #$20
     LDA.B CopTemp
@@ -1319,7 +1319,7 @@ TYX
 
 .cop_92:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $1E, X
@@ -1330,12 +1330,12 @@ TYX
 
 .cop_93:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $1E, X
     STZ.W $20, X
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $2A, X
@@ -1419,18 +1419,18 @@ TYX
     BEQ ..do_jump ; same x position, so definitely in
     BPL ..check_right ; maybe too far right?
     EOR.W #$FFFF ; do ones complement, to check the left side
-    CMP.B [CopTemp]
+    CMP.B [CopTemp.address]
     BCC ..do_jump ; still inside proximity
     LDY.W #2
     BRA ..do_jump ; nope, too far left
 
 ..check_right:
-    CMP.B [CopTemp]
+    CMP.B [CopTemp.address]
     BCC ..do_jump ; if branch is taken, the player is still in proximity
     LDY.W #6 ; else he is too far right
 
 ..do_jump:
-    LDA.B [CopTemp],Y
+    LDA.B [CopTemp.address],Y
     BRL .ret_in_a
 
 .cop_9B:
@@ -1447,18 +1447,18 @@ TYX
     BEQ ..do_jump
     BPL ..check_bottom
     EOR.W #$FFFF
-    CMP.B [CopTemp]
+    CMP.B [CopTemp.address]
     BCC ..do_jump
     LDY.W #2
     BRA ..do_jump
 
 ..check_bottom:
-    CMP.B [CopTemp]
+    CMP.B [CopTemp.address]
     BCC ..do_jump
     LDY.W #6
 
 ..do_jump:
-    LDA.B [CopTemp],Y
+    LDA.B [CopTemp.address],Y
     BRL .ret_in_a
 
 .cop_9C:
@@ -1486,13 +1486,13 @@ TYX
     BCC + : LDY.W #2 : BRA + : +
 
     PLA
-    LDA.B [CopTemp], Y
+    LDA.B [CopTemp.address], Y
     BRL .ret_in_a
 
 
 .cop_9D:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $001E,X
@@ -1514,14 +1514,14 @@ TYX
     BRL .ret_out_of_script
 
 ..do_jump:
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 .cop_9F:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -1531,7 +1531,7 @@ TYX
 
 .cop_A0
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -1541,13 +1541,13 @@ TYX
 
 .cop_A1:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X
     STA.W 0, X
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -1560,7 +1560,7 @@ TYX
     LDA.W $1C,X
     AND.W #$CFFF
     PHA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     XBA
@@ -1606,7 +1606,7 @@ TYX
     INY ; Y is now 6
 
 ..do_jump:
-    LDA.B [CopTemp],Y
+    LDA.B [CopTemp.address],Y
     BRL .ret_in_a
 
 .cop_A6:
@@ -1625,28 +1625,28 @@ TYX
 
 .cop_A8:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $22, X
     SEP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
-    BNE + : INC.B CopTemp.addr+1 : +
+    BNE + : INC.B CopTemp.address_high : +
     STA.W $24, X
     REP #$20
     BRL .ret_in_tmp
 
 .cop_A9:
     TYX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $34, X
     SEP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
-    BNE + : INC.B CopTemp.addr+1 : +
+    BNE + : INC.B CopTemp.address_high : +
     STA.W $2C, X
     REP #$20
     LDA.W $1A, X
@@ -1659,7 +1659,7 @@ TYX
     LDA.W $1C, X
     AND.W #$F1FF
     PHA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     XBA
@@ -1671,26 +1671,26 @@ TYX
 .cop_AB:
     TYX
     JSR CODE_C0E6B2
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W 0, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W 2, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16,Y
@@ -1699,26 +1699,26 @@ TYX
 .cop_AC:
     TYX
     JSR.W CODE_C0E6DA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W 0, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W 2, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16, Y
@@ -1739,7 +1739,7 @@ TYX
     DEC A
     DEC A
     STA.W $18, X
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     STA.W $14, X
@@ -1748,13 +1748,13 @@ TYX
 .cop_AE:
     TYX
     PHX
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X
     STA.B $16
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
@@ -1767,7 +1767,7 @@ TYX
     PLX
     AND.W #$0F
     BEQ ..skip
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
@@ -1778,18 +1778,18 @@ TYX
 .cop_AF:
     TYX
     JSR CODE_C0E6B2
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16, Y
@@ -1798,18 +1798,18 @@ TYX
 .cop_B0:
     TYX
     JSR.W CODE_C0E6DA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$00FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16, Y
@@ -1819,30 +1819,30 @@ TYX
 .cop_B1:
     TYX
     JSR.W CODE_C0E6B2
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X
     STA.W 0, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 2, X
     STA.W 2, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16, Y
@@ -1851,30 +1851,30 @@ TYX
 .cop_B2:
     TYX
     JSR.W CODE_C0E6DA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $18, Y
     TXA
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
     SEP #$20
     STA.W $36, Y
     REP #$20
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 0, X
     STA.W 0, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CLC
     ADC.W 2, X
     STA.W 2, Y
-    LDA.B [CopTemp]
+    LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     STA.W $16, Y

@@ -1,7 +1,10 @@
 macro LongPtr(name, ptr)
     struct <name> <ptr>
-        .addr: skip 2
-        .bank: skip 1
+        .address:
+            .address_word:
+                .address_low: skip 1
+                .address_high: skip 1
+            .address_bank: skip 1
     endstruct
 endmacro
 

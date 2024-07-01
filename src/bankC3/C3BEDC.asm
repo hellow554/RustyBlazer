@@ -25,9 +25,9 @@ CODE_C3BEDC:
     BRA .ret
 
 .store_to_transfer:
-    STY.W _03DA_ptr.addr
+    STY.W _03DA_ptr.address_word
     LDA.B #bank(pc())
-    STA.W _03DA_ptr.bank
+    STA.W _03DA_ptr.address_bank
 .ret:
     REP #$20
     COP #$86

@@ -8,9 +8,7 @@ NMI_Func:
     SEP #$20
     REP #$10
     CLD
-    LDA.B #$81
-    PHA
-    PLB
+    %SwitchToBank($81)
     STZ.W HDMAEN
     JSR.W TransferOAM
     JSR.W TransferCgdata
@@ -50,18 +48,14 @@ NMI_Func:
 .skip_readout:
     STA.W buttons_pressed
     LDA.W $039A
-    BNE .CODE_C083EB
+    BNE .end
     LDA.W _0312
     LSR A
     LDA.W #$0000
-    BCS .CODE_C083E8
-    LDA.W $0398
-    STZ.W $0398
+    BCS + : LDA.W $0398 : STZ.W $0398 : +
+    STA.W APUIO2
 
-.CODE_C083E8:
-    STA.W APUI02
-
-.CODE_C083EB:
+.end:
     PLY
     PLX
     PLA
@@ -96,19 +90,19 @@ TransferCgdata:
     STZ.W DMA_Regs[1].control ; one register, write once
     LDA.B #CGDATA ; load destination `CGDATA` into DMA destination register
     STA.W DMA_Regs[1].destination
-    LDX.W #CgData.data ; load source addr to dma
+    LDX.W #CgData8bpp.data ; load source addr to dma
     STX.W DMA_Regs[1].source_address_word
-    LDA.B #bank(CgData.data) ; load source bank to dma
+    LDA.B #bank(CgData8bpp.data) ; load source bank to dma
     STA.W DMA_Regs[1].source_address_bank
-    LDX.W #datasize(CgData.data) ; load size to transfer to dma
+    LDX.W #datasize(CgData8bpp.data) ; load size to transfer to dma
     STX.W DMA_Regs[1].size_word
     LDA.B #%10 ; enable DMA1
     STA.W MDMAEN
-    LDA.L CgData.blue
+    LDA.L CgData8bpp.CgData.blue
     STA.W COLDATA
-    LDA.L CgData.green
+    LDA.L CgData8bpp.CgData.green
     STA.W COLDATA
-    LDA.L CgData.red
+    LDA.L CgData8bpp.CgData.red
     STA.W COLDATA
     RTS
 

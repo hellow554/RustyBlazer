@@ -62,10 +62,10 @@ OPHCT = $00213C
 OPVCT = $00213D
 STAT77 = $00213E
 STAT78 = $00213F
-APUI00 = $002140
-APUI01 = $002141
-APUI02 = $002142
-APUI03 = $002143
+APUIO0 = $002140
+APUIO1 = $002141
+APUIO2 = $002142
+APUIO3 = $002143
 WMDATA = $002180
 WMADDL = $002181
 WMADDM = $002182
@@ -277,14 +277,29 @@ DATA_7E7800 = $7E7800
 DATA_7E7900 = $7E7900
 tilemap = $7E8000
 DATA_7EC000 = $7EC000
-struct CgData $7F0000
+
+struct CgData2bpp $7F0000
+    .data: skip $8
+endstruct
+struct CgData4bpp $7F0000
+    .data: skip $20
+endstruct
+struct CgData8bpp $7F0000 ; $7F0000 - $7F0203
     ; the data for the color palette
-    .data:  skip $200
+    ; an array of either
+    ; 64x2bpp
+    ; 16x4bpp
+    ; 1x8bpp
+    .data : skip $200
+endstruct
+struct CgData extends CgData8bpp
     ; fixed color data (COLDATA)
     .blue:  skip 1
     .green: skip 1
     .red:   skip 1
 endstruct
+assert objectsize(CgData8bpp) == $203
+
 ;; A value of $00 means, that the lair is cleared, but not sealed yet
 ;; A value of $C0 means, that the sealing is in progress
 ;; A Value of $80 means, that the lair is sealed
@@ -321,10 +336,8 @@ UNREACH_81BA1D = $81BA1D
 UNREACH_81BA1F = $81BA1F
 UNREACH_81BA21 = $81BA21
 UNREACH_81BA22 = $81BA22
-UNREACH_82E49F = $82E49F
 UNREACH_81FAD7 = $81FAD7
 UNREACH_81FAAB = $81FAAB
-UNREACH_81FC84 = $81FC84
 UNREACH_81FCC4 = $81FCC4
 UNREACH_81FA7F = $81FA7F
 UNREACH_81EE8E = $81EE8E
@@ -357,7 +370,6 @@ UNREACH_81AC9F = $81AC9F
 UNREACH_81B69B = $81B69B
 UNREACH_81B69D = $81B69D
 UNREACH_81B69C = $81B69C
-UNREACH_81BA0D = $81BA0D
 UNREACH_81BA1B = $81BA1B
 UNREACH_81BA1C = $81BA1C
 UNREACH_81BA2A = $81BA2A
@@ -395,7 +407,6 @@ UNREACH_898802 = $898802
 UNREACH_898804 = $898804
 UNREACH_898806 = $898806
 UNREACH_81FA27 = $81FA27
-UNREACH_81FB88 = $81FB88
 UNREACH_81FB8A = $81FB8A
 UNREACH_81FBA0 = $81FBA0
 UNREACH_81FB2F = $81FB2F

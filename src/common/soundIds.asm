@@ -1,3 +1,23 @@
+%define_enum_with_values(Sound,
+    Nothing, $00,
+    SwordSwing, $01,
+    EnemyHit, $02,
+    LairDone, $03,
+    PlayerHurt, $04,
+    EndbossDungeonAppears, $06,
+    MenuBeep, $07,
+    HealthRestore, $08,
+    Gunshot, $09,
+
+    HittingMetal, $0C,
+    ReceivingGem, $0D,
+    SomebodyAppears, $0E,
+    Thunder, $10,
+    EnemySpawns, $13,
+    OpenChest, $15,
+    LvlUp, $17,
+    DialogConfirm, $18,
+    SaveDone, $26    )
 !Sound_No = $00
 !Sound_SwordSwing = $01
 !Sound_EnemyHit = $02

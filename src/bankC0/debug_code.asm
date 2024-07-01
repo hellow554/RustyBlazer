@@ -98,5 +98,5 @@ lower_nibble_to_ascii_hex:
     SEP #$20
     RTS
 
-.hex_string
+.hex_string:
     db "0123456789ABCDEF"

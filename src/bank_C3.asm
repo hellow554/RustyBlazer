@@ -574,7 +574,7 @@ BIT.B #$10                           ;C384A4|8910    |      ;
 BEQ CODE_C3850F                      ;C384A6|F067    |C3850F;
 INC.W $03A4                          ;C384A8|EEA403  |8103A4;
 LDA.B #$F2                           ;C384AB|A9F2    |      ;
-STA.W APUI00                          ;C384AD|8D4021  |812140;
+STA.W APUIO0                          ;C384AD|8D4021  |812140;
 LDA.W $4218                          ;C384B0|AD1842  |814218;
 BIT.B #$80                           ;C384B3|8980    |      ;
 BNE CODE_C384D9                      ;C384B5|D022    |C384D9;
@@ -604,7 +604,7 @@ JSL.L printOsdStringFromBank2                    ;C384E6|2254A782|82A754;
 LDA.B #$01                           ;C384EA|A901    |      ;
 STA.W $03BA                          ;C384EC|8DBA03  |8103BA;
 LDA.B #$01                           ;C384EF|A901    |      ;
-STA.W APUI00                          ;C384F1|8D4021  |812140;
+STA.W APUIO0                          ;C384F1|8D4021  |812140;
 JSR.W CODE_C38510                    ;C384F4|201085  |C38510;
 JSR.W CODE_C38510                    ;C384F7|201085  |C38510;
 JSR.W CODE_C38510                    ;C384FA|201085  |C38510;
@@ -1122,7 +1122,7 @@ LDX.W #$0000                         ;C388C9|A20000  |      ;
 TXY                                  ;C388CC|9B      |      ;
 
 CODE_C388CD:
-LDA.W UNREACH_81BA0D,Y               ;C388CD|B90DBA  |81BA0D;
+LDA.W LairDataStructure.resur_map_num,Y               ;C388CD|B90DBA  |81BA0D;
 CMP.B #$FF                           ;C388D0|C9FF    |      ;
 BEQ CODE_C388E8                      ;C388D2|F014    |C388E8;
 LDA.W UNREACH_81BA20,Y               ;C388D4|B920BA  |81BA20;
@@ -1186,7 +1186,7 @@ LDA.W $0460                          ;C3896B|AD6004  |810460;
 BEQ CODE_C3897B                      ;C3896E|F00B    |C3897B;
 STZ.W $0460                          ;C38970|9C6004  |810460;
 JSL.L CODE_C2A468                    ;C38973|2268A482|82A468;
-JSL.L CODE_C2A4A1                    ;C38977|22A1A482|82A4A1;
+JSL.L TransferMagicSprite                    ;C38977|22A1A482|82A4A1;
 
 CODE_C3897B:
 JSL.L CODE_C38657                    ;C3897B|22578683|838657;
