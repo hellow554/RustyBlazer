@@ -1759,9 +1759,9 @@ db $A9,$01,$9F,$00,$80,$7F,$80,$A9   ;C28D4C|        |      ;
 
 CODE_C28D54:
 BRK #$98                             ;C28D54|0098    |      ;
-LDA.W $0314                          ;C28D56|AD1403  |810314;
+LDA.W map_number                          ;C28D56|AD1403  |810314;
 STA.W $03FF                          ;C28D59|8DFF03  |8103FF;
-LDA.W $0316                          ;C28D5C|AD1603  |810316;
+LDA.W map_sub_number                          ;C28D5C|AD1603  |810316;
 STA.W $0401                          ;C28D5F|8D0104  |810401;
 LDA.W UNREACH_81BA2A,X               ;C28D62|BD2ABA  |81BA2A;
 STA.W TeleportPos.facing                          ;C28D65|8D8003  |810380;
@@ -1798,7 +1798,7 @@ STA.W $0319                          ;C28DA7|8D1903  |810319;
 LDA.L UNREACH_82FC3A,X               ;C28DAA|BF3AFC82|82FC3A;
 STA.W sceneId                          ;C28DAE|8D1803  |810318;
 LDA.B #$20                           ;C28DB1|A920    |      ;
-STA.W $03B6                          ;C28DB3|8DB603  |8103B6;
+STA.W _03B6                          ;C28DB3|8DB603  |8103B6;
 STY.W revealing_lair_id                          ;C28DB6|8C0704  |810407;
 INC.W lair_reveal_in_progress                          ;C28DB9|EEFD03  |8103FD;
 RTL                                  ;C28DBC|6B      |      ;
@@ -2892,7 +2892,7 @@ LDY.W #$1ADE                         ;C29678|A0DE1A  |      ;
 JSL.L checkIfBitIsSet                    ;C2967B|22CA8283|8382CA;
 BCC .CODE_C2968B                      ;C2967F|900A    |C2968B;
 LDA.W UNREACH_81F99D,X               ;C29681|BD9DF9  |81F99D;
-STA.W $031E                          ;C29684|8D1E03  |81031E;
+STA.W _031E                          ;C29684|8D1E03  |81031E;
 SEC                                  ;C29687|38      |      ;
 PLY                                  ;C29688|7A      |      ;
 PLX                                  ;C29689|FA      |      ;
@@ -5312,25 +5312,25 @@ PLX
 RTL
 
 
-CODE_C2B272:
-PHP                                  ;C2B272|08      |      ;
-PHB                                  ;C2B273|8B      |      ;
-PHX                                  ;C2B274|DA      |      ;
-PHY                                  ;C2B275|5A      |      ;
-REP #$10                             ;C2B276|C210    |      ;
-SEP #$20                             ;C2B278|E220    |      ;
-LDA.B #$7E                           ;C2B27A|A97E    |      ;
-PHA                                  ;C2B27C|48      |      ;
-PLB                                  ;C2B27D|AB      |      ;
-LDX.W #$0100                         ;C2B27E|A20001  |      ;
-STX.B $1F                            ;C2B281|861F    |00001F;
-STX.B $21                            ;C2B283|8621    |000021;
-LDA.B #$20                           ;C2B285|A920    |      ;
+Lzss_decomp:
+    PHP
+    PHB
+    PHX
+    PHY
+    REP #$10
+    SEP #$20
 
-CODE_C2B287:
-STA.B ($1F)                          ;C2B287|921F    |00001F;
-INC.B $1F                            ;C2B289|E61F    |00001F;
-BNE CODE_C2B287                      ;C2B28B|D0FA    |C2B287;
+    ; initialize the sliding window (256 bytes of $20)
+    %SwitchToBank($7E)
+    LDX.W #256
+    STX.B $1F
+    STX.B $21
+    LDA.B #$20
+.memset:
+    STA.B ($1F)
+    INC.B $1F
+    BNE .memset
+
 LDA.B #$EF                           ;C2B28D|A9EF    |      ;
 STA.B $1F                            ;C2B28F|851F    |00001F;
 LDA.B #$80                           ;C2B291|A980    |      ;
@@ -5338,37 +5338,37 @@ STA.B $1E                            ;C2B293|851E    |00001E;
 LDX.B $25                            ;C2B295|A625    |000025;
 LDY.B $23                            ;C2B297|A423    |000023;
 
-CODE_C2B299:
+.loop:
 LDA.B [$29]                          ;C2B299|A729    |000029;
 AND.B $1E                            ;C2B29B|251E    |00001E;
 PHA                                  ;C2B29D|48      |      ;
 LSR.B $1E                            ;C2B29E|461E    |00001E;
-BCC CODE_C2B2AA                      ;C2B2A0|9008    |C2B2AA;
+BCC .CODE_C2B2AA                      ;C2B2A0|9008    |C2B2AA;
 ROR.B $1E                            ;C2B2A2|661E    |00001E;
 INC.B $29                            ;C2B2A4|E629    |000029;
-BNE CODE_C2B2AA                      ;C2B2A6|D002    |C2B2AA;
+BNE .CODE_C2B2AA                      ;C2B2A6|D002    |C2B2AA;
 INC.B $2A                            ;C2B2A8|E62A    |00002A;
 
-CODE_C2B2AA:
+.CODE_C2B2AA:
 PLA                                  ;C2B2AA|68      |      ;
-BEQ CODE_C2B2BD                      ;C2B2AB|F010    |C2B2BD;
+BEQ .CODE_C2B2BD                      ;C2B2AB|F010    |C2B2BD;
 JSR.W CODE_C2B2E2                    ;C2B2AD|20E2B2  |C2B2E2;
 STA.W $0000,X                        ;C2B2B0|9D0000  |7E0000;
 INX                                  ;C2B2B3|E8      |      ;
 STA.B ($1F)                          ;C2B2B4|921F    |00001F;
 INC.B $1F                            ;C2B2B6|E61F    |00001F;
 DEY                                  ;C2B2B8|88      |      ;
-BNE CODE_C2B299                      ;C2B2B9|D0DE    |C2B299;
-BRA CODE_C2B2DD                      ;C2B2BB|8020    |C2B2DD;
+BNE .loop                      ;C2B2B9|D0DE    |C2B299;
+BRA .ret                      ;C2B2BB|8020    |C2B2DD;
 
-CODE_C2B2BD:
+.CODE_C2B2BD:
 JSR.W CODE_C2B2E2                    ;C2B2BD|20E2B2  |C2B2E2;
 STA.B $21                            ;C2B2C0|8521    |000021;
 JSR.W CODE_C2B33F                    ;C2B2C2|203FB3  |C2B33F;
 INC A                                ;C2B2C5|1A      |      ;
 INC A                                ;C2B2C6|1A      |      ;
 
-CODE_C2B2C7:
+.CODE_C2B2C7:
 XBA                                  ;C2B2C7|EB      |      ;
 LDA.B ($21)                          ;C2B2C8|B221    |000021;
 INC.B $21                            ;C2B2CA|E621    |000021;
@@ -5377,13 +5377,13 @@ INC.B $1F                            ;C2B2CE|E61F    |00001F;
 STA.W $0000,X                        ;C2B2D0|9D0000  |7E0000;
 INX                                  ;C2B2D3|E8      |      ;
 DEY                                  ;C2B2D4|88      |      ;
-BEQ CODE_C2B2DD                      ;C2B2D5|F006    |C2B2DD;
+BEQ .ret                      ;C2B2D5|F006    |C2B2DD;
 XBA                                  ;C2B2D7|EB      |      ;
 DEC A                                ;C2B2D8|3A      |      ;
-BNE CODE_C2B2C7                      ;C2B2D9|D0EC    |C2B2C7;
-BRA CODE_C2B299                      ;C2B2DB|80BC    |C2B299;
+BNE .CODE_C2B2C7                      ;C2B2D9|D0EC    |C2B2C7;
+BRA .loop                      ;C2B2DB|80BC    |C2B299;
 
-CODE_C2B2DD:
+.ret:
 PLY                                  ;C2B2DD|7A      |      ;
 PLX                                  ;C2B2DE|FA      |      ;
 PLB                                  ;C2B2DF|AB      |      ;
@@ -5391,92 +5391,45 @@ PLP                                  ;C2B2E0|28      |      ;
 RTL                                  ;C2B2E1|6B      |      ;
 
 CODE_C2B2E2:
-LDA.B $1E                            ;C2B2E2|A51E    |00001E;
-BMI CODE_C2B329                      ;C2B2E4|3043    |C2B329;
-ASL A                                ;C2B2E6|0A      |      ;
-BMI CODE_C2B322                      ;C2B2E7|3039    |C2B322;
-ASL A                                ;C2B2E9|0A      |      ;
-BMI CODE_C2B31B                      ;C2B2EA|302F    |C2B31B;
-ASL A                                ;C2B2EC|0A      |      ;
-BMI CODE_C2B314                      ;C2B2ED|3025    |C2B314;
-ASL A                                ;C2B2EF|0A      |      ;
-BMI CODE_C2B30D                      ;C2B2F0|301B    |C2B30D;
-ASL A                                ;C2B2F2|0A      |      ;
-BMI CODE_C2B306                      ;C2B2F3|3011    |C2B306;
-ASL A                                ;C2B2F5|0A      |      ;
-BMI CODE_C2B2FF                      ;C2B2F6|3007    |C2B2FF;
-REP #$20                             ;C2B2F8|C220    |      ;
-LDA.B [$29]                          ;C2B2FA|A729    |000029;
-XBA                                  ;C2B2FC|EB      |      ;
-BRA CODE_C2B332                      ;C2B2FD|8033    |C2B332;
+.decoding:
+LDA.B $1E
 
-CODE_C2B2FF:
-REP #$20                             ;C2B2FF|C220    |      ;
-LDA.B [$29]                          ;C2B301|A729    |000029;
-XBA                                  ;C2B303|EB      |      ;
-BRA CODE_C2B333                      ;C2B304|802D    |C2B333;
+BMI ..eight : ASL
+BMI ..seven : ASL
+BMI ..six   : ASL
+BMI ..five  : ASL
+BMI ..four  : ASL
+BMI ..three : ASL
+BMI ..two
 
-CODE_C2B306:
-REP #$20                             ;C2B306|C220    |      ;
-LDA.B [$29]                          ;C2B308|A729    |000029;
-XBA                                  ;C2B30A|EB      |      ;
-BRA CODE_C2B334                      ;C2B30B|8027    |C2B334;
+..one:   REP #$20 : LDA.B [$29] : XBA : BRA .seven
+..two:   REP #$20 : LDA.B [$29] : XBA : BRA .six
+..three: REP #$20 : LDA.B [$29] : XBA : BRA .five
+..four:  REP #$20 : LDA.B [$29] : XBA : BRA .four
+..five:  REP #$20 : LDA.B [$29] : XBA : BRA .thrice
+..six:   REP #$20 : LDA.B [$29] : XBA : BRA .twice
+..seven: REP #$20 : LDA.B [$29] : XBA : BRA .once
+..eight:
+    LDA.B [$29]
+    REP #$20
+    INC.B $29
+    SEP #$20
+    RTS
 
-CODE_C2B30D:
-REP #$20                             ;C2B30D|C220    |      ;
-LDA.B [$29]                          ;C2B30F|A729    |000029;
-XBA                                  ;C2B311|EB      |      ;
-BRA CODE_C2B335                      ;C2B312|8021    |C2B335;
+.seven:  ASL
+.six:    ASL
+.five:   ASL
+.four:   ASL
+.thrice: ASL
+.twice:  ASL
+.once:   ASL
 
-CODE_C2B314:
-REP #$20                             ;C2B314|C220    |      ;
-LDA.B [$29]                          ;C2B316|A729    |000029;
-XBA                                  ;C2B318|EB      |      ;
-BRA CODE_C2B336                      ;C2B319|801B    |C2B336;
+    INC.B $29
+    XBA
+    SEP #$20
+    RTS
 
-CODE_C2B31B:
-REP #$20                             ;C2B31B|C220    |      ;
-LDA.B [$29]                          ;C2B31D|A729    |000029;
-XBA                                  ;C2B31F|EB      |      ;
-BRA CODE_C2B337                      ;C2B320|8015    |C2B337;
-
-CODE_C2B322:
-REP #$20                             ;C2B322|C220    |      ;
-LDA.B [$29]                          ;C2B324|A729    |000029;
-XBA                                  ;C2B326|EB      |      ;
-BRA CODE_C2B338                      ;C2B327|800F    |C2B338;
-
-CODE_C2B329:
-LDA.B [$29]                          ;C2B329|A729    |000029;
-REP #$20                             ;C2B32B|C220    |      ;
-INC.B $29                            ;C2B32D|E629    |000029;
-SEP #$20                             ;C2B32F|E220    |      ;
-RTS                                  ;C2B331|60      |      ;
-
-CODE_C2B332:
-ASL A                                ;C2B332|0A      |      ;
-
-CODE_C2B333:
-ASL A                                ;C2B333|0A      |      ;
-
-CODE_C2B334:
-ASL A                                ;C2B334|0A      |      ;
-
-CODE_C2B335:
-ASL A                                ;C2B335|0A      |      ;
-
-CODE_C2B336:
-ASL A                                ;C2B336|0A      |      ;
-
-CODE_C2B337:
-ASL A                                ;C2B337|0A      |      ;
-
-CODE_C2B338:
-ASL A                                ;C2B338|0A      |      ;
-INC.B $29                            ;C2B339|E629    |000029;
-XBA                                  ;C2B33B|EB      |      ;
-SEP #$20                             ;C2B33C|E220    |      ;
-RTS                                  ;C2B33E|60      |      ;
+; ------
 
 CODE_C2B33F:
 LDA.B $1E                            ;C2B33F|A51E    |00001E;
@@ -5558,125 +5511,111 @@ AND.B #$0F                           ;C2B3A3|290F    |      ;
 RTS                                  ;C2B3A5|60      |      ;
 
 CODE_C2B3A6:
-PHP                                  ;C2B3A6|08      |      ;
-SEP #$20                             ;C2B3A7|E220    |      ;
-REP #$10                             ;C2B3A9|C210    |      ;
-JSR.W CODE_C2B3FF                    ;C2B3AB|20FFB3  |C2B3FF;
+    PHP
+    SEP #$20
+    REP #$10
+    JSR.W FindCorrectMapMetadata
 
-CODE_C2B3AE:
-JSR.W CODE_C2B964                    ;C2B3AE|2064B9  |C2B964;
-CMP.B #$00                           ;C2B3B1|C900    |      ;
-BEQ CODE_C2B3FD                      ;C2B3B3|F048    |C2B3FD;
-BIT.B #$80                           ;C2B3B5|8980    |      ;
-BEQ CODE_C2B3BE                      ;C2B3B7|F005    |C2B3BE;
-JSR.W CODE_C2B43F                    ;C2B3B9|203FB4  |C2B43F;
-BRA CODE_C2B3AE                      ;C2B3BC|80F0    |C2B3AE;
+.loop:
+    JSR.W LoadCurrentYAndIncreaseIt
+    CMP.B #$00 ; 0 indicates the end of the current metadata
+    BEQ .ret
 
-CODE_C2B3BE:
-BIT.B #$40                           ;C2B3BE|8940    |      ;
-BEQ CODE_C2B3C7                      ;C2B3C0|F005    |C2B3C7;
-JSR.W CODE_C2B532                    ;C2B3C2|2032B5  |C2B532;
-BRA CODE_C2B3AE                      ;C2B3C5|80E7    |C2B3AE;
+    BIT.B #$80
+    BEQ +
+    JSR.W MapMetadata80
+    BRA .loop
 
-CODE_C2B3C7:
-BIT.B #$20                           ;C2B3C7|8920    |      ;
-BEQ CODE_C2B3D0                      ;C2B3C9|F005    |C2B3D0;
-JSR.W CODE_C2B571                    ;C2B3CB|2071B5  |C2B571;
-BRA CODE_C2B3AE                      ;C2B3CE|80DE    |C2B3AE;
++:
+    BIT.B #$40
+    BEQ +
+    JSR.W MapMetadata40
+    BRA .loop
 
-CODE_C2B3D0:
-BIT.B #$10                           ;C2B3D0|8910    |      ;
-BEQ CODE_C2B3D9                      ;C2B3D2|F005    |C2B3D9;
-JSR.W CODE_C2B62B                    ;C2B3D4|202BB6  |C2B62B;
-BRA CODE_C2B3AE                      ;C2B3D7|80D5    |C2B3AE;
++:
+    BIT.B #$20
+    BEQ +
+    JSR.W MapMetadata20
+    BRA .loop
 
-CODE_C2B3D9:
-BIT.B #$08                           ;C2B3D9|8908    |      ;
-BEQ CODE_C2B3E2                      ;C2B3DB|F005    |C2B3E2;
-JSR.W CODE_C2B77E                    ;C2B3DD|207EB7  |C2B77E;
-BRA CODE_C2B3AE                      ;C2B3E0|80CC    |C2B3AE;
++:
+    BIT.B #$10
+    BEQ +
+    JSR.W MapMetadata10
+    BRA .loop
 
-CODE_C2B3E2:
-BIT.B #$04                           ;C2B3E2|8904    |      ;
-BEQ CODE_C2B3EB                      ;C2B3E4|F005    |C2B3EB;
-db $20,$B9,$B8,$80,$C3               ;C2B3E6|        |C2B8B9;
++:
+    BIT.B #$08
+    BEQ +
+    JSR.W MapMetadata08
+    BRA .loop
 
-CODE_C2B3EB:
-BIT.B #$02                           ;C2B3EB|8902    |      ;
-BEQ CODE_C2B3F4                      ;C2B3ED|F005    |C2B3F4;
-JSR.W CODE_C2B8C3                    ;C2B3EF|20C3B8  |C2B8C3;
-BRA CODE_C2B3AE                      ;C2B3F2|80BA    |C2B3AE;
++:
+    BIT.B #$04
+    BEQ +
+    JSR.W IncrementYThrice ; MapMetadata04 seems to be not implemented
+    BRA .loop
 
-CODE_C2B3F4:
-BIT.B #$01                           ;C2B3F4|8901    |      ;
-BEQ CODE_C2B3AE                      ;C2B3F6|F0B6    |C2B3AE;
-JSR.W CODE_C2B920                    ;C2B3F8|2020B9  |C2B920;
-BRA CODE_C2B3AE                      ;C2B3FB|80B1    |C2B3AE;
++:
+    BIT.B #$02
+    BEQ +
+    JSR.W MapMetadata02
+    BRA .loop
 
-CODE_C2B3FD:
-PLP                                  ;C2B3FD|28      |      ;
-RTL                                  ;C2B3FE|6B      |      ;
++:
+    BIT.B #$01
+    BEQ .loop
+    JSR.W MapMetadata01
+    BRA .loop
 
-CODE_C2B3FF:
-LDY.W #$0000                         ;C2B3FF|A00000  |      ;
+.ret:
+    PLP
+    RTL
 
-CODE_C2B402:
-LDA.B [$2F],Y                        ;C2B402|B72F    |00002F;
-INY                                  ;C2B404|C8      |      ;
-XBA                                  ;C2B405|EB      |      ;
-LDA.B [$2F],Y                        ;C2B406|B72F    |00002F;
-INY                                  ;C2B408|C8      |      ;
-CMP.W $0316                          ;C2B409|CD1603  |810316;
-BNE CODE_C2B415                      ;C2B40C|D007    |C2B415;
-XBA                                  ;C2B40E|EB      |      ;
-CMP.W $0314                          ;C2B40F|CD1403  |810314;
-BNE CODE_C2B415                      ;C2B412|D001    |C2B415;
-RTS                                  ;C2B414|60      |      ;
+FindCorrectMapMetadata:
+    LDY.W #0
 
-CODE_C2B415:
-JSR.W CODE_C2B964                    ;C2B415|2064B9  |C2B964;
-CMP.B #$00                           ;C2B418|C900    |      ;
-BEQ CODE_C2B402                      ;C2B41A|F0E6    |C2B402;
-ASL A                                ;C2B41C|0A      |      ;
-BCS CODE_C2B437                      ;C2B41D|B018    |C2B437;
-ASL A                                ;C2B41F|0A      |      ;
-BCS CODE_C2B437                      ;C2B420|B015    |C2B437;
-ASL A                                ;C2B422|0A      |      ;
-BCS CODE_C2B436                      ;C2B423|B011    |C2B436;
-ASL A                                ;C2B425|0A      |      ;
-BCS CODE_C2B439                      ;C2B426|B011    |C2B439;
-ASL A                                ;C2B428|0A      |      ;
-BCS CODE_C2B43C                      ;C2B429|B011    |C2B43C;
-ASL A                                ;C2B42B|0A      |      ;
-BCS CODE_C2B43A                      ;C2B42C|B00C    |C2B43A;
-ASL A                                ;C2B42E|0A      |      ;
-BCS CODE_C2B438                      ;C2B42F|B007    |C2B438;
-ASL A                                ;C2B431|0A      |      ;
-BCS CODE_C2B437                      ;C2B432|B003    |C2B437;
-db $80,$FE                           ;C2B434|        |C2B434;
+.loop:
+    LDA.B [$2F],Y
+    INY
+    XBA
+    LDA.B [$2F],Y
+    INY
+    CMP.W map_sub_number
+    BNE .skip_map
+    XBA
+    CMP.W map_number
+    BNE .skip_map
+    RTS ; we found it, let's get outta here
 
-CODE_C2B436:
-INY                                  ;C2B436|C8      |      ;
+.skip_map:
+    JSR.W LoadCurrentYAndIncreaseIt
+    CMP.B #$00 ; 0 indicates the end of the current map metadata, let's break out of this and check the next map
+    BEQ .loop
 
-CODE_C2B437:
-INY                                  ;C2B437|C8      |      ;
+    ASL : BCS .skip6 ; $80
+    ASL : BCS .skip6 ; $40
+    ASL : BCS .skip7 ; $20
+    ASL : BCS .skip4 ; $10
+    ASL : BCS .skip1 ; $08
+    ASL : BCS .skip3 ; $04
+    ASL : BCS .skip5 ; $02
+    ASL : BCS .skip6 ; $01
+    - : BRA - ; fail safe lockup loop?!
 
-CODE_C2B438:
-INY                                  ;C2B438|C8      |      ;
+.skip7: INY
+.skip6: INY
+.skip5: INY
+.skip4: INY
+.skip3: INY #2
+.skip1: INY
+    BRA .skip_map
 
-CODE_C2B439:
-INY                                  ;C2B439|C8      |      ;
 
-CODE_C2B43A:
-INY                                  ;C2B43A|C8      |      ;
-INY                                  ;C2B43B|C8      |      ;
 
-CODE_C2B43C:
-INY                                  ;C2B43C|C8      |      ;
-BRA CODE_C2B415                      ;C2B43D|80D6    |C2B415;
 
-CODE_C2B43F:
-LDA.W $03B6                          ;C2B43F|ADB603  |8103B6;
+MapMetadata80:
+LDA.W _03B6                          ;C2B43F|ADB603  |8103B6;
 BIT.B #$08                           ;C2B442|8908    |      ;
 BEQ .CODE_C2B44D                      ;C2B444|F007    |C2B44D;
 INY #6
@@ -5685,21 +5624,21 @@ RTS
 .CODE_C2B44D:
 PHP                                  ;C2B44D|08      |      ;
 REP #$20                             ;C2B44E|C220    |      ;
-JSR.W CODE_C2B964                    ;C2B450|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B450|2064B9  |C2B964;
 XBA                                  ;C2B453|EB      |      ;
 STA.B $00                            ;C2B454|8500    |000000;
-JSR.W CODE_C2B964                    ;C2B456|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B456|2064B9  |C2B964;
 XBA                                  ;C2B459|EB      |      ;
 ASL A                                ;C2B45A|0A      |      ;
 STA.B $02                            ;C2B45B|8502    |000002;
-JSR.W CODE_C2B964                    ;C2B45D|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B45D|2064B9  |C2B964;
 PHA                                  ;C2B460|48      |      ;
 XBA                                  ;C2B461|EB      |      ;
 CLC                                  ;C2B462|18      |      ;
 ADC.W #$0000                         ;C2B463|690000  |      ;
 STA.W VMADDL                          ;C2B466|8D1621  |812116;
 LDX.W #$0029                         ;C2B469|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B46C|2031B7  |C2B731;
+JSR.W PcToSnes                    ;C2B46C|2031B7  |C2B731;
 LDA.B $01,S                          ;C2B46F|A301    |000001;
 BEQ .CODE_C2B484                      ;C2B471|F011    |C2B484;
 CMP.W #$0010                         ;C2B473|C91000  |      ;
@@ -5790,214 +5729,224 @@ INC.B $29                            ;C2B4F4|E629    |000029;
 INC.B $29                            ;C2B4F6|E629    |000029;
 LDX.W #$6000                         ;C2B4F8|A20060  |      ;
 STX.B $25                            ;C2B4FB|8625    |000025;
-JSL.L CODE_C2B272                    ;C2B4FD|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C2B4FD|2272B282|82B272;
 PLA                                  ;C2B501|68      |      ;
 CMP.W #$00FF                         ;C2B502|C9FF00  |      ;
-BEQ CODE_C2B518                      ;C2B505|F011    |C2B518;
+BEQ .CODE_C2B518                      ;C2B505|F011    |C2B518;
 LDX.B $00                            ;C2B507|A600    |000000;
 
-CODE_C2B509:
+.copy_loop:
 LDA.L $7E6000,X                      ;C2B509|BF00607E|7E6000;
 STA.W VMDATAL                          ;C2B50D|8D1821  |812118;
-INX                                  ;C2B510|E8      |      ;
-INX                                  ;C2B511|E8      |      ;
+INX #2
 CPX.B $02                            ;C2B512|E402    |000002;
-BNE CODE_C2B509                      ;C2B514|D0F3    |C2B509;
+BNE .copy_loop                      ;C2B514|D0F3    |C2B509;
 PLP                                  ;C2B516|28      |      ;
 RTS                                  ;C2B517|60      |      ;
 
-CODE_C2B518:
+.CODE_C2B518:
 LDX.W #$0000                         ;C2B518|A20000  |      ;
 STX.W VMADDL                          ;C2B51B|8E1621  |812116;
 SEP #$20                             ;C2B51E|E220    |      ;
 LDX.W #$0000                         ;C2B520|A20000  |      ;
 
-CODE_C2B523:
+.CODE_C2B523:
 LDA.L $7E6000,X                      ;C2B523|BF00607E|7E6000;
 STA.W VMDATAH                          ;C2B527|8D1921  |812119;
 INX                                  ;C2B52A|E8      |      ;
 CPX.W #$4000                         ;C2B52B|E00040  |      ;
-BNE CODE_C2B523                      ;C2B52E|D0F3    |C2B523;
+BNE .CODE_C2B523                      ;C2B52E|D0F3    |C2B523;
 PLP                                  ;C2B530|28      |      ;
 RTS                                  ;C2B531|60      |      ;
 
-CODE_C2B532:
-LDA.W $03B6                          ;C2B532|ADB603  |8103B6;
-BIT.B #$04                           ;C2B535|8904    |      ;
-BEQ CODE_C2B540                      ;C2B537|F007    |C2B540;
-db $C8,$C8,$C8,$C8,$C8,$C8,$60       ;C2B539|        |      ;
+;; $40 metadata format
+;; first byte:     word offset from pointer (last argument)
+;; second byte:    length of data in words
+;; third byte:     word offset into cgdata
+;; fourth - sixth: pc value
+MapMetadata40:
+    LDA.W _03B6
+    BIT.B #$04
+    BEQ +
+    INY #6
+    RTS
 
-CODE_C2B540:
-PHP                                  ;C2B540|08      |      ;
-REP #$20                             ;C2B541|C220    |      ;
-JSR.W CODE_C2B964                    ;C2B543|2064B9  |C2B964;
-ASL A                                ;C2B546|0A      |      ;
-STA.B $00                            ;C2B547|8500    |000000;
-JSR.W CODE_C2B964                    ;C2B549|2064B9  |C2B964;
-ASL A                                ;C2B54C|0A      |      ;
-STA.B $02                            ;C2B54D|8502    |000002;
-JSR.W CODE_C2B964                    ;C2B54F|2064B9  |C2B964;
-ASL A                                ;C2B552|0A      |      ;
-STA.B $04                            ;C2B553|8504    |000004;
-LDX.W #$0029                         ;C2B555|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B558|2031B7  |C2B731;
-PHY                                  ;C2B55B|5A      |      ;
-LDY.B $00                            ;C2B55C|A400    |000000;
-LDX.B $04                            ;C2B55E|A604    |000004;
++:
+    PHP
+    REP #$20
+    JSR.W LoadCurrentYAndIncreaseIt : ASL : STA.B 0
+    JSR.W LoadCurrentYAndIncreaseIt : ASL : STA.B 2
+    JSR.W LoadCurrentYAndIncreaseIt : ASL : STA.B 4
+    LDX.W #$0029
+    JSR.W PcToSnes
+    PHY
+    LDY.B $00
+    LDX.B $04
 
-CODE_C2B560:
-LDA.B [$29],Y                        ;C2B560|B729    |000029;
-STA.L $7F0000,X                      ;C2B562|9F00007F|7F0000;
-INY                                  ;C2B566|C8      |      ;
-INY                                  ;C2B567|C8      |      ;
-INX                                  ;C2B568|E8      |      ;
-INX                                  ;C2B569|E8      |      ;
-CPY.B $02                            ;C2B56A|C402    |000002;
-BNE CODE_C2B560                      ;C2B56C|D0F2    |C2B560;
-PLY                                  ;C2B56E|7A      |      ;
-PLP                                  ;C2B56F|28      |      ;
-RTS                                  ;C2B570|60      |      ;
+.copy_loop:
+    LDA.B [$29],Y
+    STA.L CgData8bpp.data, X
+    INY #2
+    INX #2
+    CPY.B $02
+    BNE .copy_loop
 
-CODE_C2B571:
-LDA.W $03B6                          ;C2B571|ADB603  |8103B6;
-BIT.B #$02                           ;C2B574|8902    |      ;
-BEQ CODE_C2B580                      ;C2B576|F008    |C2B580;
-db $C8,$C8,$C8,$C8,$C8,$C8,$C8,$60   ;C2B578|        |      ;
+    PLY
+    PLP
+    RTS
 
-CODE_C2B580:
-PHP                                  ;C2B580|08      |      ;
-REP #$20                             ;C2B581|C220    |      ;
-JSR.W CODE_C2B964                    ;C2B583|2064B9  |C2B964;
-XBA                                  ;C2B586|EB      |      ;
-STA.B $06                            ;C2B587|8506    |000006;
-AND.W #$7FFF                         ;C2B589|29FF7F  |      ;
-LSR A                                ;C2B58C|4A      |      ;
-LSR A                                ;C2B58D|4A      |      ;
-STA.B $00                            ;C2B58E|8500    |000000;
-JSR.W CODE_C2B964                    ;C2B590|2064B9  |C2B964;
-XBA                                  ;C2B593|EB      |      ;
-LSR A                                ;C2B594|4A      |      ;
-LSR A                                ;C2B595|4A      |      ;
-STA.B $02                            ;C2B596|8502    |000002;
-JSR.W CODE_C2B964                    ;C2B598|2064B9  |C2B964;
-XBA                                  ;C2B59B|EB      |      ;
-LSR A                                ;C2B59C|4A      |      ;
-LSR A                                ;C2B59D|4A      |      ;
-STA.B $04                            ;C2B59E|8504    |000004;
-JSR.W CODE_C2B964                    ;C2B5A0|2064B9  |C2B964;
-PHA                                  ;C2B5A3|48      |      ;
-LDX.W #$0029                         ;C2B5A4|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B5A7|2031B7  |C2B731;
-LDA.B $01,S                          ;C2B5AA|A301    |000001;
-CMP.W #$0001                         ;C2B5AC|C90100  |      ;
-BEQ CODE_C2B5B8                      ;C2B5AF|F007    |C2B5B8;
-CMP.W #$0002                         ;C2B5B1|C90200  |      ;
-BEQ CODE_C2B5C2                      ;C2B5B4|F00C    |C2B5C2;
-BRA CODE_C2B5CD                      ;C2B5B6|8015    |C2B5CD;
+MapMetadata20:
+    LDA.W _03B6
+    BIT.B #$02
+    BEQ +
+    INY #7
+    RTS
 
-CODE_C2B5B8:
++:
+    PHP
+    REP #$20
+
+    JSR.W LoadCurrentYAndIncreaseIt
+    XBA
+    STA.B $06
+    AND.W #$7FFF
+    LSR #2
+    STA.B $00
+    JSR.W LoadCurrentYAndIncreaseIt
+    XBA
+    LSR #2
+    STA.B $02
+    JSR.W LoadCurrentYAndIncreaseIt
+    XBA
+    LSR #2
+    STA.B $04
+    JSR.W LoadCurrentYAndIncreaseIt
+    PHA
+    LDX.W #$0029
+    JSR.W PcToSnes
+    LDA.B 1, S
+    CMP.W #1
+    BEQ .CODE_C2B5B8
+    CMP.W #$0002
+    BEQ .CODE_C2B5C2
+    BRA .CODE_C2B5CD
+
+.CODE_C2B5B8:
 LDX.W #$0419                         ;C2B5B8|A21904  |      ;
 JSR.W CODE_C2B9A8                    ;C2B5BB|20A8B9  |C2B9A8;
-BCS CODE_C2B5D3                      ;C2B5BE|B013    |C2B5D3;
-BRA CODE_C2B5CA                      ;C2B5C0|8008    |C2B5CA;
+BCS .CODE_C2B5D3                      ;C2B5BE|B013    |C2B5D3;
+BRA .CODE_C2B5CA                      ;C2B5C0|8008    |C2B5CA;
 
-CODE_C2B5C2:
+.CODE_C2B5C2:
 LDX.W #$041D                         ;C2B5C2|A21D04  |      ;
 JSR.W CODE_C2B9A8                    ;C2B5C5|20A8B9  |C2B9A8;
-BCS CODE_C2B5D3                      ;C2B5C8|B009    |C2B5D3;
+BCS .CODE_C2B5D3                      ;C2B5C8|B009    |C2B5D3;
 
-CODE_C2B5CA:
+.CODE_C2B5CA:
 PLA                                  ;C2B5CA|68      |      ;
 PLP                                  ;C2B5CB|28      |      ;
 RTS                                  ;C2B5CC|60      |      ;
 
-CODE_C2B5CD:
+.CODE_C2B5CD:
 STZ.W $041B                          ;C2B5CD|9C1B04  |81041B;
 STZ.W $041F                          ;C2B5D0|9C1F04  |81041F;
 
-CODE_C2B5D3:
-LDA.B $06                            ;C2B5D3|A506    |000006;
-BPL CODE_C2B5EE                      ;C2B5D5|1017    |C2B5EE;
-db $A9,$00,$60,$85,$2C,$5A,$A0,$00   ;C2B5D7|        |      ;
-db $00,$B7,$29,$97,$2C,$C8,$C8,$C0   ;C2B5DF|        |      ;
-db $00,$08,$D0,$F5,$7A,$80,$11       ;C2B5E7|        |      ;
+.CODE_C2B5D3:
+LDA.B $06        ; check if the MSB of the first byte is set
+BPL .uncompress_data ; which would indicate uncompressed data
+LDA.B #0
+RTS
 
-CODE_C2B5EE:
-LDA.B [$29]                          ;C2B5EE|A729    |000029;
-STA.B $23                            ;C2B5F0|8523    |000023;
-INC.B $29                            ;C2B5F2|E629    |000029;
-INC.B $29                            ;C2B5F4|E629    |000029;
-LDX.W #$6000                         ;C2B5F6|A20060  |      ;
-STX.B $25                            ;C2B5F9|8625    |000025;
-JSL.L CODE_C2B272                    ;C2B5FB|2272B282|82B272;
-PLA                                  ;C2B5FF|68      |      ;
-LDX.W #$2000                         ;C2B600|A20020  |      ;
-JSR.W CODE_C2B60E                    ;C2B603|200EB6  |C2B60E;
-LDX.W #$2800                         ;C2B606|A20028  |      ;
-JSR.W CODE_C2B60E                    ;C2B609|200EB6  |C2B60E;
-PLP                                  ;C2B60C|28      |      ;
-RTS                                  ;C2B60D|60      |      ;
+; not used?!
+STA.B $2C
+PHY
+LDY.W #0
+..loop:
+    LDA.B [$29], Y
+    STA.B [$2C], Y
+    INY #2
+    CPY.W #$800
+    BNE ..loop
+    PLY
+    BRA .CODE_C2B5FF
+; till here‽
+
+.uncompress_data:
+    LDA.B [$29]                          ;C2B5EE|A729    |000029;
+    STA.B $23                            ;C2B5F0|8523    |000023;
+    INC.B $29                            ;C2B5F2|E629    |000029;
+    INC.B $29                            ;C2B5F4|E629    |000029;
+    LDX.W #$6000                         ;C2B5F6|A20060  |      ;
+    STX.B $25                            ;C2B5F9|8625    |000025;
+    JSL.L Lzss_decomp                    ;C2B5FB|2272B282|82B272;
+
+.CODE_C2B5FF:
+    PLA                                  ;C2B5FF|68      |      ;
+    LDX.W #$2000                         ;C2B600|A20020  |      ;
+    JSR.W CODE_C2B60E                    ;C2B603|200EB6  |C2B60E;
+    LDX.W #$2800                         ;C2B606|A20028  |      ;
+    JSR.W CODE_C2B60E                    ;C2B609|200EB6  |C2B60E;
+    PLP                                  ;C2B60C|28      |      ;
+    RTS                                  ;C2B60D|60      |      ;
 
 CODE_C2B60E:
 LSR A                                ;C2B60E|4A      |      ;
-BCC CODE_C2B62A                      ;C2B60F|9019    |C2B62A;
+BCC .ret                      ;C2B60F|9019    |C2B62A;
 PHA                                  ;C2B611|48      |      ;
 PHY                                  ;C2B612|5A      |      ;
 STX.B $2C                            ;C2B613|862C    |00002C;
 LDX.B $00                            ;C2B615|A600    |000000;
 LDY.B $04                            ;C2B617|A404    |000004;
 
-CODE_C2B619:
+.loop:
 LDA.L $7E6000,X                      ;C2B619|BF00607E|7E6000;
 XBA                                  ;C2B61D|EB      |      ;
 STA.B [$2C],Y                        ;C2B61E|972C    |00002C;
-INX                                  ;C2B620|E8      |      ;
-INX                                  ;C2B621|E8      |      ;
-INY                                  ;C2B622|C8      |      ;
-INY                                  ;C2B623|C8      |      ;
+INX #2
+INY #2
 CPX.B $02                            ;C2B624|E402    |000002;
-BNE CODE_C2B619                      ;C2B626|D0F1    |C2B619;
+BNE .loop                      ;C2B626|D0F1    |C2B619;
 PLY                                  ;C2B628|7A      |      ;
 PLA                                  ;C2B629|68      |      ;
 
-CODE_C2B62A:
+.ret:
 RTS                                  ;C2B62A|60      |      ;
 
-CODE_C2B62B:
-LDA.W $03B6                          ;C2B62B|ADB603  |8103B6;
+MapMetadata10:
+LDA.W _03B6                          ;C2B62B|ADB603  |8103B6;
 BIT.B #$01                           ;C2B62E|8901    |      ;
-BEQ CODE_C2B637                      ;C2B630|F005    |C2B637;
+BEQ .CODE_C2B637                      ;C2B630|F005    |C2B637;
 db $C8,$C8,$C8,$C8,$60               ;C2B632|        |      ;
 
-CODE_C2B637:
+.CODE_C2B637:
 PHP                                  ;C2B637|08      |      ;
 REP #$20                             ;C2B638|C220    |      ;
-JSR.W CODE_C2B964                    ;C2B63A|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B63A|2064B9  |C2B964;
 STA.B $04                            ;C2B63D|8504    |000004;
 LDX.W #$0029                         ;C2B63F|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B642|2031B7  |C2B731;
+JSR.W PcToSnes                    ;C2B642|2031B7  |C2B731;
 LDA.B $04                            ;C2B645|A504    |000004;
 CMP.W #$0001                         ;C2B647|C90100  |      ;
-BEQ CODE_C2B65B                      ;C2B64A|F00F    |C2B65B;
+BEQ .CODE_C2B65B                      ;C2B64A|F00F    |C2B65B;
 CMP.W #$0002                         ;C2B64C|C90200  |      ;
-BNE CODE_C2B665                      ;C2B64F|D014    |C2B665;
+BNE .CODE_C2B665                      ;C2B64F|D014    |C2B665;
 LDX.W #$0425                         ;C2B651|A22504  |      ;
 JSR.W CODE_C2B9A8                    ;C2B654|20A8B9  |C2B9A8;
-BCS CODE_C2B66B                      ;C2B657|B012    |C2B66B;
+BCS .CODE_C2B66B                      ;C2B657|B012    |C2B66B;
 PLP                                  ;C2B659|28      |      ;
 RTS                                  ;C2B65A|60      |      ;
 
-CODE_C2B65B:
+.CODE_C2B65B:
 LDX.W #$0421                         ;C2B65B|A22104  |      ;
 JSR.W CODE_C2B9A8                    ;C2B65E|20A8B9  |C2B9A8;
-BCS CODE_C2B66B                      ;C2B661|B008    |C2B66B;
+BCS .CODE_C2B66B                      ;C2B661|B008    |C2B66B;
 db $28,$60                           ;C2B663|        |      ;
 
-CODE_C2B665:
+.CODE_C2B665:
 STZ.W $0423                          ;C2B665|9C2304  |810423;
 STZ.W $0427                          ;C2B668|9C2704  |810427;
 
-CODE_C2B66B:
+.CODE_C2B66B:
 LDA.B [$29]                          ;C2B66B|A729    |000029;
 INC.B $29                            ;C2B66D|E629    |000029;
 AND.W #$00FF                         ;C2B66F|29FF00  |      ;
@@ -6060,7 +6009,7 @@ db $06                               ;C2B6DF|        |000084;
 
 CODE_C2B6E0:
 STY.B $25                            ;C2B6E0|8425    |000025;
-JSL.L CODE_C2B272                    ;C2B6E2|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C2B6E2|2272B282|82B272;
 PLY                                  ;C2B6E6|7A      |      ;
 PLA                                  ;C2B6E7|68      |      ;
 SEC                                  ;C2B6E8|38      |      ;
@@ -6080,7 +6029,7 @@ db $40,$D0,$F5,$80,$09               ;C2B700|        |      ;
 CODE_C2B705:
 LDX.W #$C000                         ;C2B705|A200C0  |      ;
 STX.B $25                            ;C2B708|8625    |000025;
-JSL.L CODE_C2B272                    ;C2B70A|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C2B70A|2272B282|82B272;
 SEP #$20                             ;C2B70E|E220    |      ;
 LDX.W #$0000                         ;C2B710|A20000  |      ;
 STX.W VMADDL                          ;C2B713|8E1621  |812116;
@@ -6099,11 +6048,31 @@ PLY                                  ;C2B72E|7A      |      ;
 PLP                                  ;C2B72F|28      |      ;
 RTS                                  ;C2B730|60      |      ;
 
+
+;; Converts PC address to HiRom Snes Address
+;;
 ;; [$2F] contains a 24-bit base address
 ;; Y contains an offset to [$2F]
-;; X - ?! (offset to $1 and $2)
-;; ?? convert to hirom address ??
-CODE_C2B731:
+;; X - Destination (seems to be always $29)
+;;
+;; Here's a rough python code
+;; ```python
+;; def conv(addr):
+;;    upper = (addr >> 8) & 0xFFFF
+;;    onstack = upper & 0x7F
+;;    new_a = ((upper ^ onstack) * 2) | 0x80
+;;    addr = ((onstack | new_a) << 8) | (addr & 0xFF)
+;;    if addr < 0x700000:
+;;        addr += 0x800000
+;;        if addr >= 0x900000:
+;;            addr += 0x300000
+;;            addr &= ~0x8000
+;;
+;;    return addr
+;; ```
+;;
+;; I'm not sure if this is doing more than it should, but it is how it is
+PcToSnes:
     PHP
     ; load 16-bit pointer
     REP #$20
@@ -6116,55 +6085,55 @@ CODE_C2B731:
     LDA.B [$2F],Y
     INY
     STA.B $2B
-    ; do conversion ... ?
     REP #$20
+    ; calculation starts here
+    LDA.W 1, X  ; \
+    AND.W #$7F  ;  | load the upper 16 bits of the address and or them with $7F
+    PHA         ; /
+    EOR.W 1, X  ; now use that calculated value and xor it with the upper 16 bits
+    ASL         ; multiply it by 2
+    ORA.W #$80
+    ORA.B 1, S  ; or $80 to it
+    STA.W 1, X  ; write that value back
+    PLA
+    SEP #$20
+    LDA.W 2, X
+    CMP.B #$70  ; if the bank of that address is less than $70
+    BCS .ret
+    CLC
+    ADC.B #$80  ; add $80 to the bank
+    CMP.B #$90  ; if it's ≥ $90
+    BCC .next
+    CLC
+    ADC.B #$30  ; add $30 to it
+    STA.W 2, X
     LDA.W 1, X
-    AND.W #$7F
-    PHA
-EOR.W $0001,X                        ;C2B74A|5D0100  |810001;
-ASL A                                ;C2B74D|0A      |      ;
-ORA.W #$0080                         ;C2B74E|098000  |      ;
-ORA.B $01,S                          ;C2B751|0301    |000001;
-STA.W $0001,X                        ;C2B753|9D0100  |810001;
-PLA                                  ;C2B756|68      |      ;
-SEP #$20                             ;C2B757|E220    |      ;
-LDA.W $0002,X                        ;C2B759|BD0200  |810002;
-CMP.B #$70                           ;C2B75C|C970    |      ;
-BCS .ret                      ;C2B75E|B01A    |C2B77A;
-CLC                                  ;C2B760|18      |      ;
-ADC.B #$80                           ;C2B761|6980    |      ;
-CMP.B #$90                           ;C2B763|C990    |      ;
-BCC .CODE_C2B777                      ;C2B765|9010    |C2B777;
-CLC                                  ;C2B767|18      |      ;
-ADC.B #$30                           ;C2B768|6930    |      ;
-STA.W $0002,X                        ;C2B76A|9D0200  |810002;
-LDA.W $0001,X                        ;C2B76D|BD0100  |810001;
-AND.B #$7F                           ;C2B770|297F    |      ;
-STA.W $0001,X                        ;C2B772|9D0100  |810001;
-BRA .ret                      ;C2B775|8003    |C2B77A;
+    AND.B #$7F  ; $and clear the msb of the 16 bit address
+    STA.W 1, X
+    BRA .ret
 
-.CODE_C2B777:
-STA.W $0002,X                        ;C2B777|9D0200  |810002;
+.next:
+    STA.W $0002,X
 
 .ret:
-REP #$20                             ;C2B77A|C220    |      ;
-PLP                                  ;C2B77C|28      |      ;
-RTS                                  ;C2B77D|60      |      ;
-
-CODE_C2B77E:
-    JSR.W CODE_C2B964
-    BIT.B #$80
-    BEQ CODE_C2B790
-    BIT.B #$40
-    BEQ CODE_C2B78A
+    REP #$20 ; useless?!
+    PLP
     RTS
 
-CODE_C2B78A:
+MapMetadata08:
+    JSR.W LoadCurrentYAndIncreaseIt
+    BIT.B #$80
+    BEQ .CODE_C2B790
+    BIT.B #$40
+    BEQ .CODE_C2B78A
+    RTS
+
+.CODE_C2B78A:
     ORA.B #$40
     JSR.W CODE_C2B96F
     RTS
 
-CODE_C2B790:
+.CODE_C2B790:
 STA.W current_map_number
 PHY                                  ;C2B793|5A      |      ;
 REP #$20                             ;C2B794|C220    |      ;
@@ -6196,43 +6165,43 @@ STZ.W $036B                          ;C2B7DB|9C6B03  |81036B;
 STZ.W $036F                          ;C2B7DE|9C6F03  |81036F;
 LDY.W #$2000                         ;C2B7E1|A00020  |      ;
 ROR A                                ;C2B7E4|6A      |      ;
-BCC CODE_C2B7EA                      ;C2B7E5|9003    |C2B7EA;
+BCC .CODE_C2B7EA                      ;C2B7E5|9003    |C2B7EA;
 db $8C,$6A,$03                       ;C2B7E7|        |00036A;
 
-CODE_C2B7EA:
+.CODE_C2B7EA:
 ROR A                                ;C2B7EA|6A      |      ;
-BCC CODE_C2B7F0                      ;C2B7EB|9003    |C2B7F0;
+BCC .CODE_C2B7F0                      ;C2B7EB|9003    |C2B7F0;
 STY.W $036E                          ;C2B7ED|8C6E03  |81036E;
 
-CODE_C2B7F0:
+.CODE_C2B7F0:
 ROR A                                ;C2B7F0|6A      |      ;
 ROR A                                ;C2B7F1|6A      |      ;
 ROR A                                ;C2B7F2|6A      |      ;
 ROR A                                ;C2B7F3|6A      |      ;
 LDY.W #$00E0                         ;C2B7F4|A0E000  |      ;
 ROR A                                ;C2B7F7|6A      |      ;
-BCC CODE_C2B7FD                      ;C2B7F8|9003    |C2B7FD;
+BCC .CODE_C2B7FD                      ;C2B7F8|9003    |C2B7FD;
 LDY.W #$0100                         ;C2B7FA|A00001  |      ;
 
-CODE_C2B7FD:
+.CODE_C2B7FD:
 STY.W $03CC                          ;C2B7FD|8CCC03  |8103CC;
 ROR A                                ;C2B800|6A      |      ;
-BCS CODE_C2B808                      ;C2B801|B005    |C2B808;
+BCS .CODE_C2B808                      ;C2B801|B005    |C2B808;
 LDA.B #$01                           ;C2B803|A901    |      ;
 TSB.W $036F                          ;C2B805|0C6F03  |81036F;
 
-CODE_C2B808:
+.CODE_C2B808:
 LDY.W #$FDFF                         ;C2B808|A0FFFD  |      ;
 STY.W $035C                          ;C2B80B|8C5C03  |81035C;
 STY.W $0360                          ;C2B80E|8C6003  |810360;
 STZ.W $03DD                          ;C2B811|9CDD03  |8103DD;
 LDA.L LUT_C2EEAE+5,X               ;C2B814|BFB3EE82|82EEB3;
-BPL CODE_C2B81D                      ;C2B818|1003    |C2B81D;
+BPL .CODE_C2B81D                      ;C2B818|1003    |C2B81D;
 INC.W $03DD                          ;C2B81A|EEDD03  |8103DD;
 
-CODE_C2B81D:
+.CODE_C2B81D:
 LDA.W $03DD                          ;C2B81D|ADDD03  |8103DD;
-BNE CODE_C2B83F                      ;C2B820|D01D    |C2B83F;
+BNE .CODE_C2B83F                      ;C2B820|D01D    |C2B83F;
 LDA.L LUT_C2EEAE+5,X               ;C2B822|BFB3EE82|82EEB3;
 PHA                                  ;C2B826|48      |      ;
 AND.B #$03                           ;C2B827|2903    |      ;
@@ -6247,9 +6216,9 @@ CLC                                  ;C2B834|18      |      ;
 ADC.B #$70                           ;C2B835|6970    |      ;
 STA.W BG2SC                          ;C2B837|8D0821  |812108;
 STA.W $03C4                          ;C2B83A|8DC403  |8103C4;
-BRA CODE_C2B85A                      ;C2B83D|801B    |C2B85A;
+BRA .CODE_C2B85A                      ;C2B83D|801B    |C2B85A;
 
-CODE_C2B83F:
+.CODE_C2B83F:
 LDA.L LUT_C2EEAE+5,X               ;C2B83F|BFB3EE82|82EEB3;
 PHA                                  ;C2B843|48      |      ;
 AND.B #$03                           ;C2B844|2903    |      ;
@@ -6265,13 +6234,13 @@ ADC.B #$60                           ;C2B852|6960    |      ;
 STA.W BG2SC                          ;C2B854|8D0821  |812108;
 STA.W $03C4                          ;C2B857|8DC403  |8103C4;
 
-CODE_C2B85A:
+.CODE_C2B85A:
 LDA.L LUT_C2EEAE+6,X               ;C2B85A|BFB4EE82|82EEB4;
 STA.W BGMODE                          ;C2B85E|8D0521  |812105;
 PHX                                  ;C2B861|DA      |      ;
 LDY.W #$0000                         ;C2B862|A00000  |      ;
 
-CODE_C2B865:
+.CODE_C2B865:
 LDA.L LUT_C2EEAE+7,X               ;C2B865|BFB5EE82|82EEB5;
 AND.B #$0F                           ;C2B869|290F    |      ;
 STA.W $034B,Y                        ;C2B86B|994B03  |81034B;
@@ -6286,114 +6255,106 @@ INX                                  ;C2B87B|E8      |      ;
 INY                                  ;C2B87C|C8      |      ;
 INY                                  ;C2B87D|C8      |      ;
 CPY.W #$0008                         ;C2B87E|C00800  |      ;
-BNE CODE_C2B865                      ;C2B881|D0E2    |C2B865;
+BNE .CODE_C2B865                      ;C2B881|D0E2    |C2B865;
 PLX                                  ;C2B883|FA      |      ;
-LDA.W $031E                          ;C2B884|AD1E03  |81031E;
-BEQ CODE_C2B88B                      ;C2B887|F002    |C2B88B;
-BRA CODE_C2B891                      ;C2B889|8006    |C2B891;
+LDA.W _031E                          ;C2B884|AD1E03  |81031E;
+BEQ .CODE_C2B88B                      ;C2B887|F002    |C2B88B;
+BRA .CODE_C2B891                      ;C2B889|8006    |C2B891;
 
-CODE_C2B88B:
+.CODE_C2B88B:
 JSL.L CODE_C29662                    ;C2B88B|22629682|829662;
-BCC CODE_C2B899                      ;C2B88F|9008    |C2B899;
+BCC .CODE_C2B899                      ;C2B88F|9008    |C2B899;
 
-CODE_C2B891:
+.CODE_C2B891:
 LDA.L LUT_C2EEAE+11,X               ;C2B891|BFB9EE82|82EEB9;
 AND.B #$3F                           ;C2B895|293F    |      ;
-BRA CODE_C2B8A2                      ;C2B897|8009    |C2B8A2;
+BRA .CODE_C2B8A2                      ;C2B897|8009    |C2B8A2;
 
-CODE_C2B899:
+.CODE_C2B899:
 LDA.L LUT_C2EEAE+11,X               ;C2B899|BFB9EE82|82EEB9;
-BPL CODE_C2B8A2                      ;C2B89D|1003    |C2B8A2;
-INC.W $031E                          ;C2B89F|EE1E03  |81031E;
+BPL .CODE_C2B8A2                      ;C2B89D|1003    |C2B8A2;
+INC.W _031E                          ;C2B89F|EE1E03  |81031E;
 
-CODE_C2B8A2:
+.CODE_C2B8A2:
 ASL A                                ;C2B8A2|0A      |      ;
-BPL CODE_C2B8A8                      ;C2B8A3|1003    |C2B8A8;
-INC.W $031E                          ;C2B8A5|EE1E03  |81031E;
+BPL .CODE_C2B8A8                      ;C2B8A3|1003    |C2B8A8;
+INC.W _031E                          ;C2B8A5|EE1E03  |81031E;
 
-CODE_C2B8A8:
+.CODE_C2B8A8:
 ASL A                                ;C2B8A8|0A      |      ;
-BPL CODE_C2B8AE                      ;C2B8A9|1003    |C2B8AE;
+BPL .CODE_C2B8AE                      ;C2B8A9|1003    |C2B8AE;
 INC.W $0445                          ;C2B8AB|EE4504  |810445;
 
-CODE_C2B8AE:
+.CODE_C2B8AE:
 LDA.L LUT_C2EEAE+11,X               ;C2B8AE|BFB9EE82|82EEB9;
 AND.B #$0F                           ;C2B8B2|290F    |      ;
 STA.W _03BC                          ;C2B8B4|8DBC03  |8103BC;
 PLY                                  ;C2B8B7|7A      |      ;
 RTS                                  ;C2B8B8|60      |      ;
-db $20,$64,$B9,$20,$64,$B9,$20,$64   ;C2B8B9|        |C2B964;
-db $B9,$60                           ;C2B8C1|        |00AD60;
 
-CODE_C2B8C3:
-LDA.W $03B6                          ;C2B8C3|ADB603  |8103B6;
-BIT.B #$20                           ;C2B8C6|8920    |      ;
-BEQ CODE_C2B8D0                      ;C2B8C8|F006    |C2B8D0;
-INY                                  ;C2B8CA|C8      |      ;
-INY                                  ;C2B8CB|C8      |      ;
-INY                                  ;C2B8CC|C8      |      ;
-INY                                  ;C2B8CD|C8      |      ;
-INY                                  ;C2B8CE|C8      |      ;
-RTS                                  ;C2B8CF|60      |      ;
+IncrementYThrice:
+    JSR.W LoadCurrentYAndIncreaseIt
+    JSR.W LoadCurrentYAndIncreaseIt
+    JSR.W LoadCurrentYAndIncreaseIt
+    RTS
 
-CODE_C2B8D0:
-JSR.W CODE_C2B964                    ;C2B8D0|2064B9  |C2B964;
-STA.W $031A                          ;C2B8D3|8D1A03  |81031A;
-JSR.W CODE_C2B964                    ;C2B8D6|2064B9  |C2B964;
-STA.W $031C                          ;C2B8D9|8D1C03  |81031C;
-LDX.W #$0029                         ;C2B8DC|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B8DF|2031B7  |C2B731;
-LDA.W $031E                          ;C2B8E2|AD1E03  |81031E;
-CMP.W $031C                          ;C2B8E5|CD1C03  |81031C;
-BEQ CODE_C2B8EB                      ;C2B8E8|F001    |C2B8EB;
-RTS                                  ;C2B8EA|60      |      ;
+MapMetadata02:
+    LDA.W _03B6
+    BIT.B #$20
+    BEQ .do_work
+    INY #5 ; skip the payload and load the next one
+    RTS
 
-CODE_C2B8EB:
-LDX.W #$042D                         ;C2B8EB|A22D04  |      ;
-JSR.W CODE_C2B9A8                    ;C2B8EE|20A8B9  |C2B9A8;
-BCS CODE_C2B8F4                      ;C2B8F1|B001    |C2B8F4;
-RTS                                  ;C2B8F3|60      |      ;
+.do_work:
+    JSR.W LoadCurrentYAndIncreaseIt ; value for APUIO0
+    STA.W _031A
+    JSR.W LoadCurrentYAndIncreaseIt
+    STA.W _031C
+    LDX.W #$0029
+    JSR.W PcToSnes
+    LDA.W _031E
+    CMP.W _031C
+    BEQ + : RTS : +
+    LDX.W #$042D
+    JSR.W CODE_C2B9A8
+    BCS + : RTS : +
+    LDA.B #$F0
+    STA.W APUIO0
 
-CODE_C2B8F4:
-LDA.B #$F0                           ;C2B8F4|A9F0    |      ;
-STA.W APUIO0                          ;C2B8F6|8D4021  |812140;
+    -: LDA.W APUIO0 : BNE -
+    LDA.B #2
+    JSL.L wait_for_n_vblanks
+    LDA.B #$FF
+    STA.W APUIO0
+    LDA.B #2
+    JSL.L wait_for_n_vblanks
+    JSL.L CODE_C5C5AC
+    LDA.B #3
+    JSL.L wait_for_n_vblanks
+    LDA.W _031A
+    STA.W APUIO0
+    RTS
 
-CODE_C2B8F9:
-LDA.W APUIO0                          ;C2B8F9|AD4021  |812140;
-BNE CODE_C2B8F9                      ;C2B8FC|D0FB    |C2B8F9;
-LDA.B #$02                           ;C2B8FE|A902    |      ;
-JSL.L wait_for_n_vblanks                    ;C2B900|22C9B182|82B1C9;
-LDA.B #$FF                           ;C2B904|A9FF    |      ;
-STA.W APUIO0                          ;C2B906|8D4021  |812140;
-LDA.B #$02                           ;C2B909|A902    |      ;
-JSL.L wait_for_n_vblanks                    ;C2B90B|22C9B182|82B1C9;
-JSL.L CODE_C5C5AC                    ;C2B90F|22ACC585|85C5AC;
-LDA.B #$03                           ;C2B913|A903    |      ;
-JSL.L wait_for_n_vblanks                    ;C2B915|22C9B182|82B1C9;
-LDA.W $031A                          ;C2B919|AD1A03  |81031A;
-STA.W APUIO0                          ;C2B91C|8D4021  |812140;
-RTS                                  ;C2B91F|60      |      ;
-
-CODE_C2B920:
-LDA.W $03B6                          ;C2B920|ADB603  |8103B6;
+MapMetadata01:
+LDA.W _03B6                          ;C2B920|ADB603  |8103B6;
 BIT.B #$10                           ;C2B923|8910    |      ;
-BEQ CODE_C2B92E                      ;C2B925|F007    |C2B92E;
+BEQ .CODE_C2B92E                      ;C2B925|F007    |C2B92E;
 db $C8,$C8,$C8,$C8,$C8,$C8,$60       ;C2B927|        |      ;
 
-CODE_C2B92E:
-JSR.W CODE_C2B964                    ;C2B92E|2064B9  |C2B964;
+.CODE_C2B92E:
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B92E|2064B9  |C2B964;
 PHA                                  ;C2B931|48      |      ;
-JSR.W CODE_C2B964                    ;C2B932|2064B9  |C2B964;
-JSR.W CODE_C2B964                    ;C2B935|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B932|2064B9  |C2B964;
+JSR.W LoadCurrentYAndIncreaseIt                    ;C2B935|2064B9  |C2B964;
 LDX.W #$0029                         ;C2B938|A22900  |      ;
-JSR.W CODE_C2B731                    ;C2B93B|2031B7  |C2B731;
+JSR.W PcToSnes                    ;C2B93B|2031B7  |C2B731;
 LDX.W #$0429                         ;C2B93E|A22904  |      ;
 JSR.W CODE_C2B9A8                    ;C2B941|20A8B9  |C2B9A8;
-BCS CODE_C2B948                      ;C2B944|B002    |C2B948;
+BCS .CODE_C2B948                      ;C2B944|B002    |C2B948;
 PLA                                  ;C2B946|68      |      ;
 RTS                                  ;C2B947|60      |      ;
 
-CODE_C2B948:
+.CODE_C2B948:
 REP #$20                             ;C2B948|C220    |      ;
 LDA.B [$29]                          ;C2B94A|A729    |000029;
 STA.B $23                            ;C2B94C|8523    |000023;
@@ -6402,77 +6363,56 @@ INC.B $29                            ;C2B950|E629    |000029;
 SEP #$20                             ;C2B952|E220    |      ;
 LDX.W #$3800                         ;C2B954|A20038  |      ;
 PLA                                  ;C2B957|68      |      ;
-BEQ CODE_C2B95D                      ;C2B958|F003    |C2B95D;
+BEQ .CODE_C2B95D                      ;C2B958|F003    |C2B95D;
 LDX.W #$F000                         ;C2B95A|A200F0  |      ;
 
-CODE_C2B95D:
+.CODE_C2B95D:
 STX.B $25                            ;C2B95D|8625    |000025;
-JSL.L CODE_C2B272                    ;C2B95F|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C2B95F|2272B282|82B272;
 RTS                                  ;C2B963|60      |      ;
 
-CODE_C2B964:
-PHP                                  ;C2B964|08      |      ;
-REP #$20                             ;C2B965|C220    |      ;
-LDA.B [$2F],Y                        ;C2B967|B72F    |00002F;
-INY                                  ;C2B969|C8      |      ;
-AND.W #$00FF                         ;C2B96A|29FF00  |      ;
-PLP                                  ;C2B96D|28      |      ;
-RTS                                  ;C2B96E|60      |      ;
+; TODO: put this into a namespace?!
+LoadCurrentYAndIncreaseIt:
+    PHP                                  ;C2B964|08      |      ;
+    REP #$20                             ;C2B965|C220    |      ;
+    LDA.B [$2F],Y                        ;C2B967|B72F    |00002F;
+    INY                                  ;C2B969|C8      |      ;
+    AND.W #$00FF                         ;C2B96A|29FF00  |      ;
+    PLP                                  ;C2B96D|28      |      ;
+    RTS                                  ;C2B96E|60      |      ;
 
 CODE_C2B96F:
 STA.B $00                            ;C2B96F|8500    |000000;
 LDY.W #$0000                         ;C2B971|A00000  |      ;
 
-CODE_C2B974:
-INY                                  ;C2B974|C8      |      ;
-INY                                  ;C2B975|C8      |      ;
+.skip: INY #2
+.loop:
+    LDA.B [$2F],Y
+    INY
+    CMP.B #$00
+    BEQ .skip
+    ASL : BCS .skip6
+    ASL : BCS .skip6
+    ASL : BCS .skip7
+    ASL : BCS .skip4
+    ASL : BCS .next
+    ASL : BCS .skip3
+    ASL : BCS .skip5
+    ASL : BCS .skip6
+    - : BRA -
 
-CODE_C2B976:
-LDA.B [$2F],Y                        ;C2B976|B72F    |00002F;
-INY                                  ;C2B978|C8      |      ;
-CMP.B #$00                           ;C2B979|C900    |      ;
-BEQ CODE_C2B974                      ;C2B97B|F0F7    |C2B974;
-ASL A                                ;C2B97D|0A      |      ;
-BCS CODE_C2B998                      ;C2B97E|B018    |C2B998;
-ASL A                                ;C2B980|0A      |      ;
-BCS CODE_C2B998                      ;C2B981|B015    |C2B998;
-ASL A                                ;C2B983|0A      |      ;
-BCS CODE_C2B997                      ;C2B984|B011    |C2B997;
-ASL A                                ;C2B986|0A      |      ;
-BCS CODE_C2B99A                      ;C2B987|B011    |C2B99A;
-ASL A                                ;C2B989|0A      |      ;
-BCS CODE_C2B9A0                      ;C2B98A|B014    |C2B9A0;
-ASL A                                ;C2B98C|0A      |      ;
-BCS CODE_C2B99B                      ;C2B98D|B00C    |C2B99B;
-ASL A                                ;C2B98F|0A      |      ;
-BCS CODE_C2B999                      ;C2B990|B007    |C2B999;
-ASL A                                ;C2B992|0A      |      ;
-BCS CODE_C2B998                      ;C2B993|B003    |C2B998;
-db $80,$FE                           ;C2B995|        |C2B995;
+.skip7: INY
+.skip6: INY
+.skip5: INY
+.skip4: INY
+.skip3: INY #3
+BRA .loop                      ;C2B99E|80D6    |C2B976;
 
-CODE_C2B997:
-INY                                  ;C2B997|C8      |      ;
-
-CODE_C2B998:
-INY                                  ;C2B998|C8      |      ;
-
-CODE_C2B999:
-INY                                  ;C2B999|C8      |      ;
-
-CODE_C2B99A:
-INY                                  ;C2B99A|C8      |      ;
-
-CODE_C2B99B:
-INY                                  ;C2B99B|C8      |      ;
-INY                                  ;C2B99C|C8      |      ;
-INY                                  ;C2B99D|C8      |      ;
-BRA CODE_C2B976                      ;C2B99E|80D6    |C2B976;
-
-CODE_C2B9A0:
+.next:
 LDA.B [$2F],Y                        ;C2B9A0|B72F    |00002F;
 INY                                  ;C2B9A2|C8      |      ;
 CMP.B $00                            ;C2B9A3|C500    |000000;
-BNE CODE_C2B976                      ;C2B9A5|D0CF    |C2B976;
+BNE .loop                      ;C2B9A5|D0CF    |C2B976;
 RTS                                  ;C2B9A7|60      |      ;
 
 CODE_C2B9A8:
@@ -6480,17 +6420,17 @@ PHP                                  ;C2B9A8|08      |      ;
 REP #$20                             ;C2B9A9|C220    |      ;
 LDA.B $29                            ;C2B9AB|A529    |000029;
 CMP.W $0000,X                        ;C2B9AD|DD0000  |810000;
-BNE CODE_C2B9C0                      ;C2B9B0|D00E    |C2B9C0;
+BNE .CODE_C2B9C0                      ;C2B9B0|D00E    |C2B9C0;
 SEP #$20                             ;C2B9B2|E220    |      ;
 LDA.B $2B                            ;C2B9B4|A52B    |00002B;
 CMP.W $0002,X                        ;C2B9B6|DD0200  |810002;
-BNE CODE_C2B9C0                      ;C2B9B9|D005    |C2B9C0;
+BNE .CODE_C2B9C0                      ;C2B9B9|D005    |C2B9C0;
 REP #$20                             ;C2B9BB|C220    |      ;
 PLP                                  ;C2B9BD|28      |      ;
 CLC                                  ;C2B9BE|18      |      ;
 RTS                                  ;C2B9BF|60      |      ;
 
-CODE_C2B9C0:
+.CODE_C2B9C0:
 SEP #$20                             ;C2B9C0|E220    |      ;
 LDA.B $2B                            ;C2B9C2|A52B    |00002B;
 STA.W $0002,X                        ;C2B9C4|9D0200  |810002;
@@ -6659,6 +6599,7 @@ init_window_system:
 
 incsrc "text_bank2/intro_texts.asm"
 
+SquareEnixLogo:
 db $09,$0A,$01   ;C2C2F6|        |      ;
 db $DC,$02,$02,$04,$01,$1C,$03,$02   ;C2C2FE|        |000202;
 db $05,$01,$5C,$03,$02,$06,$01,$9C   ;C2C306|        |000001;
@@ -6839,12 +6780,12 @@ txt_current_map:
 ; SPACE 14
 ; SETPOS $84 1
 ; DRAWBOX 26 2
-; LOOKUP SectionNamesTable $1C6A
+; LOOKUP SectionNamesTable current_map_number
 db $01,$12,$02
 db $14,$0E
 db $01,$84,$01
 db $07,$1A,$02
-db $05 : dw SectionNamesTable,$1C6A
+db $05 : dw SectionNamesTable,current_map_number
 db $00
 ; @ENDSTRING@
 
@@ -7259,37 +7200,37 @@ db $0C
 incsrc "text_bank2/credits.asm"
 
 LUT_C2EEAE:
-dw BgmArray+0, BgmArray+12, BgmArray+24, BgmArray+36
-dw BgmArray+48, BgmArray+60, BgmArray+72, BgmArray+84
-dw BgmArray+96, BgmArray+108, BgmArray+120, BgmArray+132
-dw BgmArray+144, BgmArray+156, BgmArray+168, BgmArray+180
-dw BgmArray+192, BgmArray+204, BgmArray+216, BgmArray+228
-dw BgmArray+240, BgmArray+252, BgmArray+264, BgmArray+276
-dw BgmArray+288, BgmArray+324, BgmArray+336, BgmArray+348
-dw BgmArray+360, BgmArray+372, BgmArray+384, BgmArray+396
-dw BgmArray+408, BgmArray+420, BgmArray+432, BgmArray+300
-dw BgmArray+312, 0, 0, 0
-dw BgmArray+444, BgmArray+456, BgmArray+468, BgmArray+480
-dw BgmArray+492, BgmArray+504, BgmArray+528, BgmArray+540
-dw BgmArray+552, BgmArray+564, BgmArray+576, BgmArray+588
-dw BgmArray+516, 0, 0, 0
-dw 0, 0, 0, 0, BgmArray+600
-dw BgmArray+612, BgmArray+624, BgmArray+636, BgmArray+648
-dw BgmArray+660, BgmArray+672, BgmArray+684, BgmArray+696
-dw BgmArray+708, BgmArray+720, BgmArray+732, 0
+dw BgmArray[0], BgmArray[1], BgmArray[2], BgmArray[3]
+dw BgmArray[4], BgmArray[5], BgmArray[6], BgmArray[7]
+dw BgmArray[8], BgmArray[9], BgmArray[10], BgmArray[11]
+dw BgmArray[12], BgmArray[13], BgmArray[14], BgmArray[15]
+dw BgmArray[16], BgmArray[17], BgmArray[18], BgmArray[19]
+dw BgmArray[20], BgmArray[21], BgmArray[22], BgmArray[23]
+dw BgmArray[24], BgmArray[27], BgmArray[28], BgmArray[29]
+dw BgmArray[30], BgmArray[31], BgmArray[32], BgmArray[33]
+dw BgmArray[34], BgmArray[35], BgmArray[36], BgmArray[25]
+dw BgmArray[26], 0, 0, 0
+dw BgmArray[37], BgmArray[38], BgmArray[39], BgmArray[40]
+dw BgmArray[41], BgmArray[42], BgmArray[44], BgmArray[45]
+dw BgmArray[46], BgmArray[47], BgmArray[48], BgmArray[49]
+dw BgmArray[43], 0, 0, 0
+dw 0, 0, 0, 0, BgmArray[50]
+dw BgmArray[51], BgmArray[52], BgmArray[53], BgmArray[54]
+dw BgmArray[55], BgmArray[56], BgmArray[57], BgmArray[58]
+dw BgmArray[59], BgmArray[60], BgmArray[61], 0
 dw 0, 0, 0, 0, 0
-dw 0, 0, BgmArray+744, BgmArray+756
-dw BgmArray+768, BgmArray+780, BgmArray+792, BgmArray+804
-dw BgmArray+816, BgmArray+828, BgmArray+840, BgmArray+852
-dw BgmArray+864, BgmArray+876, BgmArray+888, 0
+dw 0, 0, BgmArray[62], BgmArray[63]
+dw BgmArray[64], BgmArray[65], BgmArray[66], BgmArray[67]
+dw BgmArray[68], BgmArray[69], BgmArray[70], BgmArray[71]
+dw BgmArray[72], BgmArray[73], BgmArray[74], 0
 dw 0, 0, 0, 0, 0
-dw 0, BgmArray+900, BgmArray+912, BgmArray+924
-dw BgmArray+936, BgmArray+948, BgmArray+960, BgmArray+972
-dw BgmArray+984, BgmArray+996, BgmArray+1008, BgmArray+1020
-dw BgmArray+1032, BgmArray+1044, BgmArray+1056, BgmArray+1068
-dw BgmArray+1080, 0, 0, 0
-dw 0, BgmArray+1092, BgmArray+1104, BgmArray+1116
-dw BgmArray+1128, BgmArray+1140, BgmArray+1152, 0
+dw 0, BgmArray[75], BgmArray[76], BgmArray[77]
+dw BgmArray[78], BgmArray[79], BgmArray[80], BgmArray[81]
+dw BgmArray[82], BgmArray[83], BgmArray[84], BgmArray[85]
+dw BgmArray[86], BgmArray[87], BgmArray[88], BgmArray[89]
+dw BgmArray[90], 0, 0, 0
+dw 0, BgmArray[91], BgmArray[92], BgmArray[93]
+dw BgmArray[94], BgmArray[95], BgmArray[96], 0
 dw 0
 
 macro BgMode(a, b, c, d, e, f, g, h, i, j, k, l)
@@ -7300,8 +7241,8 @@ endmacro
 struct BgmArray .bgm_array_start
     .main_window: skip 1
     .sub_window: skip 1
-    .color_math_a: skip 1
-    .color_math_b: skip 1
+    .color_addition_select: skip 1
+    .color_math_designation: skip 1
     .e: skip 1
     .f: skip 1
     .bgmode: skip 1
@@ -7411,7 +7352,7 @@ endstruct
     %BgMode(!BGM_BG1|!BGM_BG2|!BGM_BG3|!BGM_Obj, $00, $80, $82, $74, $03, $09, $11, $11, $11, $11, $06)
 
 
-
+UNREACH_82F43A:
 db $07,$07,$07,$07   ;C2F436|        |000011;
 db $07,$07,$07,$07,$07,$07,$07,$07   ;C2F43E|        |000007;
 db $07,$07,$07,$07,$00,$01,$02,$03   ;C2F446|        |000007;

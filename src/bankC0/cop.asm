@@ -730,13 +730,13 @@ TYX
     INC.B CopTemp
     INC.B CopTemp
     CLC
-    ADC.W 0, X      ; add to entity x position
+    ADC.W LiveEntities.pos_x, X      ; add to entity x position
     STA.B $16
     LDA.B [CopTemp.address] ; load relative y position
     INC.B CopTemp
     INC.B CopTemp
     CLC
-    ADC.W 2, X      ; add to entity y position
+    ADC.W LiveEntities.pos_y, X      ; add to entity y position
     SEC
     SBC.W #$10      ; subtract the usual 1 block
     STA.B $18
@@ -754,13 +754,13 @@ TYX
     INC.B CopTemp
     INC.B CopTemp
     CLC
-    ADC.W 0, X      ; add to entity x position
+    ADC.W LiveEntities.pos_x, X      ; add to entity x position
     STA.B $16
     LDA.B [CopTemp.address] ; load relative y position
     INC.B CopTemp
     INC.B CopTemp
     CLC
-    ADC.W 2, X      ; add to entity y position
+    ADC.W LiveEntities.pos_y, X      ; add to entity y position
     SEC
     SBC.W #$10      ; substract the usual 1 block
     STA.B $18

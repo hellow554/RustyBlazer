@@ -2118,10 +2118,10 @@ CODE_C0930A:
 .loop:
     LDA.W UNREACH_8199B4,X               ;C09321|BDB499  |8199B4;
     BMI .end                      ;C09324|3018    |C0933E;
-    CMP.W $0314                          ;C09326|CD1403  |810314;
+    CMP.W map_number                          ;C09326|CD1403  |810314;
     BNE .next                      ;C09329|D00D    |C09338;
     LDA.W UNREACH_8199B5,X               ;C0932B|BDB599  |8199B5;
-    CMP.W $0316                          ;C0932E|CD1603  |810316;
+    CMP.W map_sub_number                          ;C0932E|CD1603  |810316;
     BNE .next                      ;C09331|D005    |C09338;
     JSR.W CODE_C09340                    ;C09333|204093  |C09340;
     BRA .end                      ;C09336|8006    |C0933E;
@@ -7075,7 +7075,7 @@ CODE_C0EBFC:
 COP #$10                             ;C0EBFC|0210    |      ;
 db $00,$0A,$01,$00,$00,$00,$00       ;C0EBFE|        |      ;
 LDA.W #$0001                         ;C0EC05|A90100  |      ;
-STA.W $031E                          ;C0EC08|8D1E03  |81031E;
+STA.W _031E                          ;C0EC08|8D1E03  |81031E;
 STA.W $0451                          ;C0EC0B|8D5104  |810451;
 COP #$86                             ;C0EC0E|0286    |      ;
 RTL                                  ;C0EC10|6B      |      ;

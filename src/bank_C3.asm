@@ -133,7 +133,7 @@ LDA.W #$4000                         ;C380D7|A90040  |      ;
 STA.B $23                            ;C380DA|8523    |000023;
 LDX.W #$8000                         ;C380DC|A20080  |      ;
 STX.B $25                            ;C380DF|8625    |000025;
-JSL.L CODE_C2B272                    ;C380E1|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C380E1|2272B282|82B272;
 PHB                                  ;C380E5|8B      |      ;
 LDX.W #$8000                         ;C380E6|A20080  |      ;
 LDY.W #$3000                         ;C380E9|A00030  |      ;
@@ -150,7 +150,7 @@ LDA.W #$2000                         ;C38100|A90020  |      ;
 STA.B $23                            ;C38103|8523    |000023;
 LDX.W #$8000                         ;C38105|A20080  |      ;
 STX.B $25                            ;C38108|8625    |000025;
-JSL.L CODE_C2B272                    ;C3810A|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C3810A|2272B282|82B272;
 PHB                                  ;C3810E|8B      |      ;
 LDX.W #$8000                         ;C3810F|A20080  |      ;
 LDY.W #$1000                         ;C38112|A00010  |      ;
@@ -167,7 +167,7 @@ LDA.W #$2000                         ;C38129|A90020  |      ;
 STA.B $23                            ;C3812C|8523    |000023;
 LDX.W #$8000                         ;C3812E|A20080  |      ;
 STX.B $25                            ;C38131|8625    |000025;
-JSL.L CODE_C2B272                    ;C38133|2272B282|82B272;
+JSL.L Lzss_decomp                    ;C38133|2272B282|82B272;
 PHB                                  ;C38137|8B      |      ;
 LDX.W #$8000                         ;C38138|A20080  |      ;
 LDY.W #$C000                         ;C3813B|A000C0  |      ;
@@ -238,20 +238,17 @@ db $6B                               ;C381DF|        |      ;
 ; Calculate PassableMap offset
 ;
 ; This function takes two words at position $16 and $18 and calculates the
-; offset in the `passable_map` table.
+; offset in an array, for example the `passable_map` table.
 ; The offset is return in the `X` register
 ConvPosToArrayIdx:
-LDA.B $18                            ;C381E0|A518    |000018;
-PHA                                  ;C381E2|48      |      ;
-SEP #$20                             ;C381E3|E220    |      ;
-LDA.W $0343                          ;C381E5|AD4303  |810343;
-JSL.L multiply                    ;C381E8|22D1B182|82B1D1;
+    LDA.B $18 ; y position
+    PHA
+    SEP #$20
+    LDA.W _0343
+    JSL.L multiply
 STA.B 2, S                          ;C381EC|8302    |000002;
 LDA.B $16                            ;C381EE|A516    |000016;
-LSR A                                ;C381F0|4A      |      ;
-LSR A                                ;C381F1|4A      |      ;
-LSR A                                ;C381F2|4A      |      ;
-LSR A                                ;C381F3|4A      |      ;
+LSR #4                                ;C381F0|4A      |      ;
 AND.B #$0F                           ;C381F4|290F    |      ;
 CLC                                  ;C381F6|18      |      ;
 ADC.B $01,S                          ;C381F7|6301    |000001;
@@ -354,9 +351,7 @@ setBit:
     PHA
     PHY
     AND.W #$03F8    ; calculate the offset relative to the table start
-    LSR A           ; divide it by 8 (bits)
-    LSR A
-    LSR A
+    LSR #3          ; divide it by 8 (bits)
     CLC             ; and add that to the original Y start
     ADC.B 1, S
     STA.B 1, S
@@ -881,9 +876,9 @@ STZ.W $032E                          ;C386CC|9C2E03  |81032E;
 STZ.B $42                            ;C386CF|6442    |000042;
 JSL.L disableNmiInterruptAndBlankScreen                    ;C386D1|228CB182|82B18C;
 LDA.W sceneId                          ;C386D5|AD1803  |810318;
-STA.W $0316                          ;C386D8|8D1603  |810316;
+STA.W map_sub_number                          ;C386D8|8D1603  |810316;
 LDA.W $0319                          ;C386DB|AD1903  |810319;
-STA.W $0314                          ;C386DE|8D1403  |810314;
+STA.W map_number                          ;C386DE|8D1403  |810314;
 STZ.W sceneId                          ;C386E1|9C1803  |810318;
 JSL.L CODE_C388E9                    ;C386E4|22E98883|8388E9;
 JSL.L CODE_C0814E                    ;C386E8|224E8180|80814E;
@@ -1221,8 +1216,8 @@ JSL.L CODE_C2820E                    ;C389D5|220E8282|82820E;
 CODE_C389D9:
 LDA.B #$01                           ;C389D9|A901    |      ;
 TSB.W $03BA                          ;C389DB|0CBA03  |8103BA;
-STZ.W $031E                          ;C389DE|9C1E03  |81031E;
-STZ.W $03B6                          ;C389E1|9CB603  |8103B6;
+STZ.W _031E                          ;C389DE|9C1E03  |81031E;
+STZ.W _03B6                          ;C389E1|9CB603  |8103B6;
 LDX.W _0312                          ;C389E4|AE1203  |810312;
 STX.W _0302                          ;C389E7|8E0203  |810302;
 LDX.W #$FFFF                         ;C389EA|A2FFFF  |      ;

@@ -136,8 +136,6 @@ struct HDMA_Regs $4300
     .line_counter : skip 1                  ; $43xA
 endstruct align $10
 
-; please add new labels below this line, not above
-
 save_entries = $700000
 
 TempVar0 = $7E0000 ; a temporary place for a variable - might be override by any other function call
@@ -160,6 +158,8 @@ _0312 = $7E0312
 map_number = $7E0314
 map_sub_number = $7E0316
 sceneId = $7E0318
+_031A = $7E031A
+_031C = $7E031C
 _031E = $7E031E
 buttons_pressed = $7E0322
 buttons_pressed8 = $7E0323
@@ -175,7 +175,8 @@ bg1_hofs = $7E033A
 bg1_vofs = $7E033C
 bg2_hofs = $7E033E
 bg2_vofs = $7E0340
-_0372     = $7E0372
+_0343    = $7E0343
+_0372    = $7E0372
 %Position(PlayerPosReal, $7E0374)
 %Position(PlayerPosInt, $7E0378)
 %PositionFacing(TeleportPos, $7E037C) ; the X, Y and facing after the next teleportation event
@@ -326,6 +327,8 @@ SomeOtherTypeToTransferToVram = $7F7800
 ;; Not sure if other values are possible
 passable_map = $7F8000
 
+
+
 UNREACH_8199B4 = $8199B4
 UNREACH_8199B5 = $8199B5
 UNREACH_8199B6 = $8199B6
@@ -378,7 +381,6 @@ UNREACH_81BA10 = $81BA10
 UNREACH_82FC39 = $82FC39
 UNREACH_82FC3A = $82FC3A
 UNREACH_81BA16 = $81BA16
-UNREACH_82F43A = $82F43A
 UNREACH_82F44A = $82F44A
 UNREACH_81BA13 = $81BA13
 UNREACH_81BA14 = $81BA14
