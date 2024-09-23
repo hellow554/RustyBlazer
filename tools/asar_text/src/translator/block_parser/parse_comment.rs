@@ -10,12 +10,17 @@ use crate::{
 use super::{text_mapper::TextTranslator, Result};
 
 fn find_matching_close(mut s: &str) -> Option<usize> {
+    // absolute position from start
+    let mut apos = 0;
     while let Some(pos) = s.find('"') {
-        if Some("\\") == s.get(pos - 1..pos) {
+        if pos == 0 {
+            return Some(apos);
+        } else if Some("\\") == s.get(pos - 1..pos) {
             // quote is escaped, search the next one
-            s = &s[pos..];
+            s = &s[pos + 1..];
+            apos += pos + 1;
         } else {
-            return Some(pos);
+            return Some(apos + pos);
         }
     }
     None

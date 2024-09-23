@@ -1,6 +1,7 @@
 use asar_text::{Translator, TranspileResult};
 use std::borrow::Cow;
 
+#[track_caller]
 pub fn run_test(content: &str) -> TranspileResult {
     Translator::transpile("a.asm", content).unwrap()
 }

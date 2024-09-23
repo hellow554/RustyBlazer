@@ -161,3 +161,22 @@ db 'E','i','n',' ','m','a','g','i','s','c','h','e','r',' ','T','o','r','n','a','
 Foo Bar"#,
     )
 }
+
+#[test]
+fn bug_with_quotes() {
+    assert_simple(
+        r#"\
+; @DEFAULT_TEXTBOX@
+; "Komm` schon Turbo,"
+; "sag` \"Guten Tag\"."
+; @END@"#,
+        r#"\
+; @DEFAULT_TEXTBOX@
+; "Komm` schon Turbo,"
+; "sag` \"Guten Tag\"."
+db $10
+db 'K','o','m','m','`',' ',$EA,'T','u','r','b','o',',',$0D
+db 's','a','g','`',' ','"','G','u','t','e','n',' ','T','a','g','"','.',$0D
+; @END@"#,
+    );
+}
