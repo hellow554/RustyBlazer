@@ -452,7 +452,7 @@ CODE_C2AF4D:
 PLX                                  ;C2AF4D|FA      |      ;
 STX.W $03F5                          ;C2AF4E|8EF503  |8003F5;
 LDA.B #$01                           ;C2AF51|A901    |      ;
-TSB.W $03BA                          ;C2AF53|0CBA03  |8003BA;
+TSB.W _03BA                          ;C2AF53|0CBA03  |8003BA;
 PLB                                  ;C2AF56|AB      |      ;
 PLP                                  ;C2AF57|28      |      ;
 RTL                                  ;C2AF58|6B      |      ;

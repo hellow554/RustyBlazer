@@ -930,7 +930,7 @@ check_entity_collision:
 PHP                                  ;C08A60|08      |      ;
 PHB                                  ;C08A61|8B      |      ;
 REP #$20                             ;C08A62|C220    |      ;
-LDX.W $039E                          ;C08A64|AE9E03  |81039E;
+LDX.W _039E                          ;C08A64|AE9E03  |81039E;
 LDA.W $0016,X                        ;C08A67|BD1600  |810016;
 BIT.W #$0400                         ;C08A6A|890004  |      ;
 BEQ CODE_C08A72                      ;C08A6D|F003    |C08A72;
@@ -1035,7 +1035,7 @@ PLP                                  ;C08B1C|28      |      ;
 RTL                                  ;C08B1D|6B      |      ;
 
 CODE_C08B1E:
-LDX.W $039E                          ;C08B1E|AE9E03  |8C039E;
+LDX.W _039E                          ;C08B1E|AE9E03  |8C039E;
 LDA.W $001E,X                        ;C08B21|BD1E00  |8C001E;
 CMP.W #$0024                         ;C08B24|C92400  |      ;
 BCC CODE_C08B2A                      ;C08B27|9001    |C08B2A;
@@ -1124,7 +1124,7 @@ STA.W $0025,Y                        ;C08BD3|992500  |8C0025;
 REP #$20                             ;C08BD6|C220    |      ;
 CPY.W $039C                          ;C08BD8|CC9C03  |8C039C;
 BEQ CODE_C08BEC                      ;C08BDB|F00F    |C08BEC;
-LDX.W $039E                          ;C08BDD|AE9E03  |8C039E;
+LDX.W _039E                          ;C08BDD|AE9E03  |8C039E;
 LDA.W $001E,X                        ;C08BE0|BD1E00  |8C001E;
 SEC                                  ;C08BE3|38      |      ;
 SBC.W #$0020                         ;C08BE4|E92000  |      ;
@@ -1197,7 +1197,7 @@ BIT.W #$0001                         ;C08C73|890100  |      ;
 BEQ + : RTS : +
 SEP #$20                             ;C08C79|E220    |      ;
 LDA.W $0025,Y                        ;C08C7B|B92500  |8C0025;
-STA.W $0336                          ;C08C7E|8D3603  |8C0336;
+STA.W enemy_current_health                          ;C08C7E|8D3603  |8C0336;
 LDX.W $0038,Y                        ;C08C81|BE3800  |8C0038;
 LDA.L Entity.hp,X               ;C08C84|BF028081|818002;
 STA.W enemy_max_health                          ;C08C88|8D3803  |8C0338;
@@ -1300,7 +1300,7 @@ db $60                               ;C08D66|        |      ;
 CODE_C08D67:
 SEP #$20                             ;C08D67|E220    |      ;
 LDA.W $0025,Y                        ;C08D69|B92500  |8F0025;
-STA.W $0336                          ;C08D6C|8D3603  |8F0336;
+STA.W enemy_current_health                          ;C08D6C|8D3603  |8F0336;
 LDX.W $0038,Y                        ;C08D6F|BE3800  |8F0038;
 LDA.L Entity.hp,X               ;C08D72|BF028081|818002;
 STA.W enemy_max_health                          ;C08D76|8D3803  |8F0338;
@@ -1413,7 +1413,7 @@ PHP                                  ;C08E20|08      |      ;
 REP #$30                             ;C08E21|C230    |      ;
 LDA.W $0439                          ;C08E23|AD3904  |810439;
 BNE CODE_C08E8B                      ;C08E26|D063    |C08E8B;
-LDY.W $039E                          ;C08E28|AC9E03  |81039E;
+LDY.W _039E                          ;C08E28|AC9E03  |81039E;
 LDA.W $0000,Y                        ;C08E2B|B90000  |810000;
 CLC                                  ;C08E2E|18      |      ;
 ADC.W #$0005                         ;C08E2F|690500  |      ;
@@ -1549,7 +1549,7 @@ PLA                                  ;C08F22|68      |      ;
 REP #$20                             ;C08F23|C220    |      ;
 LDA.W #UpdateHud.Health                         ;C08F25|A90400  |      ;
 TSB.W display_hud_bitfield                          ;C08F28|0C3203  |810332;
-LDX.W $039E                          ;C08F2B|AE9E03  |81039E;
+LDX.W _039E                          ;C08F2B|AE9E03  |81039E;
 LDA.W Equipment.armor                          ;C08F2E|AD601B  |811B60;
 CMP.W #Items.MysticArmor                         ;C08F31|C90D00  |      ;
 BNE + : LDA.W #-64 : BRA ++
@@ -2203,7 +2203,7 @@ LDA.W $0000,X                        ;C093C5|BD0000  |810000;
 STA.W PlayerPosReal.x                          ;C093C8|8D7403  |810374;
 LDA.W $0002,X                        ;C093CB|BD0200  |810002;
 STA.W PlayerPosReal.y                          ;C093CE|8D7603  |810376;
-STX.W $039E                          ;C093D1|8E9E03  |81039E;
+STX.W _039E                          ;C093D1|8E9E03  |81039E;
 BRL CODE_C09351                      ;C093D4|827AFF  |C09351;
 
 CODE_C093D7:
@@ -2378,7 +2378,7 @@ LDA.W Equipment.sword                          ;C0954B|AD5E1B  |811B5E;
 BNE CODE_C0955B                      ;C0954E|D00B    |C0955B;
 
 CODE_C09550:
-LDY.W $039E                          ;C09550|AC9E03  |81039E;
+LDY.W _039E                          ;C09550|AC9E03  |81039E;
 LDA.W #$C000                         ;C09553|A900C0  |      ;
 TRB.W buttons_pressed                          ;C09556|1C2203  |810322;
 BRA CODE_C0958B                      ;C09559|8030    |C0958B;
@@ -2398,7 +2398,7 @@ TRB.W $0322
 
 CODE_C09573:
 PLX                                  ;C09573|FA      |      ;
-LDY.W $039E                          ;C09574|AC9E03  |81039E;
+LDY.W _039E                          ;C09574|AC9E03  |81039E;
 LDA.W $001E,Y                        ;C09577|B91E00  |81001E;
 SEC                                  ;C0957A|38      |      ;
 SBC.W #$0014                         ;C0957B|E91400  |      ;
@@ -2454,7 +2454,7 @@ ORA.W #$0010                         ;C0960F|091000  |      ;
 STA.W $0016,X                        ;C09612|9D1600  |810016;
 COP #$91                             ;C09615|0291    |      ;
 PHX                                  ;C09617|DA      |      ;
-LDX.W $039E                          ;C09618|AE9E03  |81039E;
+LDX.W _039E                          ;C09618|AE9E03  |81039E;
 JSR.W CODE_C096C8                    ;C0961B|20C896  |C096C8;
 BCC CODE_C0965C                      ;C0961E|903C    |C0965C;
 LDA.W $0004,X                        ;C09620|BD0400  |810004;
@@ -2849,7 +2849,7 @@ db $38,$60                           ;C098CB|        |      ;
 CODE_C098CD:
 PHX                                  ;C098CD|DA      |      ;
 PHA                                  ;C098CE|48      |      ;
-LDY.W $039E                          ;C098CF|AC9E03  |81039E;
+LDY.W _039E                          ;C098CF|AC9E03  |81039E;
 LDA.W $001E,Y                        ;C098D2|B91E00  |81001E;
 CMP.W #$0004                         ;C098D5|C90400  |      ;
 BCS CODE_C09914                      ;C098D8|B03A    |C09914;
@@ -3022,7 +3022,7 @@ RTL                                  ;C099D7|6B      |      ;
 CODE_C099D8:
 PHX                                  ;C099D8|DA      |      ;
 LDA.W revealing_lair_id                          ;C099D9|AD0704  |810407;
-ASL A                                ;C099DC|0A      |      ;
+ASL                                  ;C099DC|0A      |      ;
 TAX                                  ;C099DD|AA      |      ;
 LDA.L _7F0483, X                      ;C099DE|BF83047F|7F0483;
 PLX                                  ;C099E2|FA      |      ;
@@ -3087,7 +3087,7 @@ COP #$91                             ;C09A51|0291    |      ;
 RTL                                  ;C09A53|6B      |      ;
 
 CODE_C09A54:
-STX.W $039E                          ;C09A54|8E9E03  |81039E;
+STX.W _039E                          ;C09A54|8E9E03  |81039E;
 COP #$A9                             ;C09A57|02A9    |      ;
 db $00,$30,$7F                       ;C09A59|        |      ;
 COP #$84                             ;C09A5C|0284    |      ;
@@ -3328,9 +3328,8 @@ db $AB,$9E,$81,$9E,$DF,$9D,$67,$9D   ;C09D5F|        |      ;
 BCS CODE_C09D77                      ;C09D67|B00E    |C09D77;
 LDA.W #$0001                         ;C09D69|A90100  |      ;
 JSR.W CODE_C09FC9                    ;C09D6C|20C99F  |C09FC9;
-COP #$80                             ;C09D6F|0280    |      ;
-db $01                               ;C09D71|        |000002;
-COP #$82                             ;C09D72|0282    |      ;
+%CopPlayAnimation(1)
+%Cop82()
 BRL CODE_C09A91                      ;C09D74|821AFD  |C09A91;
 
 CODE_C09D77:
@@ -3546,7 +3545,7 @@ STA.W sceneId                          ;C09F21|8D1803  |810318;
 COP #$91                             ;C09F24|0291    |      ;
 RTL                                  ;C09F26|6B      |      ;
 BRK #$01                             ;C09F27|0001    |      ;
-JSR.W CODE_C09FA7                    ;C09F29|20A79F  |C09FA7;
+JSR.W CastPhoenixOnSwing                    ;C09F29|20A79F  |C09FA7;
 BCS CODE_C09F33                      ;C09F2C|B005    |C09F33;
 db $02,$84,$A4,$A6,$80               ;C09F2E|        |      ;
 
@@ -3560,7 +3559,7 @@ db $21                               ;C09F41|        |000002;
 COP #$82                             ;C09F42|0282    |      ;
 BRL CODE_C09A91                      ;C09F44|824AFB  |C09A91;
 BRK #$01                             ;C09F47|0001    |      ;
-JSR.W CODE_C09FA7                    ;C09F49|20A79F  |C09FA7;
+JSR.W CastPhoenixOnSwing                    ;C09F49|20A79F  |C09FA7;
 BCS CODE_C09F53                      ;C09F4C|B005    |C09F53;
 db $02,$84,$B9,$A6,$80               ;C09F4E|        |      ;
 
@@ -3574,7 +3573,7 @@ db $20                               ;C09F61|        |C08202;
 COP #$82                             ;C09F62|0282    |      ;
 BRL CODE_C09A91                      ;C09F64|822AFB  |C09A91;
 BRK #$01                             ;C09F67|0001    |      ;
-JSR.W CODE_C09FA7                    ;C09F69|20A79F  |C09FA7;
+JSR.W CastPhoenixOnSwing                    ;C09F69|20A79F  |C09FA7;
 BCS CODE_C09F73                      ;C09F6C|B005    |C09F73;
 db $02,$84,$D0,$A6,$80               ;C09F6E|        |      ;
 
@@ -3588,7 +3587,7 @@ db $22                               ;C09F81|        |828202;
 COP #$82                             ;C09F82|0282    |      ;
 BRL CODE_C09A91                      ;C09F84|820AFB  |C09A91;
 BRK #$01                             ;C09F87|0001    |      ;
-JSR.W CODE_C09FA7                    ;C09F89|20A79F  |C09FA7;
+JSR.W CastPhoenixOnSwing                    ;C09F89|20A79F  |C09FA7;
 BCS CODE_C09F93                      ;C09F8C|B005    |C09F93;
 db $02,$84,$E5,$A6,$80               ;C09F8E|        |      ;
 
@@ -3602,17 +3601,26 @@ db $23                               ;C09FA1|        |000002;
 COP #$82                             ;C09FA2|0282    |      ;
 BRL CODE_C09A91                      ;C09FA4|82EAFA  |C09A91;
 
-CODE_C09FA7:
-LDA.W Equipment.sword                          ;C09FA7|AD5E1B  |811B5E;
-CMP.W #$0008                         ;C09FAA|C90800  |      ;
-BNE CODE_C09FC7                      ;C09FAD|D018    |C09FC7;
-db $AD,$60,$1B,$C9,$10,$00,$D0,$10   ;C09FAF|        |001B60;
-db $AD,$62,$1B,$C9,$18,$00,$D0,$08   ;C09FB7|        |001B62;
-db $02,$26,$02,$00,$C7,$9F,$18,$60   ;C09FBF|        |      ;
-
-CODE_C09FC7:
-SEC                                  ;C09FC7|38      |      ;
-RTS                                  ;C09FC8|60      |      ;
+;;; Checks whether all three necessary items are equipped and casts the phoenix
+;;;
+;;; The necessary items are soulblade, soularmor and phoenix
+;;; Clears carry if the cast was successful, else carry is set
+CastPhoenixOnSwing:
+    LDA.W Equipment.sword
+    CMP.W #Items.SoulBlade
+    BNE .ret
+    LDA.W Equipment.armor
+    CMP.W #Items.SoulArmor
+    BNE .ret
+    LDA.W Equipment.magic
+    CMP.W #Items.Phoenix
+    BNE .ret
+    %CopCastMagic(2, .ret) ; phoenix costs 2 gem
+    CLC
+    RTS
+.ret:
+    SEC
+    RTS
 
 CODE_C09FC9:
 LDY.W $003E,X                        ;C09FC9|BC3E00  |81003E;
@@ -3639,6 +3647,8 @@ LDA.W #$0000                         ;C09FF1|A90000  |      ;
 STA.W $0020,Y                        ;C09FF4|992000  |810020;
 STA.W $0014,Y                        ;C09FF7|991400  |810014;
 RTS                                  ;C09FFA|60      |      ;
+
+
 LDA.W $0016,X                        ;C09FFB|BD1600  |810016;
 AND.W #$CEFF                         ;C09FFE|29FFCE  |      ;
 STA.W $0016,X                        ;C0A001|9D1600  |810016;
@@ -3900,7 +3910,7 @@ COP #$82                             ;C0A229|0282    |      ;
 BRK #$1B                             ;C0A22B|001B    |      ;
 LDA.W #$02A0                         ;C0A22D|A9A002  |      ;
 STA.W $0016,X                        ;C0A230|9D1600  |810016;
-LDY.W $039E                          ;C0A233|AC9E03  |81039E;
+LDY.W _039E                          ;C0A233|AC9E03  |81039E;
 LDA.W $001E,Y                        ;C0A236|B91E00  |81001E;
 TAY                                  ;C0A239|A8      |      ;
 LDA.W UNREACH_81FA7F,Y               ;C0A23A|B97FFA  |81FA7F;
@@ -4415,9 +4425,9 @@ CODE_C0AA11:
 COP #$86                             ;C0AA11|0286    |      ;
 RTL                                  ;C0AA13|6B      |      ;
 
-CODE_C0AA14:
-COP #$94                             ;C0AA14|0294    |      ;
-BRA CODE_C0AA14                      ;C0AA16|80FC    |C0AA14;
+Call_Cop94:
+    COP #$94
+    BRA Call_Cop94
 
 db $E2,$20,$A9,$80,$9D,$36,$00,$C2   ;C0AA18|        |      ;
 db $20,$A9,$00,$03,$9D,$16,$00,$02   ;C0AA20|        |C000A9;
@@ -4601,8 +4611,7 @@ TAX                                  ;C0AB9E|AA      |      ;
 RTS                                  ;C0AB9F|60      |      ;
 
 .data:
-    dw $C8B7, $D8C9, $CED9, $DECF
-    dw $A7DF
+    dw $C8B7, $D8C9, $CED9, $DECF, $A7DF
 
 CODE_C0ABAA:
 LDY.W $0032,X                        ;C0ABAA|BC3200  |810032;
@@ -5198,7 +5207,7 @@ Player_LevelUp:
 check_player_dead:
     PHP
     REP #$20
-    LDX.W $039E
+    LDX.W _039E
     LDA.W $0016, X
     BIT.W #$0400
     BNE .end
@@ -6726,7 +6735,7 @@ STA.W $0014,Y                        ;C0E73A|991400  |810014;
 RTS                                  ;C0E73D|60      |      ;
 LDA.W #$3080                         ;C0E73E|A98030  |      ;
 TSB.W button_mask                          ;C0E741|0C2603  |810326;
-STX.W $039E                          ;C0E744|8E9E03  |81039E;
+STX.W _039E                          ;C0E744|8E9E03  |81039E;
 SEP #$20                             ;C0E747|E220    |      ;
 LDA.W STAT78                          ;C0E749|AD3F21  |81213F;
 BIT.B #$10                           ;C0E74C|8910    |      ;
@@ -6758,7 +6767,7 @@ CODE_C0E78E:
 LDA.W #Key16.Start | Key16.Select                         ;C0E78E|A90030  |      ;
 TSB.W button_mask                          ;C0E791|0C2603  |810326;
 STZ.W buttons_pressed                          ;C0E794|9C2203  |810322;
-STX.W $039E                          ;C0E797|8E9E03  |81039E;
+STX.W _039E                          ;C0E797|8E9E03  |81039E;
 LDA.W $0451                          ;C0E79A|AD5104  |810451;
 BEQ CODE_C0E7A2                      ;C0E79D|F003    |C0E7A2;
 BRL CODE_C0ED53                      ;C0E79F|82B105  |C0ED53;
@@ -7386,7 +7395,7 @@ db $D3,$F1,$80                       ;C0EECB|        |0000F1;
 LDA.W #$3080                         ;C0EECE|A98030  |      ;
 TSB.W button_mask                          ;C0EED1|0C2603  |810326;
 COP #$A3                             ;C0EED4|02A3    |      ;
-STX.W $039E                          ;C0EED6|8E9E03  |81039E;
+STX.W _039E                          ;C0EED6|8E9E03  |81039E;
 STZ.W $0413                          ;C0EED9|9C1304  |810413;
 STZ.W $0417                          ;C0EEDC|9C1704  |810417;
 COP #$85                             ;C0EEDF|0285    |      ;
@@ -7506,7 +7515,7 @@ db $50,$00,$02,$80,$10,$02,$82,$80   ;C0F103|        |C0F105;
 db $E1,$02,$80,$01,$02,$82,$00,$16   ;C0F10B|        |000002;
 db $02,$80,$1E,$02,$82,$02,$80,$2E   ;C0F113|        |      ;
 db $02,$82,$82,$7B,$FF               ;C0F11B|        |      ;
-LDY.W $039E                          ;C0F120|AC9E03  |81039E;
+LDY.W _039E                          ;C0F120|AC9E03  |81039E;
 LDA.W $0000,Y                        ;C0F123|B90000  |810000;
 STA.W PlayerPosReal.x                          ;C0F126|8D7403  |810374;
 LSR A                                ;C0F129|4A      |      ;

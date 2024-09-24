@@ -286,6 +286,10 @@ macro Cop32(byte)
     db <byte>
 endmacro
 
+macro Cop33()
+    COP #$33
+endmacro
+
 macro Cop34()
     COP #$34
 endmacro

@@ -18,12 +18,12 @@ A4_script_witch:
 .something:
     %CopB2(CODE_C0A9C9, 0, $10, $40)
     %PlaySound($4E)
-    LDY.W $039E
+    LDY.W _039E
     LDA.W #$100
     STA.W 0, Y
     %CopLoopStart(225) : %CopLoopEnd()
     %PlaySound($4E)
-    LDY.W $039E
+    LDY.W _039E
     LDA.W #$20
     STA.W 0, Y
     LDA.W #$1A0

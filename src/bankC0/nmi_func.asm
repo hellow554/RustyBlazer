@@ -110,7 +110,7 @@ TransferL3ToVram:
     LDA.W $1C7C
     BEQ + : RTS : +
 
-    LDA.W $03BA
+    LDA.W _03BA
     BNE + : RTS : +
 
     BIT.B #$02
@@ -119,7 +119,7 @@ TransferL3ToVram:
     STX.W VMADDL
     LDX.W #L3_Text
     STX.W DMA_Regs[2].source_address_word
-    STZ.W $03BA
+    STZ.W _03BA
     BRA .beginTransfer
 
 .CODE_C0846E:
@@ -128,7 +128,7 @@ TransferL3ToVram:
     LDX.W #SomeOtherTypeToTransferToVram
     STX.W DMA_Regs[2].source_address_word
     LDA.B #$02
-    TRB.W $03BA
+    TRB.W _03BA
 
 .beginTransfer:
     LDA.B #$01

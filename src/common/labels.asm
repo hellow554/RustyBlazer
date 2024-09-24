@@ -175,11 +175,14 @@ bg1_hofs = $7E033A
 bg1_vofs = $7E033C
 bg2_hofs = $7E033E
 bg2_vofs = $7E0340
+_0342    = $7E0342
 _0343    = $7E0343
 _0372    = $7E0372
 %Position(PlayerPosReal, $7E0374)
 %Position(PlayerPosInt, $7E0378)
 %PositionFacing(TeleportPos, $7E037C) ; the X, Y and facing after the next teleportation event
+x_screen_scroll    = $7E0382 ; amount of screen scrolling in x direction
+y_screen_scroll    = $7E0384 ; amount of screen scrolling in y direction
 bg3_horizontal_scroll = $7E0386
 bg3_vertical_scroll = $7E0388
 _038A = $7E038A
@@ -349,7 +352,6 @@ UNREACH_81FB49 = $81FB49
 UNREACH_81FB4B = $81FB4B
 UNREACH_81BA2B = $81BA2B
 UNREACH_8B8000 = $8B8000
-UNKN_8D8000 = $8D8000
 
 UNREACH_82FB15 = $82FB15
 UNREACH_82FB17 = $82FB17

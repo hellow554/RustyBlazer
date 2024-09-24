@@ -22,15 +22,15 @@ assert objectsize(Entity) == 14
 
 entities_GrassValley:
     %create_entity(entity_sh_act1_center_tile, 1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 1, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 2, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(entity_sh_act1_something_something, 0, 0, 0, 0, 3, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 4, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 5, $10, $20, UNKN_8D8000, CODE_C0AA14)
-    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C0DE)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(_, 0, 0, 0, 0, 1, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(_, 0, 0, 0, 0, 2, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(entity_sh_act1_something_something, 0, 0, 0, 0, 3, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(_, 0, 0, 0, 0, 4, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(_, 0, 0, 0, 0, 5, $10, $20, DATA_CD8000, Call_Cop94)
+    %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           ScrollScreenToPlayer)
     %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C101)
-    %create_entity(_, 0, 0, 0, 0, 6, $10, $20, UNKN_8D8000, CODE_C0AA14)
+    %create_entity(_, 0, 0, 0, 0, 6, $10, $20, DATA_CD8000, Call_Cop94)
     %create_entity(_, 0, 0, 0, 0, 0, $10, $20, 0,           CODE_C3C15A)
 
     ; --- NPCs ---
@@ -858,15 +858,15 @@ entities_WorldOfEvil:
     %create_entity(entity_sh_act7_center_tile,
         1, 2, 3, 5, 0, $80, $11, UNREACH_8B8000, CODE_C09A54)
     %create_entity(_,
-        0, 0, 0, 0, $03, $10, $20, UNKN_8D8000, CODE_C0AA14)
+        0, 0, 0, 0, $03, $10, $20, DATA_CD8000, Call_Cop94)
     %create_entity(_,
-        0, 0, 0, 0, $34, $10, $20, UNKN_8D8000, CODE_C0AA14)
+        0, 0, 0, 0, $34, $10, $20, DATA_CD8000, Call_Cop94)
     %create_entity(_,
-        0, 0, 0, 0, $35, $10, $20, UNKN_8D8000, CODE_C0AA14)
+        0, 0, 0, 0, $35, $10, $20, DATA_CD8000, Call_Cop94)
     %create_entity(entity_act7_space_walk_check,
-        0, 0, 0, 0, $37, $10, $20, UNKN_8D8000, A7_script_WalkThroughSpace)
+        0, 0, 0, 0, $37, $10, $20, DATA_CD8000, A7_script_WalkThroughSpace)
     %create_entity(_,
-        0, 0, 0, 0, $38, $10, $20, UNKN_8D8000, CODE_C0AA14)
+        0, 0, 0, 0, $38, $10, $20, DATA_CD8000, Call_Cop94)
     %create_entity(entity_sh_act7_distort_space_background,
         0, 0, 0, 0, 0, $10, $20, $0, Script_A7_DistortSpaceBackground)
     %create_entity(entity_sh_act7_distort_faces_background,

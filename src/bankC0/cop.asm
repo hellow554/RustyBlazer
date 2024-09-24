@@ -473,7 +473,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDX.W textbox_tlc
     JSL.L clearTextbox
     LDA.B #1
-    STA.W $03BA
+    STA.W _03BA
     PLP
     PLA
     REP #$20
@@ -794,7 +794,7 @@ TYX
     INC.B CopTemp
     STA.B $18
 
-    LDY.W $039E ; what is here? Something entity related
+    LDY.W _039E ; what is here? Something entity related
 
     LDA.W 0, Y ; add x offset to entity x position
     CLC
@@ -865,7 +865,7 @@ TYX
 
 .cop_33:
     TYX
-    LDY.W $039E
+    LDY.W _039E
     JSR.W ..clear_certain_bit
     LDY.W $03A0
     JSR.W ..clear_certain_bit
@@ -882,7 +882,7 @@ TYX
 
 .cop_34:
     TYX
-    LDY.W $039E
+    LDY.W _039E
     JSR.W ..set_certain_bit
     LDY.W $03A0
     JSR.W ..set_certain_bit
@@ -966,7 +966,7 @@ TYX
     LDA.W #UpdateHud.Health
     TSB.W display_hud_bitfield
 
-    LDX.W $039E
+    LDX.W _039E
     LDA.W #$FFE0
     STA.W $26, X
     %PlaySound(!Sound_PlayerHit)

@@ -339,7 +339,7 @@ printOsdStringFromBank2:
     PLA
     STA.W $03FB
     LDA.B #$01
-    TSB.W $03BA
+    TSB.W _03BA
     PLB
     PLP
     RTL

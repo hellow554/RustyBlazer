@@ -1,4 +1,5 @@
 !EV_A1_CrabwalkGuyNoticedUs             = $0000
+!EV_Temporary                           = $0
 !EV_A1_WatermillKeeperFirstTalk         = $0001
 !EV_A1_BridgeGuard_GotOutOfWay          = $0004
 !EV_A1_Hideout_Kid_Hint_Given           = $0005

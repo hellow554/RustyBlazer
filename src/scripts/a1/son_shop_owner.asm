@@ -1,6 +1,6 @@
 A1_script_son_shop_owner:
     %Cop3B($16, .next)
-    %CopAssignTalkCallback(SomeTalk)
+    %CopAssignTalkCallback(Talk_UnreleasedSoul_Act1)
     SEP #$20
     LDA.B #$80
     PHA

@@ -33,7 +33,7 @@ A1_script_mill_keeper:
 .player_in_front_of_wheel:
     LDA.W #Key16.A|Key16.Select|!Key16_All_Directions
     TSB.W button_mask
-    LDY $039E
+    LDY _039E
     LDA.W #$1
     STA.W $1E, Y
     %CopLoopStart(3) : %CopLoopEnd()
@@ -54,7 +54,7 @@ A1_script_mill_keeper:
     RTL
 
 .said_no:
-    %CopShowText(Default_Text_End+1)
+    %CopShowText(Default_Text_End_Wo_Wfak)
     %CopSetScriptAddrToNextInstruction()
     %CopJumpIfEntityHasReachedXY(!Entity_Player, $26, $17, +)
     BRA .wait_for_player_to_stand_in_front_of_wheel

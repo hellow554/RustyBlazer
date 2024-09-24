@@ -87,6 +87,7 @@ db ' ',' ','g','l','a','u','b','t',' ',$94,'a','n',' ','i','h','r',' ','G','l','
 db $00
 ; @ENDSTRING@
 
+Txt_TheEnd:
 ; @NEW_TEXT@
 ; CURSIVE
 ; SETPOS $58 $03

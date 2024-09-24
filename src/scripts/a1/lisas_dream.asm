@@ -233,12 +233,12 @@ db 'r','ü','c','k','k','e','h','r','e','n',' ','w','i','r','s','t','.',$0C
 ; "dieser Traum nie zu "
 ; "Ende gehen würde." NO_NEWLINE
 ; WAIT 120
-; -> Default_Text_End+1
+; -> Default_Text_End_Wo_Wfak
 db $0F,'D','a','n','k','e','!',$0D
 db $0E,$5A
 db $8F,'w','ü','n','s','c','h','t','e',',',$BA,$0D
 db $BD,$A5,'n','i','e',' ',$FD,$0D
 db 'E','n','d','e',' ','g','e','h','e','n',' ','w','ü','r','d','e','.'
 db $0E,$78
-db $13 : dw Default_Text_End+1
+db $13 : dw Default_Text_End_Wo_Wfak
 ; @END@
