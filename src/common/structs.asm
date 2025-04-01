@@ -31,44 +31,44 @@ macro PositionFacing(name, ptr)
 endmacro
 
 struct LiveEntities 0
-    .pos_x: skip 2                      ; 00
-    .pos_y: skip 2                      ; 02
-    ._04 : skip 2                       ; 04
-    ._06 : skip 2                       ; 06
-    ._08 : skip 2                       ; 08
-    ._0a : skip 2                       ; 0A
-    ._0c : skip 2                       ; 0C
-    ._0e : skip 2                       ; 0E
-    ._10 : skip 2                       ; 10
-    ._12 : skip 2                       ; 12
-    .frame_wait_counter : skip 2        ; 14 - used in COP-1B,
-    .entity_id : skip 2                 ; 16
-    .script_ret_addr : skip 2           ; 18
-    ._1a : skip 2                       ; 1A
-    ._1c : skip 2                       ; 1C
-    .facing : skip 2                    ; 1E
-    ._20 : skip 2                       ; 20
-    ._22 : skip 2                       ; 22
-    .some_bank : skip 1                 ; 24
-    .hp : skip 1                        ; 25
-    .invincibility_counter : skip 2     ; 26 - used in COP-39, 94 and 95
-    ._28 : skip 2                       ; 28
-    ._2a : skip 1                       ; 2A
-    ._2b : skip 1                       ; 2B
-    ._2c : skip 2                       ; 2C
-    .loop_counter : skip 1              ; 2E - used in COP-03/04
-    ._2f : skip 1                       ; 2F
-    ._30 : skip 2                       ; 30
-    ._32 : skip 1                       ; 32
-    ._33 : skip 1                       ; 33
-    ._34 : skip 2                       ; 34
-    .script_ret_addr_bank : skip 1      ; 36
-    ._37 : skip 1                       ; 37
+    .pos_x: skip 2                        ; 00
+    .pos_y: skip 2                        ; 02
+    ._04 : skip 2                         ; 04
+    ._06 : skip 2                         ; 06
+    ._08 : skip 2                         ; 08
+    ._0a : skip 2                         ; 0A
+    ._0c : skip 2                         ; 0C
+    ._0e : skip 2                         ; 0E
+    ._10 : skip 2                         ; 10
+    ._12 : skip 2                         ; 12
+    .frame_wait_counter : skip 2          ; 14 - used in COP-1B,
+    .entity_id : skip 2                   ; 16
+    .script_ret_addr : skip 2             ; 18
+    ._1a : skip 2                         ; 1A
+    ._1c : skip 2                         ; 1C
+    .facing : skip 2                      ; 1E
+    ._20 : skip 2                         ; 20
+    ._22 : skip 2                         ; 22
+    .some_bank : skip 1                   ; 24
+    .hp : skip 1                          ; 25
+    .invincibility_counter : skip 2       ; 26 - used in COP-39, 94 and 95
+    ._28 : skip 2                         ; 28
+    ._2a : skip 1                         ; 2A
+    ._2b : skip 1                         ; 2B
+    .loop_start_addr : skip 2             ; 2C - used in COP-03/04
+    .loop_counter : skip 1                ; 2E - used in COP-03/04
+    ._2f : skip 1                         ; 2F
+    ._30 : skip 2                         ; 30
+    ._32 : skip 1                         ; 32
+    ._33 : skip 1                         ; 33
+    ._34 : skip 2                         ; 34
+    .script_ret_addr_bank : skip 1        ; 36
+    ._37 : skip 1                         ; 37
     .entities_table_entry_offset : skip 2 ; 38
-    .entities_palcement_ptr : skip 2    ; 3A
-    ._3c : skip 2                       ; 3C
-    ._3e : skip 2                       ; 3E
-endstruct                               ; 40
+    .entities_palcement_ptr : skip 2      ; 3A
+    ._3c : skip 2                         ; 3C
+    ._3e : skip 2                         ; 3E
+endstruct                                 ; 40
 assert objectsize(LiveEntities) == $40
 
 struct LairDataStructure $C1BA0D
@@ -84,7 +84,7 @@ struct LairDataStructure $C1BA0D
     .field_08 : skip 1              ; 08
     .npc_name : skip 1              ; 09
     .field_0A : skip 1              ; 0A
-    
+
     .lair_map_number : skip 1       ; 0B
     .lair_pos_x : skip 1            ; 0C
     .lair_pos_y : skip 1            ; 0D

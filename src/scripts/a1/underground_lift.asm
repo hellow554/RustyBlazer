@@ -11,7 +11,7 @@ A1_script_UndergroundLift:
 ;; it could be that I swapped up and downwards position, please bear with me :)
 .wheel_rotated:
     ; check if the lift should be in upwards or downwards position
-    lDY.W _039E
+    LDY.W _039E
     LDA 0, Y
     CMP #$4B0
     BCC .lift_at_bottom_position

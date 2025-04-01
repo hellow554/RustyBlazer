@@ -16,7 +16,7 @@ EnterPlayerName:
     BRA .find_null  ; until we found a null byte
 
 .enter_loop:
-    %PlaySound(!Sound_MenuBeep)
+    %PlaySound(Sound.MenuBeep)
 
 .loop_wo_beep:
     PHX
@@ -192,7 +192,7 @@ EnterPlayerName:
     LDA.L L3_Text+2, X
     STA.W 0, Y
     INY
-    %PlaySound(!Sound_DiaglogConfirm)
+    %PlaySound(Sound.DialogConfirm)
     BRL .loop_wo_beep
 
 .pressed_start:

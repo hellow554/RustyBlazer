@@ -449,11 +449,11 @@ macro CopB2(target_24, x, y, _z)
     dw <x>, <y>, <_z>
 endmacro
 
-macro create_entity(name, offense, flags1, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
+macro create_entity(name, offense, defense, hp, bcd_exp, spriteId, facing, flags2, zUknown, behaviour_ptr)
 if not(stringsequal("<name>", "_"))
 #<name>:
 endif
-    db <offense>, <flags1>, <hp>
+    db <offense>, <defense>, <hp>
     dw <bcd_exp>
     db <spriteId>, <facing>, <flags2>
     dl <zUknown>
@@ -489,22 +489,22 @@ macro define_enum(name, ...)
 	if sizeof(...) > 0
 		!enum_<name>_first = <name>.<...[0]>
 		!enum_<name>_last = <name>.<...[sizeof(...)-1]>
-	
+
 		struct <name> $000000
 			.First:
-			
+
 			!temp_i #= 0
 			while !temp_i < sizeof(...)
 				if !temp_i == sizeof(...)-1
 					.Last:
 				endif
-				
+
 				.<...[!temp_i]>: skip 1
-				
+
 				!temp_i #= !temp_i+1
 			endwhile
 			undef "temp_i"
-			
+
 			.Count:
 		endstruct
 	else
@@ -518,40 +518,40 @@ macro define_enum_with_values(name, ...)
 	if sizeof(...) > 0 && sizeof(...) & 1 == 0
 		!enum_<name>_first = <name>.<...[0]>
 		!enum_<name>_last = <name>.<...[sizeof(...) - 2]>
-	
+
 		struct <name> $000000
 			.First:
-			
+
 			!temp_i #= 0
 			!temp_prev #= 0
 			while !temp_i < sizeof(...)
 				if <...[!temp_i + 1]> < 0
 					error "Enums currently don't support negative values."
 				endif
-			
+
 				; This code here mainly serves the purpose of avoiding negative or zero skips.
 				; Although they might not be a problem per se, but I don't want to rely on
 				; Asar always supporting them.
 				if <...[!temp_i + 1]> < !temp_prev
 					error "Enum values must be ordered sequentially.".
 				endif
-				
+
 				if <...[!temp_i + 1]> != !temp_prev
 					skip <...[!temp_i + 1]>-!temp_prev
 					!temp_prev #= <...[!temp_i + 1]>
 				endif
-				
+
 				if !temp_i == sizeof(...) - 2
 					.Last:
 				endif
-				
+
 				.<...[!temp_i]>:
-				
+
 				!temp_i #= !temp_i+2
 			endwhile
 			undef "temp_i"
 			undef "temp_prev"
-			
+
 			.Count:
 		endstruct
 	else

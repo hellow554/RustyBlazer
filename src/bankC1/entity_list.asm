@@ -6,7 +6,7 @@ entities_lut:
 
 struct Entity entities_lut
     .offense: skip 1
-    .flags1: skip 1
+    .defense: skip 1
     .hp: skip 1
     .bcd_exp: skip 2
     .sprite_id: skip 1

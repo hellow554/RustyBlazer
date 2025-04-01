@@ -1,5 +1,5 @@
 A1_script_magician:
-    %CopJumpIfSealed(!Lair_A1_Magician, +) : RTL : +    
+    %CopJumpIfSealed(!Lair_A1_Magician, +) : RTL : +
     %CopAdjustNpcXPosition(8)
     %CopSetScriptAddr(CODE_C0A9C9)
     %CopAssignTalkCallback(.talkback)
@@ -24,7 +24,7 @@ A1_script_magician:
     STA.W player_souls
     REP #$20
     %CopSetEventFlag(!EV_A1_MagicianTalk)
-    %PlaySound(!Sound_SomebodyAppears)
+    %PlaySound(Sound.SomebodyAppears)
     RTL
 
 .txt1:

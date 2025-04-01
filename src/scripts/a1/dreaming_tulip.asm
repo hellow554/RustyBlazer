@@ -10,7 +10,7 @@ A1_script_dreaming_tulip:
 
 .release_jewel:
     %CopAC(CODE_C3BBB6, $70, $80, $50)
-    %PlaySound(!Sound_ReleaseCreature)
+    %PlaySound(Sound.ReleaseCreature)
     BRL .anim_loop
 
 .first_talk:

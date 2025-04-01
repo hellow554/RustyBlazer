@@ -1,46 +1,34 @@
 %define_enum_with_values(Sound,
-    Nothing, $00,
-    SwordSwing, $01,
-    EnemyHit, $02,
-    LairDone, $03,
-    PlayerHurt, $04,
-    EndbossDungeonAppears, $06,
-    MenuBeep, $07,
-    HealthRestore, $08,
-    Gunshot, $09,
-
-    HittingMetal, $0C,
-    ReceivingGem, $0D,
-    SomebodyAppears, $0E,
+    Nothing, 0,
+    SwordSwing, 1,
+    EnemyHit, 2,
+    LairDone, 3,
+    PlayerHurt, 4,
+    Explosion1, 5,
+    EndbossDungeonAppears, 6,
+    MenuBeep, 7,
+    HealthRestore, 8,
+    Gunshot1, 9,
+    Gunshot2, 10,
+    WaterSpit, 11,
+    HittingMetal, 12,
+    ReceivingGem, 13,
+    SomebodyAppears, 14,
     Thunder, $10,
-    EnemySpawns, $13,
-    OpenChest, $15,
-    LvlUp, $17,
-    DialogConfirm, $18,
-    SaveDone, $26    )
-!Sound_No = $00
-!Sound_SwordSwing = $01
-!Sound_EnemyHit = $02
-!Sound_LairDone = $03
-!Sound_PlayerHit = $04
-!Sound_Explosition1 = $05
-!Sound_EndBossDungeonAppears = $06
-!Sound_MenuBeep = $07
-!Sound_HealthRestore = $08
-!Sound_Gunshot1 = $09
-!Sound_Gunshot2 = $0A
-!Sound_WaterSpit = $0B
-!Sound_HittingMetal = $0C
-!Sound_ReceivingGem = $0D
-!Sound_SomebodyAppears = $0E
-!Sound_CastLightarrow = $12
-!Sound_OpenChest = $15
-!Sound_CastTornado = $16
-!Sound_DiaglogConfirm = $18
-!Sound_CastFlameBall = $1B
-!Sound_ReleaseCreature = $1C
-!Sound_MagicFlareExplode = $21
-!Sound_CastMagicRotator = $24
+    CastLightArrow, 18,
+    EnemySpawns, 19,
+    OpenChest, 21,
+    CastTornado, 22,
+    LvlUp, 23,
+    DialogConfirm, 24,
+    CastFlameBall, 27,
+    ReleaseCreature, 28,
+    MagicFlareExplore, 33,
+    CastMagicRotator, 36,
+    SaveDone, 38)
+
+; maybe it goes until 63/0x3f and the upper two bits are for flags? not sure though
+
 !Sound_MetalEnemyHitWithNormalSword = $4C
 !Sound_WheelStartSpinning = $4F
 !Sound_ReceiveItem = $5E

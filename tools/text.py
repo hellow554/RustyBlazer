@@ -54,7 +54,7 @@ class IdaAddr(Addr):
 
 
 class ROM:
-    ROM_IMAGE_PATH = "/home/marcel/projects/RustyBlazer/german.sfc"
+    ROM_IMAGE_PATH = "german.sfc"
     content = []
 
     @classmethod
@@ -283,11 +283,13 @@ class SbString:
                     yield from map(lambda _: a, range(0x19))
                 case 0x0C:
                     # return and store current text pointer to $03F3
+                    yield " <CONT>"
                     return
                 case 0x0D:
                     yield "\n"
                 case 0x0E:
                     [no_frames] = take(1)
+                    yield f"<wait {no_frames}> "
                     # wait for `no_frames`
                 case 0x0F:
                     # something with menu beep?!
@@ -300,6 +302,7 @@ class SbString:
                     yield "\n"
                 case 0x12:
                     # wait for any key input
+                    yield "WFE"
                     pass
                 case 0x13:
                     # load new textpointer
@@ -320,7 +323,6 @@ class SbString:
                     yield SbChar(x).get()
 
     def print(self):
-        t = []
         if self._addr.ida_bank == 0x82:
             text = "".join(self.interpret2())
         else:

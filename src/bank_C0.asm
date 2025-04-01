@@ -1035,138 +1035,148 @@ PLP                                  ;C08B1C|28      |      ;
 RTL                                  ;C08B1D|6B      |      ;
 
 CODE_C08B1E:
-LDX.W _039E                          ;C08B1E|AE9E03  |8C039E;
-LDA.W $001E,X                        ;C08B21|BD1E00  |8C001E;
-CMP.W #$0024                         ;C08B24|C92400  |      ;
-BCC CODE_C08B2A                      ;C08B27|9001    |C08B2A;
-RTS                                  ;C08B29|60      |      ;
+    LDX.W _039E
+    LDA.W $001E,X                        ;C08B21|BD1E00  |8C001E;
+    CMP.W #$0024                         ;C08B24|C92400  |      ;
+    BCC + : RTS : +
 
-CODE_C08B2A:
-LDA.W $0016,Y                        ;C08B2A|B91600  |8C0016;
-BIT.W #$0002                         ;C08B2D|890200  |      ;
-BEQ CODE_C08B35                      ;C08B30|F003    |C08B35;
+    LDA.W LiveEntities.entity_id, Y
+    BIT.W #2
+    BEQ .over
 
-CODE_C08B32:
-BRK #$4C                             ;C08B32|004C    |      ;
-RTS                                  ;C08B34|60      |      ;
+.player_hits_metal:
+    %PlaySound(!Sound_MetalEnemyHitWithNormalSword)
+    RTS
 
-CODE_C08B35:
-LDA.W Equipment.sword                          ;C08B35|AD5E1B  |8C1B5E;
-CMP.W #$0008                         ;C08B38|C90800  |      ;
-BEQ CODE_C08B8E                      ;C08B3B|F051    |C08B8E;
-LDA.W Equipment.sword                          ;C08B3D|AD5E1B  |8C1B5E;
-CMP.W #$0002                         ;C08B40|C90200  |      ;
-BNE CODE_C08B6A                      ;C08B43|D025    |C08B6A;
-db $CC,$9C,$03,$F0,$20,$B9,$1A,$00   ;C08B45|        |00039C;
-db $89,$00,$0E,$F0,$3C,$B9,$1A,$00   ;C08B4D|        |      ;
-db $09,$40,$00,$99,$1A,$00,$B9,$16   ;C08B55|        |      ;
-db $00,$09,$00,$08,$99,$16,$00,$A9   ;C08B5D|        |      ;
-db $B4,$00,$99,$26,$00               ;C08B65|        |000000;
+.over:
+    LDA.W Equipment.sword
+    CMP.W #Items.SoulBlade
+    BEQ .can_damage_enemy ; if it's the soul blade, skip all this and just damage the enemy
+    LDA.W Equipment.sword
+    CMP.W #Items.PsychoSword
+    BNE .check_enemy_immunity ; if it's the psycho sword, go along with this
+    CPY.W  _039C
+    BEQ .check_enemy_immunity ; not sure what this branch does
+    LDA.W LiveEntities._1a, Y
+    BIT.W #$E00 ; if the enemy metal, soul or ??? (maybe stunned) ?
+    BEQ .can_damage_enemy
+    LDA.W LiveEntities._1a, Y
+    ORA.W #$40
+    STA.W LiveEntities._1a, Y
+    LDA.W LiveEntities.entity_id, Y
+    ORA.W #$800 ; make him stunned?!
+    STA.W LiveEntities.entity_id, Y
+    LDA.W #180 ; and invincible for 180 frames -> 3 seconds
+    STA.W LiveEntities.invincibility_counter, Y
 
-CODE_C08B6A:
-LDA.W $001A,Y                        ;C08B6A|B91A00  |8C001A;
-BIT.W #$0800                         ;C08B6D|890008  |      ;
-BNE UNREACH_C08B7D                   ;C08B70|D00B    |C08B7D;
-BIT.W #$0400                         ;C08B72|890004  |      ;
-BNE CODE_C08B86                      ;C08B75|D00F    |C08B86;
-BIT.W #$0200                         ;C08B77|890002  |      ;
-BEQ CODE_C08B8E                      ;C08B7A|F012    |C08B8E;
-db $60                               ;C08B7C|        |      ;
+.check_enemy_immunity:
+    LDA.W LiveEntities._1a, Y
+    BIT.W #$800 ; is it a soul like enemy?
+    BNE .is_soul
+    BIT.W #$400 ; is it a metal like enemy?
+    BNE .is_metal
+    BIT.W #$200 ; nor this
+    BEQ .can_damage_enemy
+    RTS
 
-UNREACH_C08B7D:
-db $AD,$5E,$1B,$C9,$06,$00,$F0,$09   ;C08B7D|        |001B5E;
-db $60                               ;C08B85|        |      ;
+.is_soul:
+    LDA.W Equipment.sword
+    CMP.W #Items.SpiritSword
+    BEQ .can_damage_enemy
+    RTS
 
-CODE_C08B86:
-LDA.W Equipment.sword                          ;C08B86|AD5E1B  |8C1B5E;
-CMP.W #$0005                         ;C08B89|C90500  |      ;
-BNE CODE_C08B32                      ;C08B8C|D0A4    |C08B32;
+.is_metal:
+    LDA.W Equipment.sword
+    CMP.W #Items.ZantetsuSword
+    BNE .player_hits_metal
 
-CODE_C08B8E:
-LDA.W Equipment.sword                          ;C08B8E|AD5E1B  |8C1B5E;
-CMP.W #$0003                         ;C08B91|C90300  |      ;
-BNE CODE_C08BA3                      ;C08B94|D00D    |C08BA3;
-db $CC,$9C,$03,$F0,$08,$AD,$12,$03   ;C08B96|        |00039C;
-db $29,$0F,$00,$F0,$70               ;C08B9E|        |      ;
+.can_damage_enemy:
+    LDA.W Equipment.sword
+    CMP.W #Items.CriticalSword
+    BNE .calculate_damage
+    CPY.W _039C
+    BEQ .calculate_damage
+    LDA.W _0312
+    AND.W #$F
+    BEQ .enemy_dead
 
-CODE_C08BA3:
-SEP #$20                             ;C08BA3|E220    |      ;
-LDX.W $0038,Y                        ;C08BA5|BE3800  |8C0038;
-LDA.L Entity.flags1,X               ;C08BA8|BF018081|818001;
-STA.B $00                            ;C08BAC|8500    |000000;
-LDA.W $1B8C                          ;C08BAE|AD8C1B  |8C1B8C;
-SEC                                  ;C08BB1|38      |      ;
-SBC.B $00                            ;C08BB2|E500    |000000;
-BEQ CODE_C08BB8                      ;C08BB4|F002    |C08BB8;
-BCS CODE_C08BBA                      ;C08BB6|B002    |C08BBA;
+.calculate_damage:
+    SEP #$20
+    LDX.W LiveEntities.entities_table_entry_offset, Y
+    LDA.L Entity.defense, X ; load the defense of the enemy
+    STA.B TempVar0
+    LDA.W player_total_strength
+    SEC
+    SBC.B TempVar0 ; subtract the defense from our total strength
+    BEQ + : BCS ++ : + ; clamp that value to at least 1, not less
+    LDA.B #$01 : ++
+    STA.B TempVar0
 
-CODE_C08BB8:
-LDA.B #$01                           ;C08BB8|A901    |      ;
+    ; next let's check if we have the bracelet equipped and double the attack power
+    LDA.W Equipment.item
+    CMP.B #Items.SuperBracelet
+    BEQ .double_strength
+    CMP.B #Items.PowerBracelet
+    BNE .skip_double
+.double_strength:
+    ASL TempVar0
+.skip_double:
+    LDA.W LiveEntities.hp, Y
+    SEC
+    SBC.B TempVar0
+    BCC .enemy_dead
+    BEQ .enemy_dead
 
-CODE_C08BBA:
-STA.B $00                            ;C08BBA|8500    |000000;
-LDA.W Equipment.item                          ;C08BBC|AD641B  |8C1B64;
-CMP.B #$37                           ;C08BBF|C937    |      ;
-BEQ UNREACH_C08BC7                   ;C08BC1|F004    |C08BC7;
-CMP.B #$35                           ;C08BC3|C935    |      ;
-BNE CODE_C08BC9                      ;C08BC5|D002    |C08BC9;
+.store_enemy_hp:
+    STA.W LiveEntities.hp, Y
+    REP #$20
 
-UNREACH_C08BC7:
-db $06,$00                           ;C08BC7|        |000000;
+    CPY.W _039C
+    BEQ .CODE_C08BEC
+    LDX.W _039E
+    LDA.W $001E, X
+    SEC
+    SBC.W #$0020
+    CMP.W #$0004
+    BCC .CODE_C08BF7
 
-CODE_C08BC9:
-LDA.W $0025,Y                        ;C08BC9|B92500  |8C0025;
-SEC                                  ;C08BCC|38      |      ;
-SBC.B $00                            ;C08BCD|E500    |000000;
-BCC CODE_C08C13                      ;C08BCF|9042    |C08C13;
-BEQ CODE_C08C13                      ;C08BD1|F040    |C08C13;
-STA.W $0025,Y                        ;C08BD3|992500  |8C0025;
-REP #$20                             ;C08BD6|C220    |      ;
-CPY.W $039C                          ;C08BD8|CC9C03  |8C039C;
-BEQ CODE_C08BEC                      ;C08BDB|F00F    |C08BEC;
-LDX.W _039E                          ;C08BDD|AE9E03  |8C039E;
-LDA.W $001E,X                        ;C08BE0|BD1E00  |8C001E;
-SEC                                  ;C08BE3|38      |      ;
-SBC.W #$0020                         ;C08BE4|E92000  |      ;
-CMP.W #$0004                         ;C08BE7|C90400  |      ;
-BCC CODE_C08BF7                      ;C08BEA|900B    |C08BF7;
+.CODE_C08BEC:
+    LDA.W LiveEntities._1a, Y
+    AND.W #$FFBF
+    STA.W LiveEntities._1a, Y
+    BRA .CODE_C08C00
 
-CODE_C08BEC:
-LDA.W $001A,Y                        ;C08BEC|B91A00  |8C001A;
-AND.W #$FFBF                         ;C08BEF|29BFFF  |      ;
-STA.W $001A,Y                        ;C08BF2|991A00  |8C001A;
-BRA CODE_C08C00                      ;C08BF5|8009    |C08C00;
+.CODE_C08BF7:
+    LDA.W LiveEntities._1a, Y
+    ORA.W #$0040
+    STA.W LiveEntities._1a, Y
 
-CODE_C08BF7:
-LDA.W $001A,Y                        ;C08BF7|B91A00  |8C001A;
-ORA.W #$0040                         ;C08BFA|094000  |      ;
-STA.W $001A,Y                        ;C08BFD|991A00  |8C001A;
+.CODE_C08C00:
+    LDA.W #$FFF8
+    STA.W LiveEntities.invincibility_counter, Y
+    LDA.W LiveEntities.entity_id, Y
+    ORA.W #$0800
+    STA.W LiveEntities.entity_id, Y
+    %PlaySound($42)
+    BRA .CODE_C08C70
 
-CODE_C08C00:
-LDA.W #$FFF8                         ;C08C00|A9F8FF  |      ;
-STA.W $0026,Y                        ;C08C03|992600  |8C0026;
-LDA.W $0016,Y                        ;C08C06|B91600  |8C0016;
-ORA.W #$0800                         ;C08C09|090008  |      ;
-STA.W $0016,Y                        ;C08C0C|991600  |8C0016;
-BRK #$42                             ;C08C0F|0042    |      ;
-BRA CODE_C08C70                      ;C08C11|805D    |C08C70;
+.enemy_dead:
+    REP #$20
+    LDA.W LiveEntities._1a, Y
+    BIT.W #$100                         ;C08C18|890001  |      ;
+    SEP #$20                             ;C08C1B|E220    |      ;
+    BEQ .CODE_C08C23                      ;C08C1D|F004    |C08C23;
+    LDA.B #1
+    BRA .store_enemy_hp
 
-CODE_C08C13:
-REP #$20                             ;C08C13|C220    |      ;
-LDA.W $001A,Y                        ;C08C15|B91A00  |8C001A;
-BIT.W #$0100                         ;C08C18|890001  |      ;
-SEP #$20                             ;C08C1B|E220    |      ;
-BEQ CODE_C08C23                      ;C08C1D|F004    |C08C23;
-db $A9,$01,$80,$B0                   ;C08C1F|        |      ;
-
-CODE_C08C23:
-LDA.B #$80                           ;C08C23|A980    |      ;
-STA.W $0036,Y                        ;C08C25|993600  |8C0036;
-LDA.B #$00                           ;C08C28|A900    |      ;
-STA.W $0025,Y                        ;C08C2A|992500  |8C0025;
-REP #$20                             ;C08C2D|C220    |      ;
-LDA.W #$AA3C                         ;C08C2F|A93CAA  |      ;
-STA.W $0018,Y                        ;C08C32|991800  |8C0018;
+.CODE_C08C23:
+    LDA.B #<:CODE_C0AA3C
+    STA.W LiveEntities.script_ret_addr_bank, Y
+    LDA.B #0
+    STA.W LiveEntities.hp, Y
+    REP #$20
+    LDA.W #CODE_C0AA3C
+    STA.W LiveEntities.script_ret_addr, Y
 LDA.W #$0000                         ;C08C35|A90000  |      ;
 STA.W $0014,Y                        ;C08C38|991400  |8C0014;
 LDA.W $0016,Y                        ;C08C3B|B91600  |8C0016;
@@ -1191,7 +1201,7 @@ LDX.W $0038,Y                        ;C08C44|BE3800  |8C0038;
 .no_recovery_sword:
 BRK #$43                             ;C08C6E|0043    |      ;
 
-CODE_C08C70:
+.CODE_C08C70:
 LDA.W $0016,Y                        ;C08C70|B91600  |8C0016;
 BIT.W #$0001                         ;C08C73|890100  |      ;
 BEQ + : RTS : +
@@ -1205,6 +1215,8 @@ LDA.B #$80                           ;C08C8B|A980    |      ;
 STA.W displayEnemeyHealthCounter                          ;C08C8D|8D3003  |8C0330;
 REP #$20                             ;C08C90|C220    |      ;
 RTS                                  ;C08C92|60      |      ;
+
+; --------
 
 CODE_C08C93:
 LDA.W $0016,Y                        ;C08C93|B91600  |8F0016;
@@ -1272,12 +1284,12 @@ db $A9,$01,$80,$CF                   ;C08D24|        |      ;
 
 CODE_C08D28:
 SEP #$20                             ;C08D28|E220    |      ;
-LDA.B #$80                           ;C08D2A|A980    |      ;
+LDA.B #<:CODE_C0AA3C                           ;C08D2A|A980    |      ;
 STA.W $0036,Y                        ;C08D2C|993600  |8F0036;
 LDA.B #$00                           ;C08D2F|A900    |      ;
 STA.W $0025,Y                        ;C08D31|992500  |8F0025;
 REP #$20                             ;C08D34|C220    |      ;
-LDA.W #$AA3C                         ;C08D36|A93CAA  |      ;
+LDA.W #CODE_C0AA3C                         ;C08D36|A93CAA  |      ;
 STA.W $0018,Y                        ;C08D39|991800  |8F0018;
 LDA.W #$0000                         ;C08D3C|A90000  |      ;
 STA.W $0014,Y                        ;C08D3F|991400  |8F0014;
@@ -3638,7 +3650,7 @@ CODE_C09FE1:
 LDA.W player_strength_from_item                          ;C09FE1|AD701B  |811B70;
 
 CODE_C09FE4:
-STA.W $1B8C                          ;C09FE4|8D8C1B  |811B8C;
+STA.W player_total_strength                          ;C09FE4|8D8C1B  |811B8C;
 LDA.W player_defense_from_item                          ;C09FE7|AD741B  |811B74;
 CLC                                  ;C09FEA|18      |      ;
 ADC.W player_defense_from_level                          ;C09FEB|6D761B  |811B76;
@@ -4434,6 +4446,8 @@ db $20,$A9,$00,$03,$9D,$16,$00,$02   ;C0AA20|        |C000A9;
 db $A3,$AD,$72,$03,$9D,$1C,$00,$02   ;C0AA28|        |0000AD;
 db $A8,$00,$80,$8E,$02,$80,$10,$02   ;C0AA30|        |      ;
 db $82,$02,$86,$6B                   ;C0AA38|        |C0303D;
+
+CODE_C0AA3C:
 CPX.W $039C                          ;C0AA3C|EC9C03  |81039C;
 BNE CODE_C0AA44                      ;C0AA3F|D003    |C0AA44;
 BRL CODE_C0ABC2                      ;C0AA41|827E01  |C0ABC2;
@@ -6434,14 +6448,12 @@ SetResetGameStateBit:
     BPL .reset
     LDA.L BitMask, X
     ORA.W game_state, Y
-    BRA +
-
+    BRA .store
 .reset:
     LDA.L BitMask, X
     EOR.B #$FF
     AND.W game_state, Y
-
-+
+.store:
     STA.W game_state, Y
     PLX
     REP #$20
@@ -6480,13 +6492,12 @@ CheckIfItemIsObtained:
     DEY
     LDA.W Inventory, Y
     AND.B #~$80
-    BNE +
+    BNE .not
     PLA
     REP #$20
     SEC
     RTS
-
-+:
+.not:
     PLA
     LDA.W Inventory, Y
     REP #$20
@@ -6553,38 +6564,35 @@ make_npc_unpassable:
     RTS
 
 make_npc_passable:
-LDA.W $0010,X                        ;C0E61F|BD1000  |810010;
+LDA.W LiveEntities._10, X
 CLC                                  ;C0E622|18      |      ;
-ADC.W $0012,X                        ;C0E623|7D1200  |810012;
+ADC.W LiveEntities._12, X
 CMP.W #$0021                         ;C0E626|C92100  |      ;
 BCS CODE_C0E64B                      ;C0E629|B020    |C0E64B;
 PHX                                  ;C0E62B|DA      |      ;
-LDA.W $0000,X                        ;C0E62C|BD0000  |810000;
+LDA.W LiveEntities.pos_x, X
 STA.B $16                            ;C0E62F|8516    |000016;
-LDA.W $0002,X                        ;C0E631|BD0200  |810002;
+LDA.W LiveEntities.pos_y, X
 SEC                                  ;C0E634|38      |      ;
 SBC.W #$0010                         ;C0E635|E91000  |      ;
 STA.B $18                            ;C0E638|8518    |000018;
 JSL.L ConvPosToArrayIdx                    ;C0E63A|22E08183|8381E0;
-LDA.L passable_map,X                      ;C0E63E|BF00807F|7F8000;
+LDA.L passable_map, X
 AND.W #$FF00                         ;C0E642|2900FF  |      ;
-STA.L passable_map,X                      ;C0E645|9F00807F|7F8000;
+STA.L passable_map, X
 PLX                                  ;C0E649|FA      |      ;
 RTS                                  ;C0E64A|60      |      ;
 
 CODE_C0E64B:
 TXY                                  ;C0E64B|9B      |      ;
-LDA.W $0012,Y                        ;C0E64C|B91200  |810012;
-LSR A                                ;C0E64F|4A      |      ;
-LSR A                                ;C0E650|4A      |      ;
-LSR A                                ;C0E651|4A      |      ;
-LSR A                                ;C0E652|4A      |      ;
+LDA.W LiveEntities._12, Y                        ;C0E64C|B91200  |810012;
+LSR #4
 STA.B $0C                            ;C0E653|850C    |00000C;
-LDA.W $0000,X                        ;C0E655|BD0000  |810000;
+LDA.W LiveEntities.pos_x, X
 STA.B $16                            ;C0E658|8516    |000016;
-LDA.W $0002,X                        ;C0E65A|BD0200  |810002;
+LDA.W LiveEntities.pos_y, X
 SEC                                  ;C0E65D|38      |      ;
-SBC.W $0012,X                        ;C0E65E|FD1200  |810012;
+SBC.W LiveEntities._12, X
 
 CODE_C0E661:
 STA.B $18                            ;C0E661|8518    |000018;
@@ -6611,35 +6619,33 @@ BNE CODE_C0E661                      ;C0E68B|D0D4    |C0E661;
 TYX                                  ;C0E68D|BB      |      ;
 RTS                                  ;C0E68E|60      |      ;
 
-; Store in Y the index into the entities_table derived from A(8)
+; Store in Y the index into the `entities_table` derived from A(8)
 MakeLiveEntitiesIndex:
-SEP #$20                             ;C0E68F|E220    |      ;
-XBA                                  ;C0E691|EB      |      ;
-LDA.B #objectsize(LiveEntities)                           ;C0E692|A940    |      ;
-JSL.L multiply                    ;C0E694|22D1B182|82B1D1;
-REP #$20                             ;C0E698|C220    |      ;
-CLC                                  ;C0E69A|18      |      ;
-ADC.W #entities_table
-TAY                                  ;C0E69E|A8      |      ;
-RTS                                  ;C0E69F|60      |      ;
+    SEP #$20
+    XBA
+    LDA.B #objectsize(LiveEntities)
+    ; multiply A times the objectsize of `LiveEntities`
+    JSL.L multiply
+    REP #$20
+    CLC
+    ADC.W #entities_table
+    TAY
+    RTS
 
 A_times_16:
-ASL A                                ;C0E6A0|0A      |      ;
-ASL A                                ;C0E6A1|0A      |      ;
-ASL A                                ;C0E6A2|0A      |      ;
-ASL A                                ;C0E6A3|0A      |      ;
-RTS                                  ;C0E6A4|60      |      ;
+    ASL #4
+    RTS
 
 CODE_C0E6A5:
-PHA                                  ;C0E6A5|48      |      ;
-PHX                                  ;C0E6A6|DA      |      ;
-ASL A                                ;C0E6A7|0A      |      ;
-TAX                                  ;C0E6A8|AA      |      ;
-LDA.B $01,S                          ;C0E6A9|A301    |000001;
-STA.L _7F0483, X                      ;C0E6AB|9F83047F|7F0483;
-PLX                                  ;C0E6AF|FA      |      ;
-PLA                                  ;C0E6B0|68      |      ;
-RTS                                  ;C0E6B1|60      |      ;
+    PHA
+    PHX
+    ASL
+    TAX
+    LDA.B 1, S
+    STA.L _7F0483, X
+    PLX
+    PLA
+    RTS
 
 CODE_C0E6B2:
 JSL.L TakeEntityPtr                    ;C0E6B2|2202E780|80E702;

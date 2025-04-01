@@ -3106,7 +3106,7 @@ open_stats_menu:
     STA.W player_defense_from_level
     PLA
     STA.W player_strength_from_level
-    %PlaySound(!Sound_MenuBeep)
+    %PlaySound(Sound.MenuBeep)
     JSL.L wait_vblank
 
 ; wait for key release
@@ -3144,7 +3144,7 @@ open_stats_menu:
     TRB.W _032A
     STZ.W buttons_pressed
     SEP #$20
-    %PlaySound(!Sound_MenuBeep)
+    %PlaySound(Sound.MenuBeep)
     JSR.W clearOsd
     LDA.B #!UpdateHud_All
     STA.W display_hud_bitfield
@@ -4154,45 +4154,44 @@ giveItem:
     CMP.B #Items.GoatsFood
     BCS .is_item
     ; this codepath is taken for weapons, armor and magic
-    XBA                                  ;C2A105|EB      |      ;
-    LDA.B #$00                           ;C2A106|A900    |      ;
-    XBA                                  ;C2A108|EB      |      ;
-    TAY                                  ;C2A109|A8      |      ;
-    DEY                                  ;C2A10A|88      |      ;
-    STA.W Inventory.swords, Y                        ;C2A10B|991E1B  |811B1E;
-    PLP                                  ;C2A10E|28      |      ;
-    RTL                                  ;C2A10F|6B      |      ;
+    XBA
+    LDA.B #$00
+    XBA
+    TAY
+    DEY
+    STA.W Inventory, Y
+    PLP
+    RTL
 
 .is_item:
-    XBA                                  ;C2A110|EB      |      ;
-    LDA.B #$00                           ;C2A111|A900    |      ;
-    XBA                                  ;C2A113|EB      |      ;
-    TAY                                  ;C2A114|A8      |      ;
-    DEY                                  ;C2A115|88      |      ;
-    PHA                                  ;C2A116|48      |      ;
-    LDA.W Inventory.swords, Y                        ;C2A117|B91E1B  |811B1E;
-    PHA                                  ;C2A11A|48      |      ;
-    AND.B #$80                           ;C2A11B|2980    |      ;
-    ORA.B $02,S                          ;C2A11D|0302    |000002;
-    STA.W $1B1E,Y                        ;C2A11F|991E1B  |811B1E;
-    BPL .already_equipped                      ;C2A122|1005    |C2A129;
+    XBA
+    LDA.B #$00
+    XBA
+    TAY
+    DEY
+    PHA
+    LDA.W Inventory, Y
+    PHA
+    AND.B #$80
+    ORA.B 2, S
+    STA.W Inventory, Y
+    BPL .already_equipped
     AND.B #$7F
     STA.W Equipment.item
-
 .already_equipped:
-    PLA                                  ;C2A129|68      |      ;
-    AND.B #$7F                           ;C2A12A|297F    |      ;
-    CMP.B #Items.MedicalHerb                           ;C2A12C|C938    |      ;
-    BNE .end                      ;C2A12E|D00A    |C2A13A;
-    LDA.W player_max_health                          ;C2A130|AD8A1B  |811B8A;
-    SEC                                  ;C2A133|38      |      ;
-    SBC.W player_current_health                          ;C2A134|ED881B  |811B88;
-    STA.W player_health_restore ;C2A137|8D4704  |810447;
-
+    PLA
+    AND.B #$7F
+    CMP.B #Items.MedicalHerb
+    BNE .end
+    ; heal the player if herbs are given
+    LDA.W player_max_health
+    SEC
+    SBC.W player_current_health
+    STA.W player_health_restore
 .end:
-    PLA                                  ;C2A13A|68      |      ;
-    PLP                                  ;C2A13B|28      |      ;
-    RTL                                  ;C2A13C|6B      |      ;
+    PLA
+    PLP
+    RTL
 
 CODE_C2A13D:
 STA.W number_of_choies                          ;C2A13D|8DC603  |8103C6;
@@ -4418,12 +4417,12 @@ printAndRunChoiceBox:
     BRA .wait_for_button_press
 
 .pressed_b:
-    %PlaySound(!Sound_DiaglogConfirm)
+    %PlaySound(Sound.DialogConfirm)
     CLC
     BRA .return
 
 .pressed_y:
-    %PlaySound(!Sound_MenuBeep)
+    %PlaySound(Sound.MenuBeep)
     SEC
 
 .return:
@@ -4463,7 +4462,7 @@ printAndRunChoiceBox:
     SEP #$20
 
 .cursor_moved:
-    %PlaySound(!Sound_MenuBeep)
+    %PlaySound(Sound.MenuBeep)
     LDA.B #' '
     STA.L L3_Text-!Row_Width,X
     STA.L L3_Text,X

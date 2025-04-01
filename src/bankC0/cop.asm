@@ -62,35 +62,35 @@ COP_Func:
     dw .cop_AC, .cop_AD, .cop_AE, .cop_AF
     dw .cop_B0, .cop_B1, .cop_B2
 
-.cop_00:
+.cop_00: ; NOP
     TYX
     BRL .ret_out_of_script
 
-.cop_01:
+.cop_01: ; show text
     TYX
-    LDA.B [CopTemp.address] ; loads 24-bit textpointer
+    LDA.B [CopTemp.address] ; loads 16-bit from the 24-bit textpointer
     INC.B CopTemp
     INC.B CopTemp
-    TAY             ; print expects the textpointer in Y
+    TAY             ; `printOsd...` expects the textpointer in Y
     SEP #$20
     PHX
     PHB
-    LDA.B CopTemp.address_bank
+    LDA.B CopTemp.address_bank ; load the bank
     PHA
     PLB
-    JSL.L printOsdStringFromBankX
+    JSL.L printOsdStringFromBankX ; and call print
     PLB
     PLX
     REP #$20
     BRL .ret_in_tmp
 
-.cop_02:
+.cop_02: ; show yes/no choice
     TYX
     PHX
     LDY.W #choice_yes_no
     JSL.L printOsdStringFromBank2
     SEP #$20
-    LDA.B #0
+    LDA.B #0 ; default preset
     XBA
     LDA.B #2 ; number of choices
     JSL.L printAndRunChoiceBox
@@ -98,46 +98,46 @@ COP_Func:
     LDX.W textbox_tlc
     JSL.L clearTextbox
     LDA.B #1
-    STA.W $3BA
+    STA.W _03BA
     PLP
     REP #$20
     PLX
     BCS ..aborted
     AND.W #$FF
     BNE ..aborted
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 ..aborted:
     LDA [CopTemp.address]
     INC CopTemp
     INC CopTemp
     BRL .ret_in_a
 
-.cop_03:
+.cop_03: ; start loop
     TYX
-    LDA.B [CopTemp.address]
+    LDA.B [CopTemp.address] ; how many times?
     INC.B CopTemp
     AND.W #$FF
-    STA.W $2E, X ; store the loop counter in the entity struct
-    LDA.B CopTemp
-    STA.W $002C, X
-    STA.W $0018, X ; store the script return address
+    STA.W LiveEntities.loop_counter, X ; store the loop counter in the entity struct
+    LDA.B CopTemp                      ; load the pointer to thhe next instruction
+    STA.W LiveEntities.loop_start_addr, X ; and store it so cop04 can return here
+    STA.W LiveEntities.script_ret_addr, X ; store the script return address
     BRL .ret_in_a
 
 .cop_04:
     TYX
-    DEC.W $002E, X ; load the loop counter
-    BNE ..not_elapsed ; and check it it is zero
+    DEC.W LiveEntities.loop_counter, X ; load the loop counter
+    BNE ..not_elapsed ; and check if it is zero
     BRL .ret_in_tmp ; if 0, then return to the next address
 
 ..not_elapsed:
-    LDA.W $002C, X
-    STA.W $0018, X ; write the new loop value back to the entity
+    LDA.W LiveEntities.loop_start_addr, X ; restore the pointer of the first instruction of the loop
+    STA.W LiveEntities.script_ret_addr, X ; set it as new instruction here
     BRL .ret_out_of_script
 
-.cop_05:
+.cop_05: ; wait for an event flag to be set or unset
     TYX
     LDA.B [CopTemp.address]
-    BMI ..wait_for_unset
+    BMI ..wait_for_unset ; if the high bit ($8xxx) is set, wait for the flag to be unset
     JSR.W CheckGameStateBit
     BCC ..loop_again
     BRA ..loop_done
@@ -152,19 +152,21 @@ COP_Func:
     BRL .set_script_ret_addr_and_get_out
 
 ..loop_done:
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
-.cop_06:
+.cop_06: ; jump unconditionally to that address
     TYX
     LDA [CopTemp.address]
     BRL .ret_in_a
 
-.cop_07:
+.cop_07: ; jump if the event flag is not set
+    ; you can mimic the behavoir of cop08 if you set the high bit `$8xxx`
     TYX
     LDA.B [CopTemp.address]
     BRA .check_jump
 
-.cop_08:
+.cop_08: ; jump if the event flag is set
+; in fact, this is not used (:
     TYX
     LDA.B [CopTemp.address]
     EOR.W #$8000 ; do the same as cop07, but negate it
@@ -180,7 +182,7 @@ COP_Func:
     BCS ..do_jump
 
 ..dont_jump:
-    BRL .skip_4_args
+    BRL .skip_4_bytes
 
 ..do_jump:
     INC.B CopTemp
@@ -190,7 +192,7 @@ COP_Func:
     INC.B CopTemp
     BRL .ret_in_a
 
-.cop_09:
+.cop_09: ; clear or set event flag, depending on high bit `$8xxx`
     TYX
     LDA.B [CopTemp.address]
     INC.B CopTemp
@@ -198,22 +200,21 @@ COP_Func:
     JSR.W SetResetGameStateBit
     BRL .ret_in_tmp
 
-.cop_0A:
+.cop_0A: ; give item
     TYX
     LDA.B [CopTemp.address]
     INC.B CopTemp
     AND.W #$FF
-    CMP.W #Items.MedicalHerb
-    BEQ ..give_item ; the reason for this, is that we heal the player fully, if it is already equipped, but that's not check here, but in `giveItem`
+    CMP.W #Items.MedicalHerb ; the reason for this check is, that we want to heal the player, if he already has the herbs
+    BEQ ..give_item ; so we give it him "twice", so `giveItem` heals the player
     JSR.W CheckIfItemIsObtained
     BCC ..ret
-
 ..give_item:
     JSL.L giveItem
 ..ret:
     BRL .ret_in_tmp
 
-.cop_0B:
+.cop_0B: ; remove item
     TYX
     LDA.B [CopTemp.address]
     INC.B CopTemp
@@ -224,12 +225,10 @@ COP_Func:
     BPL ..not_equipped
     AND.B #$7F
     STZ.W Equipment.item
-
 ..not_equipped:
     EOR.W Inventory, Y
     STA.W Inventory, Y
     REP #$20
-
 ..ret:
     BRL .ret_in_tmp
 
@@ -246,76 +245,69 @@ COP_Func:
     STA.B $00
 
 .CODE_C0D938:
-LDA.W $0000,X                        ;C0D938|BD0000  |810000;
+LDA.W LiveEntities.pos_x, X                        ;C0D938|BD0000  |810000;
 SEC                                  ;C0D93B|38      |      ;
 SBC.B $00                            ;C0D93C|E500    |000000;
 STA.B $16                            ;C0D93E|8516    |000016;
 LDA.B $00                            ;C0D940|A500    |000000;
 ASL A                                ;C0D942|0A      |      ;
 CLC                                  ;C0D943|18      |      ;
-ADC.W $0010,X                        ;C0D944|7D1000  |810010;
+ADC.W LiveEntities._10, X                        ;C0D944|7D1000  |810010;
 SEC                                  ;C0D947|38      |      ;
 SBC.W #$000F                         ;C0D948|E90F00  |      ;
 STA.B $18                            ;C0D94B|8518    |000018;
-LDA.W $0000,Y                        ;C0D94D|B90000  |810000;
+LDA.W LiveEntities.pos_x, Y                        ;C0D94D|B90000  |810000;
 SEC                                  ;C0D950|38      |      ;
 SBC.B $16                            ;C0D951|E516    |000016;
 CMP.B $18                            ;C0D953|C518    |000018;
-BCC .CODE_C0D95A                      ;C0D955|9003    |C0D95A;
-BRL .skip_2_args                      ;C0D957|82D90B  |C0E533;
-
-.CODE_C0D95A:
-LDA.W $0002,X                        ;C0D95A|BD0200  |810002;
+BCC + : BRL .skip_2_bytes : +
+LDA.W LiveEntities.pos_y, X                        ;C0D95A|BD0200  |810002;
 CLC                                  ;C0D95D|18      |      ;
 ADC.B $00                            ;C0D95E|6500    |000000;
 STA.B $16                            ;C0D960|8516    |000016;
 LDA.B $00                            ;C0D962|A500    |000000;
 ASL A                                ;C0D964|0A      |      ;
 CLC                                  ;C0D965|18      |      ;
-ADC.W $0012,X                        ;C0D966|7D1200  |810012;
+ADC.W LiveEntities._12, X                        ;C0D966|7D1200  |810012;
 SEC                                  ;C0D969|38      |      ;
 SBC.W #$000F                         ;C0D96A|E90F00  |      ;
 STA.B $18                            ;C0D96D|8518    |000018;
 LDA.B $16                            ;C0D96F|A516    |000016;
 SEC                                  ;C0D971|38      |      ;
-SBC.W $0002,Y                        ;C0D972|F90200  |810002;
+    SBC.W LiveEntities.pos_y, Y
 CMP.B $18                            ;C0D975|C518    |000018;
-BCC .CODE_C0D97C                      ;C0D977|9003    |C0D97C;
-BRL .skip_2_args                      ;C0D979|82B70B  |C0E533;
+BCC + : BRL .skip_2_bytes : +
+    LDA.B [CopTemp.address]
+    INC.B CopTemp
+    INC.B CopTemp
+    BRL .ret_in_a
 
-.CODE_C0D97C:
-LDA.B [CopTemp.address]                          ;C0D97C|A738    |000038;
-INC.B CopTemp                            ;C0D97E|E638    |000038;
-INC.B CopTemp                            ;C0D980|E638    |000038;
-BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
-
-.cop_0D:
+.cop_0D: ; jump if entity has reached xy
     TYX
     LDA.B [CopTemp.address] ; entity id
     INC.B CopTemp
-    AND.W #$00FF
+    AND.W #$FF
     JSR.W MakeLiveEntitiesIndex
     LDA.B [CopTemp.address] ; x position
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
-    CMP.W 0, Y          ; compare it against the x position of the entity
-    BEQ + : BRL .skip_3_args : +
-
+    CMP.W LiveEntities.pos_x, Y ; compare it against the x position of the entity
+    BEQ + : BRL .skip_3_bytes : + ; branch out if it does not match
     LDA.B [CopTemp.address] ; y position
     INC.B CopTemp
     AND.W #$FF
     INC A
     JSR.W A_times_16
     CMP.W $2, Y ; compare it against the y position of the entity
-    BEQ + : BRL .skip_2_args : +
+    BEQ + : BRL .skip_2_bytes : + ; branch out if it does not match
 
     LDA.B [CopTemp.address] ; condition is met, jump to target
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
-.cop_10:
+.cop_10: ; teleport player to map
     TYX
     LDA.B [CopTemp.address] ; load the scene id
     INC.B CopTemp
@@ -336,7 +328,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     STA.W TeleportPos.y
     BRL .ret_in_tmp
 
-.cop_11:
+.cop_11: ; teleport npc to position
     TYX
     LDA.B [CopTemp.address] ; load entity id
     INC.B CopTemp
@@ -346,19 +338,19 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
-    STA.W $0000, Y   ; store x in entity table
+    STA.W LiveEntities.pos_x, Y   ; store x in entity table
     LDA.B [CopTemp.address]  ; load y
     INC.B CopTemp
     AND.W #$FF
     JSR.W A_times_16
-    STA.W $0002, Y  ; store y in the entityt table
+    STA.W LiveEntities.pos_y, Y  ; store y in the entityt table
     PHX
     TYX
     JSR.W make_npc_passable
     PLX
     BRL .ret_in_tmp
 
-.cop_12
+.cop_12: ; set script addr
     TYX
     LDA.B [CopTemp.address]
     INC.B CopTemp
@@ -367,7 +359,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
-    STA.W $0018, Y ; store it as the script ret addr
+    STA.W LiveEntities.script_ret_addr, Y
     BRL .ret_in_tmp
 
 .cop_13:
@@ -379,10 +371,10 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
-    STA.W $30, Y ; store xxx
+    STA.W LiveEntities._30, Y ; store xxx
     BRL .ret_in_tmp
 
-.cop_14:
+.cop_14: ; jump if lair is sealed
     TYX
     LDA.B [CopTemp.address]
     INC.B CopTemp
@@ -391,16 +383,16 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     LDY.W #lair_sealed_table
     JSL.L checkIfBitIsSet
     BCC ..not_sealed
-    LDA.W $0016, X ; that's the entity id?
+    LDA.W LiveEntities.entity_id, X
     AND.W #$DFFF
-    STA.W $0016, X
+    STA.W LiveEntities.entity_id, X
     LDA.B [CopTemp.address] ; load the addr to jump to
     INC.B CopTemp
     INC.B CopTemp
     BRL .ret_in_a
 
 ..not_sealed:
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 .cop_15:
     TYX
@@ -427,7 +419,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     AND.W #$FF
     JSR.W CheckIfItemIsObtained
     BCS ..is_obtained
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..is_obtained:
     LDA.B [CopTemp.address]
@@ -443,7 +435,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     JSR.W CheckIfItemIsObtained
     BCS ..not_obtained
     BPL ..not_obtained
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..not_obtained:
     LDA.B [CopTemp.address]
@@ -481,7 +473,7 @@ BRL .ret_in_a                      ;C0D982|82B40B  |C0E539;
     BCS ..aborted_textbox
     AND.W #$FF
     STA.W choice_idx
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..aborted_textbox:
     LDA.B [CopTemp.address]
@@ -508,7 +500,7 @@ TYX
     INC.B CopTemp
     AND.W $0016, X ; compare it with the entity_id
     BNE ..correct_entity
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..correct_entity:
     LDA.B [CopTemp.address]
@@ -573,7 +565,7 @@ TYX
     BRL .ret_in_a
 
 ..ret:
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 .cop_21:
     TYX
@@ -653,7 +645,7 @@ TYX
     BCS ..not_enough_gold
     LDA.W #UpdateHud.Gold
     TSB.W display_hud_bitfield
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..not_enough_gold:
     LDA.B [CopTemp.address] ; load not enough gold callback
@@ -686,7 +678,7 @@ TYX
     PLX
     AND.W #$FF
     BNE ..not_passable
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..not_passable:
     LDA.B [CopTemp.address]
@@ -714,7 +706,7 @@ TYX
     REP #$20
     BNE ..dunno
     PLX
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 ..dunno:
     PLX
@@ -824,13 +816,13 @@ TYX
 .cop_30:
     TYX
     LDA.W lair_reveal_in_progress
-    BNE + : BRL .skip_5_args : +
+    BNE + : BRL .skip_5_bytes : +
 
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
     CMP.W revealing_lair_id
-    BEQ + : BRL .skip_3_args : +
+    BEQ + : BRL .skip_3_bytes : +
     BRL .cop_85 ; I'm not really sure, why it isn't here, but so far away
 
 .cop_31:
@@ -969,7 +961,7 @@ TYX
     LDX.W _039E
     LDA.W #$FFE0
     STA.W $26, X
-    %PlaySound(!Sound_PlayerHit)
+    %PlaySound(Sound.PlayerHurt)
     LDA.W $16, X
     ORA.W #$800
     STA.W $16, X
@@ -1032,7 +1024,7 @@ TYX
     LDA.W $16, X ; entity id
     ORA.W #$10
     STA.W $16, X
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 .cop_3C:
     TYX
@@ -1183,7 +1175,7 @@ TYX
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
-    BCS + : BRL .skip_2_args : +
+    BCS + : BRL .skip_2_bytes : +
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
@@ -1204,7 +1196,7 @@ TYX
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
-    BCS + : BRL .skip_2_args : +
+    BCS + : BRL .skip_2_bytes : +
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
@@ -1225,7 +1217,7 @@ TYX
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if the player is outside
-    BCC + : BRL .skip_2_args : +
+    BCC + : BRL .skip_2_bytes : +
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
@@ -1246,7 +1238,7 @@ TYX
     INC.B CopTemp
     CMP.B $0
     ; jump to arg if player is inside
-    BCC + : BRL .skip_2_args : +
+    BCC + : BRL .skip_2_bytes : +
     LDA.B [CopTemp.address]
     INC.B CopTemp
     INC.B CopTemp
@@ -1510,7 +1502,7 @@ TYX
     BIT.W #4
     BNE ..do_jump
     JSL.L CODE_C0891F
-    BCC + : BRL .skip_2_args : +
+    BCC + : BRL .skip_2_bytes : +
     BRL .ret_out_of_script
 
 ..do_jump:
@@ -1728,13 +1720,13 @@ TYX
     TYX
     LDA.W $16, X
     BIT.W #$8000
-    BNE + : BRL .skip_1_arg : +
+    BNE + : BRL .skip_1_byte : +
     LDA.W 0, X
     CMP.W $0342
-    BCC + : BRL .skip_1_arg : +
+    BCC + : BRL .skip_1_byte : +
     LDA.W 2, X
     CMP.W $0344
-    BCC + : BRL .skip_1_arg : +
+    BCC + : BRL .skip_1_byte : +
     LDA.B CopTemp
     DEC A
     DEC A
@@ -1773,7 +1765,7 @@ TYX
     BRL .ret_in_a
 
 ..skip:
-    BRL .skip_2_args
+    BRL .skip_2_bytes
 
 .cop_AF:
     TYX
@@ -1880,19 +1872,19 @@ TYX
     STA.W $16, Y
     BRL .ret_in_tmp
 
-.skip_5_args: INC.B CopTemp
-.skip_4_args: INC.B CopTemp
-.skip_3_args: INC.B CopTemp
-.skip_2_args: INC.B CopTemp
-.skip_1_arg:  INC.B CopTemp
+.skip_5_bytes: INC.B CopTemp
+.skip_4_bytes: INC.B CopTemp
+.skip_3_bytes: INC.B CopTemp
+.skip_2_bytes: INC.B CopTemp
+.skip_1_byte:  INC.B CopTemp
 .ret_in_tmp:  LDA.B CopTemp
 .ret_in_a:
-    STA.B $02, S ; place A onto stack, so that the `RTI` in the next line returns to that address
+    STA.B 2, S ; place A onto stack, so that the `RTI` in the next line returns to that address
     RTI
 
 .set_script_ret_addr_and_get_out:
     LDA.B CopTemp
-    STA.W $18, X ; places the `CopTemp` variable onto `script_ret_addr` of the entity
+    STA.W LiveEntities.script_ret_addr, X
 
 ; returns out of the script back to the script handling function
 .ret_out_of_script:
